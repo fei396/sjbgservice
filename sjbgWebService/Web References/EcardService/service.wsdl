@@ -1,0 +1,1880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="setPlace">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="place" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setPlaceResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="getWorkTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="go" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="back" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="pos" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getWorkTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getWorkTimeResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getWorkMoney">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="go" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="back" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="pos" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ryCount" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getWorkMoneyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getWorkMoneyResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getBackTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="r1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="r2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="a1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="a2" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pos" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getBackTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getBackTimeResult" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getMoneyThisMonth">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getMoneyThisMonthResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getMoneyThisMonthResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="hasUnReceivedMoney">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="_place" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="hasUnReceivedMoneyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="hasUnReceivedMoneyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="isLastReceiveMoreThan16">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kh" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="isLastReceiveMoreThan16Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="isLastReceiveMoreThan16Result" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updatePasswd">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sqlstr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="updatePasswdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="updatePasswdResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginIP">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ipAddr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginIPResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginIPResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="LoginResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginWeb">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginWebResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="LoginWebResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserDept">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserDeptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUserDeptResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getJhByGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getJhByGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getJhByGroupResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAllRecordByJh">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="jh" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAllRecordByJhResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getAllRecordByJhResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUserGroupResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAuto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAutoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getAutoResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPlace">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPlaceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getPlaceResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCZJL">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dept" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCZJLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCZJLResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getXFJL">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dept" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groups" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="jh" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getXFJLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getXFJLResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getXFHZ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groups" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getXFHZResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getXFHZResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getGYXFHZ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groups" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="jh" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getGYXFHZResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getGYXFHZResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCustomerInfoByCardNo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cardno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCustomerInfoByCardNoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCustomerInfoByCardNoResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getOtherRecord">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getOtherRecordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getOtherRecordResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUnReceivedOther">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUnReceivedOtherResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUnReceivedOtherResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAllOtherRecord">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAllOtherRecordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getAllOtherRecordResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getOtherRecordByTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="start" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="end" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getOtherRecordByTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getOtherRecordByTimeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUnfinishedRecord">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="_place" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUnfinishedRecordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUnfinishedRecordResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getRecordByTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="start" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="end" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="_place" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getRecordByTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getRecordByTimeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAllRecord">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="_place" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getAllRecordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getAllRecordResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="addMoney">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerid" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="cardno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="workname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ids" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dt">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="Money" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="totalMoney" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="ip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oper" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="_place" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="addMoneyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="addMoneyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddMoneyManual">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="customerid" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="cardno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="workname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="kd" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Money" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="totalMoney" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="ipAddr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oper" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddMoneyManualResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddMoneyManualResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getServerTime">
+        <s:complexType />
+      </s:element>
+      <s:element name="getServerTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getServerTimeResult" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getValidDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getValidDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getValidDateResult" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getNewValidDate">
+        <s:complexType />
+      </s:element>
+      <s:element name="getNewValidDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getNewValidDateResult" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setValidDateOnly">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="vDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setValidDateOnlyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="setValidDateOnlyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setValidDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ov" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="cMoney" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="money" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="customerid" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="cardno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ip" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oper" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="_place" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="setValidDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="setValidDateResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deleteOtherRecord">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="batid" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="workno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deleteOtherRecordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deleteOtherRecordResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deleteOtherRecordById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="deleteOtherRecordByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deleteOtherRecordByIdResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="importOtherRecord">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dt">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="bat" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oper" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Ip" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="importOtherRecordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="importOtherRecordResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCanBu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="work_no" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="kssj" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="jssj" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCanBuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCanBuResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="setPlaceSoapIn">
+    <wsdl:part name="parameters" element="tns:setPlace" />
+  </wsdl:message>
+  <wsdl:message name="setPlaceSoapOut">
+    <wsdl:part name="parameters" element="tns:setPlaceResponse" />
+  </wsdl:message>
+  <wsdl:message name="getWorkTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:getWorkTime" />
+  </wsdl:message>
+  <wsdl:message name="getWorkTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:getWorkTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="getWorkMoneySoapIn">
+    <wsdl:part name="parameters" element="tns:getWorkMoney" />
+  </wsdl:message>
+  <wsdl:message name="getWorkMoneySoapOut">
+    <wsdl:part name="parameters" element="tns:getWorkMoneyResponse" />
+  </wsdl:message>
+  <wsdl:message name="getBackTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:getBackTime" />
+  </wsdl:message>
+  <wsdl:message name="getBackTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:getBackTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="getMoneyThisMonthSoapIn">
+    <wsdl:part name="parameters" element="tns:getMoneyThisMonth" />
+  </wsdl:message>
+  <wsdl:message name="getMoneyThisMonthSoapOut">
+    <wsdl:part name="parameters" element="tns:getMoneyThisMonthResponse" />
+  </wsdl:message>
+  <wsdl:message name="hasUnReceivedMoneySoapIn">
+    <wsdl:part name="parameters" element="tns:hasUnReceivedMoney" />
+  </wsdl:message>
+  <wsdl:message name="hasUnReceivedMoneySoapOut">
+    <wsdl:part name="parameters" element="tns:hasUnReceivedMoneyResponse" />
+  </wsdl:message>
+  <wsdl:message name="isLastReceiveMoreThan16SoapIn">
+    <wsdl:part name="parameters" element="tns:isLastReceiveMoreThan16" />
+  </wsdl:message>
+  <wsdl:message name="isLastReceiveMoreThan16SoapOut">
+    <wsdl:part name="parameters" element="tns:isLastReceiveMoreThan16Response" />
+  </wsdl:message>
+  <wsdl:message name="updatePasswdSoapIn">
+    <wsdl:part name="parameters" element="tns:updatePasswd" />
+  </wsdl:message>
+  <wsdl:message name="updatePasswdSoapOut">
+    <wsdl:part name="parameters" element="tns:updatePasswdResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginIPSoapIn">
+    <wsdl:part name="parameters" element="tns:LoginIP" />
+  </wsdl:message>
+  <wsdl:message name="LoginIPSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginIPResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginWebSoapIn">
+    <wsdl:part name="parameters" element="tns:LoginWeb" />
+  </wsdl:message>
+  <wsdl:message name="LoginWebSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginWebResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUserDeptSoapIn">
+    <wsdl:part name="parameters" element="tns:getUserDept" />
+  </wsdl:message>
+  <wsdl:message name="getUserDeptSoapOut">
+    <wsdl:part name="parameters" element="tns:getUserDeptResponse" />
+  </wsdl:message>
+  <wsdl:message name="getJhByGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:getJhByGroup" />
+  </wsdl:message>
+  <wsdl:message name="getJhByGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:getJhByGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAllRecordByJhSoapIn">
+    <wsdl:part name="parameters" element="tns:getAllRecordByJh" />
+  </wsdl:message>
+  <wsdl:message name="getAllRecordByJhSoapOut">
+    <wsdl:part name="parameters" element="tns:getAllRecordByJhResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUserGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:getUserGroup" />
+  </wsdl:message>
+  <wsdl:message name="getUserGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:getUserGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAutoSoapIn">
+    <wsdl:part name="parameters" element="tns:getAuto" />
+  </wsdl:message>
+  <wsdl:message name="getAutoSoapOut">
+    <wsdl:part name="parameters" element="tns:getAutoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPlaceSoapIn">
+    <wsdl:part name="parameters" element="tns:getPlace" />
+  </wsdl:message>
+  <wsdl:message name="getPlaceSoapOut">
+    <wsdl:part name="parameters" element="tns:getPlaceResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCZJLSoapIn">
+    <wsdl:part name="parameters" element="tns:getCZJL" />
+  </wsdl:message>
+  <wsdl:message name="getCZJLSoapOut">
+    <wsdl:part name="parameters" element="tns:getCZJLResponse" />
+  </wsdl:message>
+  <wsdl:message name="getXFJLSoapIn">
+    <wsdl:part name="parameters" element="tns:getXFJL" />
+  </wsdl:message>
+  <wsdl:message name="getXFJLSoapOut">
+    <wsdl:part name="parameters" element="tns:getXFJLResponse" />
+  </wsdl:message>
+  <wsdl:message name="getXFHZSoapIn">
+    <wsdl:part name="parameters" element="tns:getXFHZ" />
+  </wsdl:message>
+  <wsdl:message name="getXFHZSoapOut">
+    <wsdl:part name="parameters" element="tns:getXFHZResponse" />
+  </wsdl:message>
+  <wsdl:message name="getGYXFHZSoapIn">
+    <wsdl:part name="parameters" element="tns:getGYXFHZ" />
+  </wsdl:message>
+  <wsdl:message name="getGYXFHZSoapOut">
+    <wsdl:part name="parameters" element="tns:getGYXFHZResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCustomerInfoByCardNoSoapIn">
+    <wsdl:part name="parameters" element="tns:getCustomerInfoByCardNo" />
+  </wsdl:message>
+  <wsdl:message name="getCustomerInfoByCardNoSoapOut">
+    <wsdl:part name="parameters" element="tns:getCustomerInfoByCardNoResponse" />
+  </wsdl:message>
+  <wsdl:message name="getOtherRecordSoapIn">
+    <wsdl:part name="parameters" element="tns:getOtherRecord" />
+  </wsdl:message>
+  <wsdl:message name="getOtherRecordSoapOut">
+    <wsdl:part name="parameters" element="tns:getOtherRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUnReceivedOtherSoapIn">
+    <wsdl:part name="parameters" element="tns:getUnReceivedOther" />
+  </wsdl:message>
+  <wsdl:message name="getUnReceivedOtherSoapOut">
+    <wsdl:part name="parameters" element="tns:getUnReceivedOtherResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAllOtherRecordSoapIn">
+    <wsdl:part name="parameters" element="tns:getAllOtherRecord" />
+  </wsdl:message>
+  <wsdl:message name="getAllOtherRecordSoapOut">
+    <wsdl:part name="parameters" element="tns:getAllOtherRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="getOtherRecordByTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:getOtherRecordByTime" />
+  </wsdl:message>
+  <wsdl:message name="getOtherRecordByTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:getOtherRecordByTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUnfinishedRecordSoapIn">
+    <wsdl:part name="parameters" element="tns:getUnfinishedRecord" />
+  </wsdl:message>
+  <wsdl:message name="getUnfinishedRecordSoapOut">
+    <wsdl:part name="parameters" element="tns:getUnfinishedRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="getRecordByTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:getRecordByTime" />
+  </wsdl:message>
+  <wsdl:message name="getRecordByTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:getRecordByTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="getAllRecordSoapIn">
+    <wsdl:part name="parameters" element="tns:getAllRecord" />
+  </wsdl:message>
+  <wsdl:message name="getAllRecordSoapOut">
+    <wsdl:part name="parameters" element="tns:getAllRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="addMoneySoapIn">
+    <wsdl:part name="parameters" element="tns:addMoney" />
+  </wsdl:message>
+  <wsdl:message name="addMoneySoapOut">
+    <wsdl:part name="parameters" element="tns:addMoneyResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddMoneyManualSoapIn">
+    <wsdl:part name="parameters" element="tns:AddMoneyManual" />
+  </wsdl:message>
+  <wsdl:message name="AddMoneyManualSoapOut">
+    <wsdl:part name="parameters" element="tns:AddMoneyManualResponse" />
+  </wsdl:message>
+  <wsdl:message name="getServerTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:getServerTime" />
+  </wsdl:message>
+  <wsdl:message name="getServerTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:getServerTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="getValidDateSoapIn">
+    <wsdl:part name="parameters" element="tns:getValidDate" />
+  </wsdl:message>
+  <wsdl:message name="getValidDateSoapOut">
+    <wsdl:part name="parameters" element="tns:getValidDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="getNewValidDateSoapIn">
+    <wsdl:part name="parameters" element="tns:getNewValidDate" />
+  </wsdl:message>
+  <wsdl:message name="getNewValidDateSoapOut">
+    <wsdl:part name="parameters" element="tns:getNewValidDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="setValidDateOnlySoapIn">
+    <wsdl:part name="parameters" element="tns:setValidDateOnly" />
+  </wsdl:message>
+  <wsdl:message name="setValidDateOnlySoapOut">
+    <wsdl:part name="parameters" element="tns:setValidDateOnlyResponse" />
+  </wsdl:message>
+  <wsdl:message name="setValidDateSoapIn">
+    <wsdl:part name="parameters" element="tns:setValidDate" />
+  </wsdl:message>
+  <wsdl:message name="setValidDateSoapOut">
+    <wsdl:part name="parameters" element="tns:setValidDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="deleteOtherRecordSoapIn">
+    <wsdl:part name="parameters" element="tns:deleteOtherRecord" />
+  </wsdl:message>
+  <wsdl:message name="deleteOtherRecordSoapOut">
+    <wsdl:part name="parameters" element="tns:deleteOtherRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="deleteOtherRecordByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:deleteOtherRecordById" />
+  </wsdl:message>
+  <wsdl:message name="deleteOtherRecordByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:deleteOtherRecordByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="importOtherRecordSoapIn">
+    <wsdl:part name="parameters" element="tns:importOtherRecord" />
+  </wsdl:message>
+  <wsdl:message name="importOtherRecordSoapOut">
+    <wsdl:part name="parameters" element="tns:importOtherRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCanBuSoapIn">
+    <wsdl:part name="parameters" element="tns:getCanBu" />
+  </wsdl:message>
+  <wsdl:message name="getCanBuSoapOut">
+    <wsdl:part name="parameters" element="tns:getCanBuResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="setPlace">
+      <wsdl:input message="tns:setPlaceSoapIn" />
+      <wsdl:output message="tns:setPlaceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getWorkTime">
+      <wsdl:input message="tns:getWorkTimeSoapIn" />
+      <wsdl:output message="tns:getWorkTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getWorkMoney">
+      <wsdl:input message="tns:getWorkMoneySoapIn" />
+      <wsdl:output message="tns:getWorkMoneySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBackTime">
+      <wsdl:input message="tns:getBackTimeSoapIn" />
+      <wsdl:output message="tns:getBackTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getMoneyThisMonth">
+      <wsdl:input message="tns:getMoneyThisMonthSoapIn" />
+      <wsdl:output message="tns:getMoneyThisMonthSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="hasUnReceivedMoney">
+      <wsdl:input message="tns:hasUnReceivedMoneySoapIn" />
+      <wsdl:output message="tns:hasUnReceivedMoneySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="isLastReceiveMoreThan16">
+      <wsdl:input message="tns:isLastReceiveMoreThan16SoapIn" />
+      <wsdl:output message="tns:isLastReceiveMoreThan16SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updatePasswd">
+      <wsdl:input message="tns:updatePasswdSoapIn" />
+      <wsdl:output message="tns:updatePasswdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginIP">
+      <wsdl:input message="tns:LoginIPSoapIn" />
+      <wsdl:output message="tns:LoginIPSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginWeb">
+      <wsdl:input message="tns:LoginWebSoapIn" />
+      <wsdl:output message="tns:LoginWebSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserDept">
+      <wsdl:input message="tns:getUserDeptSoapIn" />
+      <wsdl:output message="tns:getUserDeptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getJhByGroup">
+      <wsdl:input message="tns:getJhByGroupSoapIn" />
+      <wsdl:output message="tns:getJhByGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllRecordByJh">
+      <wsdl:input message="tns:getAllRecordByJhSoapIn" />
+      <wsdl:output message="tns:getAllRecordByJhSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserGroup">
+      <wsdl:input message="tns:getUserGroupSoapIn" />
+      <wsdl:output message="tns:getUserGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAuto">
+      <wsdl:input message="tns:getAutoSoapIn" />
+      <wsdl:output message="tns:getAutoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPlace">
+      <wsdl:input message="tns:getPlaceSoapIn" />
+      <wsdl:output message="tns:getPlaceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCZJL">
+      <wsdl:input message="tns:getCZJLSoapIn" />
+      <wsdl:output message="tns:getCZJLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXFJL">
+      <wsdl:input message="tns:getXFJLSoapIn" />
+      <wsdl:output message="tns:getXFJLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXFHZ">
+      <wsdl:input message="tns:getXFHZSoapIn" />
+      <wsdl:output message="tns:getXFHZSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGYXFHZ">
+      <wsdl:input message="tns:getGYXFHZSoapIn" />
+      <wsdl:output message="tns:getGYXFHZSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerInfoByCardNo">
+      <wsdl:input message="tns:getCustomerInfoByCardNoSoapIn" />
+      <wsdl:output message="tns:getCustomerInfoByCardNoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getOtherRecord">
+      <wsdl:input message="tns:getOtherRecordSoapIn" />
+      <wsdl:output message="tns:getOtherRecordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUnReceivedOther">
+      <wsdl:input message="tns:getUnReceivedOtherSoapIn" />
+      <wsdl:output message="tns:getUnReceivedOtherSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllOtherRecord">
+      <wsdl:input message="tns:getAllOtherRecordSoapIn" />
+      <wsdl:output message="tns:getAllOtherRecordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getOtherRecordByTime">
+      <wsdl:input message="tns:getOtherRecordByTimeSoapIn" />
+      <wsdl:output message="tns:getOtherRecordByTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUnfinishedRecord">
+      <wsdl:input message="tns:getUnfinishedRecordSoapIn" />
+      <wsdl:output message="tns:getUnfinishedRecordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getRecordByTime">
+      <wsdl:input message="tns:getRecordByTimeSoapIn" />
+      <wsdl:output message="tns:getRecordByTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllRecord">
+      <wsdl:input message="tns:getAllRecordSoapIn" />
+      <wsdl:output message="tns:getAllRecordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addMoney">
+      <wsdl:input message="tns:addMoneySoapIn" />
+      <wsdl:output message="tns:addMoneySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMoneyManual">
+      <wsdl:input message="tns:AddMoneyManualSoapIn" />
+      <wsdl:output message="tns:AddMoneyManualSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getServerTime">
+      <wsdl:input message="tns:getServerTimeSoapIn" />
+      <wsdl:output message="tns:getServerTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getValidDate">
+      <wsdl:input message="tns:getValidDateSoapIn" />
+      <wsdl:output message="tns:getValidDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getNewValidDate">
+      <wsdl:input message="tns:getNewValidDateSoapIn" />
+      <wsdl:output message="tns:getNewValidDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setValidDateOnly">
+      <wsdl:input message="tns:setValidDateOnlySoapIn" />
+      <wsdl:output message="tns:setValidDateOnlySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setValidDate">
+      <wsdl:input message="tns:setValidDateSoapIn" />
+      <wsdl:output message="tns:setValidDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteOtherRecord">
+      <wsdl:input message="tns:deleteOtherRecordSoapIn" />
+      <wsdl:output message="tns:deleteOtherRecordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteOtherRecordById">
+      <wsdl:input message="tns:deleteOtherRecordByIdSoapIn" />
+      <wsdl:output message="tns:deleteOtherRecordByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="importOtherRecord">
+      <wsdl:input message="tns:importOtherRecordSoapIn" />
+      <wsdl:output message="tns:importOtherRecordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCanBu">
+      <wsdl:input message="tns:getCanBuSoapIn" />
+      <wsdl:output message="tns:getCanBuSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="setPlace">
+      <soap:operation soapAction="http://tempuri.org/setPlace" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWorkTime">
+      <soap:operation soapAction="http://tempuri.org/getWorkTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWorkMoney">
+      <soap:operation soapAction="http://tempuri.org/getWorkMoney" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBackTime">
+      <soap:operation soapAction="http://tempuri.org/getBackTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoneyThisMonth">
+      <soap:operation soapAction="http://tempuri.org/getMoneyThisMonth" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="hasUnReceivedMoney">
+      <soap:operation soapAction="http://tempuri.org/hasUnReceivedMoney" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isLastReceiveMoreThan16">
+      <soap:operation soapAction="http://tempuri.org/isLastReceiveMoreThan16" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updatePasswd">
+      <soap:operation soapAction="http://tempuri.org/updatePasswd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginIP">
+      <soap:operation soapAction="http://tempuri.org/LoginIP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginWeb">
+      <soap:operation soapAction="http://tempuri.org/LoginWeb" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserDept">
+      <soap:operation soapAction="http://tempuri.org/getUserDept" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getJhByGroup">
+      <soap:operation soapAction="http://tempuri.org/getJhByGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllRecordByJh">
+      <soap:operation soapAction="http://tempuri.org/getAllRecordByJh" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserGroup">
+      <soap:operation soapAction="http://tempuri.org/getUserGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAuto">
+      <soap:operation soapAction="http://tempuri.org/getAuto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPlace">
+      <soap:operation soapAction="http://tempuri.org/getPlace" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCZJL">
+      <soap:operation soapAction="http://tempuri.org/getCZJL" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXFJL">
+      <soap:operation soapAction="http://tempuri.org/getXFJL" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXFHZ">
+      <soap:operation soapAction="http://tempuri.org/getXFHZ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGYXFHZ">
+      <soap:operation soapAction="http://tempuri.org/getGYXFHZ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerInfoByCardNo">
+      <soap:operation soapAction="http://tempuri.org/getCustomerInfoByCardNo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOtherRecord">
+      <soap:operation soapAction="http://tempuri.org/getOtherRecord" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnReceivedOther">
+      <soap:operation soapAction="http://tempuri.org/getUnReceivedOther" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllOtherRecord">
+      <soap:operation soapAction="http://tempuri.org/getAllOtherRecord" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOtherRecordByTime">
+      <soap:operation soapAction="http://tempuri.org/getOtherRecordByTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnfinishedRecord">
+      <soap:operation soapAction="http://tempuri.org/getUnfinishedRecord" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRecordByTime">
+      <soap:operation soapAction="http://tempuri.org/getRecordByTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllRecord">
+      <soap:operation soapAction="http://tempuri.org/getAllRecord" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addMoney">
+      <soap:operation soapAction="http://tempuri.org/addMoney" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMoneyManual">
+      <soap:operation soapAction="http://tempuri.org/AddMoneyManual" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getServerTime">
+      <soap:operation soapAction="http://tempuri.org/getServerTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getValidDate">
+      <soap:operation soapAction="http://tempuri.org/getValidDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNewValidDate">
+      <soap:operation soapAction="http://tempuri.org/getNewValidDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setValidDateOnly">
+      <soap:operation soapAction="http://tempuri.org/setValidDateOnly" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setValidDate">
+      <soap:operation soapAction="http://tempuri.org/setValidDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteOtherRecord">
+      <soap:operation soapAction="http://tempuri.org/deleteOtherRecord" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteOtherRecordById">
+      <soap:operation soapAction="http://tempuri.org/deleteOtherRecordById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="importOtherRecord">
+      <soap:operation soapAction="http://tempuri.org/importOtherRecord" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCanBu">
+      <soap:operation soapAction="http://tempuri.org/getCanBu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="setPlace">
+      <soap12:operation soapAction="http://tempuri.org/setPlace" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWorkTime">
+      <soap12:operation soapAction="http://tempuri.org/getWorkTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWorkMoney">
+      <soap12:operation soapAction="http://tempuri.org/getWorkMoney" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBackTime">
+      <soap12:operation soapAction="http://tempuri.org/getBackTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoneyThisMonth">
+      <soap12:operation soapAction="http://tempuri.org/getMoneyThisMonth" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="hasUnReceivedMoney">
+      <soap12:operation soapAction="http://tempuri.org/hasUnReceivedMoney" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isLastReceiveMoreThan16">
+      <soap12:operation soapAction="http://tempuri.org/isLastReceiveMoreThan16" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updatePasswd">
+      <soap12:operation soapAction="http://tempuri.org/updatePasswd" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginIP">
+      <soap12:operation soapAction="http://tempuri.org/LoginIP" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginWeb">
+      <soap12:operation soapAction="http://tempuri.org/LoginWeb" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserDept">
+      <soap12:operation soapAction="http://tempuri.org/getUserDept" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getJhByGroup">
+      <soap12:operation soapAction="http://tempuri.org/getJhByGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllRecordByJh">
+      <soap12:operation soapAction="http://tempuri.org/getAllRecordByJh" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserGroup">
+      <soap12:operation soapAction="http://tempuri.org/getUserGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAuto">
+      <soap12:operation soapAction="http://tempuri.org/getAuto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPlace">
+      <soap12:operation soapAction="http://tempuri.org/getPlace" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCZJL">
+      <soap12:operation soapAction="http://tempuri.org/getCZJL" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXFJL">
+      <soap12:operation soapAction="http://tempuri.org/getXFJL" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXFHZ">
+      <soap12:operation soapAction="http://tempuri.org/getXFHZ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGYXFHZ">
+      <soap12:operation soapAction="http://tempuri.org/getGYXFHZ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerInfoByCardNo">
+      <soap12:operation soapAction="http://tempuri.org/getCustomerInfoByCardNo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOtherRecord">
+      <soap12:operation soapAction="http://tempuri.org/getOtherRecord" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnReceivedOther">
+      <soap12:operation soapAction="http://tempuri.org/getUnReceivedOther" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllOtherRecord">
+      <soap12:operation soapAction="http://tempuri.org/getAllOtherRecord" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOtherRecordByTime">
+      <soap12:operation soapAction="http://tempuri.org/getOtherRecordByTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnfinishedRecord">
+      <soap12:operation soapAction="http://tempuri.org/getUnfinishedRecord" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRecordByTime">
+      <soap12:operation soapAction="http://tempuri.org/getRecordByTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllRecord">
+      <soap12:operation soapAction="http://tempuri.org/getAllRecord" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addMoney">
+      <soap12:operation soapAction="http://tempuri.org/addMoney" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMoneyManual">
+      <soap12:operation soapAction="http://tempuri.org/AddMoneyManual" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getServerTime">
+      <soap12:operation soapAction="http://tempuri.org/getServerTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getValidDate">
+      <soap12:operation soapAction="http://tempuri.org/getValidDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNewValidDate">
+      <soap12:operation soapAction="http://tempuri.org/getNewValidDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setValidDateOnly">
+      <soap12:operation soapAction="http://tempuri.org/setValidDateOnly" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setValidDate">
+      <soap12:operation soapAction="http://tempuri.org/setValidDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteOtherRecord">
+      <soap12:operation soapAction="http://tempuri.org/deleteOtherRecord" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteOtherRecordById">
+      <soap12:operation soapAction="http://tempuri.org/deleteOtherRecordById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="importOtherRecord">
+      <soap12:operation soapAction="http://tempuri.org/importOtherRecord" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCanBu">
+      <soap12:operation soapAction="http://tempuri.org/getCanBu" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://10.99.81.6:8082/ecardservice/service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://10.99.81.6:8082/ecardservice/service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

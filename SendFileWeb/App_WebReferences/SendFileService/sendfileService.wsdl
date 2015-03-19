@@ -1,0 +1,1052 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://sjbg.xxjwd.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s1="http://sjbg.xxjwd.org/literalTypes" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://sjbg.xxjwd.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:complexType name="ArrayOfReceiveFile">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:ReceiveFile[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ReceiveFile">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ExtName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FileDesc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Sender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SenderName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SenderDept" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="DutyRoomID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="DutyRoom" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="DutyRoomDeptId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="DutyRoomDept" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Receiver" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ReceiverName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ReceiveTime" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="FileDrId" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SjbgSoapHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="A" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="P" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSentFileList">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:SentFileList[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SentFileList">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="FID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Sender" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="AllCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ReceiveCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSentFileDetail">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:SentFileDetail[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SentFileDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Receiver" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="DutyRoom" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ReceiveTime" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="INT">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Number" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDepartment">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:Department[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Department">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDutyRoom">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:DutyRoom[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DutyRoom">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="WeiZhi" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="CheJianID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="CheJian" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/literalTypes">
+      <s:element name="ArrayOfReceiveFile" nillable="true" type="s1:ArrayOfReceiveFile" />
+      <s:complexType name="ArrayOfReceiveFile">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ReceiveFile" nillable="true" type="s1:ReceiveFile" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ReceiveFile">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExtName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileDesc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SenderName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SenderDept" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DutyRoomID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DutyRoom" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DutyRoomDeptId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DutyRoomDept" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Receiver" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReceiverName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReceiveTime" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FileDrId" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfSentFileList" nillable="true" type="s1:ArrayOfSentFileList" />
+      <s:complexType name="ArrayOfSentFileList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SentFileList" nillable="true" type="s1:SentFileList" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SentFileList">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="FID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AllCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReceiveCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfSentFileDetail" nillable="true" type="s1:ArrayOfSentFileDetail" />
+      <s:complexType name="ArrayOfSentFileDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SentFileDetail" nillable="true" type="s1:SentFileDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SentFileDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Receiver" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DutyRoom" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReceiveTime" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="INT" nillable="true" type="s1:INT" />
+      <s:complexType name="INT">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Number" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfDepartment" nillable="true" type="s1:ArrayOfDepartment" />
+      <s:complexType name="ArrayOfDepartment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Department" nillable="true" type="s1:Department" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Department">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="int" type="s:int" />
+      <s:element name="ArrayOfDutyRoom" nillable="true" type="s1:ArrayOfDutyRoom" />
+      <s:complexType name="ArrayOfDutyRoom">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DutyRoom" nillable="true" type="s1:DutyRoom" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DutyRoom">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="WeiZhi" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CheJianID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CheJian" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getFileListToReceiveSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="type" type="s:int" />
+    <wsdl:part name="ksxh" type="s:int" />
+    <wsdl:part name="count" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getFileListToReceiveSoapOut">
+    <wsdl:part name="getFileListToReceiveResult" type="tns:ArrayOfReceiveFile" />
+  </wsdl:message>
+  <wsdl:message name="getFileListToReceiveSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileListSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileListSoapOut">
+    <wsdl:part name="getSentFileListResult" type="tns:ArrayOfSentFileList" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileListSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileDetailsSoapIn">
+    <wsdl:part name="fid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileDetailsSoapOut">
+    <wsdl:part name="getSentFileDetailsResult" type="tns:ArrayOfSentFileDetail" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileDetailsSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveSoapIn">
+    <wsdl:part name="fid" type="s:int" />
+    <wsdl:part name="extName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveSoapOut">
+    <wsdl:part name="getFileToReceiveResult" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveFromDataBaseSoapIn">
+    <wsdl:part name="fid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveFromDataBaseSoapOut">
+    <wsdl:part name="getFileToReceiveFromDataBaseResult" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveFromDataBaseSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="receiveFileSoapIn">
+    <wsdl:part name="fdrid" type="s:int" />
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="receiveFileSoapOut">
+    <wsdl:part name="receiveFileResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="receiveFileSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getSendFileDeptSoapIn">
+    <wsdl:part name="did" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getSendFileDeptSoapOut">
+    <wsdl:part name="getSendFileDeptResult" type="tns:ArrayOfDepartment" />
+  </wsdl:message>
+  <wsdl:message name="getSendFileDeptSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getDeptByUserNoSoapIn">
+    <wsdl:part name="userno" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDeptByUserNoSoapOut">
+    <wsdl:part name="getDeptByUserNoResult" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getDeptByUserNoSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getDutyRoomByDeptIdSoapIn">
+    <wsdl:part name="did" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getDutyRoomByDeptIdSoapOut">
+    <wsdl:part name="getDutyRoomByDeptIdResult" type="tns:ArrayOfDutyRoom" />
+  </wsdl:message>
+  <wsdl:message name="getDutyRoomByDeptIdSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="SendFileSoapIn">
+    <wsdl:part name="sender" type="s:int" />
+    <wsdl:part name="fileFullName" type="s:string" />
+    <wsdl:part name="fileDesc" type="s:string" />
+    <wsdl:part name="fileContent" type="s:string" />
+    <wsdl:part name="receivers" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendFileSoapOut">
+    <wsdl:part name="SendFileResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="SendFileSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="SendFiletestSoapIn">
+    <wsdl:part name="sender" type="s:string" />
+    <wsdl:part name="topic" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+    <wsdl:part name="type" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="SendFiletestSoapOut">
+    <wsdl:part name="SendFiletestResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="SendFiletestSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getFileListToReceiveHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileListToReceiveHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfReceiveFile" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileListHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileListHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfSentFileList" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileDetailsHttpGetIn">
+    <wsdl:part name="fid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileDetailsHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfSentFileDetail" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveHttpGetIn">
+    <wsdl:part name="fid" type="s:string" />
+    <wsdl:part name="extName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveHttpGetOut">
+    <wsdl:part name="Body" element="s1:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveFromDataBaseHttpGetIn">
+    <wsdl:part name="fid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveFromDataBaseHttpGetOut">
+    <wsdl:part name="Body" element="s1:string" />
+  </wsdl:message>
+  <wsdl:message name="receiveFileHttpGetIn">
+    <wsdl:part name="fdrid" type="s:string" />
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="receiveFileHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getSendFileDeptHttpGetIn">
+    <wsdl:part name="did" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getSendFileDeptHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfDepartment" />
+  </wsdl:message>
+  <wsdl:message name="getDeptByUserNoHttpGetIn">
+    <wsdl:part name="userno" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDeptByUserNoHttpGetOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="getDutyRoomByDeptIdHttpGetIn">
+    <wsdl:part name="did" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDutyRoomByDeptIdHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfDutyRoom" />
+  </wsdl:message>
+  <wsdl:message name="SendFileHttpGetIn">
+    <wsdl:part name="sender" type="s:string" />
+    <wsdl:part name="fileFullName" type="s:string" />
+    <wsdl:part name="fileDesc" type="s:string" />
+    <wsdl:part name="fileContent" type="s:string" />
+    <wsdl:part name="receivers" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendFileHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="SendFiletestHttpGetIn">
+    <wsdl:part name="sender" type="s:string" />
+    <wsdl:part name="topic" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendFiletestHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getFileListToReceiveHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileListToReceiveHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfReceiveFile" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileListHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileListHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfSentFileList" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileDetailsHttpPostIn">
+    <wsdl:part name="fid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getSentFileDetailsHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfSentFileDetail" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveHttpPostIn">
+    <wsdl:part name="fid" type="s:string" />
+    <wsdl:part name="extName" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveHttpPostOut">
+    <wsdl:part name="Body" element="s1:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveFromDataBaseHttpPostIn">
+    <wsdl:part name="fid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getFileToReceiveFromDataBaseHttpPostOut">
+    <wsdl:part name="Body" element="s1:string" />
+  </wsdl:message>
+  <wsdl:message name="receiveFileHttpPostIn">
+    <wsdl:part name="fdrid" type="s:string" />
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="receiveFileHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getSendFileDeptHttpPostIn">
+    <wsdl:part name="did" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getSendFileDeptHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfDepartment" />
+  </wsdl:message>
+  <wsdl:message name="getDeptByUserNoHttpPostIn">
+    <wsdl:part name="userno" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDeptByUserNoHttpPostOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="getDutyRoomByDeptIdHttpPostIn">
+    <wsdl:part name="did" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDutyRoomByDeptIdHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfDutyRoom" />
+  </wsdl:message>
+  <wsdl:message name="SendFileHttpPostIn">
+    <wsdl:part name="sender" type="s:string" />
+    <wsdl:part name="fileFullName" type="s:string" />
+    <wsdl:part name="fileDesc" type="s:string" />
+    <wsdl:part name="fileContent" type="s:string" />
+    <wsdl:part name="receivers" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendFileHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="SendFiletestHttpPostIn">
+    <wsdl:part name="sender" type="s:string" />
+    <wsdl:part name="topic" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendFiletestHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:portType name="sendfileServiceSoap">
+    <wsdl:operation name="getFileListToReceive">
+      <wsdl:input message="tns:getFileListToReceiveSoapIn" />
+      <wsdl:output message="tns:getFileListToReceiveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileList">
+      <wsdl:input message="tns:getSentFileListSoapIn" />
+      <wsdl:output message="tns:getSentFileListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileDetails">
+      <wsdl:input message="tns:getSentFileDetailsSoapIn" />
+      <wsdl:output message="tns:getSentFileDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceive">
+      <wsdl:input message="tns:getFileToReceiveSoapIn" />
+      <wsdl:output message="tns:getFileToReceiveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceiveFromDataBase">
+      <wsdl:input message="tns:getFileToReceiveFromDataBaseSoapIn" />
+      <wsdl:output message="tns:getFileToReceiveFromDataBaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="receiveFile">
+      <wsdl:input message="tns:receiveFileSoapIn" />
+      <wsdl:output message="tns:receiveFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSendFileDept">
+      <wsdl:input message="tns:getSendFileDeptSoapIn" />
+      <wsdl:output message="tns:getSendFileDeptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptByUserNo">
+      <wsdl:input message="tns:getDeptByUserNoSoapIn" />
+      <wsdl:output message="tns:getDeptByUserNoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDutyRoomByDeptId">
+      <wsdl:input message="tns:getDutyRoomByDeptIdSoapIn" />
+      <wsdl:output message="tns:getDutyRoomByDeptIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendFile">
+      <wsdl:input message="tns:SendFileSoapIn" />
+      <wsdl:output message="tns:SendFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendFiletest">
+      <wsdl:input message="tns:SendFiletestSoapIn" />
+      <wsdl:output message="tns:SendFiletestSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="sendfileServiceHttpGet">
+    <wsdl:operation name="getFileListToReceive">
+      <wsdl:input message="tns:getFileListToReceiveHttpGetIn" />
+      <wsdl:output message="tns:getFileListToReceiveHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileList">
+      <wsdl:input message="tns:getSentFileListHttpGetIn" />
+      <wsdl:output message="tns:getSentFileListHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileDetails">
+      <wsdl:input message="tns:getSentFileDetailsHttpGetIn" />
+      <wsdl:output message="tns:getSentFileDetailsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceive">
+      <wsdl:input message="tns:getFileToReceiveHttpGetIn" />
+      <wsdl:output message="tns:getFileToReceiveHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceiveFromDataBase">
+      <wsdl:input message="tns:getFileToReceiveFromDataBaseHttpGetIn" />
+      <wsdl:output message="tns:getFileToReceiveFromDataBaseHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="receiveFile">
+      <wsdl:input message="tns:receiveFileHttpGetIn" />
+      <wsdl:output message="tns:receiveFileHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSendFileDept">
+      <wsdl:input message="tns:getSendFileDeptHttpGetIn" />
+      <wsdl:output message="tns:getSendFileDeptHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptByUserNo">
+      <wsdl:input message="tns:getDeptByUserNoHttpGetIn" />
+      <wsdl:output message="tns:getDeptByUserNoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDutyRoomByDeptId">
+      <wsdl:input message="tns:getDutyRoomByDeptIdHttpGetIn" />
+      <wsdl:output message="tns:getDutyRoomByDeptIdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendFile">
+      <wsdl:input message="tns:SendFileHttpGetIn" />
+      <wsdl:output message="tns:SendFileHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendFiletest">
+      <wsdl:input message="tns:SendFiletestHttpGetIn" />
+      <wsdl:output message="tns:SendFiletestHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="sendfileServiceHttpPost">
+    <wsdl:operation name="getFileListToReceive">
+      <wsdl:input message="tns:getFileListToReceiveHttpPostIn" />
+      <wsdl:output message="tns:getFileListToReceiveHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileList">
+      <wsdl:input message="tns:getSentFileListHttpPostIn" />
+      <wsdl:output message="tns:getSentFileListHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileDetails">
+      <wsdl:input message="tns:getSentFileDetailsHttpPostIn" />
+      <wsdl:output message="tns:getSentFileDetailsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceive">
+      <wsdl:input message="tns:getFileToReceiveHttpPostIn" />
+      <wsdl:output message="tns:getFileToReceiveHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceiveFromDataBase">
+      <wsdl:input message="tns:getFileToReceiveFromDataBaseHttpPostIn" />
+      <wsdl:output message="tns:getFileToReceiveFromDataBaseHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="receiveFile">
+      <wsdl:input message="tns:receiveFileHttpPostIn" />
+      <wsdl:output message="tns:receiveFileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSendFileDept">
+      <wsdl:input message="tns:getSendFileDeptHttpPostIn" />
+      <wsdl:output message="tns:getSendFileDeptHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptByUserNo">
+      <wsdl:input message="tns:getDeptByUserNoHttpPostIn" />
+      <wsdl:output message="tns:getDeptByUserNoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDutyRoomByDeptId">
+      <wsdl:input message="tns:getDutyRoomByDeptIdHttpPostIn" />
+      <wsdl:output message="tns:getDutyRoomByDeptIdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendFile">
+      <wsdl:input message="tns:SendFileHttpPostIn" />
+      <wsdl:output message="tns:SendFileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendFiletest">
+      <wsdl:input message="tns:SendFiletestHttpPostIn" />
+      <wsdl:output message="tns:SendFiletestHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="sendfileServiceSoap" type="tns:sendfileServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getFileListToReceive">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getFileListToReceive" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getFileListToReceiveSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileList">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getSentFileList" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getSentFileListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileDetails">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getSentFileDetails" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getSentFileDetailsSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceive">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getFileToReceive" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getFileToReceiveSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceiveFromDataBase">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getFileToReceiveFromDataBase" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getFileToReceiveFromDataBaseSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="receiveFile">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/receiveFile" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:receiveFileSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSendFileDept">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getSendFileDept" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getSendFileDeptSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptByUserNo">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getDeptByUserNo" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getDeptByUserNoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDutyRoomByDeptId">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getDutyRoomByDeptId" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getDutyRoomByDeptIdSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFile">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/SendFile" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:SendFileSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFiletest">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/SendFiletest" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:SendFiletestSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="sendfileServiceSoap12" type="tns:sendfileServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getFileListToReceive">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getFileListToReceive" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getFileListToReceiveSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileList">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getSentFileList" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getSentFileListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileDetails">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getSentFileDetails" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getSentFileDetailsSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceive">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getFileToReceive" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getFileToReceiveSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceiveFromDataBase">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getFileToReceiveFromDataBase" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getFileToReceiveFromDataBaseSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="receiveFile">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/receiveFile" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:receiveFileSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSendFileDept">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getSendFileDept" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getSendFileDeptSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptByUserNo">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getDeptByUserNo" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getDeptByUserNoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDutyRoomByDeptId">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getDutyRoomByDeptId" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getDutyRoomByDeptIdSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFile">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/SendFile" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:SendFileSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFiletest">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/SendFiletest" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:SendFiletestSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="sendfileServiceHttpGet" type="tns:sendfileServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="getFileListToReceive">
+      <http:operation location="/getFileListToReceive" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileList">
+      <http:operation location="/getSentFileList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileDetails">
+      <http:operation location="/getSentFileDetails" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceive">
+      <http:operation location="/getFileToReceive" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceiveFromDataBase">
+      <http:operation location="/getFileToReceiveFromDataBase" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="receiveFile">
+      <http:operation location="/receiveFile" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSendFileDept">
+      <http:operation location="/getSendFileDept" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptByUserNo">
+      <http:operation location="/getDeptByUserNo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDutyRoomByDeptId">
+      <http:operation location="/getDutyRoomByDeptId" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFile">
+      <http:operation location="/SendFile" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFiletest">
+      <http:operation location="/SendFiletest" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="sendfileServiceHttpPost" type="tns:sendfileServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="getFileListToReceive">
+      <http:operation location="/getFileListToReceive" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileList">
+      <http:operation location="/getSentFileList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentFileDetails">
+      <http:operation location="/getSentFileDetails" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceive">
+      <http:operation location="/getFileToReceive" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFileToReceiveFromDataBase">
+      <http:operation location="/getFileToReceiveFromDataBase" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="receiveFile">
+      <http:operation location="/receiveFile" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSendFileDept">
+      <http:operation location="/getSendFileDept" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptByUserNo">
+      <http:operation location="/getDeptByUserNo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDutyRoomByDeptId">
+      <http:operation location="/getDutyRoomByDeptId" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFile">
+      <http:operation location="/SendFile" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendFiletest">
+      <http:operation location="/SendFiletest" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="sendfileService">
+    <wsdl:port name="sendfileServiceSoap" binding="tns:sendfileServiceSoap">
+      <soap:address location="http://localhost:4024/sendfileService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="sendfileServiceSoap12" binding="tns:sendfileServiceSoap12">
+      <soap12:address location="http://localhost:4024/sendfileService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="sendfileServiceHttpGet" binding="tns:sendfileServiceHttpGet">
+      <http:address location="http://localhost:4024/sendfileService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="sendfileServiceHttpPost" binding="tns:sendfileServiceHttpPost">
+      <http:address location="http://localhost:4024/sendfileService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

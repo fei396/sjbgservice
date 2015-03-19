@@ -1,0 +1,11 @@
+Top_Toolbar	: 0
+Left_Toolbar	: 50
+	:hover	: 85
+Left_Menu	: 120
+	:close	: 155
+Main_Toolbar	: 190
+	:hover	: 225
+Main_Top_shadow	: 260
+Main_Title_bg	: 295
+Main_foot_bg	: 330
+Foot_bg		: 365

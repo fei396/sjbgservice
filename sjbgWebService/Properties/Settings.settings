@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="sjbgWebService.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="sjbgWebService_EcardService_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.99.81.6:8082/ecardservice/service.asmx</Value>
+    </Setting>
+    <Setting Name="sjbgWebService_OracleService_fyyjcService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.99.81.16/sjbgoracleservice/fyyjcService.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

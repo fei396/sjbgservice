@@ -1,0 +1,117 @@
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 13px; PADDING-BOTTOM: 5px; MARGIN: 0px auto; COLOR: #020202; WORD-BREAK: break-all; PADDING-TOP: 5px; BACKGROUND-COLOR: #ffffff
+}
+TABLE {
+	BORDER-RIGHT: #0099cc 0px; PADDING-RIGHT: 5px; BORDER-TOP: #0099cc 0px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #0099cc 0px; LINE-HEIGHT: 20px; PADDING-TOP: 5px; BORDER-BOTTOM: #0099cc 0px
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #212121; LINE-HEIGHT: 20px
+}
+SELECT {
+	FONT-SIZE: 12px; COLOR: #212121; LINE-HEIGHT: 20px
+}
+UL {
+	FONT-SIZE: 12px; COLOR: #212121; LINE-HEIGHT: 20px
+}
+P {
+	FONT-SIZE: 12px; COLOR: #212121; LINE-HEIGHT: 20px
+}
+.padding-body {
+	PADDING-RIGHT: 12px; FONT-SIZE: 13px; COLOR: #020202; WORD-BREAK: break-all; FONT-FAMILY: 'lucida grande', tahoma, helvetica, "ËÎÌו", arial,
+		'bitstream vera sans', sans-serif; BACKGROUND-COLOR: #ffffff
+}
+.cmnbtn {
+	BORDER-RIGHT: #002d96 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #002d96 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid :               DXImageTransform .              
+		Microsoft . 
+		     
+		
+		
+		  
+		 
+		Gradient(GradientType =               0, StartColorStr =             
+		 #FFFFFF, EndColorStr =       
+		       #9DBCEA); BORDER-LEFT: #002d96 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #002d96 1px solid
+}
+TH {
+	FONT-SIZE: 12px; BACKGROUND: #8fd8ff; COLOR: #010142; LINE-HEIGHT: 20px; style: weight
+}
+.body-white-bg {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; MARGIN: 0px; WIDTH: 776px; BACKGROUND-COLOR: #fff
+}
+A:link {
+	FONT-SIZE: 12px; COLOR: #3d3eff; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-SIZE: 12px; COLOR: #e69135; TEXT-DECORATION: underline
+}
+A:active {
+	FONT-SIZE: 12px; COLOR: #003466; TEXT-DECORATION: none
+}
+FORM {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+INPUT {
+	BORDER-RIGHT: #959595 1px solid; BORDER-TOP: #959595 1px solid; FONT-SIZE: 12px; BORDER-LEFT: #959595 1px solid; COLOR: #111; BORDER-BOTTOM: #959595 1px solid; HEIGHT: 20px; BACKGROUND-COLOR: #fff
+}
+#lgn_btn {
+	BORDER-RIGHT: #002d96 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #002d96 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid :               DXImageTransform .              
+		Microsoft . 
+		     
+		
+		
+		  
+		 
+		Gradient(GradientType =               0, StartColorStr =             
+		 #FFFFFF, EndColorStr =       
+		       #9DBCEA); BORDER-LEFT: #002d96 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #002d96 1px solid
+}
+TEXTAREA {
+	BORDER-RIGHT: #959595 1px solid; BORDER-TOP: #959595 1px solid; FONT-SIZE: 12px; BORDER-LEFT: #959595 1px solid; COLOR: #111; BORDER-BOTTOM: #959595 1px solid; FONT-FAMILY: 'lucida grande', tahoma, helvetica, "ËÎÌו", arial,
+		'bitstream vera sans', sans-serif; BACKGROUND-COLOR: #fff
+}
+.subbutton {
+	BORDER-RIGHT: #0e1f5b 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #d8dfea 1px solid; PADDING-LEFT: 5px; BACKGROUND: #6b89b8; PADDING-BOTTOM: 3px; BORDER-LEFT: #d8dfea 1px solid; CURSOR: pointer; COLOR: #fff; LINE-HEIGHT: 16px; PADDING-TOP: 3px; BORDER-BOTTOM: #0e1f5b 1px solid; HEIGHT: 24px
+}
+.blue {
+	FONT-SIZE: 12px; COLOR: #6a7b89
+}
+.login_btn {
+	FONT-WEIGHT: bold; FONT-SIZE: 16px; WIDTH: 80px; CURSOR: hand; HEIGHT: 40px; BACKGROUND-COLOR: #eadcaa
+}
+.btn {
+	BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid :                 DXImageTransform .               
+		 Microsoft .  
+		     
+		
+		
+		  
+		 
+		
+		Gradient(GradientType =                 0, StartColorStr =              
+		  #ffffff, EndColorStr =        
+		        #becffe); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid
+}
+#table1 {
+	BORDER-RIGHT: 1px; BORDER-TOP: 1px; BORDER-LEFT: 1px; BORDER-BOTTOM: 1px; BORDER-COLLAPSE: collapse
+}
+#table1 TD {
+	BORDER-RIGHT: #aebfcf 1px solid; BORDER-TOP: #aebfcf 1px solid; FONT-SIZE: 12px; BORDER-LEFT: #aebfcf 1px solid; COLOR: #212121; BORDER-BOTTOM: #aebfcf 1px solid
+}
+#table1 TH {
+	BORDER-RIGHT: #aebfcf 1px solid; BORDER-TOP: #aebfcf 1px solid; FONT-SIZE: 12px; BORDER-LEFT: #aebfcf 1px solid; COLOR: #010142; BORDER-BOTTOM: #aebfcf 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #f2f4fe; style: weight
+}
+#table2 {
+	BORDER-RIGHT: 1px; PADDING-RIGHT: 15px; BORDER-TOP: 1px; PADDING-LEFT: 15px; PADDING-BOTTOM: 15px; BORDER-LEFT: 1px; PADDING-TOP: 15px; BORDER-BOTTOM: 1px; BORDER-COLLAPSE: collapse
+}
+#table2 TH {
+	BORDER-RIGHT: #aebfcf 1px solid; PADDING-RIGHT: 25px; BORDER-TOP: #aebfcf 1px solid; PADDING-LEFT: 25px; FONT-SIZE: 12px; PADDING-BOTTOM: 10px; BORDER-LEFT: #aebfcf 1px solid; COLOR: #010142; PADDING-TOP: 10px; BORDER-BOTTOM: #aebfcf 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #f2f4fe; style: weight
+}
+#table2 TD {
+	BORDER-RIGHT: #aebfcf 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #aebfcf 1px solid; PADDING-LEFT: 0px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-LEFT: #aebfcf 1px solid; COLOR: #212121; PADDING-TOP: 5px; BORDER-BOTTOM: #aebfcf 1px solid; TEXT-ALIGN: center
+}
+#btn3 {
+	BORDER-RIGHT: 0px; BACKGROUND-POSITION: -14px -221px; BORDER-TOP: 0px; FONT-WEIGHT: bolder; FONT-SIZE: 12px; MARGIN-LEFT: 0px; BORDER-LEFT: 0px; WIDTH: 50px; CURSOR: pointer; COLOR: #666; LINE-HEIGHT: 23px; BORDER-BOTTOM: 0px; HEIGHT: 25px; TEXT-ALIGN: center
+}
+#err_div {
+	BORDER-RIGHT: #000000 0px; BORDER-TOP: #000000 0px; Z-INDEX: 1; FILTER: alpha(opacity = 100); BORDER-LEFT: #000000 0px; WIDTH: 100%; BORDER-BOTTOM: #000000 0px; HEIGHT: 100%; BACKGROUND-COLOR: #ffffff
+}

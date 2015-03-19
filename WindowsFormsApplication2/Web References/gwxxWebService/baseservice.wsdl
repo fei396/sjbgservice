@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://sjbg.xxjwd.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://sjbg.xxjwd.org/literalTypes" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://sjbg.xxjwd.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/">
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Uid" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="UserNo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="UserDept" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Product">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Pid" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="PName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ServicePage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ApkInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="VerCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="VerName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="URL" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FileName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SjbgSoapHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="A" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="P" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/literalTypes">
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="User" nillable="true" type="s1:User" />
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Uid" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserNo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserDept" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Product" nillable="true" type="s1:Product" />
+      <s:complexType name="Product">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Pid" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ServicePage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ApkInfo" nillable="true" type="s1:ApkInfo" />
+      <s:complexType name="ApkInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="VerCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="VerName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="initPasswordSoapIn" />
+  <wsdl:message name="initPasswordSoapOut">
+    <wsdl:part name="initPasswordResult" type="s:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setTqyjPasswordSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="newPass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="setTqyjPasswordSoapOut">
+    <wsdl:part name="setTqyjPasswordResult" type="s:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setNewPasswordSoapIn">
+    <wsdl:part name="user_no" type="s:string" />
+    <wsdl:part name="newPass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="setNewPasswordSoapOut">
+    <wsdl:part name="setNewPasswordResult" type="s:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getUserByIdSoapIn">
+    <wsdl:part name="user_no" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getUserByIdSoapOut">
+    <wsdl:part name="getUserByIdResult" type="tns:User" />
+  </wsdl:message>
+  <wsdl:message name="loginSoapIn">
+    <wsdl:part name="user_no" type="s:string" />
+    <wsdl:part name="user_pass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="loginSoapOut">
+    <wsdl:part name="loginResult" type="s:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getProductByPNameSoapIn">
+    <wsdl:part name="pname" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getProductByPNameSoapOut">
+    <wsdl:part name="getProductByPNameResult" type="tns:Product" />
+  </wsdl:message>
+  <wsdl:message name="getApkVerCodeSoapIn" />
+  <wsdl:message name="getApkVerCodeSoapOut">
+    <wsdl:part name="getApkVerCodeResult" type="tns:ApkInfo" />
+  </wsdl:message>
+  <wsdl:message name="getApkVerCodeSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="initPasswordHttpGetIn" />
+  <wsdl:message name="initPasswordHttpGetOut">
+    <wsdl:part name="Body" element="s1:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setTqyjPasswordHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="newPass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="setTqyjPasswordHttpGetOut">
+    <wsdl:part name="Body" element="s1:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setNewPasswordHttpGetIn">
+    <wsdl:part name="user_no" type="s:string" />
+    <wsdl:part name="newPass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="setNewPasswordHttpGetOut">
+    <wsdl:part name="Body" element="s1:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getUserByIdHttpGetIn">
+    <wsdl:part name="user_no" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getUserByIdHttpGetOut">
+    <wsdl:part name="Body" element="s1:User" />
+  </wsdl:message>
+  <wsdl:message name="loginHttpGetIn">
+    <wsdl:part name="user_no" type="s:string" />
+    <wsdl:part name="user_pass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="loginHttpGetOut">
+    <wsdl:part name="Body" element="s1:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getProductByPNameHttpGetIn">
+    <wsdl:part name="pname" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getProductByPNameHttpGetOut">
+    <wsdl:part name="Body" element="s1:Product" />
+  </wsdl:message>
+  <wsdl:message name="getApkVerCodeHttpGetIn" />
+  <wsdl:message name="getApkVerCodeHttpGetOut">
+    <wsdl:part name="Body" element="s1:ApkInfo" />
+  </wsdl:message>
+  <wsdl:message name="initPasswordHttpPostIn" />
+  <wsdl:message name="initPasswordHttpPostOut">
+    <wsdl:part name="Body" element="s1:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setTqyjPasswordHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="newPass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="setTqyjPasswordHttpPostOut">
+    <wsdl:part name="Body" element="s1:boolean" />
+  </wsdl:message>
+  <wsdl:message name="setNewPasswordHttpPostIn">
+    <wsdl:part name="user_no" type="s:string" />
+    <wsdl:part name="newPass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="setNewPasswordHttpPostOut">
+    <wsdl:part name="Body" element="s1:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getUserByIdHttpPostIn">
+    <wsdl:part name="user_no" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getUserByIdHttpPostOut">
+    <wsdl:part name="Body" element="s1:User" />
+  </wsdl:message>
+  <wsdl:message name="loginHttpPostIn">
+    <wsdl:part name="user_no" type="s:string" />
+    <wsdl:part name="user_pass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="loginHttpPostOut">
+    <wsdl:part name="Body" element="s1:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getProductByPNameHttpPostIn">
+    <wsdl:part name="pname" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getProductByPNameHttpPostOut">
+    <wsdl:part name="Body" element="s1:Product" />
+  </wsdl:message>
+  <wsdl:message name="getApkVerCodeHttpPostIn" />
+  <wsdl:message name="getApkVerCodeHttpPostOut">
+    <wsdl:part name="Body" element="s1:ApkInfo" />
+  </wsdl:message>
+  <wsdl:portType name="baseServiceSoap">
+    <wsdl:operation name="initPassword">
+      <wsdl:input message="tns:initPasswordSoapIn" />
+      <wsdl:output message="tns:initPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setTqyjPassword">
+      <wsdl:input message="tns:setTqyjPasswordSoapIn" />
+      <wsdl:output message="tns:setTqyjPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setNewPassword">
+      <wsdl:input message="tns:setNewPasswordSoapIn" />
+      <wsdl:output message="tns:setNewPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserById">
+      <wsdl:input message="tns:getUserByIdSoapIn" />
+      <wsdl:output message="tns:getUserByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:loginSoapIn" />
+      <wsdl:output message="tns:loginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getProductByPName">
+      <wsdl:input message="tns:getProductByPNameSoapIn" />
+      <wsdl:output message="tns:getProductByPNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getApkVerCode">
+      <wsdl:input message="tns:getApkVerCodeSoapIn" />
+      <wsdl:output message="tns:getApkVerCodeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="baseServiceHttpGet">
+    <wsdl:operation name="initPassword">
+      <wsdl:input message="tns:initPasswordHttpGetIn" />
+      <wsdl:output message="tns:initPasswordHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setTqyjPassword">
+      <wsdl:input message="tns:setTqyjPasswordHttpGetIn" />
+      <wsdl:output message="tns:setTqyjPasswordHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setNewPassword">
+      <wsdl:input message="tns:setNewPasswordHttpGetIn" />
+      <wsdl:output message="tns:setNewPasswordHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserById">
+      <wsdl:input message="tns:getUserByIdHttpGetIn" />
+      <wsdl:output message="tns:getUserByIdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:loginHttpGetIn" />
+      <wsdl:output message="tns:loginHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getProductByPName">
+      <wsdl:input message="tns:getProductByPNameHttpGetIn" />
+      <wsdl:output message="tns:getProductByPNameHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getApkVerCode">
+      <wsdl:input message="tns:getApkVerCodeHttpGetIn" />
+      <wsdl:output message="tns:getApkVerCodeHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="baseServiceHttpPost">
+    <wsdl:operation name="initPassword">
+      <wsdl:input message="tns:initPasswordHttpPostIn" />
+      <wsdl:output message="tns:initPasswordHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setTqyjPassword">
+      <wsdl:input message="tns:setTqyjPasswordHttpPostIn" />
+      <wsdl:output message="tns:setTqyjPasswordHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setNewPassword">
+      <wsdl:input message="tns:setNewPasswordHttpPostIn" />
+      <wsdl:output message="tns:setNewPasswordHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserById">
+      <wsdl:input message="tns:getUserByIdHttpPostIn" />
+      <wsdl:output message="tns:getUserByIdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:loginHttpPostIn" />
+      <wsdl:output message="tns:loginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getProductByPName">
+      <wsdl:input message="tns:getProductByPNameHttpPostIn" />
+      <wsdl:output message="tns:getProductByPNameHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getApkVerCode">
+      <wsdl:input message="tns:getApkVerCodeHttpPostIn" />
+      <wsdl:output message="tns:getApkVerCodeHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="baseServiceSoap" type="tns:baseServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="initPassword">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/initPassword" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setTqyjPassword">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/setTqyjPassword" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setNewPassword">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/setNewPassword" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserById">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getUserById" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/login" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductByPName">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getProductByPName" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getApkVerCode">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getApkVerCode" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getApkVerCodeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="baseServiceSoap12" type="tns:baseServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="initPassword">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/initPassword" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setTqyjPassword">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/setTqyjPassword" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setNewPassword">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/setNewPassword" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserById">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getUserById" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/login" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductByPName">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getProductByPName" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getApkVerCode">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getApkVerCode" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getApkVerCodeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="baseServiceHttpGet" type="tns:baseServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="initPassword">
+      <http:operation location="/initPassword" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setTqyjPassword">
+      <http:operation location="/setTqyjPassword" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setNewPassword">
+      <http:operation location="/setNewPassword" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserById">
+      <http:operation location="/getUserById" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <http:operation location="/login" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductByPName">
+      <http:operation location="/getProductByPName" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getApkVerCode">
+      <http:operation location="/getApkVerCode" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="baseServiceHttpPost" type="tns:baseServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="initPassword">
+      <http:operation location="/initPassword" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setTqyjPassword">
+      <http:operation location="/setTqyjPassword" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setNewPassword">
+      <http:operation location="/setNewPassword" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserById">
+      <http:operation location="/getUserById" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <http:operation location="/login" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductByPName">
+      <http:operation location="/getProductByPName" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getApkVerCode">
+      <http:operation location="/getApkVerCode" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="baseService">
+    <wsdl:port name="baseServiceSoap" binding="tns:baseServiceSoap">
+      <soap:address location="http://192.168.2.8:808/baseservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="baseServiceSoap12" binding="tns:baseServiceSoap12">
+      <soap12:address location="http://192.168.2.8:808/baseservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="baseServiceHttpGet" binding="tns:baseServiceHttpGet">
+      <http:address location="http://192.168.2.8:808/baseservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="baseServiceHttpPost" binding="tns:baseServiceHttpPost">
+      <http:address location="http://192.168.2.8:808/baseservice.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

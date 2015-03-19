@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="getFyyjc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="jczt" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getFyyjcResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getFyyjcResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getFyyjcZt">
+        <s:complexType />
+      </s:element>
+      <s:element name="getFyyjcZtResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getFyyjcZtResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getFyyjcSoapIn">
+    <wsdl:part name="parameters" element="tns:getFyyjc" />
+  </wsdl:message>
+  <wsdl:message name="getFyyjcSoapOut">
+    <wsdl:part name="parameters" element="tns:getFyyjcResponse" />
+  </wsdl:message>
+  <wsdl:message name="getFyyjcZtSoapIn">
+    <wsdl:part name="parameters" element="tns:getFyyjcZt" />
+  </wsdl:message>
+  <wsdl:message name="getFyyjcZtSoapOut">
+    <wsdl:part name="parameters" element="tns:getFyyjcZtResponse" />
+  </wsdl:message>
+  <wsdl:portType name="fyyjcServiceSoap">
+    <wsdl:operation name="getFyyjc">
+      <wsdl:input message="tns:getFyyjcSoapIn" />
+      <wsdl:output message="tns:getFyyjcSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getFyyjcZt">
+      <wsdl:input message="tns:getFyyjcZtSoapIn" />
+      <wsdl:output message="tns:getFyyjcZtSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="fyyjcServiceSoap" type="tns:fyyjcServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getFyyjc">
+      <soap:operation soapAction="http://tempuri.org/getFyyjc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFyyjcZt">
+      <soap:operation soapAction="http://tempuri.org/getFyyjcZt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="fyyjcServiceSoap12" type="tns:fyyjcServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getFyyjc">
+      <soap12:operation soapAction="http://tempuri.org/getFyyjc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getFyyjcZt">
+      <soap12:operation soapAction="http://tempuri.org/getFyyjcZt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="fyyjcService">
+    <wsdl:port name="fyyjcServiceSoap" binding="tns:fyyjcServiceSoap">
+      <soap:address location="http://10.99.81.16/sjbgoracleservice/fyyjcService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="fyyjcServiceSoap12" binding="tns:fyyjcServiceSoap12">
+      <soap12:address location="http://10.99.81.16/sjbgoracleservice/fyyjcService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

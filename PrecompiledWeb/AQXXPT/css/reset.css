@@ -1,0 +1,17 @@
+﻿/* reset HTML dom */
+* { word-break: break-all; word-wrap: break-word; }
+* {
+font-family: "Microsoft YaHei"
+}
+
+body { text-align: left; }
+body, th, td, input, select, textarea, button { font:12px  Tahoma, Arial, Helvetica, snas-serif; }
+body, h1, h2, h3, h4, h5, h6, p, ul, dl, dt, dd, form, fieldset { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6 { }
+ul li { list-style: none; }
+a img { border: none; }
+caption, th { text-align: left; }
+caption { font-size: 14px; font-weight: bold; }
+caption p { font-weight: normal; }
+
+
