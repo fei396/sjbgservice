@@ -57,12 +57,17 @@ public partial class applyAqxx : System.Web.UI.Page
 
         txtTitle.Text = "";
         txtContent.Text = "";
-
+        txtSetTime.Text = "";
         User[] autiors = s.getAqxxptShenHe();
         ddlAuditor.DataSource = autiors;
         ddlAuditor.DataValueField = "userno";
         ddlAuditor.DataTextField = "username";
         ddlAuditor.DataBind();
+        cbLeaderAll.Checked = false;
+        cbLeader0001.Checked = false;
+        cbLeader0002.Checked = false;
+        cbLeader0007.Checked = false;
+        cbLeader0008.Checked = false;
     }
 
 
@@ -135,10 +140,16 @@ public partial class applyAqxx : System.Web.UI.Page
 
         string auditor = ddlAuditor.SelectedItem.Value;
         string setTime = txtSetTime.Text;
+        string lingDaos = "";
+        if (cbLeader0001.Checked) lingDaos += "0001,";
+        if (cbLeader0002.Checked) lingDaos += "0002,";
+        if (cbLeader0007.Checked) lingDaos += "0007,";
+        if (cbLeader0008.Checked) lingDaos += "0008,";
+        if (!lingDaos.Equals("")) lingDaos = lingDaos.Substring(0, lingDaos.Length - 1);
         if (auditor.Equals("0000"))
         {
             auditor = "3974";
-            INT result = s.applyAqxx(fileSender, auditor, title, content, buMens, setTime);
+            INT result = s.applyAqxx(fileSender, auditor, title, content, buMens, setTime,lingDaos);
             if (result.Number == 1)
             {
                 int xxid = Convert.ToInt32(result.Message);
@@ -162,7 +173,7 @@ public partial class applyAqxx : System.Web.UI.Page
         }
         else
         {
-            INT result = s.applyAqxx(fileSender, auditor, title, content, buMens, setTime);
+            INT result = s.applyAqxx(fileSender, auditor, title, content, buMens, setTime,lingDaos);
             if (result.Number == 1)
             {
                 Response.Write(" <script> alert( '提交信息成功，请等待领导审核。 ') </script> ");
@@ -179,7 +190,14 @@ public partial class applyAqxx : System.Web.UI.Page
     protected void CancelButton_Click(object sender, EventArgs e)
     {
         int blzbid = Convert.ToInt32(Request["fid"]);
-        Response.Redirect("sendAqxx.aspx");
+        Response.Redirect("applyAqxx.aspx");
+    }
+    protected void cbLeaderAll_CheckedChanged(object sender, EventArgs e)
+    {
+        cbLeader0001.Checked = cbLeaderAll.Checked;
+        cbLeader0002.Checked = cbLeaderAll.Checked;
+        cbLeader0007.Checked = cbLeaderAll.Checked;
+        cbLeader0008.Checked = cbLeaderAll.Checked;
     }
 }
 

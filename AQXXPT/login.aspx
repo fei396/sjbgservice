@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>新乡机务段派班安全卡控系统维护</title>
+    <title>新乡机务段安全信息平台</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../css/style01.css" type="text/css" rel="stylesheet" />

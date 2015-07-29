@@ -14,7 +14,10 @@ using System.IO;
 public partial class editfile : System.Web.UI.Page
 {
     aqxxptService.aqxxptService ss = new aqxxptService.aqxxptService();
-    int uid;
+    int uid, maxPage;
+    const int pageCount = 10;
+    static int cpage;
+    static int allCount;
     protected void Page_Load(object sender, EventArgs e)
     {
         string s = Session["user"] as string;
@@ -35,13 +38,60 @@ public partial class editfile : System.Web.UI.Page
             
             ss.SjbgSoapHeaderValue = Security.getSoapHeader();
             Security.SetCertificatePolicy();
-            aqxxptService.AqxxInfo[] aqxxs = ss.getAqxxInfo(uid,0);
-            GridView1.DataSource = aqxxs;
-            GridView1.DataBind();
+            allCount = ss.getAqxxCount(uid);
+            if (allCount < 0) return;
+            //aqxxptService.AqxxInfo[] aqxxs = ss.getAqxxInfo(uid,0);
+            //GridView1.DataSource = aqxxs;
+            //GridView1.DataBind();
+            cpage = 1;
+            getData(cpage);
 		}
     }
 
+    private void getData(int page)
+    {
+        Security.SetCertificatePolicy();
 
+      
+        maxPage = (allCount / pageCount) + 1;
+        if (page < 1) page = 1;  
+        if ((page - 1) * pageCount >= allCount) page = maxPage;
+        cpage = page;
+        aqxxptService.AqxxInfo[] aqxxs = ss.getAqxxInfos(uid, pageCount * (page - 1) + 1, pageCount);
+        GridView1.DataSource = aqxxs;
+        GridView1.DataBind();
+       
+        //Label lblcurPage = (Label)GridView1.BottomPagerRow.Cells[0].FindControl("lblcurPage");
+
+        //Label lblPageCount = (Label)GridView1.BottomPagerRow.Cells[0].FindControl("lblPageCount");
+        lblcurPage.Text = page.ToString();
+        lblPageCount.Text = maxPage.ToString();
+        //LinkButton cmdFirstPage = (LinkButton)GridView1.BottomPagerRow.Cells[0].FindControl("cmdFirstPage");
+        //LinkButton cmdPreview = (LinkButton)GridView1.BottomPagerRow.Cells[0].FindControl("cmdPreview");
+        //LinkButton cmdNext = (LinkButton)GridView1.BottomPagerRow.Cells[0].FindControl("cmdNext");
+        //LinkButton cmdLastPage = (LinkButton)GridView1.BottomPagerRow.Cells[0].FindControl("cmdLastPage");
+        if (page == 1)
+        {
+            cmdFirstPage.Enabled = false;
+            cmdPreview.Enabled = false;
+            cmdNext.Enabled = true;
+            cmdLastPage.Enabled = true;
+        }
+        else if (page >= maxPage)
+        {
+            cmdFirstPage.Enabled = true;
+            cmdPreview.Enabled = true;
+            cmdNext.Enabled = false;
+            cmdLastPage.Enabled = false;
+        }
+        else
+        {
+            cmdFirstPage.Enabled = true;
+            cmdPreview.Enabled = true;
+            cmdNext.Enabled = true;
+            cmdLastPage.Enabled = true;
+        }
+    }
 	
 
 
@@ -83,6 +133,28 @@ public partial class editfile : System.Web.UI.Page
     }
 
 
+    protected void First_Click(object sender, EventArgs e)
+    {
+        getData(1);
+    }
+
+    protected void Last_Click(object sender, EventArgs e)
+    {
+        getData(maxPage);
+    }
+    protected void Pre_Click(object sender, EventArgs e)
+    {
+        getData(cpage - 1);
+    }
+    protected void Next_Click(object sender, EventArgs e)
+    {
+        getData(cpage + 1);
+    }
+    protected void Custom_Click(object sender, EventArgs e)
+    {
+
+        getData(Convert.ToInt32(txtGoPage.Text));
+    }
 
 
 	protected void GridView1_DataBound(object sender, EventArgs e)
@@ -105,10 +177,9 @@ public partial class editfile : System.Web.UI.Page
 	protected void Button1_Click(object sender, EventArgs e)
 	{
 
-		TextBox tb_gopage = (TextBox)GridView1.BottomPagerRow.Cells[0].FindControl("txtGoPage");
 		try
 		{
-			GridView1.PageIndex = Convert.ToInt32(tb_gopage.Text) - 1;
+            GridView1.PageIndex = Convert.ToInt32(txtGoPage.Text) - 1;
 		}
 		catch
 		{

@@ -89,7 +89,7 @@ getPageScroll = function () {
 
 */
 oHome = "main.aspx",
-sName = "外点指导室文件传送系统",
+sName = "安全信息平台",
 iFrame = null,
 oFrame = null,
 prevMenu = null,

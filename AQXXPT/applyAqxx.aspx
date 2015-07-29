@@ -75,6 +75,18 @@
             </tr>
             <tr>
                 <td style="height: 26px">
+                   ≥≠ÀÕ∂Œ¡Ïµº£∫
+                </td>
+                <td colspan="4"  id="tdLeader" runat="server" style="height: 26px" 
+                    align="justify">
+                    <asp:CheckBox ID="cbLeaderAll" runat="server" Text="»´—°" AutoPostBack="True" 
+                        oncheckedchanged="cbLeaderAll_CheckedChanged" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0001" runat="server" Text="÷£Ω‹" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
+                        ID="cbLeader0002" Text="≤ÃŒ∞Ω‹" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0008" Text="’≈—”’Ÿ" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
+                            ID="cbLeader0007" Text="¡ıœ≤…˙" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 26px">
                     &nbsp
                 </td>
                 <td colspan="2" style="height: 26px">

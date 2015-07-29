@@ -160,6 +160,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="AuditTime" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="int" type="s:int" />
       <s:element name="ArrayOfAQXX" nillable="true" type="s1:ArrayOfAQXX" />
       <s:complexType name="ArrayOfAQXX">
         <s:sequence>
@@ -219,6 +220,7 @@
     <wsdl:part name="content" type="s:string" />
     <wsdl:part name="buMens" type="s:string" />
     <wsdl:part name="setTime" type="s:string" />
+    <wsdl:part name="lingDaos" type="s:string" />
   </wsdl:message>
   <wsdl:message name="applyAqxxSoapOut">
     <wsdl:part name="applyAqxxResult" type="tns:INT" />
@@ -236,6 +238,26 @@
   <wsdl:message name="getAqxxInfoSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
+  <wsdl:message name="getAqxxCountSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxCountSoapOut">
+    <wsdl:part name="getAqxxCountResult" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxCountSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxInfosSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="ksxh" type="s:int" />
+    <wsdl:part name="count" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxInfosSoapOut">
+    <wsdl:part name="getAqxxInfosResult" type="tns:ArrayOfAqxxInfo" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxInfosSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
   <wsdl:message name="getAqxxToAuditSoapIn">
     <wsdl:part name="uid" type="s:int" />
     <wsdl:part name="xxid" type="s:int" />
@@ -244,15 +266,6 @@
     <wsdl:part name="getAqxxToAuditResult" type="tns:ArrayOfAQXX" />
   </wsdl:message>
   <wsdl:message name="getAqxxToAuditSjbgSoapHeader">
-    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
-  </wsdl:message>
-  <wsdl:message name="getAqxxContentSoapIn">
-    <wsdl:part name="xxid" type="s:int" />
-  </wsdl:message>
-  <wsdl:message name="getAqxxContentSoapOut">
-    <wsdl:part name="getAqxxContentResult" type="tns:ArrayOfAQXX" />
-  </wsdl:message>
-  <wsdl:message name="getAqxxContentSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
   <wsdl:message name="getAqxxDetailSoapIn">
@@ -279,6 +292,15 @@
   <wsdl:message name="auditAqxxSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
+  <wsdl:message name="getAqxxContentSoapIn">
+    <wsdl:part name="xxid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxContentSoapOut">
+    <wsdl:part name="getAqxxContentResult" type="tns:ArrayOfAQXX" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxContentSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
   <wsdl:message name="getAqxxptBmHttpGetIn">
     <wsdl:part name="xxid" type="s:string" />
   </wsdl:message>
@@ -296,6 +318,7 @@
     <wsdl:part name="content" type="s:string" />
     <wsdl:part name="buMens" type="s:string" />
     <wsdl:part name="setTime" type="s:string" />
+    <wsdl:part name="lingDaos" type="s:string" />
   </wsdl:message>
   <wsdl:message name="applyAqxxHttpGetOut">
     <wsdl:part name="Body" element="s1:INT" />
@@ -307,17 +330,25 @@
   <wsdl:message name="getAqxxInfoHttpGetOut">
     <wsdl:part name="Body" element="s1:ArrayOfAqxxInfo" />
   </wsdl:message>
+  <wsdl:message name="getAqxxCountHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxCountHttpGetOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxInfosHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxInfosHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAqxxInfo" />
+  </wsdl:message>
   <wsdl:message name="getAqxxToAuditHttpGetIn">
     <wsdl:part name="uid" type="s:string" />
     <wsdl:part name="xxid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getAqxxToAuditHttpGetOut">
-    <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
-  </wsdl:message>
-  <wsdl:message name="getAqxxContentHttpGetIn">
-    <wsdl:part name="xxid" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="getAqxxContentHttpGetOut">
     <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
   </wsdl:message>
   <wsdl:message name="getAqxxDetailHttpGetIn">
@@ -338,6 +369,12 @@
   <wsdl:message name="auditAqxxHttpGetOut">
     <wsdl:part name="Body" element="s1:INT" />
   </wsdl:message>
+  <wsdl:message name="getAqxxContentHttpGetIn">
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxContentHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
+  </wsdl:message>
   <wsdl:message name="getAqxxptBmHttpPostIn">
     <wsdl:part name="xxid" type="s:string" />
   </wsdl:message>
@@ -355,6 +392,7 @@
     <wsdl:part name="content" type="s:string" />
     <wsdl:part name="buMens" type="s:string" />
     <wsdl:part name="setTime" type="s:string" />
+    <wsdl:part name="lingDaos" type="s:string" />
   </wsdl:message>
   <wsdl:message name="applyAqxxHttpPostOut">
     <wsdl:part name="Body" element="s1:INT" />
@@ -366,17 +404,25 @@
   <wsdl:message name="getAqxxInfoHttpPostOut">
     <wsdl:part name="Body" element="s1:ArrayOfAqxxInfo" />
   </wsdl:message>
+  <wsdl:message name="getAqxxCountHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxCountHttpPostOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxInfosHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxInfosHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAqxxInfo" />
+  </wsdl:message>
   <wsdl:message name="getAqxxToAuditHttpPostIn">
     <wsdl:part name="uid" type="s:string" />
     <wsdl:part name="xxid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getAqxxToAuditHttpPostOut">
-    <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
-  </wsdl:message>
-  <wsdl:message name="getAqxxContentHttpPostIn">
-    <wsdl:part name="xxid" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="getAqxxContentHttpPostOut">
     <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
   </wsdl:message>
   <wsdl:message name="getAqxxDetailHttpPostIn">
@@ -397,6 +443,12 @@
   <wsdl:message name="auditAqxxHttpPostOut">
     <wsdl:part name="Body" element="s1:INT" />
   </wsdl:message>
+  <wsdl:message name="getAqxxContentHttpPostIn">
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAqxxContentHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
+  </wsdl:message>
   <wsdl:portType name="aqxxptServiceSoap">
     <wsdl:operation name="getAqxxptBm">
       <wsdl:input message="tns:getAqxxptBmSoapIn" />
@@ -414,13 +466,17 @@
       <wsdl:input message="tns:getAqxxInfoSoapIn" />
       <wsdl:output message="tns:getAqxxInfoSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="getAqxxCount">
+      <wsdl:input message="tns:getAqxxCountSoapIn" />
+      <wsdl:output message="tns:getAqxxCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxInfos">
+      <wsdl:input message="tns:getAqxxInfosSoapIn" />
+      <wsdl:output message="tns:getAqxxInfosSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="getAqxxToAudit">
       <wsdl:input message="tns:getAqxxToAuditSoapIn" />
       <wsdl:output message="tns:getAqxxToAuditSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getAqxxContent">
-      <wsdl:input message="tns:getAqxxContentSoapIn" />
-      <wsdl:output message="tns:getAqxxContentSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="getAqxxDetail">
       <wsdl:input message="tns:getAqxxDetailSoapIn" />
@@ -429,6 +485,10 @@
     <wsdl:operation name="auditAqxx">
       <wsdl:input message="tns:auditAqxxSoapIn" />
       <wsdl:output message="tns:auditAqxxSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxContent">
+      <wsdl:input message="tns:getAqxxContentSoapIn" />
+      <wsdl:output message="tns:getAqxxContentSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="aqxxptServiceHttpGet">
@@ -448,13 +508,17 @@
       <wsdl:input message="tns:getAqxxInfoHttpGetIn" />
       <wsdl:output message="tns:getAqxxInfoHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="getAqxxCount">
+      <wsdl:input message="tns:getAqxxCountHttpGetIn" />
+      <wsdl:output message="tns:getAqxxCountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxInfos">
+      <wsdl:input message="tns:getAqxxInfosHttpGetIn" />
+      <wsdl:output message="tns:getAqxxInfosHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="getAqxxToAudit">
       <wsdl:input message="tns:getAqxxToAuditHttpGetIn" />
       <wsdl:output message="tns:getAqxxToAuditHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getAqxxContent">
-      <wsdl:input message="tns:getAqxxContentHttpGetIn" />
-      <wsdl:output message="tns:getAqxxContentHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="getAqxxDetail">
       <wsdl:input message="tns:getAqxxDetailHttpGetIn" />
@@ -463,6 +527,10 @@
     <wsdl:operation name="auditAqxx">
       <wsdl:input message="tns:auditAqxxHttpGetIn" />
       <wsdl:output message="tns:auditAqxxHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxContent">
+      <wsdl:input message="tns:getAqxxContentHttpGetIn" />
+      <wsdl:output message="tns:getAqxxContentHttpGetOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="aqxxptServiceHttpPost">
@@ -482,13 +550,17 @@
       <wsdl:input message="tns:getAqxxInfoHttpPostIn" />
       <wsdl:output message="tns:getAqxxInfoHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="getAqxxCount">
+      <wsdl:input message="tns:getAqxxCountHttpPostIn" />
+      <wsdl:output message="tns:getAqxxCountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxInfos">
+      <wsdl:input message="tns:getAqxxInfosHttpPostIn" />
+      <wsdl:output message="tns:getAqxxInfosHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="getAqxxToAudit">
       <wsdl:input message="tns:getAqxxToAuditHttpPostIn" />
       <wsdl:output message="tns:getAqxxToAuditHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getAqxxContent">
-      <wsdl:input message="tns:getAqxxContentHttpPostIn" />
-      <wsdl:output message="tns:getAqxxContentHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="getAqxxDetail">
       <wsdl:input message="tns:getAqxxDetailHttpPostIn" />
@@ -497,6 +569,10 @@
     <wsdl:operation name="auditAqxx">
       <wsdl:input message="tns:auditAqxxHttpPostIn" />
       <wsdl:output message="tns:auditAqxxHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxContent">
+      <wsdl:input message="tns:getAqxxContentHttpPostIn" />
+      <wsdl:output message="tns:getAqxxContentHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="aqxxptServiceSoap" type="tns:aqxxptServiceSoap">
@@ -541,21 +617,31 @@
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getAqxxToAudit">
-      <soap:operation soapAction="http://sjbg.xxjwd.org/getAqxxToAudit" style="rpc" />
+    <wsdl:operation name="getAqxxCount">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getAqxxCount" style="rpc" />
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:getAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:header message="tns:getAqxxCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getAqxxContent">
-      <soap:operation soapAction="http://sjbg.xxjwd.org/getAqxxContent" style="rpc" />
+    <wsdl:operation name="getAqxxInfos">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getAqxxInfos" style="rpc" />
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:getAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:header message="tns:getAqxxInfosSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxToAudit">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getAqxxToAudit" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -576,6 +662,16 @@
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
         <soap:header message="tns:auditAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxContent">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getAqxxContent" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -624,21 +720,31 @@
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getAqxxToAudit">
-      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAqxxToAudit" style="rpc" />
+    <wsdl:operation name="getAqxxCount">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAqxxCount" style="rpc" />
       <wsdl:input>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:getAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:header message="tns:getAqxxCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getAqxxContent">
-      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAqxxContent" style="rpc" />
+    <wsdl:operation name="getAqxxInfos">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAqxxInfos" style="rpc" />
       <wsdl:input>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:getAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:header message="tns:getAqxxInfosSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxToAudit">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAqxxToAudit" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
@@ -659,6 +765,16 @@
       <wsdl:input>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
         <soap12:header message="tns:auditAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxContent">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAqxxContent" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
@@ -703,8 +819,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getAqxxToAudit">
-      <http:operation location="/getAqxxToAudit" />
+    <wsdl:operation name="getAqxxCount">
+      <http:operation location="/getAqxxCount" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -712,8 +828,17 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getAqxxContent">
-      <http:operation location="/getAqxxContent" />
+    <wsdl:operation name="getAqxxInfos">
+      <http:operation location="/getAqxxInfos" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxToAudit">
+      <http:operation location="/getAqxxToAudit" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -732,6 +857,15 @@
     </wsdl:operation>
     <wsdl:operation name="auditAqxx">
       <http:operation location="/auditAqxx" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxContent">
+      <http:operation location="/getAqxxContent" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -778,8 +912,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getAqxxToAudit">
-      <http:operation location="/getAqxxToAudit" />
+    <wsdl:operation name="getAqxxCount">
+      <http:operation location="/getAqxxCount" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -787,8 +921,17 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getAqxxContent">
-      <http:operation location="/getAqxxContent" />
+    <wsdl:operation name="getAqxxInfos">
+      <http:operation location="/getAqxxInfos" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxToAudit">
+      <http:operation location="/getAqxxToAudit" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -807,6 +950,15 @@
     </wsdl:operation>
     <wsdl:operation name="auditAqxx">
       <http:operation location="/auditAqxx" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAqxxContent">
+      <http:operation location="/getAqxxContent" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
