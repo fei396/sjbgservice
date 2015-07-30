@@ -3113,7 +3113,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens,DateTime setTime)
+        public static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens,DateTime setTime,string lingDaos)
         {
             SqlConnection conn = new SqlConnection(baseConnStr);
             int xxid = 0;
@@ -3142,6 +3142,23 @@ namespace sjbgWebService
                 //comm.CommandText = "insert into t_aqxxpt_xxjs (xxid,receiver) select " + xxid.ToString() + " as xxid, user_no from V_AQXXPT_Receiver where bumen_id in (" + buMens + ")";
                 comm.CommandText = "insert into t_aqxxpt_xx_bm ( xxid,bmid) select " + xxid.ToString() + " as xxid,bm_id as bm_id from dic_bumen where bm_id in  (" + buMens + ")";
                 comm.ExecuteNonQuery();
+                if (lingDaos.Equals("") || lingDaos == null)
+                {
+                    //do nothing
+                }
+                else
+                {
+                    string[] lingdao = lingDaos.Split(',');
+                    comm.CommandText = "insert into t_aqxxpt_xxjs (xxid,receiver) values(@xxid,@lingdao)";
+                    for (int i = 0; i < lingdao.Length; i++)
+                    {
+                        comm.Parameters.Clear();
+                        comm.Parameters.AddWithValue("xxid", xxid);
+                        comm.Parameters.AddWithValue("lingdao", lingdao[i]);
+                        comm.ExecuteNonQuery();
+                    }
+
+                }
                 comm.CommandText = "insert into t_aqxxpt_sh (xxid,auditor) values(@xxid,@auditor)";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("xxid", xxid);
@@ -3276,29 +3293,6 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getAqxxContent(int xxid)
-        {
-            SqlConnection conn = new SqlConnection(baseConnStr);
-            SqlCommand comm = new SqlCommand();
-            SqlDataAdapter sda = new SqlDataAdapter();
-            comm.Connection = conn;
-            comm.CommandText = "select id,xxid,title,txt,sender,createtime as sendtime,settime from v_aqxxpt_audit where (xxid=@xxid or @xxid=0)";
-            comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("xxid", xxid);
-            sda.SelectCommand = comm;
-            DataTable dt = new DataTable();
-            try
-            {
-                sda.Fill(dt);
-            }
-            catch
-            {
-                dt.TableName = "error!";
-                return dt;
-            }
-            dt.TableName = "getAqxxContent";
-            return dt;
-        }
 
         internal static DataTable getAqxxInfo(int did,int xxid)
         {
@@ -3348,6 +3342,31 @@ namespace sjbgWebService
             dt.TableName = "getAqxxDetail";
             return dt;
         }
+
+        internal static DataTable getAqxxContent(int xxid)
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            SqlDataAdapter sda = new SqlDataAdapter();
+            comm.Connection = conn;
+            comm.CommandText = "select id,xxid,title,txt,sender,createtime as sendtime,settime from v_aqxxpt_audit where (xxid=@xxid or @xxid=0)";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("xxid", xxid);
+            sda.SelectCommand = comm;
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                dt.TableName = "error!";
+                return dt;
+            }
+            dt.TableName = "getAqxxContent";
+            return dt;
+        }
+
         #endregion
 
 

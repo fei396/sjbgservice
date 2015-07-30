@@ -1,10 +1,10 @@
-﻿<%@ page language="C#" autoeventwireup="true" inherits="login, App_Web_6tvq6jyo" %>
+﻿<%@ page language="C#" autoeventwireup="true" inherits="login, App_Web_gjajr-s1" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>新乡机务段派班安全卡控系统维护</title>
+    <title>新乡机务段安全信息平台</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../css/style01.css" type="text/css" rel="stylesheet" />

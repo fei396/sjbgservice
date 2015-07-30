@@ -1,4 +1,4 @@
-<%@ page language="C#" autoeventwireup="true" inherits="applyAqxx, App_Web_6tvq6jyo" %>
+<%@ page language="C#" autoeventwireup="true" inherits="applyAqxx, App_Web_gjajr-s1" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -71,6 +71,18 @@
                     已选定：<br />
                     <asp:ListBox ID="lbDR" runat="server" Rows="10" Width="180px" SelectionMode="Multiple">
                     </asp:ListBox>
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 26px">
+                   抄送段领导：
+                </td>
+                <td colspan="4"  id="tdLeader" runat="server" style="height: 26px" 
+                    align="justify">
+                    <asp:CheckBox ID="cbLeaderAll" runat="server" Text="全选" AutoPostBack="True" 
+                        oncheckedchanged="cbLeaderAll_CheckedChanged" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0001" runat="server" Text="郑杰" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
+                        ID="cbLeader0002" Text="蔡伟杰" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0008" Text="张延召" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
+                            ID="cbLeader0007" Text="刘喜生" runat="server" />
                 </td>
             </tr>
             <tr>

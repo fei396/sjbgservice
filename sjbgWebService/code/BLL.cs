@@ -1530,7 +1530,7 @@ namespace sjbgWebService
         }
 
         #region 安全信息平台
-        internal static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens,string setTime)
+        internal static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens,string setTime,string lingDaos)
         {
             DateTime time;
             try
@@ -1541,7 +1541,7 @@ namespace sjbgWebService
             {
                 return new INT(-1, "时间格式不正确");
             }
-            return DAL.ApplyAqxx(sender, auditor, title, content, buMens, time);
+            return DAL.ApplyAqxx(sender, auditor, title, content, buMens, time,lingDaos);
         }
 
         internal static INT AuditAqxx(int xxid, string auditor, int result, string title,string txt)
@@ -1551,36 +1551,11 @@ namespace sjbgWebService
 
         internal static AQXX[] getAqxxToAudit(int uid ,int xxid)
         {
-            string auditor;
-            if (uid == 0) auditor="0";
-            else auditor = uid.toWorkNo();
+            string auditor = uid.toWorkNo();
             DataTable dt = new DataTable();
             dt = DAL.getAqxxToAudit(auditor ,xxid);
 
             if (!dt.TableName.Equals("getAqxxToAudit")) return null;
-            AQXX[] aqxxs = new AQXX[dt.Rows.Count];
-            for (int i = 0; i < aqxxs.Length; i++)
-            {
-                aqxxs[i] = new AQXX();
-                aqxxs[i].ID = Convert.ToInt32(dt.Rows[i]["xxid"]);
-                aqxxs[i].Sender = Convert.ToString(dt.Rows[i]["sender"]);
-                aqxxs[i].Title = Convert.ToString(dt.Rows[i]["title"]);
-                aqxxs[i].Content = Convert.ToString(dt.Rows[i]["txt"]);
-                aqxxs[i].SendTime = Convert.ToString(dt.Rows[i]["sendTime"]);
-                aqxxs[i].SetTime = Convert.ToString(dt.Rows[i]["setTime"]);
-                aqxxs[i].SenderNo = Convert.ToString(dt.Rows[i]["sender"]);
-                aqxxs[i].SenderName = Convert.ToString(dt.Rows[i]["sender"]);
-            }
-            return aqxxs;
-        }
-
-        internal static AQXX[] getAqxxContent(int xxid)
-        {
-
-            DataTable dt = new DataTable();
-            dt = DAL.getAqxxContent( xxid);
-
-            if (!dt.TableName.Equals("getAqxxContent")) return null;
             AQXX[] aqxxs = new AQXX[dt.Rows.Count];
             for (int i = 0; i < aqxxs.Length; i++)
             {
@@ -1673,6 +1648,52 @@ namespace sjbgWebService
             return ais;
         }
 
+        internal static int getAqxxCount(int uid)
+        {
+            User user = getUserByNum(uid.toWorkNo());
+            if (user == null)
+            {
+                return -1;
+            }
+
+            DataTable dt = new DataTable();
+            dt = DAL.getAqxxInfo(user.UserDept, 0);
+
+            return dt.Rows.Count;
+        }
+
+        internal static AqxxInfo[] getAqxxInfos(int uid, int ksxh,int count)
+        {
+            User user = getUserByNum(uid.toWorkNo());
+            if (user == null)
+            {
+                AqxxInfo ai = new AqxxInfo();
+                ai.Title = "hei";
+                return new AqxxInfo[] { ai };
+            }
+
+            DataTable dt = new DataTable();
+            dt = DAL.getAqxxInfo(user.UserDept, 0);
+
+            if (!dt.TableName.Equals("getAqxxInfo")) return null;
+            AqxxInfo[] ais = new AqxxInfo[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
+            for (int i = 0; i < ais.Length; i++)
+            {
+                ais[i] = new AqxxInfo();
+                ais[i].XXID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["xxid"]);
+                ais[i].Title = Convert.ToString(dt.Rows[i + ksxh - 1]["title"]);
+                ais[i].Sender = Convert.ToString(dt.Rows[i + ksxh - 1]["sender"]);
+                ais[i].SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendtime"]);
+                //ais[i].Content = Convert.ToString(dt.Rows[i+ ksxh - 1]["txt"]);
+                ais[i].ReadCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["readCount"]);
+                ais[i].SendCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["sendCount"]);
+                ais[i].Status = Convert.ToString(dt.Rows[i + ksxh - 1]["Status"]);
+                ais[i].Auditor = Convert.ToString(dt.Rows[i + ksxh - 1]["Auditor"]);
+                ais[i].AuditTime = Convert.ToString(dt.Rows[i + ksxh - 1]["AuditTime"]);
+            }
+            return ais;
+        }
+
         internal static AqxxDetail[] getAqxxDetail(int xxid ,int ksxh ,int count)
         {
             DataTable dt = new DataTable();
@@ -1691,6 +1712,30 @@ namespace sjbgWebService
                 depts[i].ReceiverDept = Convert.ToString(dt.Rows[i + ksxh - 1]["receiverDept"]);
             }
             return depts;
+        }
+
+
+        internal static AQXX[] getAqxxContent(int xxid)
+        {
+
+            DataTable dt = new DataTable();
+            dt = DAL.getAqxxContent(xxid);
+
+            if (!dt.TableName.Equals("getAqxxContent")) return null;
+            AQXX[] aqxxs = new AQXX[dt.Rows.Count];
+            for (int i = 0; i < aqxxs.Length; i++)
+            {
+                aqxxs[i] = new AQXX();
+                aqxxs[i].ID = Convert.ToInt32(dt.Rows[i]["xxid"]);
+                aqxxs[i].Sender = Convert.ToString(dt.Rows[i]["sender"]);
+                aqxxs[i].Title = Convert.ToString(dt.Rows[i]["title"]);
+                aqxxs[i].Content = Convert.ToString(dt.Rows[i]["txt"]);
+                aqxxs[i].SendTime = Convert.ToString(dt.Rows[i]["sendTime"]);
+                aqxxs[i].SetTime = Convert.ToString(dt.Rows[i]["setTime"]);
+                aqxxs[i].SenderNo = Convert.ToString(dt.Rows[i]["sender"]);
+                aqxxs[i].SenderName = Convert.ToString(dt.Rows[i]["sender"]);
+            }
+            return aqxxs;
         }
         #endregion
 

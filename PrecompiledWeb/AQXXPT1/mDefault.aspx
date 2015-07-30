@@ -1,10 +1,10 @@
-<%@ page language="C#" autoeventwireup="true" inherits="mDefault, App_Web_6tvq6jyo" %>
+<%@ page language="C#" autoeventwireup="true" inherits="mDefault, App_Web_gjajr-s1" %>
 
 
 
 <html>
 <head runat="server">
-    <title>新乡机务段派班安全卡控系统</title>
+    <title>新乡机务段安全信息平台1</title>
     <link href="css/Style.css" rel="stylesheet" type="text/css" />
  <%--   <script language="javascript" type="text/javascript" src="js/madminMain.js" charset="GB2312"></script>--%>
 <script language="javascript" type="text/javascript">
