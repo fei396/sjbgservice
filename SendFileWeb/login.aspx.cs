@@ -47,6 +47,7 @@ public partial class login : System.Web.UI.Page
             SendFileService.sendfileService ss = new SendFileService.sendfileService();
             int did = ss.getDeptByUserNo(vr.WorkNo);
             Session["dept"] = did.ToString();
+            
             Response.Redirect("mdefault.aspx");
         }
     }
@@ -101,6 +102,7 @@ public partial class login : System.Web.UI.Page
 		Session["usec"] = s.getSecurity();
 		Session["usercode"] = s.getUserCode();
 		Session["udept"] = s.getUserDept();
+        
         Response.Redirect(url);
 	}
 }

@@ -80,9 +80,10 @@
                 <td colspan="4"  id="tdLeader" runat="server" style="height: 26px" 
                     align="justify">
                     <asp:CheckBox ID="cbLeaderAll" runat="server" Text="全选" AutoPostBack="True" 
-                        oncheckedchanged="cbLeaderAll_CheckedChanged" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0001" runat="server" Text="郑杰" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
+                        oncheckedchanged="cbLeaderAll_CheckedChanged" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0001" runat="server" Text="李思博" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
                         ID="cbLeader0002" Text="蔡伟杰" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0008" Text="张延召" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
-                            ID="cbLeader0007" Text="刘喜生" runat="server" />
+                            ID="cbLeader0007" Text="刘喜生" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
+                            ID="cbLeader7034" Text="张力" runat="server" />
                 </td>
             </tr>
             <tr>

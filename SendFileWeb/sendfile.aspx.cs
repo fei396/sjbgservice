@@ -147,7 +147,12 @@ public partial class sendfile : System.Web.UI.Page
     {
         SendFileService.sendfileService ss = new sendfileService();
         ss.SjbgSoapHeaderValue = Security.getSoapHeader();
-        int did =  Convert.ToInt32(Session["dept"] as string);
+        object dept = Session["dept"];
+        if (dept == null )
+        {
+            
+        }
+        int did = Convert.ToInt32(dept);
         if (did == 0)
         {
         }
@@ -160,6 +165,7 @@ public partial class sendfile : System.Web.UI.Page
                 ListItem li = new ListItem(drs[i].WeiZhi, drs[i].ID.ToString());
                 lbDRn.Items.Add(li);
             }
+            
 
         }
         fileContent = "";

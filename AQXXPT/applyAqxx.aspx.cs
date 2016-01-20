@@ -145,6 +145,7 @@ public partial class applyAqxx : System.Web.UI.Page
         if (cbLeader0002.Checked) lingDaos += "0002,";
         if (cbLeader0007.Checked) lingDaos += "0007,";
         if (cbLeader0008.Checked) lingDaos += "0008,";
+        if (cbLeader7034.Checked) lingDaos += "7034,";
         if (!lingDaos.Equals("")) lingDaos = lingDaos.Substring(0, lingDaos.Length - 1);
         if (auditor.Equals("0000"))
         {
@@ -198,6 +199,7 @@ public partial class applyAqxx : System.Web.UI.Page
         cbLeader0002.Checked = cbLeaderAll.Checked;
         cbLeader0007.Checked = cbLeaderAll.Checked;
         cbLeader0008.Checked = cbLeaderAll.Checked;
+        cbLeader7034.Checked = cbLeaderAll.Checked;
     }
 }
 

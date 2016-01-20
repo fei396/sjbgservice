@@ -52,6 +52,7 @@ namespace aqxxptSMSservice
                 client.sendMessageSingle(strAdmin, "安全信息平台短信服务意外终止。");
             }
             this.Stop();
+            
         }
 
 
@@ -138,8 +139,8 @@ namespace aqxxptSMSservice
             {
                 Log.writeLog("client.checkAll");
                 Log.writeLog(ex.Message);
-                Log.writeLog("服务意外终止。");
-                this.DoStop();
+                //Log.writeLog("服务意外终止。");
+                //this.DoStop();
             }
             timer1.Start();
         }
