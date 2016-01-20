@@ -1269,22 +1269,22 @@ namespace sjbgWebService
                 for (int i = 0; i < rfs.Length; i++)
                 {
                     rfs[i] = new ReceiveFile();
-                    rfs[i].ID = Convert.ToInt32(dt.Rows[i]["fid"]);
-                    rfs[i].FileDrId = Convert.ToInt32(dt.Rows[i]["id"]);
-                    rfs[i].DutyRoomID = Convert.ToInt32(dt.Rows[i]["drid"]);
-                    rfs[i].DutyRoomDeptId = Convert.ToInt32(dt.Rows[i]["dutyroom_bmid"]);
-                    rfs[i].DutyRoom = Convert.ToString(dt.Rows[i]["dutyroom"]);
-                    rfs[i].DutyRoomDept = Convert.ToString(dt.Rows[i]["dutyroom_bmmc"]);
-                    rfs[i].ExtName = Convert.ToString(dt.Rows[i]["extName"]);
-                    rfs[i].FileDesc = Convert.ToString(dt.Rows[i]["filedesc"]);
-                    rfs[i].FileName = Convert.ToString(dt.Rows[i]["fileName"]);
-                    rfs[i].Receiver = Convert.ToString(dt.Rows[i]["receiver"]);
-                    rfs[i].ReceiverName = Convert.ToString(dt.Rows[i]["receiverName"]);
-                    rfs[i].ReceiveTime = Convert.ToString(dt.Rows[i]["receive_time"]);
-                    rfs[i].Sender = Convert.ToString(dt.Rows[i]["sender"]);
-                    rfs[i].SenderDept = Convert.ToString(dt.Rows[i]["senderDeptName"]);
-                    rfs[i].SenderName = Convert.ToString(dt.Rows[i]["senderName"]);
-                    rfs[i].SendTime = Convert.ToString(dt.Rows[i]["sendTime"]);
+                    rfs[i].ID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["fid"]);
+                    rfs[i].FileDrId = Convert.ToInt32(dt.Rows[i + ksxh - 1]["id"]);
+                    rfs[i].DutyRoomID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["drid"]);
+                    rfs[i].DutyRoomDeptId = Convert.ToInt32(dt.Rows[i + ksxh - 1]["dutyroom_bmid"]);
+                    rfs[i].DutyRoom = Convert.ToString(dt.Rows[i + ksxh - 1]["dutyroom"]);
+                    rfs[i].DutyRoomDept = Convert.ToString(dt.Rows[i + ksxh - 1]["dutyroom_bmmc"]);
+                    rfs[i].ExtName = Convert.ToString(dt.Rows[i + ksxh - 1]["extName"]);
+                    rfs[i].FileDesc = Convert.ToString(dt.Rows[i + ksxh - 1]["filedesc"]);
+                    rfs[i].FileName = Convert.ToString(dt.Rows[i + ksxh - 1]["fileName"]);
+                    rfs[i].Receiver = Convert.ToString(dt.Rows[i + ksxh - 1]["receiver"]);
+                    rfs[i].ReceiverName = Convert.ToString(dt.Rows[i + ksxh - 1]["receiverName"]);
+                    rfs[i].ReceiveTime = Convert.ToString(dt.Rows[i + ksxh - 1]["receive_time"]);
+                    rfs[i].Sender = Convert.ToString(dt.Rows[i + ksxh - 1]["sender"]);
+                    rfs[i].SenderDept = Convert.ToString(dt.Rows[i + ksxh - 1]["senderDeptName"]);
+                    rfs[i].SenderName = Convert.ToString(dt.Rows[i + ksxh - 1]["senderName"]);
+                    rfs[i].SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendTime"]);
                     
                 }
                 return rfs;

@@ -22,6 +22,15 @@ namespace sjbgWebService.pub
 		public SjbgSoapHeader sjbgHeader = new SjbgSoapHeader();
 		public PreSoapHeader preHeader = new PreSoapHeader();
 
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [WebMethod]
+        public bool setPassword(int uid,string password)
+        {
+            if (!sjbgHeader.checkValid()) return false;
+            return DAL.setPassword(uid,password);
+        }
+
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
 		[WebMethod]
 		public bool initPassword()

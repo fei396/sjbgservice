@@ -54,10 +54,10 @@ namespace sjbgWebService
         /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public INT applyAqxx(string sender, string auditor, string title, string content, string buMens,string setTime,string lingDaos)
+        public INT applyAqxx(string sender, string auditor, string title, string content, string buMens, string setTime, string lingDaos)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.ApplyAqxx(sender, auditor, title, content, buMens,setTime,lingDaos);
+            return BLL.ApplyAqxx(sender, auditor, title, content, buMens, setTime, lingDaos);
         }
 
 

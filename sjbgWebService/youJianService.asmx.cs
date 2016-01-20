@@ -111,7 +111,7 @@ namespace sjbgWebService.youjian
         [SoapRpcMethod, WebMethod]
         public INT deleteMailBox(int uid, string mailBoxName)
         {
-            //if (!sjbgHeader.checkValid()) return null;
+            if (!sjbgHeader.checkValid()) return null;
             return DAL.deleteMailBox(uid, mailBoxName);
         }
 
@@ -119,8 +119,28 @@ namespace sjbgWebService.youjian
         [SoapRpcMethod, WebMethod]
         public INT renameMailBox(int uid, string oldMailBoxName , string newMailBoxName)
         {
-            //if (!sjbgHeader.checkValid()) return null;
+            if (!sjbgHeader.checkValid()) return null;
             return DAL.renameMailBox(uid, oldMailBoxName, newMailBoxName);
         }
+
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public YouJianSimple[] getMailMessageListTKMP(int uid, int start, int count,bool asc)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return DAL.getMailMessagesTKMP(uid, start, count, asc);
+        }
+
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public YouJian getMailMessageTKMP(int uid, int muid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return DAL.getMailMessageTKMP(uid, muid);
+
+        }
+     
 	}
 }

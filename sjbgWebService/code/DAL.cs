@@ -486,6 +486,33 @@ namespace sjbgWebService
             }
         }
 
+        public static bool setPassword(int uid,string pass)
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "update dic_user set user_mima=@pass where user_no=@work_no";
+            string work_no = uid.toWorkNo();
+            pass = BLL.setEncryptPass(pass, pass);
+            comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("pass", pass);
+                comm.Parameters.AddWithValue("work_no", work_no);
+                try
+                {
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                }
+                catch
+                {
+                    return false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            
+            return true;
+        }
 
         public static bool initPassword()
         {
@@ -1583,8 +1610,8 @@ namespace sjbgWebService
             smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
             smtp.EnableSsl = false;
             smtp.UseDefaultCredentials = false;
-            smtp.Host = SjbgConfig.MailHost;
-            smtp.Port = SjbgConfig.MailSmtpPort;
+            smtp.Host = "10.99.81.68";// SjbgConfig.MailHost;
+            smtp.Port = 25;// SjbgConfig.MailSmtpPort;
             smtp.Credentials = new System.Net.NetworkCredential(workno + "@" + SjbgConfig.MailDomain, SjbgConfig.MailPassword);
 
             System.Net.Mail.MailMessage mm = new System.Net.Mail.MailMessage();
@@ -1670,6 +1697,35 @@ namespace sjbgWebService
             return yjs;
         }
 
+        internal static string[] getTKMPuser(string workno)
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "select yyxt_userbh,yyxt_user,yyxt_usermm from dat_userDuiYing where yyxt_id = 3 and xtbg_user=" + workno;
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            if (dt.Rows.Count == 0) return null;
+            string userid = dt.Rows[0]["yyxt_user"].ToString();
+            string pass = dt.Rows[0]["yyxt_usermm"].ToString();
+            string[] userinfo = new string[2];
+            userinfo[0] = userid;
+            userinfo[1] = pass;
+            return userinfo;
+         }
+
+        internal static YouJianSimple[] getMailMessagesTKMP(int uid, int startId, int count,bool asc)
+        {
+            string workno = uid.toWorkNo();
+            string[] userinfo = getTKMPuser(workno);
+            string user = userinfo[0];
+            string pass = userinfo[1];
+            YouJianTKMP yjt = new YouJianTKMP(user, pass);
+            return yjt.getMailList(startId, count, asc, 0);
+            
+        }
+
         internal static YouJianFuJian[] getMailAttachment(int uid, int muid, string mailBoxName, int pos)
         {
             string workno = uid.ToString().PadLeft(4, '0');
@@ -1689,6 +1745,18 @@ namespace sjbgWebService
             if (pos <= 0) return yjfj;
             else if (pos > yjfj.Length) return null;
             else return new YouJianFuJian[] { yjfj[pos - 1] };
+        }
+
+        internal static YouJian getMailMessageTKMP(int uid, int muid)
+        {
+            string workno = uid.toWorkNo();
+
+            string[] userinfo = getTKMPuser(workno);
+            string user = userinfo[0];
+            string pass = userinfo[1];
+            YouJianTKMP yjt = new YouJianTKMP(user, pass);
+            YouJian yj = yjt.getMail(muid);
+            return yj;
         }
 
         internal static WenJianJia[] getMailBoxList(int uid)
@@ -2603,7 +2671,7 @@ namespace sjbgWebService
             try
             {
                 byte[] buffer = Convert.FromBase64String(fileContent);
-                comm.CommandText = "select work_no from T_SendFile_DutyRoom_Receiver where drid in (" + drs + ")";
+                comm.CommandText = "select work_no from T_SendFile_DutyRoom_Receiver where onwork=1 and drid in (" + drs + ")";
                 DataTable dt = new DataTable();
                 SqlDataAdapter da = new SqlDataAdapter(comm);
                 da.Fill(dt);
@@ -2628,30 +2696,34 @@ namespace sjbgWebService
                         worknos = worknos + Convert.ToString(dt.Rows[i]["work_no"]) + ",";
                     }
                     worknos = worknos.Substring(0, worknos.Length - 1);
+                    comm.CommandText = "select bm_mc + user_name as sender from v_user where user_no=@sender";
+                    comm.Parameters.Clear();
+                    comm.Parameters.AddWithValue("sender", sender);
+                    sender = comm.ExecuteScalar().ToString();
+
+
+                    string content = sender + "发来文件：" + fileName + "." + extName + "，请接收。";
+                    comm.CommandText = "insert into T_System_Message(toUser, Type, Content, Command) select distinct user_no as toUser ,0 , '" + content + "','SendFile' from dic_user where user_no in (" + worknos + ")";
+                    comm.Parameters.Clear();
+                    comm.ExecuteNonQuery();
+
+                    //for (int i = 0; i < dt.Rows.Count; i++)
+                    //{
+                    //    string topic = dt.Rows[i]["work_no"].ToString();
+                    //    sendMqttMessage(sender, topic, content, 2);
+                    //}
                 }
 
-                comm.CommandText = "select bm_mc + user_name as sender from v_user where user_no=@sender";
-                comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("sender", sender);
-                sender = comm.ExecuteScalar().ToString();
 
-                string content = sender + "发来文件：" + fileName + "." + extName + "，请接收。";
-                comm.CommandText = "insert into T_System_Message(toUser, Type, Content, Command) select distinct user_no as toUser ,0 , '" + content + "','SendFile' from dic_user where user_no in (" + worknos + ")";
-                comm.Parameters.Clear();
-                comm.ExecuteNonQuery();
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    string topic = dt.Rows[i]["work_no"].ToString();
-                    sendMqttMessage(sender, topic, content, 2); 
-                }
-                
+
+
                 //System.IO.FileStream fs = new System.IO.FileStream(SjbgConfig.SendFilePath + fid.ToString() + "." + extName, System.IO.FileMode.Create);
                 //fs.Write(buffer, 0, buffer.Length);
                 //fs.Close();
             }
             catch
             {
-                trans.Rollback();                                                             
+                trans.Rollback();
                 return new INT(-1, "写入数据库错误");
             }
             trans.Commit();
@@ -2881,7 +2953,7 @@ namespace sjbgWebService
             trans = conn.BeginTransaction();
             try
             {
-                
+
                 comm.Transaction = trans;
 
                 //获取该topic有多少人订阅
@@ -2893,7 +2965,7 @@ namespace sjbgWebService
                 sda.Fill(dt);
                 if (dt.Rows.Count == 0) return new INT(-1, "无人订阅该topic");
                 string users = "";
-                for(int i=0;i<dt.Rows.Count;i++)
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     users += "'" + dt.Rows[i]["work_no"].ToString() + "',";
                 }
@@ -2919,8 +2991,8 @@ namespace sjbgWebService
                 string content = mm.ToJsonString();
                 comm.CommandText = "insert into t_publish_message (mid,topic,txt) values(@mid,@topic,@txt)";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("topic",topic);
-                comm.Parameters.AddWithValue("txt",content);
+                comm.Parameters.AddWithValue("topic", topic);
+                comm.Parameters.AddWithValue("txt", content);
                 comm.Parameters.AddWithValue("mid", mid);
                 comm.ExecuteNonQuery();
                 trans.Commit();
@@ -2935,7 +3007,7 @@ namespace sjbgWebService
             {
                 conn.Close();
             }
-           
+
             return new INT(1);
         }
 
@@ -3000,7 +3072,7 @@ namespace sjbgWebService
             try
             {
                 conn.Open();
-                int i = Convert.ToInt32( comm.ExecuteNonQuery());
+                int i = Convert.ToInt32(comm.ExecuteNonQuery());
                 if (i == 0) return new INT(-2, "未找到该消息");
             }
             catch (Exception ex)
@@ -3113,7 +3185,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens,DateTime setTime,string lingDaos)
+        public static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens, DateTime setTime, string lingDaos)
         {
             SqlConnection conn = new SqlConnection(baseConnStr);
             int xxid = 0;
@@ -3123,7 +3195,7 @@ namespace sjbgWebService
             }
             catch
             {
-                return new INT( -100,"数据库错误");
+                return new INT(-100, "数据库错误");
             }
             SqlTransaction trans;
             trans = conn.BeginTransaction();
@@ -3164,7 +3236,7 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("xxid", xxid);
                 comm.Parameters.AddWithValue("auditor", auditor);
                 comm.ExecuteNonQuery();
-                if (DAL.sendMqttMessage(sender, auditor, "有一条安全信息需要您审核。", 2).Number == 1)
+                if (1==1)//(DAL.sendMqttMessage(sender, auditor, "有一条安全信息需要您审核。", 2).Number == 1)
                 {
                     DAL.sendMobileMessage(Convert.ToInt32(auditor), "有一条安全信息需要您审核。");
                     trans.Commit();
@@ -3172,19 +3244,19 @@ namespace sjbgWebService
                 else
                 {
                     trans.Rollback();
-                    return new INT(-1,"发送提醒信息失败");
+                    return new INT(-1, "发送提醒信息失败");
                 }
             }
             catch (Exception ex)
             {
                 trans.Rollback();
-                return new INT( -100,ex.Message);
+                return new INT(-100, ex.Message);
             }
             finally
             {
                 conn.Close();
             }
-            return new INT(1,xxid.ToString());
+            return new INT(1, xxid.ToString());
         }
 
 
@@ -3214,22 +3286,22 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("auditor", auditor);
                 comm.Parameters.AddWithValue("xxid", xxid);
                 comm.ExecuteNonQuery();
-                
+
                 if (result == 0)//审核不通过，通知发信息人
                 {
                     comm.CommandText = "select sender from t_aqxxpt_xx where id = @xxid";
                     comm.Parameters.Clear();
                     comm.Parameters.AddWithValue("xxid", xxid);
                     string sender = Convert.ToString(comm.ExecuteScalar());
-                    if (DAL.sendMqttMessage("提醒信息：", sender, "安全信息审核未通过，原因：" + txt , 2).Number == 1)
+                    if (DAL.sendMqttMessage("提醒信息：", sender, "安全信息审核未通过，原因：" + txt, 2).Number == 1)
                     {
-                        DAL.sendMobileMessage(Convert.ToInt32(sender) ,"安全信息审核未通过，原因：" + txt);
+                        DAL.sendMobileMessage(Convert.ToInt32(sender), "安全信息审核未通过，原因：" + txt);
                         trans.Commit();
                     }
                     else
                     {
                         trans.Rollback();
-                        return new INT(-1,"发送提醒信息失败");
+                        return new INT(-1, "发送提醒信息失败");
                     }
                 }
                 else//审核通过,插入信息接收表
@@ -3252,8 +3324,8 @@ namespace sjbgWebService
                     ///
                     trans.Commit();
                 }
-            
-                
+
+
             }
             catch (Exception ex)
             {
@@ -3268,7 +3340,7 @@ namespace sjbgWebService
         }
 
 
-        internal static DataTable getAqxxToAudit(string auditor ,int xxid)
+        internal static DataTable getAqxxToAudit(string auditor, int xxid)
         {
             SqlConnection conn = new SqlConnection(baseConnStr);
             SqlCommand comm = new SqlCommand();
@@ -3277,7 +3349,7 @@ namespace sjbgWebService
             comm.CommandText = "select id,xxid,title,txt,sender,createtime as sendtime,settime from v_aqxxpt_audit where auditTime is null and auditor=@auditor and (xxid=@xxid or @xxid=0)";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("auditor", auditor);
-            comm.Parameters.AddWithValue("xxid",xxid);
+            comm.Parameters.AddWithValue("xxid", xxid);
             sda.SelectCommand = comm;
             DataTable dt = new DataTable();
             try
@@ -3294,13 +3366,13 @@ namespace sjbgWebService
         }
 
 
-        internal static DataTable getAqxxInfo(int did,int xxid)
+        internal static DataTable getAqxxInfo(int did, int xxid)
         {
             SqlConnection conn = new SqlConnection(baseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
-            comm.CommandText = "select xxid,sender,title,sendTime,readcount,sendcount,status,auditor,audittime from v_aqxxpt_xxjs_info where (xxid = @xxid or @xxid=0) and (senderdept=@did or @did=1) order by sendtime desc";
+            comm.CommandText = "select xxid,sender,title,sendTime,readcount,sendcount,status,auditor,audittime from v_aqxxpt_xxjs_info where (xxid = @xxid or @xxid=0) and (senderdept=@did or @did=1) order by audittime desc";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("xxid", xxid);
             comm.Parameters.AddWithValue("did", did);
@@ -3368,6 +3440,7 @@ namespace sjbgWebService
         }
 
         #endregion
+
 
 
 
