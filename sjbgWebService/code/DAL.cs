@@ -1329,12 +1329,17 @@ namespace sjbgWebService
 
         internal static INT sendMobileMessage(int work_no, string content)
         {
+            return sendMobileMessage(work_no.toWorkNo(), content);
+        }
+
+        internal static INT sendMobileMessage(string work_no, string content)
+        {
             SqlConnection conn = new SqlConnection(yyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "insert into dataexchange (data_no,data_content) values(@work_no,@content)";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no.ToString().PadLeft(4, '0'));
+            comm.Parameters.AddWithValue("work_no", work_no);
             comm.Parameters.AddWithValue("content", content);
             try
             {
@@ -1351,6 +1356,51 @@ namespace sjbgWebService
             }
 
             return new INT(1, "");
+        }
+
+        internal static INT sendMobileMessage(string[] work_no, string content)
+        {
+            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            try
+            {
+                conn.Open();
+            }
+            catch
+            {
+                return new INT(-1, "数据库错误");
+            }
+            SqlTransaction trans;
+            trans = conn.BeginTransaction();
+            try
+            {
+                comm.Transaction = trans;
+
+                for (int i = 0; i < work_no.Length; i++)
+                {
+                    comm.CommandText = "insert into dataexchange (data_no,data_content) values(@work_no,@content)";
+                    comm.Parameters.Clear();
+                    comm.Parameters.AddWithValue("work_no", work_no[i]);
+                    comm.Parameters.AddWithValue("content", content);
+                    comm.ExecuteNonQuery();
+                }
+                trans.Commit();
+            }
+
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return new INT(-1, ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return new INT(1);
+            
+
         }
 
         /// <summary>
@@ -3436,6 +3486,232 @@ namespace sjbgWebService
                 return dt;
             }
             dt.TableName = "getAqxxContent";
+            return dt;
+        }
+
+        #endregion
+
+
+        #region 2016新公文流转系统
+        internal static INT addNewGongWen2016(string ht,string wh,string bt,string zw,int wjxzID,int wjlxID ,string fbr,string ip,string jsr,string[] gwfj)
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            try
+            {
+                conn.Open();
+            }
+            catch
+            {
+                return new INT(-1, "数据库错误");
+            }
+            SqlTransaction trans;
+            trans = conn.BeginTransaction();
+            try
+            {
+
+                comm.Transaction = trans;
+
+                //先插入公文信息表
+                comm.CommandText = "INSERT INTO [dbo].[T_GongWen_GWXX] (ht,wh,bt,zw,wjxzID,wjlxID,fbr,fbrq,ip)";
+                comm.CommandText += " VALUES (@ht,@wh,@bt,@zw,@wjxzID,@wjlxID,@fbr,getdate(),@ip)";
+                comm.CommandText += " ;select scope_identity();";//获取新插入的行ID
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@ht", ht);
+                comm.Parameters.AddWithValue("@wh", wh);
+                comm.Parameters.AddWithValue("@bt", bt);
+                comm.Parameters.AddWithValue("@zw", zw);
+                comm.Parameters.AddWithValue("@wjxzid", wjxzID);
+                comm.Parameters.AddWithValue("@wjlxid", wjxzID);
+                comm.Parameters.AddWithValue("@fbr", fbr);
+                comm.Parameters.AddWithValue("@ip", ip);
+
+                int gid = Convert.ToInt32(comm.ExecuteScalar());
+
+                for (int i = 0; i < gwfj.Length; i++)
+                {
+                    comm.CommandText = "insert into t_gongwen_gwfj (gwid,fjmc,paixu) values(@gwid,@fjmc,@paixu)";
+                    comm.Parameters.Clear();
+                    comm.Parameters.AddWithValue("@gwid", gid);
+                    comm.Parameters.AddWithValue("@fjmc", gwfj[i]);
+                    comm.Parameters.AddWithValue("@paixu", i+1);
+                    comm.ExecuteNonQuery();
+                }
+                //插入公文流转表开始流转
+                comm.CommandText = "insert into t_gongwen_lz (gwid,pid,fsr,jsr,fssj) values(@gwid,0,@fsr,@jsr,getdate())";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@gwid", gid);
+                comm.Parameters.AddWithValue("@fsr", fbr);
+                comm.Parameters.AddWithValue("@jsr", jsr);
+                comm.ExecuteNonQuery();
+
+                //发短信通知
+                //INT r = sendMobileMessage(jsr, "您有一件新公文未签阅。公文标题：" + bt);
+                INT r = sendMobileMessage("3974", "您有一件新公文未签阅。公文标题：" + bt);
+                if (r.Number == 1)
+                {
+                    trans.Commit();
+                }
+                else
+                {
+                    trans.Rollback();
+                    return new INT(-1, "发送提醒短信失败。公文创建未成功。");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return new INT(-1, ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return new INT(1);
+        }
+
+
+        internal static INT SignGongWen2016(int gwid ,int lzid, string fsr , string[] jsr,string bt,string qsnr)
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            try
+            {
+                conn.Open();
+            }
+            catch
+            {
+                return new INT(-1, "数据库错误");
+            }
+            SqlTransaction trans;
+            trans = conn.BeginTransaction();
+            try
+            {
+                comm.Transaction = trans;
+
+                comm.CommandText = "update t_gongwen_lz set qsnr=@qsnr,qssj=getdate() where id=@id";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@id", lzid);
+                comm.Parameters.AddWithValue("@qsnr", qsnr);
+                comm.ExecuteNonQuery();
+
+                if (jsr != null)
+                {
+                    for (int i = 0; i < jsr.Length; i++)
+                    {
+                        comm.CommandText = "insert into t_gongwen_lz (gwid,pid,fsr,jsr,fssj) values(@gwid,@pid,@fsr ,@jsr, getdate())";
+                        comm.Parameters.Clear();
+                        comm.Parameters.AddWithValue("@gwid", gwid);
+                        comm.Parameters.AddWithValue("@pid", lzid);
+                        comm.Parameters.AddWithValue("@fsr", fsr);
+                        comm.Parameters.AddWithValue("@jsr", jsr[i]);
+                        comm.ExecuteNonQuery();
+                    }
+                    //发短信通知
+                    INT r = sendMobileMessage(jsr, "您有一件新公文未签阅。公文标题：" + bt);
+                    if (r.Number == 1)
+                    {
+                        trans.Commit();
+                    }
+                    else
+                    {
+                        trans.Rollback();
+                        return new INT(-1, "发送提醒短信失败。公文创建未成功。");
+                    }
+                }
+                else
+                {
+                    trans.Commit();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return new INT(-1, ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return new INT(1);
+        }
+
+        internal static DataTable getGongWenXingZhi()
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT id, wjxz FROM V_GongWen_GWXZ  order by paixu";
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                dt.TableName = "error!";
+                return dt;
+            }
+
+            dt.TableName = "getGongWenXingZhi";
+            return dt;
+        }
+
+        internal static DataTable getGongWenLeiXing()
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT id, wjlx FROM V_GongWen_GWLX  order by paixu";
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                dt.TableName = "error!";
+                return dt;
+            }
+
+            dt.TableName = "getGongWenLeiXing";
+            return dt;
+        }
+
+
+        internal static DataTable getGongWenYongHu(int[] rid)
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+
+            comm.CommandText = "SELECT  user_no, user_name, bm_id, bm_mc, sjh, rid, nc FROM V_GongWen_YongHu ";
+            string str = rid.ToListString();
+            if (!str.Equals(string.Empty))
+            {
+                comm.CommandText += " where rid in (" + str + ")";
+            }
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                dt.TableName = "error!";
+                return dt;
+            }
+
+            dt.TableName = "getGongWenYongHu";
             return dt;
         }
 

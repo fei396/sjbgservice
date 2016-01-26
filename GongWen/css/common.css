@@ -1,0 +1,24 @@
+﻿/*Color Define*/
+body { color:#333; background:#fff; padding:0; }
+a { color:#09F; text-decoration: none; }
+a:hover { color:#C00; text-decoration:underline}
+
+/*Clear float*/
+.clearfix:after { clear:both; content:"."; display:block; height:0pt; visibility:hidden; }
+.clearfix { display:block; zoom:1; }
+/*Corner Style*/
+.no_b { border-color:#fff; }
+.no_b h3 { border-top:solid 1px #d1d1d1; margin-bottom:10px; display:block;}
+/*Basic style*/
+html { line-height:20px; }
+.text_center { display:block; text-align:center;}
+.top_el { margin-top:0; }
+.top_space { margin-top:10px;}
+.m_s10 { margin:0 10px; }
+.p_10 { padding:10px; }
+.p_b_10 { padding-bottom:10px; }
+.f_14, .f_14 a { font-size:14px; }
+.float_l { float:left }
+.float_r { float:right }
+.text_input { border:solid 1px #999; border-color:#aaa #ddd #ddd #aaa; width:160px;};
+

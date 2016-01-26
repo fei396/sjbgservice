@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sjbgWebService", "sjbgWebService\sjbgWebService.csproj", "{4613A48C-A282-4E8A-98CD-F2BFD08558B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication2", "WindowsFormsApplication2\WindowsFormsApplication2.csproj", "{945398E3-CF3B-4FB1-8AD1-385FFFB95C54}"
@@ -32,6 +34,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SendFileWeb", "SendFileWeb\
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "6620"
+		SlnRelativePath = "SendFileWeb\"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AQXXPT", "AQXXPT\", "{5A99E56F-5D64-4106-A53B-CECAF75A6E0C}"
@@ -52,9 +55,32 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AQXXPT", "AQXXPT\", "{5A99E
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "3223"
+		SlnRelativePath = "AQXXPT\"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aqxxptSMSservice", "aqxxptSMSservice\aqxxptSMSservice.csproj", "{468DBD9C-B68E-4B12-A2E1-3F50EB5EE929}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GongWen", "http://localhost:47077", "{108F8C45-4AD6-4F69-9054-265AC8498399}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_47077"
+		Debug.AspNetCompiler.PhysicalPath = "GongWen\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_47077\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_47077"
+		Release.AspNetCompiler.PhysicalPath = "GongWen\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_47077\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "GongWen\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -225,6 +251,24 @@ Global
 		{468DBD9C-B68E-4B12-A2E1-3F50EB5EE929}.Release|x64.ActiveCfg = Release|x86
 		{468DBD9C-B68E-4B12-A2E1-3F50EB5EE929}.Release|x86.ActiveCfg = Release|x86
 		{468DBD9C-B68E-4B12-A2E1-3F50EB5EE929}.Release|x86.Build.0 = Release|x86
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.oraclex64|Any CPU.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.oraclex64|Any CPU.Build.0 = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.oraclex64|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.oraclex64|Mixed Platforms.Build.0 = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.oraclex64|x64.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.oraclex64|x86.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|x64.ActiveCfg = Debug|Any CPU
+		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

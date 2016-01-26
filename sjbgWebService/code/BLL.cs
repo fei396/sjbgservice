@@ -29,6 +29,18 @@ namespace sjbgWebService
             }
         }
 
+        public static string ToListString(this int[] i)
+        {
+            if (i == null || i.Length == 0) return string.Empty;
+            string str = "";
+            for (int j = 0; j < i.Length; j++)
+            {
+                str += i[j].ToString() + ",";
+            }
+            str = str.Substring(0, str.Length - 1);
+            return str;
+        }
+
         public static string ToJsonString(this MqttMessage mm)
         {
             int types = mm.Type;
@@ -48,11 +60,11 @@ namespace sjbgWebService
             string s = i.ToString();
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5").ToUpper();
         }
-        private static bool isValidUserNo(this string str)
+        public static bool isValidUserNo(this string str)
         {
             return true;
         }
-        private static bool isValidPass(this string str)
+        public static bool isValidPass(this string str)
         {
             return true;
         }
@@ -1738,6 +1750,126 @@ namespace sjbgWebService
             return aqxxs;
         }
         #endregion
+
+
+        #region 2016新版公文流转系统
+
+
+        internal static GongWen getGwxxById2016(int gid)
+        {
+
+            GongWen gw = new GongWen();
+            gw.Title = "张纯杰测试";
+            //DataTable dt = DAL.getGwxxByWh("");
+            //if (dt.TableName.Equals("wh"))
+            //{
+            //    gw.Id = Convert.ToInt32(dt.Rows[0]["id"]);
+            //    gw.RedTitle = Convert.ToString(dt.Rows[0]["ht"]);
+            //    gw.Number = Convert.ToString(dt.Rows[0]["wh"]);
+            //    gw.Title = Convert.ToString(dt.Rows[0]["bt"]);
+            //    gw.Content = Convert.ToString(dt.Rows[0]["zw"]);
+            //    gw.SendDept = Convert.ToString(dt.Rows[0]["fwdw"]);
+            //    gw.SendDate = Convert.ToString(dt.Rows[0]["fwrq"]);
+            //    gw.Suggestion = Convert.ToString(dt.Rows[0]["csyj"]);
+            //    gw.FileType = Convert.ToString(dt.Rows[0]["wjxz"]);
+            //    gw.SendType = Convert.ToString(dt.Rows[0]["lwlx"]);
+            //    gw.AttachPath01 = Convert.ToString(dt.Rows[0]["fj1"]);
+            //    gw.AttachPath02 = Convert.ToString(dt.Rows[0]["fj2"]);
+            //    gw.AttachPath03 = Convert.ToString(dt.Rows[0]["fj3"]);
+            //    gw.AttachPath04 = Convert.ToString(dt.Rows[0]["fj4"]);
+            //    gw.AttachPath05 = Convert.ToString(dt.Rows[0]["fj5"]);
+            //    gw.AttachPath06 = Convert.ToString(dt.Rows[0]["fj6"]);
+            //}
+            return gw;
+
+        }
+
+        internal static INT addNewGongWen2016(int uid, string ht, string wh, string bt, string zw, int xzid, int lxid, string ip, string jsr, string[] gwfj)
+        {
+            string work_no = uid.toWorkNo();
+            if (!ht.isValidString()||!wh.isValidString()||!bt.isValidString()||!zw.isValidString())
+            {
+                return new INT(-1, "文件信息中包含非法字符。");
+            }
+            
+            return DAL.addNewGongWen2016(ht, wh, bt, zw, xzid, lxid, work_no, ip, jsr, gwfj);
+        }
+
+        internal static INT signGongWen2016(int gwid, int lzid, string fsr, string[] jsr, string qsnr)
+        {
+            GongWen gw = getGwxxById2016(gwid);
+            return DAL.SignGongWen2016(gwid, lzid, fsr, jsr, gw.Title, qsnr);
+        }
+
+
+        internal static GongWenXingZhi[] getGongWenXingZhi()
+        {
+            DataTable dt = DAL.getGongWenXingZhi();
+            if (dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else
+            {
+                GongWenXingZhi[] gwxz = new GongWenXingZhi[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    gwxz[i] = new GongWenXingZhi();
+                    gwxz[i].XZID = Convert.ToInt32(dt.Rows[i]["id"]);
+                    gwxz[i].XZMC = Convert.ToString(dt.Rows[i]["wjxz"]);
+                }
+                return gwxz;
+            }
+        }
+
+        internal static GongWenLeiXing[] getGongWenLeiXing()
+        {
+            DataTable dt = DAL.getGongWenLeiXing();
+            if (dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else
+            {
+                GongWenLeiXing[] gwlx = new GongWenLeiXing[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    gwlx[i] = new GongWenLeiXing();
+                    gwlx[i].LXID = Convert.ToInt32(dt.Rows[i]["id"]);
+                    gwlx[i].LXMC = Convert.ToString(dt.Rows[i]["wjlx"]);
+                }
+                return gwlx;
+            }
+        }
+
+
+        internal static GongWenYongHu[] getGongWenYongHu(int[] rid)
+        {
+            DataTable dt = DAL.getGongWenYongHu(rid);
+            if (dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else
+            {
+                GongWenYongHu[] gwyh = new GongWenYongHu[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    gwyh[i] = new GongWenYongHu();
+                    gwyh[i].GongHao = Convert.ToString(dt.Rows[i]["user_no"]);
+                    gwyh[i].XingMing = Convert.ToString(dt.Rows[i]["user_name"]);
+                    gwyh[i].NiCheng = Convert.ToString(dt.Rows[i]["nc"]);
+                    gwyh[i].BuMenID = Convert.ToInt32(dt.Rows[i]["bm_id"]);
+                    gwyh[i].BuMen = Convert.ToString(dt.Rows[i]["bm_mc"]);
+                }
+                return gwyh;
+            }
+        }
+        #endregion
+
+
+
+
 
 
     }

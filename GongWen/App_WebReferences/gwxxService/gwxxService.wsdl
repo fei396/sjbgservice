@@ -1,0 +1,1545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://sjbg.xxjwd.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://sjbg.xxjwd.org/literalTypes" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s2="http://sjbg.xxjwd.org/AbstractTypes" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://sjbg.xxjwd.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:complexType name="ArrayOfUserGw">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:UserGw[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="UserGw">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Yhbh" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Yhmc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Yhsm" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Ssbm" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Yhqx" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Yhnc" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Ssxzbm" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ShuangQian" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SjbgSoapHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="A" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="P" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBuMenGw">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:BuMenGw[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BuMenGw">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Bmbh" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Bmlb" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Bmmc" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Bmsqbh" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Bmlbmc" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBuMenLeiBie">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:BuMenLeiBie[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BuMenLeiBie">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Lbmc" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GongWen">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="RedTitle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Number" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendDept" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FileType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Suggestion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="AttachPath01" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="AttachPath02" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="AttachPath03" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="AttachPath04" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="AttachPath05" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="AttachPath06" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BOOLEAN">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="IsTrue" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfGongWen">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:GongWen[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfInstruction">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:Instruction[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Instruction">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Date" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="INT">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Number" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="s:string[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfGongWenXingZhi">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:GongWenXingZhi[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GongWenXingZhi">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="XZID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="XZMC" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfGongWenLeiXing">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:GongWenLeiXing[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GongWenLeiXing">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="LXID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="LXMC" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfGongWenYongHu">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:GongWenYongHu[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GongWenYongHu">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="GongHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="XingMing" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="NiCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BuMen" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="BuMenID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="RoleID" type="tns:ArrayOfInt" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="XingZhiID" type="tns:ArrayOfInt" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfInt">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="s:int[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/literalTypes">
+      <s:element name="ArrayOfUserGw" nillable="true" type="s1:ArrayOfUserGw" />
+      <s:complexType name="ArrayOfUserGw">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserGw" nillable="true" type="s1:UserGw" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserGw">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Yhbh" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Yhmc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Yhsm" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Ssbm" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Yhqx" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Yhnc" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Ssxzbm" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShuangQian" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfBuMenGw" nillable="true" type="s1:ArrayOfBuMenGw" />
+      <s:complexType name="ArrayOfBuMenGw">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BuMenGw" nillable="true" type="s1:BuMenGw" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BuMenGw">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Bmbh" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Bmlb" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Bmmc" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Bmsqbh" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Bmlbmc" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfBuMenLeiBie" nillable="true" type="s1:ArrayOfBuMenLeiBie" />
+      <s:complexType name="ArrayOfBuMenLeiBie">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BuMenLeiBie" nillable="true" type="s1:BuMenLeiBie" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BuMenLeiBie">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Lbmc" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GongWen" nillable="true" type="s1:GongWen" />
+      <s:complexType name="GongWen">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="RedTitle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendDept" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Suggestion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AttachPath01" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AttachPath02" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AttachPath03" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AttachPath04" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AttachPath05" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AttachPath06" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BOOLEAN" nillable="true" type="s1:BOOLEAN" />
+      <s:complexType name="BOOLEAN">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsTrue" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfGongWen" nillable="true" type="s1:ArrayOfGongWen" />
+      <s:complexType name="ArrayOfGongWen">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GongWen" nillable="true" type="s1:GongWen" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfInstruction" nillable="true" type="s1:ArrayOfInstruction" />
+      <s:complexType name="ArrayOfInstruction">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Instruction" nillable="true" type="s1:Instruction" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Instruction">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="INT" nillable="true" type="s1:INT" />
+      <s:complexType name="INT">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Number" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfGongWenXingZhi" nillable="true" type="s1:ArrayOfGongWenXingZhi" />
+      <s:complexType name="ArrayOfGongWenXingZhi">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GongWenXingZhi" nillable="true" type="s1:GongWenXingZhi" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GongWenXingZhi">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="XZID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="XZMC" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfGongWenLeiXing" nillable="true" type="s1:ArrayOfGongWenLeiXing" />
+      <s:complexType name="ArrayOfGongWenLeiXing">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GongWenLeiXing" nillable="true" type="s1:GongWenLeiXing" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GongWenLeiXing">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="LXID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="LXMC" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfGongWenYongHu" nillable="true" type="s1:ArrayOfGongWenYongHu" />
+      <s:complexType name="ArrayOfGongWenYongHu">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GongWenYongHu" nillable="true" type="s1:GongWenYongHu" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GongWenYongHu">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="GongHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XingMing" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NiCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BuMen" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BuMenID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="RoleID" type="s1:ArrayOfInt" />
+          <s:element minOccurs="0" maxOccurs="1" name="XingZhiID" type="s1:ArrayOfInt" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema targetNamespace="http://sjbg.xxjwd.org/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getLeaderListSoapIn" />
+  <wsdl:message name="getLeaderListSoapOut">
+    <wsdl:part name="getLeaderListResult" type="tns:ArrayOfUserGw" />
+  </wsdl:message>
+  <wsdl:message name="getLeaderListSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getDeptListByIdSoapIn">
+    <wsdl:part name="lbid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getDeptListByIdSoapOut">
+    <wsdl:part name="getDeptListByIdResult" type="tns:ArrayOfBuMenGw" />
+  </wsdl:message>
+  <wsdl:message name="getDeptListByIdSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getDeptTypeListSoapIn" />
+  <wsdl:message name="getDeptTypeListSoapOut">
+    <wsdl:part name="getDeptTypeListResult" type="tns:ArrayOfBuMenLeiBie" />
+  </wsdl:message>
+  <wsdl:message name="getDeptTypeListSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGwxxByWhSoapIn">
+    <wsdl:part name="wh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwxxByWhSoapOut">
+    <wsdl:part name="getGwxxByWhResult" type="tns:GongWen" />
+  </wsdl:message>
+  <wsdl:message name="getGwxxByWhSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="isSignedSoapIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="gh" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="isSignedSoapOut">
+    <wsdl:part name="isSignedResult" type="tns:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="isSignedSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="signGwSoapIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="ins" type="s:string" />
+    <wsdl:part name="nextUsers" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="signGwSoapOut">
+    <wsdl:part name="signGwResult" type="tns:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="signGwSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGwlbSoapIn">
+    <wsdl:part name="gh" type="s:int" />
+    <wsdl:part name="lblx" type="s:int" />
+    <wsdl:part name="gwlx" type="s:int" />
+    <wsdl:part name="dwlx" type="s:int" />
+    <wsdl:part name="ksxh" type="s:int" />
+    <wsdl:part name="count" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGwlbSoapOut">
+    <wsdl:part name="getGwlbResult" type="tns:ArrayOfGongWen" />
+  </wsdl:message>
+  <wsdl:message name="getGwlbSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getInstructionsSoapIn">
+    <wsdl:part name="wh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getInstructionsSoapOut">
+    <wsdl:part name="getInstructionsResult" type="tns:ArrayOfInstruction" />
+  </wsdl:message>
+  <wsdl:message name="getInstructionsSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getAttachFileSoapIn">
+    <wsdl:part name="filePath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAttachFileSoapOut">
+    <wsdl:part name="getAttachFileResult" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAttachFileSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGwLevelSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGwLevelSoapOut">
+    <wsdl:part name="getGwLevelResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="getGwLevelSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="signGwMiddleSoapIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="signGwMiddleSoapOut">
+    <wsdl:part name="signGwMiddleResult" type="tns:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="signGwMiddleSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="addNewGongWen2016SoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="ht" type="s:string" />
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="bt" type="s:string" />
+    <wsdl:part name="zw" type="s:string" />
+    <wsdl:part name="xzid" type="s:int" />
+    <wsdl:part name="lxid" type="s:int" />
+    <wsdl:part name="ip" type="s:string" />
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="gwfj" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="addNewGongWen2016SoapOut">
+    <wsdl:part name="addNewGongWen2016Result" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="addNewGongWen2016SjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="signGongWen2016SoapIn">
+    <wsdl:part name="gwid" type="s:int" />
+    <wsdl:part name="lzid" type="s:int" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="jsr" type="tns:ArrayOfString" />
+    <wsdl:part name="qsnr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="signGongWen2016SoapOut">
+    <wsdl:part name="signGongWen2016Result" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="signGongWen2016SjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getXingZhiSoapIn" />
+  <wsdl:message name="getXingZhiSoapOut">
+    <wsdl:part name="getXingZhiResult" type="tns:ArrayOfGongWenXingZhi" />
+  </wsdl:message>
+  <wsdl:message name="getXingZhiSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getLeiXingSoapIn" />
+  <wsdl:message name="getLeiXingSoapOut">
+    <wsdl:part name="getLeiXingResult" type="tns:ArrayOfGongWenLeiXing" />
+  </wsdl:message>
+  <wsdl:message name="getLeiXingSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getLingDaoSoapIn" />
+  <wsdl:message name="getLingDaoSoapOut">
+    <wsdl:part name="getLingDaoResult" type="tns:ArrayOfGongWenYongHu" />
+  </wsdl:message>
+  <wsdl:message name="getLingDaoSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getLeaderListHttpGetIn" />
+  <wsdl:message name="getLeaderListHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfUserGw" />
+  </wsdl:message>
+  <wsdl:message name="getDeptListByIdHttpGetIn">
+    <wsdl:part name="lbid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDeptListByIdHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenGw" />
+  </wsdl:message>
+  <wsdl:message name="getDeptTypeListHttpGetIn" />
+  <wsdl:message name="getDeptTypeListHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenLeiBie" />
+  </wsdl:message>
+  <wsdl:message name="getGwxxByWhHttpGetIn">
+    <wsdl:part name="wh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwxxByWhHttpGetOut">
+    <wsdl:part name="Body" element="s1:GongWen" />
+  </wsdl:message>
+  <wsdl:message name="isSignedHttpGetIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="gh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="isSignedHttpGetOut">
+    <wsdl:part name="Body" element="s1:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="signGwHttpGetIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="ins" type="s:string" />
+    <wsdl:part name="nextUsers" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="signGwHttpGetOut">
+    <wsdl:part name="Body" element="s1:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="getGwlbHttpGetIn">
+    <wsdl:part name="gh" type="s:string" />
+    <wsdl:part name="lblx" type="s:string" />
+    <wsdl:part name="gwlx" type="s:string" />
+    <wsdl:part name="dwlx" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwlbHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWen" />
+  </wsdl:message>
+  <wsdl:message name="getInstructionsHttpGetIn">
+    <wsdl:part name="wh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getInstructionsHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfInstruction" />
+  </wsdl:message>
+  <wsdl:message name="getAttachFileHttpGetIn">
+    <wsdl:part name="filePath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAttachFileHttpGetOut">
+    <wsdl:part name="Body" element="s1:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwLevelHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwLevelHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="signGwMiddleHttpGetIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="signGwMiddleHttpGetOut">
+    <wsdl:part name="Body" element="s1:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="addNewGongWen2016HttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="ht" type="s:string" />
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="bt" type="s:string" />
+    <wsdl:part name="zw" type="s:string" />
+    <wsdl:part name="xzid" type="s:string" />
+    <wsdl:part name="lxid" type="s:string" />
+    <wsdl:part name="ip" type="s:string" />
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="gwfj" type="s2:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="addNewGongWen2016HttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="signGongWen2016HttpGetIn">
+    <wsdl:part name="gwid" type="s:string" />
+    <wsdl:part name="lzid" type="s:string" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="jsr" type="s2:StringArray" />
+    <wsdl:part name="qsnr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="signGongWen2016HttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getXingZhiHttpGetIn" />
+  <wsdl:message name="getXingZhiHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenXingZhi" />
+  </wsdl:message>
+  <wsdl:message name="getLeiXingHttpGetIn" />
+  <wsdl:message name="getLeiXingHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenLeiXing" />
+  </wsdl:message>
+  <wsdl:message name="getLingDaoHttpGetIn" />
+  <wsdl:message name="getLingDaoHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenYongHu" />
+  </wsdl:message>
+  <wsdl:message name="getLeaderListHttpPostIn" />
+  <wsdl:message name="getLeaderListHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfUserGw" />
+  </wsdl:message>
+  <wsdl:message name="getDeptListByIdHttpPostIn">
+    <wsdl:part name="lbid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDeptListByIdHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenGw" />
+  </wsdl:message>
+  <wsdl:message name="getDeptTypeListHttpPostIn" />
+  <wsdl:message name="getDeptTypeListHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenLeiBie" />
+  </wsdl:message>
+  <wsdl:message name="getGwxxByWhHttpPostIn">
+    <wsdl:part name="wh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwxxByWhHttpPostOut">
+    <wsdl:part name="Body" element="s1:GongWen" />
+  </wsdl:message>
+  <wsdl:message name="isSignedHttpPostIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="gh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="isSignedHttpPostOut">
+    <wsdl:part name="Body" element="s1:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="signGwHttpPostIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="ins" type="s:string" />
+    <wsdl:part name="nextUsers" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="signGwHttpPostOut">
+    <wsdl:part name="Body" element="s1:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="getGwlbHttpPostIn">
+    <wsdl:part name="gh" type="s:string" />
+    <wsdl:part name="lblx" type="s:string" />
+    <wsdl:part name="gwlx" type="s:string" />
+    <wsdl:part name="dwlx" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwlbHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWen" />
+  </wsdl:message>
+  <wsdl:message name="getInstructionsHttpPostIn">
+    <wsdl:part name="wh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getInstructionsHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfInstruction" />
+  </wsdl:message>
+  <wsdl:message name="getAttachFileHttpPostIn">
+    <wsdl:part name="filePath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getAttachFileHttpPostOut">
+    <wsdl:part name="Body" element="s1:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwLevelHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGwLevelHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="signGwMiddleHttpPostIn">
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="signGwMiddleHttpPostOut">
+    <wsdl:part name="Body" element="s1:BOOLEAN" />
+  </wsdl:message>
+  <wsdl:message name="addNewGongWen2016HttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="ht" type="s:string" />
+    <wsdl:part name="wh" type="s:string" />
+    <wsdl:part name="bt" type="s:string" />
+    <wsdl:part name="zw" type="s:string" />
+    <wsdl:part name="xzid" type="s:string" />
+    <wsdl:part name="lxid" type="s:string" />
+    <wsdl:part name="ip" type="s:string" />
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="gwfj" type="s2:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="addNewGongWen2016HttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="signGongWen2016HttpPostIn">
+    <wsdl:part name="gwid" type="s:string" />
+    <wsdl:part name="lzid" type="s:string" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="jsr" type="s2:StringArray" />
+    <wsdl:part name="qsnr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="signGongWen2016HttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getXingZhiHttpPostIn" />
+  <wsdl:message name="getXingZhiHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenXingZhi" />
+  </wsdl:message>
+  <wsdl:message name="getLeiXingHttpPostIn" />
+  <wsdl:message name="getLeiXingHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenLeiXing" />
+  </wsdl:message>
+  <wsdl:message name="getLingDaoHttpPostIn" />
+  <wsdl:message name="getLingDaoHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenYongHu" />
+  </wsdl:message>
+  <wsdl:portType name="gwxxWebServiceSoap">
+    <wsdl:operation name="getLeaderList">
+      <wsdl:input message="tns:getLeaderListSoapIn" />
+      <wsdl:output message="tns:getLeaderListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptListById">
+      <wsdl:input message="tns:getDeptListByIdSoapIn" />
+      <wsdl:output message="tns:getDeptListByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptTypeList">
+      <wsdl:input message="tns:getDeptTypeListSoapIn" />
+      <wsdl:output message="tns:getDeptTypeListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwxxByWh">
+      <wsdl:input message="tns:getGwxxByWhSoapIn" />
+      <wsdl:output message="tns:getGwxxByWhSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="isSigned">
+      <wsdl:input message="tns:isSignedSoapIn" />
+      <wsdl:output message="tns:isSignedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGw">
+      <wsdl:input message="tns:signGwSoapIn" />
+      <wsdl:output message="tns:signGwSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwlb">
+      <wsdl:input message="tns:getGwlbSoapIn" />
+      <wsdl:output message="tns:getGwlbSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getInstructions">
+      <wsdl:input message="tns:getInstructionsSoapIn" />
+      <wsdl:output message="tns:getInstructionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAttachFile">
+      <wsdl:input message="tns:getAttachFileSoapIn" />
+      <wsdl:output message="tns:getAttachFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwLevel">
+      <wsdl:input message="tns:getGwLevelSoapIn" />
+      <wsdl:output message="tns:getGwLevelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGwMiddle">
+      <wsdl:input message="tns:signGwMiddleSoapIn" />
+      <wsdl:output message="tns:signGwMiddleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addNewGongWen2016">
+      <wsdl:input message="tns:addNewGongWen2016SoapIn" />
+      <wsdl:output message="tns:addNewGongWen2016SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGongWen2016">
+      <wsdl:input message="tns:signGongWen2016SoapIn" />
+      <wsdl:output message="tns:signGongWen2016SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXingZhi">
+      <wsdl:input message="tns:getXingZhiSoapIn" />
+      <wsdl:output message="tns:getXingZhiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLeiXing">
+      <wsdl:input message="tns:getLeiXingSoapIn" />
+      <wsdl:output message="tns:getLeiXingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLingDao">
+      <wsdl:input message="tns:getLingDaoSoapIn" />
+      <wsdl:output message="tns:getLingDaoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="gwxxWebServiceHttpGet">
+    <wsdl:operation name="getLeaderList">
+      <wsdl:input message="tns:getLeaderListHttpGetIn" />
+      <wsdl:output message="tns:getLeaderListHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptListById">
+      <wsdl:input message="tns:getDeptListByIdHttpGetIn" />
+      <wsdl:output message="tns:getDeptListByIdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptTypeList">
+      <wsdl:input message="tns:getDeptTypeListHttpGetIn" />
+      <wsdl:output message="tns:getDeptTypeListHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwxxByWh">
+      <wsdl:input message="tns:getGwxxByWhHttpGetIn" />
+      <wsdl:output message="tns:getGwxxByWhHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="isSigned">
+      <wsdl:input message="tns:isSignedHttpGetIn" />
+      <wsdl:output message="tns:isSignedHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGw">
+      <wsdl:input message="tns:signGwHttpGetIn" />
+      <wsdl:output message="tns:signGwHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwlb">
+      <wsdl:input message="tns:getGwlbHttpGetIn" />
+      <wsdl:output message="tns:getGwlbHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getInstructions">
+      <wsdl:input message="tns:getInstructionsHttpGetIn" />
+      <wsdl:output message="tns:getInstructionsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAttachFile">
+      <wsdl:input message="tns:getAttachFileHttpGetIn" />
+      <wsdl:output message="tns:getAttachFileHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwLevel">
+      <wsdl:input message="tns:getGwLevelHttpGetIn" />
+      <wsdl:output message="tns:getGwLevelHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGwMiddle">
+      <wsdl:input message="tns:signGwMiddleHttpGetIn" />
+      <wsdl:output message="tns:signGwMiddleHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addNewGongWen2016">
+      <wsdl:input message="tns:addNewGongWen2016HttpGetIn" />
+      <wsdl:output message="tns:addNewGongWen2016HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGongWen2016">
+      <wsdl:input message="tns:signGongWen2016HttpGetIn" />
+      <wsdl:output message="tns:signGongWen2016HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXingZhi">
+      <wsdl:input message="tns:getXingZhiHttpGetIn" />
+      <wsdl:output message="tns:getXingZhiHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLeiXing">
+      <wsdl:input message="tns:getLeiXingHttpGetIn" />
+      <wsdl:output message="tns:getLeiXingHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLingDao">
+      <wsdl:input message="tns:getLingDaoHttpGetIn" />
+      <wsdl:output message="tns:getLingDaoHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="gwxxWebServiceHttpPost">
+    <wsdl:operation name="getLeaderList">
+      <wsdl:input message="tns:getLeaderListHttpPostIn" />
+      <wsdl:output message="tns:getLeaderListHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptListById">
+      <wsdl:input message="tns:getDeptListByIdHttpPostIn" />
+      <wsdl:output message="tns:getDeptListByIdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDeptTypeList">
+      <wsdl:input message="tns:getDeptTypeListHttpPostIn" />
+      <wsdl:output message="tns:getDeptTypeListHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwxxByWh">
+      <wsdl:input message="tns:getGwxxByWhHttpPostIn" />
+      <wsdl:output message="tns:getGwxxByWhHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="isSigned">
+      <wsdl:input message="tns:isSignedHttpPostIn" />
+      <wsdl:output message="tns:isSignedHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGw">
+      <wsdl:input message="tns:signGwHttpPostIn" />
+      <wsdl:output message="tns:signGwHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwlb">
+      <wsdl:input message="tns:getGwlbHttpPostIn" />
+      <wsdl:output message="tns:getGwlbHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getInstructions">
+      <wsdl:input message="tns:getInstructionsHttpPostIn" />
+      <wsdl:output message="tns:getInstructionsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getAttachFile">
+      <wsdl:input message="tns:getAttachFileHttpPostIn" />
+      <wsdl:output message="tns:getAttachFileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGwLevel">
+      <wsdl:input message="tns:getGwLevelHttpPostIn" />
+      <wsdl:output message="tns:getGwLevelHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGwMiddle">
+      <wsdl:input message="tns:signGwMiddleHttpPostIn" />
+      <wsdl:output message="tns:signGwMiddleHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addNewGongWen2016">
+      <wsdl:input message="tns:addNewGongWen2016HttpPostIn" />
+      <wsdl:output message="tns:addNewGongWen2016HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="signGongWen2016">
+      <wsdl:input message="tns:signGongWen2016HttpPostIn" />
+      <wsdl:output message="tns:signGongWen2016HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXingZhi">
+      <wsdl:input message="tns:getXingZhiHttpPostIn" />
+      <wsdl:output message="tns:getXingZhiHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLeiXing">
+      <wsdl:input message="tns:getLeiXingHttpPostIn" />
+      <wsdl:output message="tns:getLeiXingHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLingDao">
+      <wsdl:input message="tns:getLingDaoHttpPostIn" />
+      <wsdl:output message="tns:getLingDaoHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="gwxxWebServiceSoap" type="tns:gwxxWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getLeaderList">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getLeaderList" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getLeaderListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptListById">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getDeptListById" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getDeptListByIdSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptTypeList">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getDeptTypeList" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getDeptTypeListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwxxByWh">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGwxxByWh" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGwxxByWhSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isSigned">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/isSigned" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:isSignedSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGw">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/signGw" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:signGwSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwlb">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGwlb" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGwlbSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInstructions">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getInstructions" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getInstructionsSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAttachFile">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getAttachFile" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getAttachFileSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwLevel">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGwLevel" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGwLevelSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGwMiddle">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/signGwMiddle" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:signGwMiddleSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addNewGongWen2016">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/addNewGongWen2016" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:addNewGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGongWen2016">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/signGongWen2016" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:signGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXingZhi">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getXingZhi" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getXingZhiSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLeiXing">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getLeiXing" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getLeiXingSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLingDao">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getLingDao" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getLingDaoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="gwxxWebServiceSoap12" type="tns:gwxxWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getLeaderList">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getLeaderList" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getLeaderListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptListById">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getDeptListById" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getDeptListByIdSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptTypeList">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getDeptTypeList" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getDeptTypeListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwxxByWh">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGwxxByWh" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGwxxByWhSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isSigned">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/isSigned" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:isSignedSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGw">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/signGw" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:signGwSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwlb">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGwlb" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGwlbSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInstructions">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getInstructions" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getInstructionsSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAttachFile">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAttachFile" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getAttachFileSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwLevel">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGwLevel" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGwLevelSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGwMiddle">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/signGwMiddle" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:signGwMiddleSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addNewGongWen2016">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/addNewGongWen2016" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:addNewGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGongWen2016">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/signGongWen2016" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:signGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXingZhi">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getXingZhi" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getXingZhiSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLeiXing">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getLeiXing" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getLeiXingSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLingDao">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getLingDao" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getLingDaoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="gwxxWebServiceHttpGet" type="tns:gwxxWebServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="getLeaderList">
+      <http:operation location="/getLeaderList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptListById">
+      <http:operation location="/getDeptListById" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptTypeList">
+      <http:operation location="/getDeptTypeList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwxxByWh">
+      <http:operation location="/getGwxxByWh" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isSigned">
+      <http:operation location="/isSigned" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGw">
+      <http:operation location="/signGw" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwlb">
+      <http:operation location="/getGwlb" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInstructions">
+      <http:operation location="/getInstructions" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAttachFile">
+      <http:operation location="/getAttachFile" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwLevel">
+      <http:operation location="/getGwLevel" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGwMiddle">
+      <http:operation location="/signGwMiddle" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addNewGongWen2016">
+      <http:operation location="/addNewGongWen2016" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGongWen2016">
+      <http:operation location="/signGongWen2016" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXingZhi">
+      <http:operation location="/getXingZhi" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLeiXing">
+      <http:operation location="/getLeiXing" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLingDao">
+      <http:operation location="/getLingDao" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="gwxxWebServiceHttpPost" type="tns:gwxxWebServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="getLeaderList">
+      <http:operation location="/getLeaderList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptListById">
+      <http:operation location="/getDeptListById" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDeptTypeList">
+      <http:operation location="/getDeptTypeList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwxxByWh">
+      <http:operation location="/getGwxxByWh" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isSigned">
+      <http:operation location="/isSigned" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGw">
+      <http:operation location="/signGw" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwlb">
+      <http:operation location="/getGwlb" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInstructions">
+      <http:operation location="/getInstructions" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAttachFile">
+      <http:operation location="/getAttachFile" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGwLevel">
+      <http:operation location="/getGwLevel" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGwMiddle">
+      <http:operation location="/signGwMiddle" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addNewGongWen2016">
+      <http:operation location="/addNewGongWen2016" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="signGongWen2016">
+      <http:operation location="/signGongWen2016" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXingZhi">
+      <http:operation location="/getXingZhi" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLeiXing">
+      <http:operation location="/getLeiXing" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLingDao">
+      <http:operation location="/getLingDao" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="gwxxWebService">
+    <wsdl:port name="gwxxWebServiceSoap" binding="tns:gwxxWebServiceSoap">
+      <soap:address location="http://localhost:4024/gwxxService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="gwxxWebServiceSoap12" binding="tns:gwxxWebServiceSoap12">
+      <soap12:address location="http://localhost:4024/gwxxService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="gwxxWebServiceHttpGet" binding="tns:gwxxWebServiceHttpGet">
+      <http:address location="http://localhost:4024/gwxxService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="gwxxWebServiceHttpPost" binding="tns:gwxxWebServiceHttpPost">
+      <http:address location="http://localhost:4024/gwxxService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

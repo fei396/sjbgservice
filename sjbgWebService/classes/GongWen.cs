@@ -202,4 +202,44 @@ namespace sjbgWebService.gwxx
         public int ID { get; set; }
         public string Lbmc{get;set;}
     }
+
+    public class GongWenLeiXing
+    {
+        public int LXID{get;set;}
+        public string LXMC{get;set;}
+    }
+    public class GongWenXingZhi
+    {
+        public int XZID{get;set;}
+        public string XZMC{get;set;}
+    }
+
+    public class GongWenYongHu
+    {
+        public string GongHao { get; set; }
+        public string XingMing { get; set; }
+        public string NiCheng { get; set; }
+        public string BuMen { get; set; }
+        public int BuMenID { get; set; }
+        public int[] RoleID { get; set; }
+        public int[] XingZhiID { get; set; }
+
+        public string XingZhiIDString
+        {
+            get
+            {
+                
+                if (XingZhiID == null || XingZhiID.Length == 0) return string.Empty;
+                string str = "";
+                for(int i=0;i<XingZhiID.Length;i++)
+                {
+                    str += XingZhiID[i].ToString() + ",";
+                }
+                str = str.Substring(0, str.Length - 1);
+                return str;
+            }
+        }
+
+
+    }
 }
