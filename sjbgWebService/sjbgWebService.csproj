@@ -84,6 +84,7 @@
     <Content Include="tqyjService.asmx" />
     <Content Include="jianxiuService.asmx" />
     <Content Include="sendfileService.asmx" />
+    <None Include="Properties\PublishProfiles\测试.pubxml" />
     <None Include="Properties\PublishProfiles\配置文件1.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -22,23 +22,16 @@ public partial class AddNew : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        //string s = Session["user"] as string;
-        //try
-        //{
-        //    uid = Convert.ToInt32(s);
-        //}
-        //catch
-        //{
-        //    Response.Redirect("error.aspx?errCode=请通过正确方式登录本站");
-        //}
-        //if (s == null || s == "")
-        //{
-        //    Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
-        //}
+        GongWenYongHu user = Session["user"] as GongWenYongHu;
+        if (user == null)
+        {
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+        }
+
 
         if (!IsPostBack)
         {
-            Session["uid"] = 3974;
+            
             initPage();
         }
     }
@@ -63,13 +56,19 @@ public partial class AddNew : System.Web.UI.Page
             ListItem li = new ListItem(gwxz[i].XZMC, gwxz[i].XZID.ToString());
             ddlXingZhi.Items.Add(li);
         }
-        GongWenYongHu[] lingdao = s.getLingDao();
+        GongWenYongHu[] lingdao = s.getLingDao(new int[]{21});
         ddlLingDao.Items.Clear();
         for (int i = 0; i < lingdao.Length; i++)
         {
             ListItem li = new ListItem(lingdao[i].NiCheng + "(" + lingdao[i].XingMing + ")", lingdao[i].GongHao);
             ddlLingDao.Items.Add(li);
         }
+        txtBt.Text = "";
+        txtFwdw.Text = "";
+        txtHt.Text = "";
+        txtWh.Text = "";
+        txtYj.Text = "";
+        txtZw.Text = "";
         //txtTitle.Text = "";
         //txtContent.Text = "";
         //txtSetTime.Text = "";
@@ -89,13 +88,19 @@ public partial class AddNew : System.Web.UI.Page
 
     protected void AddButton_Click(object sender, EventArgs e)
     {
+        GongWenYongHu user = Session["user"] as GongWenYongHu;
+        if (user == null)
+        {
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+        }
+
         string[] files =uploadfile();
         if (files == null)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "uploadError", "alert('上传文件出错!')", true);
             return;
         }
-        int uid = Convert.ToInt32(Session["uid"]);
+        int uid = Convert.ToInt32(user.GongHao);
         string ht = txtHt.Text;
         string dw = txtFwdw.Text;
         string bt = txtBt.Text;
@@ -103,9 +108,10 @@ public partial class AddNew : System.Web.UI.Page
         string zw = txtZw.Text;
         int lxid = Convert.ToInt32(ddlLeiXing.SelectedValue);
         int xzid = Convert.ToInt32(ddlXingZhi.SelectedValue);
+        string yj = txtYj.Text;
         string jsr = ddlLingDao.SelectedValue;
         gwxxService.gwxxWebService g = new gwxxWebService();
-        INT i = g.addNewGongWen2016(uid, ht, wh, bt, zw, xzid, lxid, "127.0.0.1", jsr, files);
+        INT i = g.addNewGongWen2016(uid, ht, dw, wh, bt, zw,yj, xzid, lxid,pbModule.getIP(), jsr, files);
         if (i.Number != 1)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "发布公文出错", "alert('" + i.Message + "')", true);
@@ -117,21 +123,9 @@ public partial class AddNew : System.Web.UI.Page
             initPage();
         }
     }
-    protected void CancelButton_Click(object sender, EventArgs e)
-    {
-        gwxxService.gwxxWebService g = new gwxxWebService();
-        INT i = g.signGongWen2016(5, 4, "3974", null, "明白");
-        if (i.Number != 1)
-        {
-            txtZw.Text = i.Message;
-        }
-    }
 
     private string[] uploadfile()
     {
-
-
-
         HttpFileCollection files = HttpContext.Current.Request.Files;//获取上传控件的个数  
         if (haveFile(files))//存在上传文件  
         {

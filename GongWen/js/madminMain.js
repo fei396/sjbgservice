@@ -89,7 +89,7 @@ getPageScroll = function () {
 
 */
 oHome = "main.aspx",
-sName = "安全信息平台",
+sName = "公文流转系统",
 iFrame = null,
 oFrame = null,
 prevMenu = null,
@@ -100,18 +100,41 @@ wResizeEnd = true,
 resizeTime = null,
 Menus = new Object(),
 // 初始化
-init = function () {
+init = function (rid) {
     if (window != top) {
         top.location.replace(self.location);
         return false;
     }
     // 初始化菜单列表
+    switch(rid)
+    {
+        case 21:
+        case 22:
+            Menus = {
 
-    Menus = {
+                "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListGongWen.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1","自定义短语":"DuanYu.aspx","自定义部门":"BuMen.aspx" } }
 
-        "操作菜单": { "row": 1, "show": true, "menu": { "发送信息": "applyaqxx.aspx", "信息查询": "editfile.aspx"} }
+            };
+            break;
+        case 23:
+            case 24:
+            Menus = {
 
-    };
+                "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListGongWen.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1", "管理本部门人员": "EditBuMenRenYuan.aspx", "自定义短语": "DuanYu.aspx" } }
+
+            };
+            break;
+        case 20:
+            Menus = {
+
+                "操作菜单": { "row": 1, "show": true, "menu": { "发新公文": "AddNew.aspx", "未签完公文": "ListGongWenGuiDang.aspx?type=0","所有公文":"ListGongWenGuiDang.aspx?type=1" } }
+
+            };
+            break;
+        default:
+            break;
+    }
+   
 
     // 生成并初始化菜单
     menu.create(Menus);
@@ -236,21 +259,21 @@ menu = {
         var tMenus = new Array();
         var mHtml = "";
         var i = 0;
-        for (var m in Menus) {
-            // 如果为当前点击菜单项
-            if (m == mName) {
-                sMenus = Menus[m].menu;
-                // 设置模块标题
-                $("manage_title").innerHTML = m;
-                for (var sm in sMenus) {
-                    tMenus[i] = "<a href=\"" + sMenus[sm] + "\" target=\"main_data\">" + sm.replace(/[ ]/g, "") + "</a>";
-                    i++;
-                }
-                mHtml = tMenus.join("&nbsp;--&nbsp;");
-                $("manage_menu").innerHTML = mHtml;
-                break;
-            }
-        }
+        //for (var m in Menus) {
+        //    // 如果为当前点击菜单项
+        //    if (m == mName) {
+        //        sMenus = Menus[m].menu;
+        //        // 设置模块标题
+        //        $("manage_title").innerHTML = m;
+        //        for (var sm in sMenus) {
+        //            tMenus[i] = "<a href=\"" + sMenus[sm] + "\" target=\"main_data\">" + sm.replace(/[ ]/g, "") + "</a>";
+        //            i++;
+        //        }
+        //        mHtml = tMenus.join("&nbsp;--&nbsp;");
+        //        //$("manage_menu").innerHTML = mHtml;
+        //        break;
+        //    }
+        //}
         prevMMenu = menu;
     },
     // 显示隐藏左侧整列菜单

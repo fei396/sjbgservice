@@ -7,10 +7,7 @@
     protected void Page_Load(object sender, EventArgs e)
     {
         
-        Guid g = Guid.NewGuid();
-        XxjwdSSO sso = new XxjwdSSO(Request);
-        string code = sso.getNewVerifyCode("3770");
-        Response.Redirect("login.aspx?code=" + code);
+
     }
 
     public string GetCustomerMac(string IP)
@@ -41,6 +38,15 @@
         }
 
     }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Guid g = Guid.NewGuid();
+        XxjwdSSO sso = new XxjwdSSO(Request);
+        string gh = TextBox1.Text;
+        string code = sso.getNewVerifyCode(gh);
+        Response.Redirect("login.aspx?code=" + code);
+    }
 </script>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -50,14 +56,8 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-        <br />
-        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-        <br />
-        <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
-        <br />
-        <asp:Label ID="Label4"
-            runat="server" Text="Label"></asp:Label>
+        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
     </div>
     </form>
 </body>

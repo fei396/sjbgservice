@@ -43,7 +43,24 @@ public partial class login : System.Web.UI.Page
         }
         else
         {
-            Session["user"] = vr.WorkNo;
+            int uid;
+            try
+            {
+                uid = Convert.ToInt32(vr.WorkNo);
+            }
+            catch (Exception ex)
+            {
+                Response.Redirect("error.aspx?errcode=登录失败：" + Convert.ToString(ex.Message));
+                return;
+            }
+            gwxxService.gwxxWebService s = new gwxxService.gwxxWebService();
+            gwxxService.GongWenYongHu gwyh = s.getGongWenYongHuByUid(uid);
+            if (gwyh==null)
+            {
+                Response.Redirect("error.aspx?errcode=登录失败：用户不存在");
+                return;
+            }
+            Session["user"] = gwyh;
             Response.Redirect("mdefault.aspx");
         }
     }

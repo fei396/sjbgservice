@@ -1,10 +1,10 @@
-<%@ Page Language="C#" AutoEventWireup="true"   CodeFile="mDefault.aspx.cs" Inherits="mDefault" %>
+<%@ Page Language="C#"  MaintainScrollPositionOnPostback="true"   AutoEventWireup="true"   CodeFile="mDefault.aspx.cs" Inherits="mDefault" %>
 
 
 
 <html>
 <head runat="server">
-    <title>新乡机务段安全信息平台1</title>
+    <title>新乡机务段公文流转系统</title>
     <link href="css/Style.css" rel="stylesheet" type="text/css" />
  <%--   <script language="javascript" type="text/javascript" src="js/madminMain.js" charset="GB2312"></script>--%>
 <script language="javascript" type="text/javascript">
@@ -20,7 +20,7 @@ window.onresize = function() {
 -->
 </script>
 </head>
-<body>
+<body >
     <form id="form1" runat="server">
 <div id="wrap">
 	        <!-- 顶部 -->
@@ -55,10 +55,10 @@ window.onresize = function() {
 			        <td id="main" class="main_border">
 				        <div id="main_toolbar" class="toolbarBg">
 					        <div id="showDate" class="right"></div>
-					        <a href="javascript:void(0);" onclick="goTo(this);" rel="showLeft" id="btnShowLeft" class="sh_left_open" title="隐藏左侧导航菜单"><span class="btnIco btnShLeft"></span><span id="manage_title">系统管理员</span></a>
+					        <a href="javascript:void(0);" onclick="goTo(this);" rel="showLeft" id="btnShowLeft" class="sh_left_open" title="隐藏左侧导航菜单"><span class="btnIco btnShLeft"></span><span id="manage_title"><asp:Label runat="server" ID="lblWelcome"></asp:Label></span></a>
 				        </div>
-				        <iframe src="" id="main_data" name="main_data" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" onload="reSize();"></iframe>
-				        <div id="footer" class="toolbarBg"><span class="left"> 2011版权所有.</span></div>
+				        <iframe src="" noresize="noresize" id="main_data" name="main_data" marginwidth="0" marginheight="0" frameborder="0" scrolling="yes" onload="reSize();"></iframe>
+				        <div id="footer" class="toolbarBg"><span class="left"> 2016版权所有.</span></div>
 			        </td>
 		        </tr>
 	        </table>

@@ -120,6 +120,13 @@
           </s:restriction>
         </s:complexContent>
       </s:complexType>
+      <s:complexType name="ArrayOfInt">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="s:int[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
       <s:complexType name="ArrayOfGongWenXingZhi">
         <s:complexContent mixed="false">
           <s:restriction base="soapenc:Array">
@@ -160,16 +167,147 @@
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="NiCheng" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BuMen" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="BuMenID" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="RoleID" type="tns:ArrayOfInt" />
-          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="XingZhiID" type="tns:ArrayOfInt" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="RoleID" type="s:int" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="ArrayOfInt">
+      <s:complexType name="ArrayOfGongWenList">
         <s:complexContent mixed="false">
           <s:restriction base="soapenc:Array">
-            <s:attribute wsdl:arrayType="s:int[]" ref="soapenc:arrayType" />
+            <s:attribute wsdl:arrayType="tns:GongWenList[]" ref="soapenc:arrayType" />
           </s:restriction>
         </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GongWenList">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="XuHao" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="GongWenID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="LiuZhuanID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaSongRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="WenHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BiaoTi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaSongShiJian" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ShiFouQianShou" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="QianShouQingKuang" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GongWen2016">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="GongWenID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="WenHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="HongTou" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaWenDanWei" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BiaoTi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ZhengWen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ChengSongYiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="WenJianXingZhi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="WenJianLeiXing" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="XingZhiID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="LeiXingID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaBuShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaBuRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaBuRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FuJian" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfGongWenLiuZhuan">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:GongWenLiuZhuan[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GongWenLiuZhuan">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="LiuZhuanID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="GongWenID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaSongRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaSongRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JieShouRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JieShouRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaSongShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="QianShouShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="QianShouNeiRong" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfZiDingYiDuanYu">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:ZiDingYiDuanYu[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ZiDingYiDuanYu">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="SiYou" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="DuanYuNeiRong" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfZiDingYiBuMen">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:ZiDingYiBuMen[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ZiDingYiBuMen">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="MingCheng" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBuMenFenLei">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:BuMenFenLei[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BuMenFenLei">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="FenLeiID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="BuMenID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BuMenMingCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FenLeiMingCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FenLeiZongCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="RenYuan" type="tns:ArrayOfBuMenRenYuan" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBuMenRenYuan">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:BuMenRenYuan[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BuMenRenYuan">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="GongHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="XianShiMingCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="NiCheng" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfGongWenGuiDangList">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:GongWenGuiDangList[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GongWenGuiDangList">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="XuHao" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="GongWenID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="LiuZhuanID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="WenHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BiaoTi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaBuRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaBuRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JieShouRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JieShouRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaBuShiJian" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ShiFouLiuZhuanWanCheng" type="s:boolean" />
+        </s:sequence>
       </s:complexType>
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/literalTypes">
@@ -312,15 +450,149 @@
           <s:element minOccurs="0" maxOccurs="1" name="NiCheng" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="BuMen" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="BuMenID" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="RoleID" type="s1:ArrayOfInt" />
-          <s:element minOccurs="0" maxOccurs="1" name="XingZhiID" type="s1:ArrayOfInt" />
+          <s:element minOccurs="1" maxOccurs="1" name="RoleID" type="s:int" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="ArrayOfInt">
+      <s:element name="GongWenYongHu" nillable="true" type="s1:GongWenYongHu" />
+      <s:element name="ArrayOfGongWenList" nillable="true" type="s1:ArrayOfGongWenList" />
+      <s:complexType name="ArrayOfGongWenList">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GongWenList" nillable="true" type="s1:GongWenList" />
         </s:sequence>
       </s:complexType>
+      <s:complexType name="GongWenList">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="XuHao" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GongWenID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LiuZhuanID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaSongRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WenHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BiaoTi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaSongShiJian" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShiFouQianShou" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="QianShouQingKuang" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="int" type="s:int" />
+      <s:element name="GongWen2016" nillable="true" type="s1:GongWen2016" />
+      <s:complexType name="GongWen2016">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="GongWenID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="WenHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HongTou" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaWenDanWei" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BiaoTi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZhengWen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ChengSongYiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WenJianXingZhi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WenJianLeiXing" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="XingZhiID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LeiXingID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaBuShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaBuRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaBuRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FuJian" type="s1:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfGongWenLiuZhuan" nillable="true" type="s1:ArrayOfGongWenLiuZhuan" />
+      <s:complexType name="ArrayOfGongWenLiuZhuan">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GongWenLiuZhuan" nillable="true" type="s1:GongWenLiuZhuan" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GongWenLiuZhuan">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="LiuZhuanID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GongWenID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaSongRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaSongRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JieShouRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JieShouRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaSongShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="QianShouShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="QianShouNeiRong" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfZiDingYiDuanYu" nillable="true" type="s1:ArrayOfZiDingYiDuanYu" />
+      <s:complexType name="ArrayOfZiDingYiDuanYu">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ZiDingYiDuanYu" nillable="true" type="s1:ZiDingYiDuanYu" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZiDingYiDuanYu">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiYou" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="DuanYuNeiRong" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfZiDingYiBuMen" nillable="true" type="s1:ArrayOfZiDingYiBuMen" />
+      <s:complexType name="ArrayOfZiDingYiBuMen">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ZiDingYiBuMen" nillable="true" type="s1:ZiDingYiBuMen" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZiDingYiBuMen">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MingCheng" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfBuMenFenLei" nillable="true" type="s1:ArrayOfBuMenFenLei" />
+      <s:complexType name="ArrayOfBuMenFenLei">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BuMenFenLei" nillable="true" type="s1:BuMenFenLei" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BuMenFenLei">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="FenLeiID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="BuMenID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BuMenMingCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FenLeiMingCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FenLeiZongCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RenYuan" type="s1:ArrayOfBuMenRenYuan" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBuMenRenYuan">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BuMenRenYuan" nillable="true" type="s1:BuMenRenYuan" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BuMenRenYuan">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="GongHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XianShiMingCheng" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NiCheng" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfGongWenGuiDangList" nillable="true" type="s1:ArrayOfGongWenGuiDangList" />
+      <s:complexType name="ArrayOfGongWenGuiDangList">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GongWenGuiDangList" nillable="true" type="s1:GongWenGuiDangList" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GongWenGuiDangList">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="XuHao" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GongWenID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LiuZhuanID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="WenHao" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BiaoTi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaBuRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaBuRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JieShouRen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JieShouRenXM" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FaBuShiJian" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ShiFouLiuZhuanWanCheng" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfBuMenRenYuan" nillable="true" type="s1:ArrayOfBuMenRenYuan" />
     </s:schema>
     <s:schema targetNamespace="http://sjbg.xxjwd.org/AbstractTypes">
       <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -443,9 +715,11 @@
   <wsdl:message name="addNewGongWen2016SoapIn">
     <wsdl:part name="uid" type="s:int" />
     <wsdl:part name="ht" type="s:string" />
+    <wsdl:part name="dw" type="s:string" />
     <wsdl:part name="wh" type="s:string" />
     <wsdl:part name="bt" type="s:string" />
     <wsdl:part name="zw" type="s:string" />
+    <wsdl:part name="yj" type="s:string" />
     <wsdl:part name="xzid" type="s:int" />
     <wsdl:part name="lxid" type="s:int" />
     <wsdl:part name="ip" type="s:string" />
@@ -461,9 +735,10 @@
   <wsdl:message name="signGongWen2016SoapIn">
     <wsdl:part name="gwid" type="s:int" />
     <wsdl:part name="lzid" type="s:int" />
-    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="fsr" type="s:int" />
     <wsdl:part name="jsr" type="tns:ArrayOfString" />
     <wsdl:part name="qsnr" type="s:string" />
+    <wsdl:part name="zdybm" type="tns:ArrayOfInt" />
   </wsdl:message>
   <wsdl:message name="signGongWen2016SoapOut">
     <wsdl:part name="signGongWen2016Result" type="tns:INT" />
@@ -485,11 +760,255 @@
   <wsdl:message name="getLeiXingSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
-  <wsdl:message name="getLingDaoSoapIn" />
+  <wsdl:message name="getLingDaoSoapIn">
+    <wsdl:part name="roleid" type="tns:ArrayOfInt" />
+  </wsdl:message>
   <wsdl:message name="getLingDaoSoapOut">
     <wsdl:part name="getLingDaoResult" type="tns:ArrayOfGongWenYongHu" />
   </wsdl:message>
   <wsdl:message name="getLingDaoSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenYongHuByUidSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenYongHuByUidSoapOut">
+    <wsdl:part name="getGongWenYongHuByUidResult" type="tns:GongWenYongHu" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenYongHuByUidSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenListSoapIn">
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="gwtype" type="s:int" />
+    <wsdl:part name="ksxh" type="s:int" />
+    <wsdl:part name="count" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenListSoapOut">
+    <wsdl:part name="getGongWenListResult" type="tns:ArrayOfGongWenList" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenListSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenCountSoapIn">
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="gwtype" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenCountSoapOut">
+    <wsdl:part name="getGongWenCountResult" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenCountSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGongWen2016ByIDSoapIn">
+    <wsdl:part name="gwid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWen2016ByIDSoapOut">
+    <wsdl:part name="getGongWen2016ByIDResult" type="tns:GongWen2016" />
+  </wsdl:message>
+  <wsdl:message name="getGongWen2016ByIDSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getLiuZhuanXianSoapIn">
+    <wsdl:part name="lzid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getLiuZhuanXianSoapOut">
+    <wsdl:part name="getLiuZhuanXianResult" type="tns:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
+  <wsdl:message name="getLiuZhuanXianSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiDuanYuSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="onlyPrivate" type="s:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiDuanYuSoapOut">
+    <wsdl:part name="getZiDingYiDuanYuResult" type="tns:ArrayOfZiDingYiDuanYu" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiDuanYuSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="addDuanYuSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="dynr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="addDuanYuSoapOut">
+    <wsdl:part name="addDuanYuResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="addDuanYuSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="deleteDuanYuSoapIn">
+    <wsdl:part name="id" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="deleteDuanYuSoapOut">
+    <wsdl:part name="deleteDuanYuResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteDuanYuSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="updateDuanYuSoapIn">
+    <wsdl:part name="id" type="s:int" />
+    <wsdl:part name="newTxt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="updateDuanYuSoapOut">
+    <wsdl:part name="updateDuanYuResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="updateDuanYuSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="addZdybmSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="dynr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="addZdybmSoapOut">
+    <wsdl:part name="addZdybmResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="addZdybmSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="deleteZdybmSoapIn">
+    <wsdl:part name="id" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="deleteZdybmSoapOut">
+    <wsdl:part name="deleteZdybmResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteZdybmSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="updateZdybmSoapIn">
+    <wsdl:part name="id" type="s:int" />
+    <wsdl:part name="newTxt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="updateZdybmSoapOut">
+    <wsdl:part name="updateZdybmResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="updateZdybmSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenSoapOut">
+    <wsdl:part name="getZiDingYiBuMenResult" type="tns:ArrayOfZiDingYiBuMen" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenFenLeiSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="rid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenFenLeiSoapOut">
+    <wsdl:part name="getBuMenFenLeiResult" type="tns:ArrayOfBuMenFenLei" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenFenLeiSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangListSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="type" type="s:int" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="ksxh" type="s:int" />
+    <wsdl:part name="count" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangListSoapOut">
+    <wsdl:part name="getGongWenGuiDangListResult" type="tns:ArrayOfGongWenGuiDangList" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangListSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangCountSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="type" type="s:int" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangCountSoapOut">
+    <wsdl:part name="getGongWenGuiDangCountResult" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangCountSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanSoapIn">
+    <wsdl:part name="gwid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanSoapOut">
+    <wsdl:part name="makeCuiBanResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenRenYuanSoapIn">
+    <wsdl:part name="zdybmid" type="s:int" />
+    <wsdl:part name="added" type="s:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenRenYuanSoapOut">
+    <wsdl:part name="getZiDingYiBuMenRenYuanResult" type="tns:ArrayOfBuMenRenYuan" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenRenYuanSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="setZiDingYiBuMenRenYuanSoapIn">
+    <wsdl:part name="zdybmid" type="s:int" />
+    <wsdl:part name="user_no" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="setZiDingYiBuMenRenYuanSoapOut">
+    <wsdl:part name="setZiDingYiBuMenRenYuanResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="setZiDingYiBuMenRenYuanSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenRenYuanSoapIn">
+    <wsdl:part name="bmid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenRenYuanSoapOut">
+    <wsdl:part name="getBuMenRenYuanResult" type="tns:ArrayOfBuMenRenYuan" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenRenYuanSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="addGongWenRenYuanSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="gh" type="s:string" />
+    <wsdl:part name="rid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="addGongWenRenYuanSoapOut">
+    <wsdl:part name="addGongWenRenYuanResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="addGongWenRenYuanSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWenRenYuanSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="gh" type="s:string" />
+    <wsdl:part name="rid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWenRenYuanSoapOut">
+    <wsdl:part name="deleteGongWenRenYuanResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWenRenYuanSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getYongHuXinXiByGhSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="gh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getYongHuXinXiByGhSoapOut">
+    <wsdl:part name="getYongHuXinXiByGhResult" type="tns:GongWenYongHu" />
+  </wsdl:message>
+  <wsdl:message name="getYongHuXinXiByGhSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
   <wsdl:message name="getLeaderListHttpGetIn" />
@@ -567,9 +1086,11 @@
   <wsdl:message name="addNewGongWen2016HttpGetIn">
     <wsdl:part name="uid" type="s:string" />
     <wsdl:part name="ht" type="s:string" />
+    <wsdl:part name="dw" type="s:string" />
     <wsdl:part name="wh" type="s:string" />
     <wsdl:part name="bt" type="s:string" />
     <wsdl:part name="zw" type="s:string" />
+    <wsdl:part name="yj" type="s:string" />
     <wsdl:part name="xzid" type="s:string" />
     <wsdl:part name="lxid" type="s:string" />
     <wsdl:part name="ip" type="s:string" />
@@ -585,6 +1106,7 @@
     <wsdl:part name="fsr" type="s:string" />
     <wsdl:part name="jsr" type="s2:StringArray" />
     <wsdl:part name="qsnr" type="s:string" />
+    <wsdl:part name="zdybm" type="s2:StringArray" />
   </wsdl:message>
   <wsdl:message name="signGongWen2016HttpGetOut">
     <wsdl:part name="Body" element="s1:INT" />
@@ -597,9 +1119,184 @@
   <wsdl:message name="getLeiXingHttpGetOut">
     <wsdl:part name="Body" element="s1:ArrayOfGongWenLeiXing" />
   </wsdl:message>
-  <wsdl:message name="getLingDaoHttpGetIn" />
+  <wsdl:message name="getLingDaoHttpGetIn">
+    <wsdl:part name="roleid" type="s2:StringArray" />
+  </wsdl:message>
   <wsdl:message name="getLingDaoHttpGetOut">
     <wsdl:part name="Body" element="s1:ArrayOfGongWenYongHu" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenYongHuByUidHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenYongHuByUidHttpGetOut">
+    <wsdl:part name="Body" element="s1:GongWenYongHu" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenListHttpGetIn">
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="gwtype" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenListHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenList" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenCountHttpGetIn">
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="gwtype" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenCountHttpGetOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWen2016ByIDHttpGetIn">
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWen2016ByIDHttpGetOut">
+    <wsdl:part name="Body" element="s1:GongWen2016" />
+  </wsdl:message>
+  <wsdl:message name="getLiuZhuanXianHttpGetIn">
+    <wsdl:part name="lzid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getLiuZhuanXianHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiDuanYuHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="onlyPrivate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiDuanYuHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfZiDingYiDuanYu" />
+  </wsdl:message>
+  <wsdl:message name="addDuanYuHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="dynr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="addDuanYuHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteDuanYuHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteDuanYuHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="updateDuanYuHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="newTxt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="updateDuanYuHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="addZdybmHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="dynr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="addZdybmHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteZdybmHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteZdybmHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="updateZdybmHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="newTxt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="updateZdybmHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfZiDingYiBuMen" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenFenLeiHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="rid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenFenLeiHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenFenLei" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangListHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangListHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenGuiDangList" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangCountHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangCountHttpGetOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanHttpGetIn">
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenRenYuanHttpGetIn">
+    <wsdl:part name="zdybmid" type="s:string" />
+    <wsdl:part name="added" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenRenYuanHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenRenYuan" />
+  </wsdl:message>
+  <wsdl:message name="setZiDingYiBuMenRenYuanHttpGetIn">
+    <wsdl:part name="zdybmid" type="s:string" />
+    <wsdl:part name="user_no" type="s2:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="setZiDingYiBuMenRenYuanHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenRenYuanHttpGetIn">
+    <wsdl:part name="bmid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenRenYuanHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenRenYuan" />
+  </wsdl:message>
+  <wsdl:message name="addGongWenRenYuanHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gh" type="s:string" />
+    <wsdl:part name="rid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="addGongWenRenYuanHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWenRenYuanHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gh" type="s:string" />
+    <wsdl:part name="rid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWenRenYuanHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getYongHuXinXiByGhHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getYongHuXinXiByGhHttpGetOut">
+    <wsdl:part name="Body" element="s1:GongWenYongHu" />
   </wsdl:message>
   <wsdl:message name="getLeaderListHttpPostIn" />
   <wsdl:message name="getLeaderListHttpPostOut">
@@ -676,9 +1373,11 @@
   <wsdl:message name="addNewGongWen2016HttpPostIn">
     <wsdl:part name="uid" type="s:string" />
     <wsdl:part name="ht" type="s:string" />
+    <wsdl:part name="dw" type="s:string" />
     <wsdl:part name="wh" type="s:string" />
     <wsdl:part name="bt" type="s:string" />
     <wsdl:part name="zw" type="s:string" />
+    <wsdl:part name="yj" type="s:string" />
     <wsdl:part name="xzid" type="s:string" />
     <wsdl:part name="lxid" type="s:string" />
     <wsdl:part name="ip" type="s:string" />
@@ -694,6 +1393,7 @@
     <wsdl:part name="fsr" type="s:string" />
     <wsdl:part name="jsr" type="s2:StringArray" />
     <wsdl:part name="qsnr" type="s:string" />
+    <wsdl:part name="zdybm" type="s2:StringArray" />
   </wsdl:message>
   <wsdl:message name="signGongWen2016HttpPostOut">
     <wsdl:part name="Body" element="s1:INT" />
@@ -706,9 +1406,184 @@
   <wsdl:message name="getLeiXingHttpPostOut">
     <wsdl:part name="Body" element="s1:ArrayOfGongWenLeiXing" />
   </wsdl:message>
-  <wsdl:message name="getLingDaoHttpPostIn" />
+  <wsdl:message name="getLingDaoHttpPostIn">
+    <wsdl:part name="roleid" type="s2:StringArray" />
+  </wsdl:message>
   <wsdl:message name="getLingDaoHttpPostOut">
     <wsdl:part name="Body" element="s1:ArrayOfGongWenYongHu" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenYongHuByUidHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenYongHuByUidHttpPostOut">
+    <wsdl:part name="Body" element="s1:GongWenYongHu" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenListHttpPostIn">
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="gwtype" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenListHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenList" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenCountHttpPostIn">
+    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="fsr" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="gwtype" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenCountHttpPostOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="getGongWen2016ByIDHttpPostIn">
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWen2016ByIDHttpPostOut">
+    <wsdl:part name="Body" element="s1:GongWen2016" />
+  </wsdl:message>
+  <wsdl:message name="getLiuZhuanXianHttpPostIn">
+    <wsdl:part name="lzid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getLiuZhuanXianHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiDuanYuHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="onlyPrivate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiDuanYuHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfZiDingYiDuanYu" />
+  </wsdl:message>
+  <wsdl:message name="addDuanYuHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="dynr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="addDuanYuHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteDuanYuHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteDuanYuHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="updateDuanYuHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="newTxt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="updateDuanYuHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="addZdybmHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="dynr" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="addZdybmHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteZdybmHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteZdybmHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="updateZdybmHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="newTxt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="updateZdybmHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfZiDingYiBuMen" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenFenLeiHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="rid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenFenLeiHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenFenLei" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangListHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangListHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenGuiDangList" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangCountHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getGongWenGuiDangCountHttpPostOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanHttpPostIn">
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenRenYuanHttpPostIn">
+    <wsdl:part name="zdybmid" type="s:string" />
+    <wsdl:part name="added" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getZiDingYiBuMenRenYuanHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenRenYuan" />
+  </wsdl:message>
+  <wsdl:message name="setZiDingYiBuMenRenYuanHttpPostIn">
+    <wsdl:part name="zdybmid" type="s:string" />
+    <wsdl:part name="user_no" type="s2:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="setZiDingYiBuMenRenYuanHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenRenYuanHttpPostIn">
+    <wsdl:part name="bmid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getBuMenRenYuanHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfBuMenRenYuan" />
+  </wsdl:message>
+  <wsdl:message name="addGongWenRenYuanHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gh" type="s:string" />
+    <wsdl:part name="rid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="addGongWenRenYuanHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWenRenYuanHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gh" type="s:string" />
+    <wsdl:part name="rid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWenRenYuanHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="getYongHuXinXiByGhHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gh" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getYongHuXinXiByGhHttpPostOut">
+    <wsdl:part name="Body" element="s1:GongWenYongHu" />
   </wsdl:message>
   <wsdl:portType name="gwxxWebServiceSoap">
     <wsdl:operation name="getLeaderList">
@@ -774,6 +1649,98 @@
     <wsdl:operation name="getLingDao">
       <wsdl:input message="tns:getLingDaoSoapIn" />
       <wsdl:output message="tns:getLingDaoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenYongHuByUid">
+      <wsdl:input message="tns:getGongWenYongHuByUidSoapIn" />
+      <wsdl:output message="tns:getGongWenYongHuByUidSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenList">
+      <wsdl:input message="tns:getGongWenListSoapIn" />
+      <wsdl:output message="tns:getGongWenListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenCount">
+      <wsdl:input message="tns:getGongWenCountSoapIn" />
+      <wsdl:output message="tns:getGongWenCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWen2016ByID">
+      <wsdl:input message="tns:getGongWen2016ByIDSoapIn" />
+      <wsdl:output message="tns:getGongWen2016ByIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLiuZhuanXian">
+      <wsdl:input message="tns:getLiuZhuanXianSoapIn" />
+      <wsdl:output message="tns:getLiuZhuanXianSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiDuanYu">
+      <wsdl:input message="tns:getZiDingYiDuanYuSoapIn" />
+      <wsdl:output message="tns:getZiDingYiDuanYuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addDuanYu">
+      <wsdl:input message="tns:addDuanYuSoapIn" />
+      <wsdl:output message="tns:addDuanYuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteDuanYu">
+      <wsdl:input message="tns:deleteDuanYuSoapIn" />
+      <wsdl:output message="tns:deleteDuanYuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateDuanYu">
+      <wsdl:input message="tns:updateDuanYuSoapIn" />
+      <wsdl:output message="tns:updateDuanYuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addZdybm">
+      <wsdl:input message="tns:addZdybmSoapIn" />
+      <wsdl:output message="tns:addZdybmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteZdybm">
+      <wsdl:input message="tns:deleteZdybmSoapIn" />
+      <wsdl:output message="tns:deleteZdybmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateZdybm">
+      <wsdl:input message="tns:updateZdybmSoapIn" />
+      <wsdl:output message="tns:updateZdybmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMen">
+      <wsdl:input message="tns:getZiDingYiBuMenSoapIn" />
+      <wsdl:output message="tns:getZiDingYiBuMenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenFenLei">
+      <wsdl:input message="tns:getBuMenFenLeiSoapIn" />
+      <wsdl:output message="tns:getBuMenFenLeiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangList">
+      <wsdl:input message="tns:getGongWenGuiDangListSoapIn" />
+      <wsdl:output message="tns:getGongWenGuiDangListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangCount">
+      <wsdl:input message="tns:getGongWenGuiDangCountSoapIn" />
+      <wsdl:output message="tns:getGongWenGuiDangCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBan">
+      <wsdl:input message="tns:makeCuiBanSoapIn" />
+      <wsdl:output message="tns:makeCuiBanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMenRenYuan">
+      <wsdl:input message="tns:getZiDingYiBuMenRenYuanSoapIn" />
+      <wsdl:output message="tns:getZiDingYiBuMenRenYuanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setZiDingYiBuMenRenYuan">
+      <wsdl:input message="tns:setZiDingYiBuMenRenYuanSoapIn" />
+      <wsdl:output message="tns:setZiDingYiBuMenRenYuanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenRenYuan">
+      <wsdl:input message="tns:getBuMenRenYuanSoapIn" />
+      <wsdl:output message="tns:getBuMenRenYuanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addGongWenRenYuan">
+      <wsdl:input message="tns:addGongWenRenYuanSoapIn" />
+      <wsdl:output message="tns:addGongWenRenYuanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWenRenYuan">
+      <wsdl:input message="tns:deleteGongWenRenYuanSoapIn" />
+      <wsdl:output message="tns:deleteGongWenRenYuanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getYongHuXinXiByGh">
+      <wsdl:input message="tns:getYongHuXinXiByGhSoapIn" />
+      <wsdl:output message="tns:getYongHuXinXiByGhSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="gwxxWebServiceHttpGet">
@@ -841,6 +1808,98 @@
       <wsdl:input message="tns:getLingDaoHttpGetIn" />
       <wsdl:output message="tns:getLingDaoHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="getGongWenYongHuByUid">
+      <wsdl:input message="tns:getGongWenYongHuByUidHttpGetIn" />
+      <wsdl:output message="tns:getGongWenYongHuByUidHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenList">
+      <wsdl:input message="tns:getGongWenListHttpGetIn" />
+      <wsdl:output message="tns:getGongWenListHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenCount">
+      <wsdl:input message="tns:getGongWenCountHttpGetIn" />
+      <wsdl:output message="tns:getGongWenCountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWen2016ByID">
+      <wsdl:input message="tns:getGongWen2016ByIDHttpGetIn" />
+      <wsdl:output message="tns:getGongWen2016ByIDHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLiuZhuanXian">
+      <wsdl:input message="tns:getLiuZhuanXianHttpGetIn" />
+      <wsdl:output message="tns:getLiuZhuanXianHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiDuanYu">
+      <wsdl:input message="tns:getZiDingYiDuanYuHttpGetIn" />
+      <wsdl:output message="tns:getZiDingYiDuanYuHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addDuanYu">
+      <wsdl:input message="tns:addDuanYuHttpGetIn" />
+      <wsdl:output message="tns:addDuanYuHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteDuanYu">
+      <wsdl:input message="tns:deleteDuanYuHttpGetIn" />
+      <wsdl:output message="tns:deleteDuanYuHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateDuanYu">
+      <wsdl:input message="tns:updateDuanYuHttpGetIn" />
+      <wsdl:output message="tns:updateDuanYuHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addZdybm">
+      <wsdl:input message="tns:addZdybmHttpGetIn" />
+      <wsdl:output message="tns:addZdybmHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteZdybm">
+      <wsdl:input message="tns:deleteZdybmHttpGetIn" />
+      <wsdl:output message="tns:deleteZdybmHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateZdybm">
+      <wsdl:input message="tns:updateZdybmHttpGetIn" />
+      <wsdl:output message="tns:updateZdybmHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMen">
+      <wsdl:input message="tns:getZiDingYiBuMenHttpGetIn" />
+      <wsdl:output message="tns:getZiDingYiBuMenHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenFenLei">
+      <wsdl:input message="tns:getBuMenFenLeiHttpGetIn" />
+      <wsdl:output message="tns:getBuMenFenLeiHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangList">
+      <wsdl:input message="tns:getGongWenGuiDangListHttpGetIn" />
+      <wsdl:output message="tns:getGongWenGuiDangListHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangCount">
+      <wsdl:input message="tns:getGongWenGuiDangCountHttpGetIn" />
+      <wsdl:output message="tns:getGongWenGuiDangCountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBan">
+      <wsdl:input message="tns:makeCuiBanHttpGetIn" />
+      <wsdl:output message="tns:makeCuiBanHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMenRenYuan">
+      <wsdl:input message="tns:getZiDingYiBuMenRenYuanHttpGetIn" />
+      <wsdl:output message="tns:getZiDingYiBuMenRenYuanHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setZiDingYiBuMenRenYuan">
+      <wsdl:input message="tns:setZiDingYiBuMenRenYuanHttpGetIn" />
+      <wsdl:output message="tns:setZiDingYiBuMenRenYuanHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenRenYuan">
+      <wsdl:input message="tns:getBuMenRenYuanHttpGetIn" />
+      <wsdl:output message="tns:getBuMenRenYuanHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addGongWenRenYuan">
+      <wsdl:input message="tns:addGongWenRenYuanHttpGetIn" />
+      <wsdl:output message="tns:addGongWenRenYuanHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWenRenYuan">
+      <wsdl:input message="tns:deleteGongWenRenYuanHttpGetIn" />
+      <wsdl:output message="tns:deleteGongWenRenYuanHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getYongHuXinXiByGh">
+      <wsdl:input message="tns:getYongHuXinXiByGhHttpGetIn" />
+      <wsdl:output message="tns:getYongHuXinXiByGhHttpGetOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="gwxxWebServiceHttpPost">
     <wsdl:operation name="getLeaderList">
@@ -906,6 +1965,98 @@
     <wsdl:operation name="getLingDao">
       <wsdl:input message="tns:getLingDaoHttpPostIn" />
       <wsdl:output message="tns:getLingDaoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenYongHuByUid">
+      <wsdl:input message="tns:getGongWenYongHuByUidHttpPostIn" />
+      <wsdl:output message="tns:getGongWenYongHuByUidHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenList">
+      <wsdl:input message="tns:getGongWenListHttpPostIn" />
+      <wsdl:output message="tns:getGongWenListHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenCount">
+      <wsdl:input message="tns:getGongWenCountHttpPostIn" />
+      <wsdl:output message="tns:getGongWenCountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWen2016ByID">
+      <wsdl:input message="tns:getGongWen2016ByIDHttpPostIn" />
+      <wsdl:output message="tns:getGongWen2016ByIDHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLiuZhuanXian">
+      <wsdl:input message="tns:getLiuZhuanXianHttpPostIn" />
+      <wsdl:output message="tns:getLiuZhuanXianHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiDuanYu">
+      <wsdl:input message="tns:getZiDingYiDuanYuHttpPostIn" />
+      <wsdl:output message="tns:getZiDingYiDuanYuHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addDuanYu">
+      <wsdl:input message="tns:addDuanYuHttpPostIn" />
+      <wsdl:output message="tns:addDuanYuHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteDuanYu">
+      <wsdl:input message="tns:deleteDuanYuHttpPostIn" />
+      <wsdl:output message="tns:deleteDuanYuHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateDuanYu">
+      <wsdl:input message="tns:updateDuanYuHttpPostIn" />
+      <wsdl:output message="tns:updateDuanYuHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addZdybm">
+      <wsdl:input message="tns:addZdybmHttpPostIn" />
+      <wsdl:output message="tns:addZdybmHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteZdybm">
+      <wsdl:input message="tns:deleteZdybmHttpPostIn" />
+      <wsdl:output message="tns:deleteZdybmHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="updateZdybm">
+      <wsdl:input message="tns:updateZdybmHttpPostIn" />
+      <wsdl:output message="tns:updateZdybmHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMen">
+      <wsdl:input message="tns:getZiDingYiBuMenHttpPostIn" />
+      <wsdl:output message="tns:getZiDingYiBuMenHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenFenLei">
+      <wsdl:input message="tns:getBuMenFenLeiHttpPostIn" />
+      <wsdl:output message="tns:getBuMenFenLeiHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangList">
+      <wsdl:input message="tns:getGongWenGuiDangListHttpPostIn" />
+      <wsdl:output message="tns:getGongWenGuiDangListHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangCount">
+      <wsdl:input message="tns:getGongWenGuiDangCountHttpPostIn" />
+      <wsdl:output message="tns:getGongWenGuiDangCountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBan">
+      <wsdl:input message="tns:makeCuiBanHttpPostIn" />
+      <wsdl:output message="tns:makeCuiBanHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMenRenYuan">
+      <wsdl:input message="tns:getZiDingYiBuMenRenYuanHttpPostIn" />
+      <wsdl:output message="tns:getZiDingYiBuMenRenYuanHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="setZiDingYiBuMenRenYuan">
+      <wsdl:input message="tns:setZiDingYiBuMenRenYuanHttpPostIn" />
+      <wsdl:output message="tns:setZiDingYiBuMenRenYuanHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenRenYuan">
+      <wsdl:input message="tns:getBuMenRenYuanHttpPostIn" />
+      <wsdl:output message="tns:getBuMenRenYuanHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addGongWenRenYuan">
+      <wsdl:input message="tns:addGongWenRenYuanHttpPostIn" />
+      <wsdl:output message="tns:addGongWenRenYuanHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWenRenYuan">
+      <wsdl:input message="tns:deleteGongWenRenYuanHttpPostIn" />
+      <wsdl:output message="tns:deleteGongWenRenYuanHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getYongHuXinXiByGh">
+      <wsdl:input message="tns:getYongHuXinXiByGhHttpPostIn" />
+      <wsdl:output message="tns:getYongHuXinXiByGhHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="gwxxWebServiceSoap" type="tns:gwxxWebServiceSoap">
@@ -1065,6 +2216,236 @@
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
         <soap:header message="tns:getLingDaoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenYongHuByUid">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGongWenYongHuByUid" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGongWenYongHuByUidSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenList">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGongWenList" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGongWenListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenCount">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGongWenCount" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGongWenCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWen2016ByID">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGongWen2016ByID" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGongWen2016ByIDSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLiuZhuanXian">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getLiuZhuanXian" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getLiuZhuanXianSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiDuanYu">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getZiDingYiDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getZiDingYiDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addDuanYu">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/addDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:addDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteDuanYu">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/deleteDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:deleteDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateDuanYu">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/updateDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:updateDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addZdybm">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/addZdybm" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:addZdybmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteZdybm">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/deleteZdybm" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:deleteZdybmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateZdybm">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/updateZdybm" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:updateZdybmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMen">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getZiDingYiBuMen" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getZiDingYiBuMenSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenFenLei">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getBuMenFenLei" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getBuMenFenLeiSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangList">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGongWenGuiDangList" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGongWenGuiDangListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangCount">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getGongWenGuiDangCount" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getGongWenGuiDangCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBan">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/makeCuiBan" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:makeCuiBanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMenRenYuan">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getZiDingYiBuMenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getZiDingYiBuMenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setZiDingYiBuMenRenYuan">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/setZiDingYiBuMenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:setZiDingYiBuMenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenRenYuan">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getBuMenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getBuMenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addGongWenRenYuan">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/addGongWenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:addGongWenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWenRenYuan">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/deleteGongWenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:deleteGongWenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getYongHuXinXiByGh">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getYongHuXinXiByGh" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getYongHuXinXiByGhSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -1233,6 +2614,236 @@
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getGongWenYongHuByUid">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGongWenYongHuByUid" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGongWenYongHuByUidSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenList">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGongWenList" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGongWenListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenCount">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGongWenCount" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGongWenCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWen2016ByID">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGongWen2016ByID" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGongWen2016ByIDSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLiuZhuanXian">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getLiuZhuanXian" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getLiuZhuanXianSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiDuanYu">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getZiDingYiDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getZiDingYiDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addDuanYu">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/addDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:addDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteDuanYu">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/deleteDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:deleteDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateDuanYu">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/updateDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:updateDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addZdybm">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/addZdybm" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:addZdybmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteZdybm">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/deleteZdybm" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:deleteZdybmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateZdybm">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/updateZdybm" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:updateZdybmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMen">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getZiDingYiBuMen" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getZiDingYiBuMenSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenFenLei">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getBuMenFenLei" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getBuMenFenLeiSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangList">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGongWenGuiDangList" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGongWenGuiDangListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangCount">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getGongWenGuiDangCount" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getGongWenGuiDangCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBan">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/makeCuiBan" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:makeCuiBanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMenRenYuan">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getZiDingYiBuMenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getZiDingYiBuMenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setZiDingYiBuMenRenYuan">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/setZiDingYiBuMenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:setZiDingYiBuMenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenRenYuan">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getBuMenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getBuMenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addGongWenRenYuan">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/addGongWenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:addGongWenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWenRenYuan">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/deleteGongWenRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:deleteGongWenRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getYongHuXinXiByGh">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getYongHuXinXiByGh" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getYongHuXinXiByGhSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="gwxxWebServiceHttpGet" type="tns:gwxxWebServiceHttpGet">
     <http:binding verb="GET" />
@@ -1380,6 +2991,213 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getGongWenYongHuByUid">
+      <http:operation location="/getGongWenYongHuByUid" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenList">
+      <http:operation location="/getGongWenList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenCount">
+      <http:operation location="/getGongWenCount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWen2016ByID">
+      <http:operation location="/getGongWen2016ByID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLiuZhuanXian">
+      <http:operation location="/getLiuZhuanXian" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiDuanYu">
+      <http:operation location="/getZiDingYiDuanYu" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addDuanYu">
+      <http:operation location="/addDuanYu" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteDuanYu">
+      <http:operation location="/deleteDuanYu" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateDuanYu">
+      <http:operation location="/updateDuanYu" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addZdybm">
+      <http:operation location="/addZdybm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteZdybm">
+      <http:operation location="/deleteZdybm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateZdybm">
+      <http:operation location="/updateZdybm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMen">
+      <http:operation location="/getZiDingYiBuMen" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenFenLei">
+      <http:operation location="/getBuMenFenLei" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangList">
+      <http:operation location="/getGongWenGuiDangList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangCount">
+      <http:operation location="/getGongWenGuiDangCount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBan">
+      <http:operation location="/makeCuiBan" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMenRenYuan">
+      <http:operation location="/getZiDingYiBuMenRenYuan" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setZiDingYiBuMenRenYuan">
+      <http:operation location="/setZiDingYiBuMenRenYuan" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenRenYuan">
+      <http:operation location="/getBuMenRenYuan" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addGongWenRenYuan">
+      <http:operation location="/addGongWenRenYuan" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWenRenYuan">
+      <http:operation location="/deleteGongWenRenYuan" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getYongHuXinXiByGh">
+      <http:operation location="/getYongHuXinXiByGh" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="gwxxWebServiceHttpPost" type="tns:gwxxWebServiceHttpPost">
     <http:binding verb="POST" />
@@ -1520,6 +3338,213 @@
     </wsdl:operation>
     <wsdl:operation name="getLingDao">
       <http:operation location="/getLingDao" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenYongHuByUid">
+      <http:operation location="/getGongWenYongHuByUid" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenList">
+      <http:operation location="/getGongWenList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenCount">
+      <http:operation location="/getGongWenCount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWen2016ByID">
+      <http:operation location="/getGongWen2016ByID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLiuZhuanXian">
+      <http:operation location="/getLiuZhuanXian" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiDuanYu">
+      <http:operation location="/getZiDingYiDuanYu" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addDuanYu">
+      <http:operation location="/addDuanYu" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteDuanYu">
+      <http:operation location="/deleteDuanYu" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateDuanYu">
+      <http:operation location="/updateDuanYu" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addZdybm">
+      <http:operation location="/addZdybm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteZdybm">
+      <http:operation location="/deleteZdybm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateZdybm">
+      <http:operation location="/updateZdybm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMen">
+      <http:operation location="/getZiDingYiBuMen" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenFenLei">
+      <http:operation location="/getBuMenFenLei" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangList">
+      <http:operation location="/getGongWenGuiDangList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGongWenGuiDangCount">
+      <http:operation location="/getGongWenGuiDangCount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBan">
+      <http:operation location="/makeCuiBan" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZiDingYiBuMenRenYuan">
+      <http:operation location="/getZiDingYiBuMenRenYuan" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setZiDingYiBuMenRenYuan">
+      <http:operation location="/setZiDingYiBuMenRenYuan" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBuMenRenYuan">
+      <http:operation location="/getBuMenRenYuan" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addGongWenRenYuan">
+      <http:operation location="/addGongWenRenYuan" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWenRenYuan">
+      <http:operation location="/deleteGongWenRenYuan" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getYongHuXinXiByGh">
+      <http:operation location="/getYongHuXinXiByGh" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

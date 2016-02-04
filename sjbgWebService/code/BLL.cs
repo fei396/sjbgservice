@@ -16,7 +16,7 @@ namespace sjbgWebService
 
         public static MqttMessageType ToMqttMessageType(this int type)
         {
-            switch(type)
+            switch (type)
             {
                 case 1:
                     return MqttMessageType.CHAT_MESSAGE;
@@ -41,10 +41,22 @@ namespace sjbgWebService
             return str;
         }
 
+        public static string ToListString(this string[] i)
+        {
+            if (i == null || i.Length == 0) return string.Empty;
+            string str = "";
+            for (int j = 0; j < i.Length; j++)
+            {
+                str += i[j] + ",";
+            }
+            str = str.Substring(0, str.Length - 1);
+            return str;
+        }
+
         public static string ToJsonString(this MqttMessage mm)
         {
             int types = mm.Type;
-            
+
             JavaScriptSerializer j = new JavaScriptSerializer();
             string str = j.Serialize(mm);
             return str;
@@ -68,18 +80,18 @@ namespace sjbgWebService
         {
             return true;
         }
-		public static bool isValidEmail(this string str)
-		{
-			return true;
-		}
-		public static bool isValidMobile(this string str)
-		{
-			return true;
-		}
-		public static bool isValidString(this string str)
-		{
-			return true;
-		}
+        public static bool isValidEmail(this string str)
+        {
+            return true;
+        }
+        public static bool isValidMobile(this string str)
+        {
+            return true;
+        }
+        public static bool isValidString(this string str)
+        {
+            return true;
+        }
         public static string setEncryptPass(string gh, string pass)
         {
             return ToMD5String(gh + pass);
@@ -88,7 +100,7 @@ namespace sjbgWebService
         public static string toWorkNo(this int uid)
         {
             int length = 4;
-            if (uid <= 0 || uid >= Math.Pow(10, length)) throw new ArgumentOutOfRangeException("uid", "工号只能在0001-9999中间") ;
+            if (uid <= 0 || uid >= Math.Pow(10, length)) throw new ArgumentOutOfRangeException("uid", "工号只能在0001-9999中间");
             return uid.ToString().PadLeft(length, '0');
         }
 
@@ -96,12 +108,12 @@ namespace sjbgWebService
         public static List<System.Net.Mail.MailAddress> ToSysMailAddress(string str)
         {
             if (str.Contains(SjbgConfig.FuHaoKaiShi) == false) return null;
-            string[] strYjdzs = str.Split(new string[]{SjbgConfig.FuHaoYouJianDiZhi} , StringSplitOptions.RemoveEmptyEntries);
+            string[] strYjdzs = str.Split(new string[] { SjbgConfig.FuHaoYouJianDiZhi }, StringSplitOptions.RemoveEmptyEntries);
             List<System.Net.Mail.MailAddress> ma = new List<System.Net.Mail.MailAddress>();
             for (int i = 0; i < strYjdzs.Length; i++)
             {
                 string address = strYjdzs[i].Substring(strYjdzs[i].IndexOf(SjbgConfig.FuHaoKaiShi) + SjbgConfig.FuHaoKaiShi.Length, strYjdzs[i].IndexOf(SjbgConfig.FuHaoFenGe) - strYjdzs[i].IndexOf(SjbgConfig.FuHaoKaiShi) - SjbgConfig.FuHaoKaiShi.Length);
-                string displayname = strYjdzs[i].Substring( strYjdzs[i].IndexOf(SjbgConfig.FuHaoFenGe) + SjbgConfig.FuHaoFenGe.Length , strYjdzs[i].Length - SjbgConfig.FuHaoFenGe.Length - strYjdzs[i].IndexOf(SjbgConfig.FuHaoFenGe));
+                string displayname = strYjdzs[i].Substring(strYjdzs[i].IndexOf(SjbgConfig.FuHaoFenGe) + SjbgConfig.FuHaoFenGe.Length, strYjdzs[i].Length - SjbgConfig.FuHaoFenGe.Length - strYjdzs[i].IndexOf(SjbgConfig.FuHaoFenGe));
                 ma.Add(new System.Net.Mail.MailAddress(address, displayname));
             }
             return ma;
@@ -208,9 +220,9 @@ namespace sjbgWebService
                 return new BOOLEAN(false, ex.Message);
             }
             GongWen gw = getGongWenByWh(wh);
-            if (gw.Id == 0) return new BOOLEAN(false,"");
+            if (gw.Id == 0) return new BOOLEAN(false, "");
             UserGw user = getUserGwByUid(uid);
-            if (user.Yhmc.Equals("")) return new BOOLEAN(false,"");
+            if (user.Yhmc.Equals("")) return new BOOLEAN(false, "");
             if (user.Yhqx == 6) //领导权限
             {
                 Instruction ins = new Instruction();
@@ -230,7 +242,7 @@ namespace sjbgWebService
             {
                 return DAL.sign(gw, user);
             }
-           
+
         }
 
         public static BOOLEAN isSigned(string wh, int gh)
@@ -242,7 +254,7 @@ namespace sjbgWebService
             }
             catch
             {
-                return new BOOLEAN(true,"") ;
+                return new BOOLEAN(true, "");
             }
             GongWen gw = getGongWenByWh(wh);
             UserGw user = getUserGwByUid(uid);
@@ -274,7 +286,7 @@ namespace sjbgWebService
             int uid;
             try
             {
-                uid = Convert.ToInt32(DAL.getProductUserIdByBaseNum(gh.ToString().PadLeft(4, '0'),2));
+                uid = Convert.ToInt32(DAL.getProductUserIdByBaseNum(gh.ToString().PadLeft(4, '0'), 2));
             }
             catch
             {
@@ -291,7 +303,7 @@ namespace sjbgWebService
                 dt = DAL.getUnfinishedGwlb(user, dwlx);
             }
             if (ksxh > dt.Rows.Count) return null;
-            GongWen[] gws = new GongWen[ksxh+ count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
+            GongWen[] gws = new GongWen[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
             for (int i = 0; i < gws.Length; i++)
             {
                 gws[i] = new GongWen();
@@ -349,11 +361,11 @@ namespace sjbgWebService
 
 
 
-        public static INT login(string user_no, string user_pass,string code,string ip,string deviceInfo,string deviceVersion)
+        public static INT login(string user_no, string user_pass, string code, string ip, string deviceInfo, string deviceVersion)
         {
-            if (!isValidPass(user_pass)) return new INT(0,"工号或密码不正确");
+            if (!isValidPass(user_pass)) return new INT(0, "工号或密码不正确");
             if (!isValidUserNo(user_no)) return new INT(0, "工号或密码不正确");
-            return DAL.login(user_no, user_pass, code,ip, deviceInfo,deviceVersion);
+            return DAL.login(user_no, user_pass, code, ip, deviceInfo, deviceVersion);
         }
 
         public static INT loginDirect(string user_no, string user_pass, string code, string ip, string deviceInfo, string deviceVersion)
@@ -532,7 +544,7 @@ namespace sjbgWebService
 
         internal static JianBao[] getJianBao(string dept, DateTime dateTime)
         {
-            DataTable dt = DAL.getJianBao(dept,dateTime);
+            DataTable dt = DAL.getJianBao(dept, dateTime);
             if (dt.TableName.Equals("JianBao") && dt.Rows.Count > 0)
             {
                 JianBao[] jbs = new JianBao[dt.Rows.Count];
@@ -554,7 +566,7 @@ namespace sjbgWebService
 
         internal static JianBao[] getAllJianBao(DateTime dateTime)
         {
-            DataTable dt = DAL.getJianBao("all" ,dateTime);
+            DataTable dt = DAL.getJianBao("all", dateTime);
             if (dt.TableName.Equals("JianBao") && dt.Rows.Count > 0)
             {
                 JianBao[] jbs = new JianBao[dt.Rows.Count];
@@ -598,69 +610,69 @@ namespace sjbgWebService
             return DAL.getTqUDeptByUid(uid);
         }
 
-        internal static TeQing[] getTeQingByWorkNo(int workno,int ksxh,int count)
+        internal static TeQing[] getTeQingByWorkNo(int workno, int ksxh, int count)
         {
             int uid = getTqUidByWorkNo(workno).Number;
             DataTable dt = DAL.getTeQingByUid(uid);
-			if (  dt == null || dt.Rows.Count == 0 || !dt.TableName.Equals("getTeQingByUid") ) return null;
+            if (dt == null || dt.Rows.Count == 0 || !dt.TableName.Equals("getTeQingByUid")) return null;
             TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
             for (int i = 0; i < tqs.Length; i++)
             {
                 tqs[i] = new TeQing();
-				tqs[i].ID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["mid"]);
-				tqs[i].SenderDept = Convert.ToString(dt.Rows[i + ksxh - 1]["deptName"]);
-				tqs[i].SenderName = Convert.ToString(dt.Rows[i + ksxh - 1]["sName"]);
-				tqs[i].Title = Convert.ToString(dt.Rows[i + ksxh - 1]["mtitle"]);
-				tqs[i].Content = Convert.ToString(dt.Rows[i + ksxh - 1]["mtext"]);
-				tqs[i].ReplyTime = Convert.ToString(dt.Rows[i + ksxh - 1]["readTime"]);
-				tqs[i].SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendTime"]);
-				tqs[i].NeedReply = Convert.ToInt32(dt.Rows[i + ksxh - 1]["needReply"]);
+                tqs[i].ID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["mid"]);
+                tqs[i].SenderDept = Convert.ToString(dt.Rows[i + ksxh - 1]["deptName"]);
+                tqs[i].SenderName = Convert.ToString(dt.Rows[i + ksxh - 1]["sName"]);
+                tqs[i].Title = Convert.ToString(dt.Rows[i + ksxh - 1]["mtitle"]);
+                tqs[i].Content = Convert.ToString(dt.Rows[i + ksxh - 1]["mtext"]);
+                tqs[i].ReplyTime = Convert.ToString(dt.Rows[i + ksxh - 1]["readTime"]);
+                tqs[i].SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendTime"]);
+                tqs[i].NeedReply = Convert.ToInt32(dt.Rows[i + ksxh - 1]["needReply"]);
             }
             return tqs;
         }
 
 
 
-        internal static BOOLEAN replyTq(int workno,int tid, string replayContent)
+        internal static BOOLEAN replyTq(int workno, int tid, string replayContent)
         {
             int uid = getTqUidByWorkNo(workno).Number;
-            return DAL.replyTq(uid, tid, replayContent);   
+            return DAL.replyTq(uid, tid, replayContent);
         }
 
-        internal static TeQing[] checkReply(int senderno ,int ksxh,int count)
+        internal static TeQing[] checkReply(int senderno, int ksxh, int count)
         {
             int uid = getTqUidByWorkNo(senderno).Number;
             DataTable dt = DAL.checkReply(uid);
             if (dt.TableName != "checkReply" || dt == null || dt.Rows.Count == 0) return null;
-			TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
+            TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
             for (int i = 0; i < tqs.Length; i++)
             {
-				tqs[i] = new TeQing();
-				tqs[i].ID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["mid"]);
-				tqs[i].SenderDept = Convert.ToString(dt.Rows[i + ksxh - 1]["deptName"]);
-				tqs[i].SenderName = Convert.ToString(dt.Rows[i + ksxh - 1]["sName"]);
-				tqs[i].Title = Convert.ToString(dt.Rows[i + ksxh - 1]["mtitle"]);
-				tqs[i].Content = Convert.ToString(dt.Rows[i + ksxh - 1]["mtext"]);
-				tqs[i].SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendTime"]);
-				tqs[i].ReplyCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["readCount"]);
-				tqs[i].SendCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["sendCountl"]);
+                tqs[i] = new TeQing();
+                tqs[i].ID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["mid"]);
+                tqs[i].SenderDept = Convert.ToString(dt.Rows[i + ksxh - 1]["deptName"]);
+                tqs[i].SenderName = Convert.ToString(dt.Rows[i + ksxh - 1]["sName"]);
+                tqs[i].Title = Convert.ToString(dt.Rows[i + ksxh - 1]["mtitle"]);
+                tqs[i].Content = Convert.ToString(dt.Rows[i + ksxh - 1]["mtext"]);
+                tqs[i].SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendTime"]);
+                tqs[i].ReplyCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["readCount"]);
+                tqs[i].SendCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["sendCountl"]);
             }
             return tqs;
         }
 
-        internal static TeQing[] checkReplyDetails(int tid,int ksxh,int count)
+        internal static TeQing[] checkReplyDetails(int tid, int ksxh, int count)
         {
             DataTable dt = DAL.checkReplyDetails(tid);
             if (dt.TableName != "checkReplyDetails" || dt == null || dt.Rows.Count == 0) return null;
-			TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
+            TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
             for (int i = 0; i < tqs.Length; i++)
             {
                 tqs[i] = new TeQing();
-				tqs[i].ReceiverDept = Convert.ToString(dt.Rows[i + ksxh - 1]["rdeptname"]);
-				tqs[i].ReceiverName = Convert.ToString(dt.Rows[i + ksxh - 1]["rName"]);
-				tqs[i].ReplyTime = Convert.ToString(dt.Rows[i + ksxh - 1]["readTime"]);
-				tqs[i].NeedReply = Convert.ToInt32(dt.Rows[i + ksxh - 1]["needReply"]);
-				tqs[i].ReplyContent = Convert.ToString(dt.Rows[i + ksxh - 1]["txt"]);
+                tqs[i].ReceiverDept = Convert.ToString(dt.Rows[i + ksxh - 1]["rdeptname"]);
+                tqs[i].ReceiverName = Convert.ToString(dt.Rows[i + ksxh - 1]["rName"]);
+                tqs[i].ReplyTime = Convert.ToString(dt.Rows[i + ksxh - 1]["readTime"]);
+                tqs[i].NeedReply = Convert.ToInt32(dt.Rows[i + ksxh - 1]["needReply"]);
+                tqs[i].ReplyContent = Convert.ToString(dt.Rows[i + ksxh - 1]["txt"]);
             }
             return tqs;
         }
@@ -672,74 +684,74 @@ namespace sjbgWebService
             return getTqUtypeByUid(tquid);
         }
 
-		internal static INT getGwLevel(int workno)
-		{
-			int uid;
-			try
-			{
-				uid = Convert.ToInt32(DAL.getProductUserIdByBaseNum(workno.ToString().PadLeft(4, '0'), 2));
-			}
-			catch (Exception ex)
-			{
-				return new INT (-1,ex.Message);
-			}
-			return new INT( getUserGwByUid(uid).Yhqx,"");
-		}
+        internal static INT getGwLevel(int workno)
+        {
+            int uid;
+            try
+            {
+                uid = Convert.ToInt32(DAL.getProductUserIdByBaseNum(workno.ToString().PadLeft(4, '0'), 2));
+            }
+            catch (Exception ex)
+            {
+                return new INT(-1, ex.Message);
+            }
+            return new INT(getUserGwByUid(uid).Yhqx, "");
+        }
 
 
 
-		internal static INT registerDevice(RegisterInfo ri)
-		{
+        internal static INT registerDevice(RegisterInfo ri)
+        {
             INT registerCode = DAL.checkUserMobile(ri.WorkNo, ri.Mobile, ri.UniqueCode);
             if (registerCode.Number == 0)//判断该设备是否已经注册
-			{
+            {
                 return DAL.registerDevice(ri.WorkNo, ri.Mobile, ri.UniqueCode, ri.RegisterCode, ri.SecurityQuestion, ri.SecurityAnswer, ri.EmailAddress);
-			}
+            }
             else if (registerCode.Number == 1) //设备已注册
             {
-                return new INT(-99,"该设备已经注册");
+                return new INT(-99, "该设备已经注册");
             }
-            else 
-			{
-				return registerCode;
-			}
-		}
+            else
+            {
+                return registerCode;
+            }
+        }
 
 
-		internal static INT requestRegisterCode(RegisterInfo ri)
-		{
-			string code = generateRegisterCode(ri.WorkNo,ri.Mobile);
+        internal static INT requestRegisterCode(RegisterInfo ri)
+        {
+            string code = generateRegisterCode(ri.WorkNo, ri.Mobile);
             INT i = DAL.checkUserMobile(ri.WorkNo, ri.Mobile, ri.UniqueCode);
-            if (i.Number < 0 ) return i;
-            i = DAL.insertRegisterCode(ri.WorkNo, ri.Mobile, code, ri.UniqueCode); 
-			if( i.Number == 1)
-			{
+            if (i.Number < 0) return i;
+            i = DAL.insertRegisterCode(ri.WorkNo, ri.Mobile, code, ri.UniqueCode);
+            if (i.Number == 1)
+            {
                 return DAL.sendMobileMessage(ri.WorkNo, makeRegisterMobileMessageContent(code));
 
-			}
-			else
-			{
-				return i;
-			}
-		}
-		static string makeRegisterMobileMessageContent(string code)
-		{
-			string str = "您的手机办公系统注册验证码是：" + code + "，请在2分钟内完成注册，如非本人操作请忽略。";
-			return str;
-		}
+            }
+            else
+            {
+                return i;
+            }
+        }
+        static string makeRegisterMobileMessageContent(string code)
+        {
+            string str = "您的手机办公系统注册验证码是：" + code + "，请在2分钟内完成注册，如非本人操作请忽略。";
+            return str;
+        }
 
-		static string generateRegisterCode(int work_no, string mobile)
-		{
-			string strSeed = work_no.ToString() + mobile +  Convert.ToString(DateTime.Now.Ticks);
-			strSeed = ToMD5String(strSeed);
-			strSeed = strSeed.Substring(0, 2) + strSeed.Substring(8, 2) + strSeed.Substring(16, 2) + strSeed.Substring(24 , 2);
-			uint uSeed = uint.Parse(strSeed,System.Globalization.NumberStyles.HexNumber);
-			int iSeed;
-			iSeed = Convert.ToInt32(uSeed / 2);
-			Random r = new Random(iSeed);
-			strSeed = r.Next(1, 999999).ToString().PadLeft(6,'0');
-			return strSeed;
-		}
+        static string generateRegisterCode(int work_no, string mobile)
+        {
+            string strSeed = work_no.ToString() + mobile + Convert.ToString(DateTime.Now.Ticks);
+            strSeed = ToMD5String(strSeed);
+            strSeed = strSeed.Substring(0, 2) + strSeed.Substring(8, 2) + strSeed.Substring(16, 2) + strSeed.Substring(24, 2);
+            uint uSeed = uint.Parse(strSeed, System.Globalization.NumberStyles.HexNumber);
+            int iSeed;
+            iSeed = Convert.ToInt32(uSeed / 2);
+            Random r = new Random(iSeed);
+            strSeed = r.Next(1, 999999).ToString().PadLeft(6, '0');
+            return strSeed;
+        }
 
         internal static GpsData[] getGpsByNum(string gps_data)
         {
@@ -781,7 +793,7 @@ namespace sjbgWebService
                     ur[i].ID = Convert.ToInt32(dt.Rows[i]["rid"]);
                     ur[i].Name = Convert.ToString(dt.Rows[i]["rname"]);
                     ur[i].Description = Convert.ToString(dt.Rows[i]["descr"]);
-               
+
 
                 }
                 return ur;
@@ -946,13 +958,13 @@ namespace sjbgWebService
         {
             string work_no = uid.ToString().PadLeft(4, '0');
             return DAL.setNewPass(work_no, opass, npass);
-                
+
         }
 
-        internal static MingPai[] getMingPaiByXianBie(int database, string line_mode,int type)
+        internal static MingPai[] getMingPaiByXianBie(int database, string line_mode, int type)
         {
             DataTable dt = new DataTable();
-            dt = DAL.getMingPaiByXianBie(database, line_mode,type);
+            dt = DAL.getMingPaiByXianBie(database, line_mode, type);
             if (dt.TableName.Equals("MingPai") && dt.Rows.Count > 0)
             {
                 MingPai[] mps = new MingPai[dt.Rows.Count];
@@ -975,7 +987,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static MingPai[] getMingPaiByUid(int database ,int uid)
+        internal static MingPai[] getMingPaiByUid(int database, int uid)
         {
             DataTable dt = new DataTable();
             string work_no = uid.ToString().PadLeft(4, '0');
@@ -1015,7 +1027,7 @@ namespace sjbgWebService
                     xbs[i].LeiXing = 1;//轮乘
                     xbs[i].XianBieID = Convert.ToString(dt.Rows[i]["line_mode"]);
                     xbs[i].XianBieMingCheng = Convert.ToString(dt.Rows[i]["qduan"]);
-                    
+
 
                 }
                 return xbs;
@@ -1030,7 +1042,7 @@ namespace sjbgWebService
         {
             DataTable dt = new DataTable();
 
-            dt = DAL.getDaMingPai(database, line, type,filter);
+            dt = DAL.getDaMingPai(database, line, type, filter);
 
             if (!dt.TableName.Equals("getDaMingPai") || (ksxh > dt.Rows.Count)) return null;
             DaMingPai[] dmps = new DaMingPai[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
@@ -1076,7 +1088,7 @@ namespace sjbgWebService
                     cbs[i].CheCi = Convert.ToString(dt.Rows[i]["roadway"]);
                     cbs[i].KaiChe = Convert.ToDateTime(dt.Rows[i]["open_time"]).ToString("MM-dd HH:mm");
                     cbs[i].DaoDa = Convert.ToDateTime(dt.Rows[i]["arrive_time"]).ToString("MM-dd HH:mm");
-                    cbs[i].ShiChang = Math.Round( Convert.ToDouble(dt.Rows[i]["shichang"]) ,2).ToString();
+                    cbs[i].ShiChang = Math.Round(Convert.ToDouble(dt.Rows[i]["shichang"]), 2).ToString();
                 }
                 return cbs;
             }
@@ -1090,7 +1102,7 @@ namespace sjbgWebService
         {
             string xsj = "";
             if (sj == null || sj == "") return "";
-            if (sj.Length != 12 ) return "";
+            if (sj.Length != 12) return "";
             xsj = sj.Substring(0, 4);
             xsj += "-" + sj.Substring(4, 2);
             xsj += "-" + sj.Substring(6, 2);
@@ -1116,7 +1128,7 @@ namespace sjbgWebService
                     fyys[i].ZhuanRuShiJian = fyySjzh(Convert.ToString(dt.Rows[i]["zrsj"]));
                     fyys[i].ZhuanChuShiJian = fyySjzh(Convert.ToString(dt.Rows[i]["zcsj"]));
                     fyys[i].GongZuoShiJian = Convert.ToString(dt.Rows[i]["gzsj"]);
-                    
+
                 }
                 return fyys;
             }
@@ -1136,7 +1148,7 @@ namespace sjbgWebService
                 {
 
                     zts[i] = Convert.ToString(dt.Rows[i]["zryy"]);
-                    
+
 
                 }
                 return zts;
@@ -1144,7 +1156,7 @@ namespace sjbgWebService
             else
             {
                 return null;
-            } 
+            }
         }
 
 
@@ -1268,11 +1280,11 @@ namespace sjbgWebService
             }
         }
 
-        internal static ReceiveFile[] getFilesToReceive(int uid, int type ,int ksxh ,int count)
+        internal static ReceiveFile[] getFilesToReceive(int uid, int type, int ksxh, int count)
         {
             string work_no = uid.ToString().PadLeft(4, '0');
             int drid = DAL.getDutyRoomIdByWork_no(work_no);
-            if (drid == -1 ) return null;
+            if (drid == -1) return null;
             DataTable dt = DAL.getFilesToReceive(drid, type);
             if (!dt.TableName.Equals("getFilesToReceive") || (ksxh > dt.Rows.Count)) return null;
             else
@@ -1297,18 +1309,18 @@ namespace sjbgWebService
                     rfs[i].SenderDept = Convert.ToString(dt.Rows[i + ksxh - 1]["senderDeptName"]);
                     rfs[i].SenderName = Convert.ToString(dt.Rows[i + ksxh - 1]["senderName"]);
                     rfs[i].SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendTime"]);
-                    
+
                 }
                 return rfs;
             }
-          
+
         }
 
 
         internal static INT receiveFile(int fdrid, int uid)
         {
             string work_no = uid.ToString().PadLeft(4, '0');
-            return  DAL.receiveFile(fdrid, work_no);
+            return DAL.receiveFile(fdrid, work_no);
 
         }
 
@@ -1417,9 +1429,9 @@ namespace sjbgWebService
             int dotPos = fileFullName.LastIndexOf('.');
             if (dotPos <= 1) return new INT(-1, "文件名格式错误");
             fileName = fileFullName.Substring(0, dotPos);
-            extName = fileFullName.Substring(dotPos +1, fileFullName.Length - dotPos -1 );
+            extName = fileFullName.Substring(dotPos + 1, fileFullName.Length - dotPos - 1);
             return DAL.SendFile(sender.UserNo, fileName, extName, fileDesc, fileContent, receivers);
-            
+
         }
 
         internal static INT SendFeedBack(int uid, string txt)
@@ -1446,7 +1458,7 @@ namespace sjbgWebService
                 lis[i].DeviceInfo = Convert.ToString(dt.Rows[i + ksxh - 1]["deviceInfo"]);
                 lis[i].IpAddress = Convert.ToString(dt.Rows[i + ksxh - 1]["IpAddress"]);
                 lis[i].LoginTime = Convert.ToString(dt.Rows[i + ksxh - 1]["loginTime"]);
-              
+
             }
             return lis;
         }
@@ -1466,7 +1478,7 @@ namespace sjbgWebService
                 lis[i] = new MqttTopic();
                 lis[i].ID = Convert.ToInt32(dt.Rows[i]["id"]);
                 lis[i].Topic = Convert.ToString(dt.Rows[i]["topic"]);
-             
+
 
             }
             return lis;
@@ -1477,7 +1489,7 @@ namespace sjbgWebService
             return DAL.setTopicsSubed(tids);
         }
 
-        internal static INT setMqttStaus(int uid,int type,string clientId)
+        internal static INT setMqttStaus(int uid, int type, string clientId)
         {
             string work_no = uid.toWorkNo();
             return DAL.setMqttStatus(work_no, type, clientId);
@@ -1489,13 +1501,13 @@ namespace sjbgWebService
             return DAL.getMqttStatus(work_no);
         }
 
-        internal static SystemMessage[] getSystemMessage(int uid, int type,int ksxh,int count)
+        internal static SystemMessage[] getSystemMessage(int uid, int type, int ksxh, int count)
         {
             DataTable dt = new DataTable();
             string work_no = uid.toWorkNo();
-            dt = DAL.getSystemMessage(work_no,type);
+            dt = DAL.getSystemMessage(work_no, type);
 
-            if (!dt.TableName.Equals("getSystemMessage")  || (ksxh > dt.Rows.Count)) return null;
+            if (!dt.TableName.Equals("getSystemMessage") || (ksxh > dt.Rows.Count)) return null;
             SystemMessage[] sms = new SystemMessage[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
             for (int i = 0; i < sms.Length; i++)
             {
@@ -1542,7 +1554,7 @@ namespace sjbgWebService
         }
 
         #region 安全信息平台
-        internal static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens,string setTime,string lingDaos)
+        internal static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens, string setTime, string lingDaos)
         {
             DateTime time;
             try
@@ -1553,19 +1565,19 @@ namespace sjbgWebService
             {
                 return new INT(-1, "时间格式不正确");
             }
-            return DAL.ApplyAqxx(sender, auditor, title, content, buMens, time,lingDaos);
+            return DAL.ApplyAqxx(sender, auditor, title, content, buMens, time, lingDaos);
         }
 
-        internal static INT AuditAqxx(int xxid, string auditor, int result, string title,string txt)
+        internal static INT AuditAqxx(int xxid, string auditor, int result, string title, string txt)
         {
-            return DAL.AuditAqxx(xxid, auditor, result,title,txt);
+            return DAL.AuditAqxx(xxid, auditor, result, title, txt);
         }
 
-        internal static AQXX[] getAqxxToAudit(int uid ,int xxid)
+        internal static AQXX[] getAqxxToAudit(int uid, int xxid)
         {
             string auditor = uid.toWorkNo();
             DataTable dt = new DataTable();
-            dt = DAL.getAqxxToAudit(auditor ,xxid);
+            dt = DAL.getAqxxToAudit(auditor, xxid);
 
             if (!dt.TableName.Equals("getAqxxToAudit")) return null;
             AQXX[] aqxxs = new AQXX[dt.Rows.Count];
@@ -1628,7 +1640,7 @@ namespace sjbgWebService
 
 
 
-        internal static AqxxInfo[] getAqxxInfo(int uid,int xxid)
+        internal static AqxxInfo[] getAqxxInfo(int uid, int xxid)
         {
             User user = getUserByNum(uid.toWorkNo());
             if (user == null)
@@ -1674,7 +1686,7 @@ namespace sjbgWebService
             return dt.Rows.Count;
         }
 
-        internal static AqxxInfo[] getAqxxInfos(int uid, int ksxh,int count)
+        internal static AqxxInfo[] getAqxxInfos(int uid, int ksxh, int count)
         {
             User user = getUserByNum(uid.toWorkNo());
             if (user == null)
@@ -1706,7 +1718,7 @@ namespace sjbgWebService
             return ais;
         }
 
-        internal static AqxxDetail[] getAqxxDetail(int xxid ,int ksxh ,int count)
+        internal static AqxxDetail[] getAqxxDetail(int xxid, int ksxh, int count)
         {
             DataTable dt = new DataTable();
             dt = DAL.getAqxxDetail(xxid);
@@ -1754,51 +1766,166 @@ namespace sjbgWebService
 
         #region 2016新版公文流转系统
 
-
-        internal static GongWen getGwxxById2016(int gid)
+        internal static bool isBanZiChengYuanFinished(int gwid)
         {
-
-            GongWen gw = new GongWen();
-            gw.Title = "张纯杰测试";
-            //DataTable dt = DAL.getGwxxByWh("");
-            //if (dt.TableName.Equals("wh"))
-            //{
-            //    gw.Id = Convert.ToInt32(dt.Rows[0]["id"]);
-            //    gw.RedTitle = Convert.ToString(dt.Rows[0]["ht"]);
-            //    gw.Number = Convert.ToString(dt.Rows[0]["wh"]);
-            //    gw.Title = Convert.ToString(dt.Rows[0]["bt"]);
-            //    gw.Content = Convert.ToString(dt.Rows[0]["zw"]);
-            //    gw.SendDept = Convert.ToString(dt.Rows[0]["fwdw"]);
-            //    gw.SendDate = Convert.ToString(dt.Rows[0]["fwrq"]);
-            //    gw.Suggestion = Convert.ToString(dt.Rows[0]["csyj"]);
-            //    gw.FileType = Convert.ToString(dt.Rows[0]["wjxz"]);
-            //    gw.SendType = Convert.ToString(dt.Rows[0]["lwlx"]);
-            //    gw.AttachPath01 = Convert.ToString(dt.Rows[0]["fj1"]);
-            //    gw.AttachPath02 = Convert.ToString(dt.Rows[0]["fj2"]);
-            //    gw.AttachPath03 = Convert.ToString(dt.Rows[0]["fj3"]);
-            //    gw.AttachPath04 = Convert.ToString(dt.Rows[0]["fj4"]);
-            //    gw.AttachPath05 = Convert.ToString(dt.Rows[0]["fj5"]);
-            //    gw.AttachPath06 = Convert.ToString(dt.Rows[0]["fj6"]);
-            //}
-            return gw;
-
+            int count = DAL.unfinishedBanZiChengYuanRenShu(gwid);
+            if (count > 0) return false;
+            else return true;
+        }
+        internal static GongWenList[] getGongWenList(string jsr, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype, int ksxh, int count)
+        {
+            DataTable dt = DAL.getGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
+            if (dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else
+            {
+                GongWenList[] gwlist = new GongWenList[ksxh + count - 1 < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
+                for (int i = 0; i < gwlist.Length; i++)
+                {
+                    gwlist[i] = new GongWenList();
+                    gwlist[i].GongWenID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["gwid"]);
+                    gwlist[i].LiuZhuanID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["lzID"]);
+                    gwlist[i].XuHao = i + 1;
+                    gwlist[i].BiaoTi = Convert.ToString(dt.Rows[i + ksxh - 1]["bt"]);
+                    gwlist[i].WenHao = Convert.ToString(dt.Rows[i + ksxh - 1]["wh"]);
+                    gwlist[i].FaSongRen = Convert.ToString(dt.Rows[i + ksxh - 1]["fsrxm"]);
+                    gwlist[i].FaSongShiJian = Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fssj"]).ToString("yyyy-MM-dd HH:mm:ss");
+                    string qssj = Convert.ToString(dt.Rows[i + ksxh - 1]["qssj"]);
+                    int fsr_rid =  Convert.ToInt32(dt.Rows[i + ksxh - 1]["fsr_rid"]);
+                    int jsr_rid = Convert.ToInt32(dt.Rows[i + ksxh - 1]["jsr_rid"]);
+                    
+                    if (qssj.Equals(string.Empty))//签收时间为空
+                    {
+                        if (fsr_rid==21 && jsr_rid ==23)//并且是段长书记直接发给中层的
+                        {
+                            if (isBanZiChengYuanFinished(gwlist[i].GongWenID)) //判断班子成员是否都已经完成签收
+                            {
+                                gwlist[i].ShiFouQianShou = 0;//如果班子成员都签完了，标记为未签收
+                                gwlist[i].QianShouQingKuang = "未签收";
+                            }
+                            else
+                            {
+                                gwlist[i].ShiFouQianShou = 2;//否则标记为只读只读
+                                gwlist[i].QianShouQingKuang = "只读";
+                            }
+                        }
+                        else
+                        {
+                            gwlist[i].ShiFouQianShou = 0;
+                            gwlist[i].QianShouQingKuang = "未签收";
+                        }
+                        
+                    }
+                    else //签收时间不为空
+                    {
+                        gwlist[i].ShiFouQianShou = 1;
+                        gwlist[i].QianShouQingKuang = "已签收";
+                    }
+                }
+                return gwlist;
+            }
         }
 
-        internal static INT addNewGongWen2016(int uid, string ht, string wh, string bt, string zw, int xzid, int lxid, string ip, string jsr, string[] gwfj)
+        internal static int getGongWenGuiDangCount(int uid, int type, string keyWord, string sTime, string eTime )
         {
             string work_no = uid.toWorkNo();
-            if (!ht.isValidString()||!wh.isValidString()||!bt.isValidString()||!zw.isValidString())
+            DataTable dt = DAL.getGongWenGuiDangList(work_no, keyWord, sTime, eTime, type);
+            if (dt.TableName.Equals("error!"))
+            {
+                return -1;
+            }
+            else
+            {
+                return dt.Rows.Count;
+            }
+        }
+
+
+        internal static GongWenGuiDangList[] getGongWenGuiDangList(int uid, int type, string keyWord, string sTime, string eTime, int ksxh, int count)
+        {
+            string work_no = uid.toWorkNo();
+            DataTable dt = DAL.getGongWenGuiDangList(work_no, keyWord, sTime, eTime, type);
+            if (dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else
+            {
+                GongWenGuiDangList[] gwlist = new GongWenGuiDangList[ksxh + count - 1 < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
+                for (int i = 0; i < gwlist.Length; i++)
+                {
+                    gwlist[i] = new GongWenGuiDangList();
+                    gwlist[i].GongWenID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["gwid"]);
+                    gwlist[i].LiuZhuanID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["lzid"]);
+                    gwlist[i].XuHao = i + 1;
+                    gwlist[i].BiaoTi = Convert.ToString(dt.Rows[i + ksxh - 1]["bt"]);
+                    gwlist[i].WenHao = Convert.ToString(dt.Rows[i + ksxh - 1]["wh"]);
+                    gwlist[i].FaBuRen = Convert.ToString(dt.Rows[i + ksxh - 1]["fbr"]);
+                    gwlist[i].FaBuRenXM = Convert.ToString(dt.Rows[i + ksxh - 1]["fbrxm"]);
+                    gwlist[i].FaBuShiJian = Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fbrq"]).ToString("yyyy-MM-dd HH:mm:ss");
+                    gwlist[i].JieShouRen = Convert.ToString(dt.Rows[i + ksxh - 1]["jsr"]);
+                    gwlist[i].JieShouRenXM = Convert.ToString(dt.Rows[i + ksxh - 1]["jsrxm"]);
+                    int qswc = Convert.ToInt32(dt.Rows[i + ksxh - 1]["ShiFouLiuZhuanWanCheng"]);
+                    if (qswc == 1)
+                    {
+                        gwlist[i].ShiFouLiuZhuanWanCheng = true;
+                    }
+                    else
+                    {
+                        gwlist[i].ShiFouLiuZhuanWanCheng = false;
+                    }
+                }
+                return gwlist;
+            }
+        }
+
+        internal static int getGongWenCount(string jsr, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype)
+        {
+            DataTable dt = DAL.getGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
+            if (dt.TableName.Equals("error!"))
+            {
+                return -1;
+            }
+            else
+            {
+                return dt.Rows.Count;
+            }
+        }
+
+        internal static INT addNewGongWen2016(int uid, string ht, string dw, string wh, string bt, string zw, string yj, int xzid, int lxid, string ip, string jsr, string[] gwfj)
+        {
+            string work_no = uid.toWorkNo();
+            if (!ht.isValidString() || !wh.isValidString() || !bt.isValidString() || !zw.isValidString())
             {
                 return new INT(-1, "文件信息中包含非法字符。");
             }
-            
-            return DAL.addNewGongWen2016(ht, wh, bt, zw, xzid, lxid, work_no, ip, jsr, gwfj);
+
+            return DAL.addNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, ip, jsr, gwfj);
         }
 
-        internal static INT signGongWen2016(int gwid, int lzid, string fsr, string[] jsr, string qsnr)
+        internal static INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm)
         {
-            GongWen gw = getGwxxById2016(gwid);
-            return DAL.SignGongWen2016(gwid, lzid, fsr, jsr, gw.Title, qsnr);
+            string work_no = fsr.toWorkNo();
+            GongWenYongHu gwyh = getGongWenYongHuByUid(fsr);
+            if (gwyh == null)
+            {
+                return new INT(-1, "尚未设置签阅公文权限");
+            }
+            GongWen2016 gw = getGongWen2016ById(gwid);
+            if (!zdybm.Equals(null) && zdybm.Length > 0)
+            {
+                DataTable dt = DAL.getZiDingYiBuMenRenYuan(zdybm);
+                string[] zdyjsr = new string[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    zdyjsr[i] = dt.Rows[i]["user_no"].ToString();
+                }
+                jsr = jsr.Concat(zdyjsr).ToArray();
+            }
+            jsr = jsr.Distinct().ToArray();
+            return DAL.SignGongWen2016(gwid, lzid, work_no, jsr, gw.BiaoTi,gwyh.XingMing,gwyh.RoleID, qsnr);
         }
 
 
@@ -1865,6 +1992,440 @@ namespace sjbgWebService
                 return gwyh;
             }
         }
+
+        internal static GongWenYongHu getGongWenYongHuByUid(int uid)
+        {
+            string work_no = uid.toWorkNo();
+            DataTable dt = DAL.getGongWenYongHu(work_no);
+            if (dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else if (dt.Rows.Count == 0 || dt.Rows.Count > 1)
+            {
+                return null;
+            }
+            else
+            {
+                GongWenYongHu gwyh = new GongWenYongHu();
+                gwyh.GongHao = Convert.ToString(dt.Rows[0]["user_no"]);
+                gwyh.XingMing = Convert.ToString(dt.Rows[0]["user_name"]);
+                gwyh.NiCheng = Convert.ToString(dt.Rows[0]["nc"]);
+                gwyh.BuMenID = Convert.ToInt32(dt.Rows[0]["bm_id"]);
+                gwyh.BuMen = Convert.ToString(dt.Rows[0]["bm_mc"]);
+                gwyh.RoleID = Convert.ToInt32(dt.Rows[0]["rid"]);
+                return gwyh;
+            }
+        }
+
+
+        internal static GongWen2016 getGongWen2016ById(int gwid)
+        {
+
+            DataTable dt = DAL.getGongWen2016ById(gwid);
+            if (!dt.TableName.Equals("error!"))
+            {
+                if (dt.Rows.Count == 1)
+                {
+                    GongWen2016 gw = new GongWen2016();
+                    gw.BiaoTi = Convert.ToString(dt.Rows[0]["bt"]);
+                    gw.ChengSongYiJian = Convert.ToString(dt.Rows[0]["csyj"]);
+                    gw.FaBuRen = Convert.ToString(dt.Rows[0]["fbr"]);
+                    gw.FaBuRenXM = Convert.ToString(dt.Rows[0]["fbrxm"]);
+                    gw.FaBuShiJian = Convert.ToString(dt.Rows[0]["fbrq"]);
+                    gw.FaWenDanWei = Convert.ToString(dt.Rows[0]["dw"]);
+                    gw.GongWenID = Convert.ToInt32(dt.Rows[0]["gwid"]);
+                    gw.HongTou = Convert.ToString(dt.Rows[0]["ht"]);
+                    gw.LeiXingID = Convert.ToInt32(dt.Rows[0]["wjlxid"]);
+                    gw.XingZhiID = Convert.ToInt32(dt.Rows[0]["wjxzid"]);
+                    gw.WenHao = Convert.ToString(dt.Rows[0]["wh"]);
+                    gw.WenJianLeiXing = Convert.ToString(dt.Rows[0]["wjlx"]);
+                    gw.WenJianXingZhi = Convert.ToString(dt.Rows[0]["wjxz"]);
+                    gw.ZhengWen = Convert.ToString(dt.Rows[0]["zw"]);
+                    DataTable dtFj = DAL.getGongWenFuJian2016ById(gwid);
+                    if (!dtFj.TableName.Equals("error!"))
+                    {
+                        if (dtFj.Rows.Count > 0)
+                        {
+                            gw.FuJian = new string[dtFj.Rows.Count];
+                            for (int j = 0; j < dtFj.Rows.Count; j++)
+                            {
+                                gw.FuJian[j] = dtFj.Rows[j]["fjmc"].ToString();
+                            }
+                            return gw;
+                        }
+
+                    }
+
+                }
+            }
+            return null;
+        }
+
+        internal static GongWenLiuZhuan[] getLiuZhuanXianByLzId(int lzid)
+        {
+
+            DataTable dt = DAL.getLiuZhuanXianByLzId(lzid);
+            if (dt.TableName.Equals("error!"))
+            {
+
+                return null;
+            }
+            else
+            {
+                GongWenLiuZhuan[] gwlz = new GongWenLiuZhuan[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    gwlz[i] = new GongWenLiuZhuan();
+                    gwlz[i].LiuZhuanID = Convert.ToInt32(dt.Rows[i]["lzid"]);
+                    gwlz[i].GongWenID = Convert.ToInt32(dt.Rows[i]["gwid"]);
+                    gwlz[i].FaSongRen = Convert.ToString(dt.Rows[i]["fsr"]);
+                    gwlz[i].FaSongRenXM = Convert.ToString(dt.Rows[i]["fsrxm"]);
+                    gwlz[i].FaSongShiJian = Convert.ToString(dt.Rows[i]["fssj"]);
+                    gwlz[i].JieShouRen = Convert.ToString(dt.Rows[i]["jsr"]);
+                    gwlz[i].JieShouRenXM = Convert.ToString(dt.Rows[i]["jsrxm"]);
+                    gwlz[i].QianShouNeiRong = Convert.ToString(dt.Rows[i]["qsnr"]);
+                    gwlz[i].QianShouShiJian = Convert.ToString(dt.Rows[i]["qssj"]);
+                }
+                return gwlz;
+            }
+
+        }
+
+        internal static INT updateDuanYu(int id, string newTxt)
+        {
+            return DAL.updateDuanYu(id, newTxt);
+        }
+        internal static INT deleteDuanYu(int id)
+        {
+            return DAL.deleteDuanYu(id);
+        }
+        internal static INT addZdybm(int uid, string dynr)
+        {
+            string work_no = uid.toWorkNo();
+            return DAL.addZdybm(work_no, dynr);
+        }
+
+        internal static INT updateZdybm(int id, string newTxt)
+        {
+            return DAL.updateZdybm(id, newTxt);
+        }
+        internal static INT deleteZdybm(int id)
+        {
+            return DAL.deleteZdybm(id);
+        }
+        internal static INT addDuanYu(int uid, string dynr)
+        {
+            string work_no = uid.toWorkNo();
+            return DAL.addDuanYu(work_no, dynr);
+        }
+
+        internal static ZiDingYiDuanYu[] getZiDingYiDuanYu(int uid, bool onlyPrivate)
+        {
+            string work_no = uid.toWorkNo();
+            DataTable dt = DAL.getZiDingYiDuanYu(work_no, onlyPrivate);
+            if (dt.TableName.Equals("error!"))
+            {
+
+                return null;
+            }
+            else
+            {
+                ZiDingYiDuanYu[] duanyu = new ZiDingYiDuanYu[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    duanyu[i] = new ZiDingYiDuanYu();
+                    duanyu[i].ID = Convert.ToInt32(dt.Rows[i]["id"]);
+                    duanyu[i].DuanYuNeiRong = dt.Rows[i]["dynr"].ToString();
+                    if (dt.Rows[i]["uid"].ToString().Equals("0"))
+                    {
+                        duanyu[i].SiYou = false;
+                    }
+                    else
+                    {
+                        duanyu[i].SiYou = true;
+                    }
+                }
+                return duanyu;
+            }
+        }
+        internal static ZiDingYiBuMen[] getZiDingYiBuMen(int uid)
+        {
+            string work_no = uid.toWorkNo();
+            DataTable dt = DAL.getZiDingYiBuMen(work_no);
+            if (dt.TableName.Equals("error!"))
+            {
+
+                return null;
+            }
+            else
+            {
+                ZiDingYiBuMen[] bumen = new ZiDingYiBuMen[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    bumen[i] = new ZiDingYiBuMen();
+                    bumen[i].ID = Convert.ToInt32(dt.Rows[i]["ID"].ToString());
+                    bumen[i].MingCheng = Convert.ToString(dt.Rows[i]["bmnr"].ToString());
+                }
+                return bumen;
+            }
+        }
+
+
+
+
+        internal static BuMenFenLei[] getBuMenFenLei(int uid, int rid)
+        {
+            string work_no = uid.toWorkNo();
+            if (rid == 21 || rid == 22)
+            {
+                return getBuMenFenLeiLingDao(work_no,rid);
+            }
+            else if (rid == 23)
+            {
+                return getBuMenFenLeiZhongCeng(work_no);
+            }
+            else return null;
+        }
+
+
+        internal static INT setZiDingYiBuMenRenYuan(int zdybmid, string[] user_no)
+        {
+            return DAL.setZiDingYiBuMenRenYuan(zdybmid, user_no);
+        }
+
+        internal static BuMenRenYuan[] getZiDingYiBuMenRenYuan(int zdybmid,bool added)
+        {
+            DataTable dt = DAL.getZiDingYiBuMenRenYuan(zdybmid, added);
+            if (dt.TableName.Equals("error!"))
+            {
+
+                return null;
+            }
+            else
+            {
+                BuMenRenYuan[] bmry = new BuMenRenYuan[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    bmry[i] = new BuMenRenYuan();
+                    bmry[i].GongHao = Convert.ToString(dt.Rows[i]["user_no"].ToString());
+                    bmry[i].XianShiMingCheng = Convert.ToString(dt.Rows[i]["xsmc"].ToString());
+                }
+                return bmry;
+            }
+        }
+
+        internal static BuMenRenYuan[] getBuMenRenYuan(int bmid)
+        {
+            DataTable dt = DAL.getBuMenRenYuan(bmid);
+            if (dt.TableName.Equals("error!"))
+            {
+
+                return null;
+            }
+            else
+            {
+                BuMenRenYuan[] bmry = new BuMenRenYuan[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    bmry[i] = new BuMenRenYuan();
+                    bmry[i].GongHao = Convert.ToString(dt.Rows[i]["user_no"].ToString());
+                    bmry[i].XianShiMingCheng = Convert.ToString(dt.Rows[i]["user_name"].ToString());
+                }
+                return bmry;
+            }
+        }
+
+        internal static BuMenFenLei[] getBuMenFenLeiZhongCeng(string work_no)
+        {
+
+            DataTable dt = DAL.getBenBuMenRenYuan(work_no);
+            if (dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                BuMenFenLei[] bmfl = new BuMenFenLei[1];
+                bmfl[0] = new BuMenFenLei();
+                bmfl[0].FenLeiMingCheng = Convert.ToString(dt.Rows[0]["bm_mc"]);
+                bmfl[0].FenLeiZongCheng = "全体人员";
+                BuMenRenYuan[] ry = new BuMenRenYuan[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    ry[i] = new BuMenRenYuan();
+                    ry[i].GongHao = Convert.ToString(dt.Rows[i]["user_no"].ToString());
+                    ry[i].XianShiMingCheng = Convert.ToString(dt.Rows[i]["user_name"].ToString());
+                    ry[i].NiCheng = Convert.ToString(dt.Rows[i]["nc"].ToString());
+                }
+                bmfl[0].RenYuan = ry;
+                return bmfl;
+            }
+        }
+
+        internal static BuMenFenLei[] getBuMenFenLeiLingDao(string work_no,int rid)
+        {
+            DataTable dt = DAL.getBuMenFenLei(rid);
+            if (rid != 21 && rid != 22) return null;//只有领导有权限
+            if (dt.TableName.Equals("error!"))
+            {
+
+                return null;
+            }
+            else
+            {
+                BuMenFenLei[] bumen = new BuMenFenLei[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    bumen[i] = new BuMenFenLei();
+                    bumen[i].FenLeiID = Convert.ToInt32(dt.Rows[i]["flID"].ToString());
+                    bumen[i].FenLeiMingCheng = Convert.ToString(dt.Rows[i]["flmc"].ToString());
+                    bumen[i].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
+
+                    DataTable dtyh = DAL.getBuMenFenLeiYongHu(work_no, bumen[i].FenLeiID);
+                    BuMenRenYuan[] ry = new BuMenRenYuan[dtyh.Rows.Count];
+                    for (int j = 0; j < dtyh.Rows.Count; j++)
+                    {
+                        ry[j] = new BuMenRenYuan();
+                        ry[j].GongHao = Convert.ToString(dtyh.Rows[j]["user_no"].ToString());
+                        ry[j].XianShiMingCheng = Convert.ToString(dtyh.Rows[j]["xsmc"].ToString());
+                        ry[j].NiCheng = Convert.ToString(dtyh.Rows[j]["nc"].ToString());
+                    }
+                    bumen[i].RenYuan = ry;
+                }
+                return bumen;
+            }
+        }
+
+
+        internal static INT makeCuiBan(int gwid)
+        {
+            GongWen2016 gw = getGongWen2016ById(gwid);
+            if (gw == null)
+            {
+                return new INT(-1, "无此公文");
+            }
+            return DAL.makeCuiBan(gwid, gw.BiaoTi);
+        }
+
+
+
+        internal static INT addGongWenRenYuan(int uid,string gh, int rid)
+        {
+            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            if (gwyh == null)
+            {
+                return new INT(-1, "无权限添加新公文用户。");
+            }
+            if (rid <=20 || rid > 24)
+            {
+                return new INT(-1, "错误的角色ID。");
+            }
+            if (gwyh.RoleID == 21 || gwyh.RoleID == 22 || gwyh.RoleID == 24) //段领导和基层管理人员
+            {
+                return new INT(-1, "无权限添加新公文用户。");
+            }
+             
+            else if (gwyh.RoleID == 20)//公文处理员
+            {
+                if (rid == 24)//公文处理员不能直接添加基层用户
+                {
+                    return new INT(-1, "无权限添加新公文用户。");
+                }
+            }
+            else //中层干部
+            {
+                if (rid != 24)
+                {
+                    return new INT(-1, "无权限添加新公文用户。");
+                }
+
+            }
+            if (DAL.isGongWenYongHu(gh))
+            {
+                return new INT(-1, "已经是公文用户，不能再次添加");
+            }
+            if (getYongHuXinXiByGh(uid,gh) == null)
+            {
+                return new INT(-1, "不是本部门人员，无法添加");
+            }
+            return DAL.addGongWenRenYuan(gh, rid);
+        }
+
+        internal static INT deleteGongWenRenYuan(int uid, string gh, int rid)
+        {
+            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            if (gwyh == null)
+            {
+                return new INT(-1, "无权限删除新公文用户。");
+            }
+            if (rid <= 20 || rid > 24)
+            {
+                return new INT(-1, "错误的角色ID。");
+            }
+            if (gwyh.RoleID == 21 || gwyh.RoleID == 22 || gwyh.RoleID == 24) //段领导和基层管理人员
+            {
+                return new INT(-1, "无权限删除新公文用户。");
+            }
+
+            else if (gwyh.RoleID == 20)//公文处理员
+            {
+                if (rid == 24)//公文处理员不能直接添加基层用户
+                {
+                    return new INT(-1, "无权限删除新公文用户。");
+                }
+            }
+            else //中层干部
+            {
+                if (rid != 24)
+                {
+                    return new INT(-1, "无权限删除新公文用户。");
+                }
+
+            }
+            if (!DAL.isGongWenYongHu(gh))
+            {
+                return new INT(-1, "不是公文用户，不能删除");
+            }
+            return DAL.deleteGongWenRenYuan(gh, rid);
+        }
+
+        internal static GongWenYongHu getYongHuXinXiByGh(int uid,string gh)
+        {
+            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            if (gwyh == null)
+            {
+                return null;
+            }
+            if (gwyh.RoleID != 20 && gwyh.RoleID!= 23)
+            {
+                return null;
+            }
+            DataTable dt = DAL.getYongHuXinXiByGh(gh);
+            if (dt== null)
+            {
+                return null;
+            }
+            else if (dt.Rows.Count != 1)
+            {
+                return null;
+            }
+            GongWenYongHu r = new GongWenYongHu();
+            r.GongHao = Convert.ToString(dt.Rows[0]["user_no"]);
+            r.XingMing = Convert.ToString(dt.Rows[0]["user_name"]);
+            r.BuMen = Convert.ToString(dt.Rows[0]["bm_mc"]);
+            r.BuMenID = Convert.ToInt32(dt.Rows[0]["bm_id"]);
+            if (gwyh.RoleID ==23 && gwyh.BuMenID != r.BuMenID)
+            {
+                return null;
+            }
+            return r;
+        }
+
         #endregion
 
 
@@ -1872,5 +2433,13 @@ namespace sjbgWebService
 
 
 
+
+
+
+
     }
+
+
+
+
 }

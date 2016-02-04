@@ -7,7 +7,7 @@
     <title></title>
     <link href="css/reset.css" rel="stylesheet" type="text/css" />
     <link href="css/common.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" language="javascript" src="js/WebCalendar.js"></script>
+    
     <style type="text/css">
         .auto-style1 {
             height: 50px;
@@ -48,28 +48,28 @@
                 <tr style="height: 50px">
                     <td align="right" width="10%" style="height: 50px">文件红头：</td>
                     <td colspan="5" style="height: 50px" align="center" valign="middle">
-                        <asp:TextBox ID="txtHt" runat="server" Width="80%"></asp:TextBox>
+                        <asp:TextBox ID="txtHt" runat="server" Width="90%"></asp:TextBox>
                     </td>
                 </tr>
                 <tr style="height: 50px">
                     <td align="right" width="10%" style="height: 50px">发文单位：
                     </td>
                     <td colspan="5" style="height: 50px" align="center" valign="middle">
-                        <asp:TextBox ID="txtFwdw" runat="server" Width="80%"></asp:TextBox>
+                        <asp:TextBox ID="txtFwdw" runat="server" Width="90%"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td align="right" width="10%" class="auto-style1">文  号：
                     </td>
                     <td colspan="5" align="center" valign="middle" class="auto-style1">
-                        <asp:TextBox ID="txtWh" runat="server" Width="80%"></asp:TextBox>
+                        <asp:TextBox ID="txtWh" runat="server" Width="90%"></asp:TextBox>
                     </td>
                 </tr>
                 <tr height="300" style="height: 50px">
                     <td align="right" width="10%">标  题：
                     </td>
                     <td colspan="5" align="center" valign="middle">
-                        <asp:TextBox ID="txtBt" runat="server" Width="80%"
+                        <asp:TextBox ID="txtBt" runat="server" Width="90%"
                             ></asp:TextBox>
                     </td>
                 </tr>
@@ -77,7 +77,7 @@
                     <td align="right" width="10%">正  文：
                     </td>
                     <td colspan="5" align="center" valign="middle">
-                        <asp:TextBox ID="txtZw" runat="server" Height="90%" Width="80%"
+                        <asp:TextBox ID="txtZw" runat="server" Height="300" Width="90%"
                             TextMode="MultiLine"></asp:TextBox>
                     </td>
                 </tr>
@@ -98,6 +98,14 @@
                     </td>
 
                 </tr>
+                <tr style="height: 50px">
+                    <td align="right" width="10%">呈送意见：
+                    </td>
+                    <td colspan="5" align="center" valign="middle">
+                        <asp:TextBox ID="txtYj" runat="server" Width="90%"
+                            ></asp:TextBox>
+                    </td>
+
                 <tr height="50">
                     <td align="right" width="10%">文件类型：
                     </td>
@@ -120,7 +128,7 @@
                 </tr>
                 <tr>
 
-                    <td style="height: 50" colspan="6" width="100%">
+                    <td style="height: 50" colspan="6" width="100%" align="center">
                         <asp:Button ID="btnAdd" runat="server" Text="确  定" OnClick="AddButton_Click" />
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <asp:Button ID="btnReset" runat="server" Text="取  消" OnClick="AddButton_Click" />

@@ -13,14 +13,7 @@ public partial class logout : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Security s = new Security();
-        s.setSecurity(-1);
-        s.setUserName("");
-        s.setUserCode("");
-        Session["sec"] = s;
-		Session["usec"] = -1;
-		Session["usercode"] = "";
-		Session["udept"] = "";
-        Response.Redirect("login.aspx");
+        Session["user"] = null;
+        Response.Redirect("http://10.99.81.68");
     }
 }
