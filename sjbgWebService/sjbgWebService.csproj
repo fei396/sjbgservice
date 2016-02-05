@@ -139,9 +139,9 @@
     <Compile Include="code\BLL.cs" />
     <Compile Include="code\Config.cs" />
     <Compile Include="code\DAL.cs" />
-    <Compile Include="code\Enums.cs" />
     <Compile Include="classes\GongWen.cs" />
     <Compile Include="classes\JianBao.cs" />
+    <Compile Include="code\Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="gwxxService.asmx.cs">
       <DependentUpon>gwxxService.asmx</DependentUpon>

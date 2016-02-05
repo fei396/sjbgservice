@@ -3506,13 +3506,15 @@ namespace sjbgWebService
             {
                 return new INT(-1, "数据库错误");
             }
+
+            //因为添加公文过程中要在多个表中添加数据，所以设置一个事务(SqlTransaction)，确保数据完整性
             SqlTransaction trans;
             trans = conn.BeginTransaction();
             try
             {
-
                 comm.Transaction = trans;
-
+                
+                
                 //先插入公文信息表
                 comm.CommandText = "INSERT INTO [dbo].[T_GongWen_GWXX] (ht,dw,wh,bt,zw,csyj,wjxzID,wjlxID,fbr,fbrq,ip)";
                 comm.CommandText += " VALUES (@ht,@dw,@wh,@bt,@zw,@csyj,@wjxzID,@wjlxID,@fbr,getdate(),@ip)";
@@ -3529,8 +3531,11 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("@fbr", fbr);
                 comm.Parameters.AddWithValue("@ip", ip);
 
+                //因为在insert语句后加入了select scope_identity();
+                //所以可以用ExecuteScalar获取scope_identity()的内容，即insert以后新生成的ID
                 int gid = Convert.ToInt32(comm.ExecuteScalar());
 
+                //依次把附件添加进附件表
                 for (int i = 0; i < gwfj.Length; i++)
                 {
                     comm.CommandText = "insert into t_gongwen_gwfj (gwid,fjmc,paixu) values(@gwid,@fjmc,@paixu)";
@@ -3540,7 +3545,8 @@ namespace sjbgWebService
                     comm.Parameters.AddWithValue("@paixu", i + 1);
                     comm.ExecuteNonQuery();
                 }
-                //插入公文流转表开始流转
+
+                //添加公文流转表开始流转
                 comm.CommandText = "insert into t_gongwen_lz (gwid,pid,fsr,jsr,fssj) values(@gwid,0,@fsr,@jsr,getdate())";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("@gwid", gid);
@@ -3549,14 +3555,17 @@ namespace sjbgWebService
                 comm.ExecuteNonQuery();
 
                 //发短信通知
-                INT r = sendMobileMessage(jsr, "您有一件新公文需要签阅。公文标题：" + bt);
-                //INT r = sendMobileMessage("3974", "您有一件新公文未签阅。公文标题：" + bt);
+                //INT r = sendMobileMessage(jsr, "您有一件新公文需要签阅。公文标题：" + bt);
+                INT r = sendMobileMessage("3974", "您有一件新公文未签阅。公文标题：" + bt);
                 if (r.Number == 1)
                 {
+                    //所有操作都成功完成，提交事务，确认操作
                     trans.Commit();
                 }
                 else
                 {
+                    //发短信时提醒失败
+                    //回滚事务，撤销操作，返回错误信息
                     trans.Rollback();
                     return new INT(-1, "发送提醒短信失败。公文创建未成功。");
                 }
@@ -3564,6 +3573,8 @@ namespace sjbgWebService
 
             catch (Exception ex)
             {
+                //在操作中失败
+                //回滚事务，撤销操作，返回错误信息
                 trans.Rollback();
                 return new INT(-1, ex.Message);
             }
@@ -3572,6 +3583,7 @@ namespace sjbgWebService
                 conn.Close();
             }
 
+            //返回成功
             return new INT(1);
         }
 
@@ -3746,15 +3758,17 @@ namespace sjbgWebService
         /// <param name="sTime">开始时间</param>
         /// <param name="eTime">截至时间</param>
         /// <param name="gwtype">公文类型，0，未签公文，1，全部公文</param>
-        /// <returns></returns>
+        /// <returns>包含公文信息的DataTable</returns>
         internal static DataTable getGongWenList(string jsr, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime,int gwtype)
         {
             SqlConnection conn = new SqlConnection(baseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  gwid, lzID, ht,dw, wh, bt, zw, wjxzID, wjlxID, fbr, fbrq, wjlx, wjxz, fbrxm, pID,fsr, fsrxm, jsr, jsrxm, fssj, qssj, qsnr,fsr_rid,jsr_rid FROM V_GongWen_List_All where jsr=@jsr ";
+            
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("jsr", jsr);
+            
             if (!fsr.Equals(string.Empty))
             {
                 comm.CommandText += " and fsr=@fsr ";
@@ -3789,7 +3803,10 @@ namespace sjbgWebService
             {
                 comm.CommandText += " and qssj is null ";
             }
+            
             comm.CommandText += " order by fssj desc ";
+            
+
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try

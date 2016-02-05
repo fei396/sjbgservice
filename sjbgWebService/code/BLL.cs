@@ -1774,13 +1774,18 @@ namespace sjbgWebService
         }
         internal static GongWenList[] getGongWenList(string jsr, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype, int ksxh, int count)
         {
+
+            //调用数据操作层的函数获取公文列表DataTable
             DataTable dt = DAL.getGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
+
+            //如果获取数据过程错误，返回null
             if (dt.TableName.Equals("error!"))
             {
                 return null;
             }
             else
             {
+                //将DataTable转换为GongWenList
                 GongWenList[] gwlist = new GongWenList[ksxh + count - 1 < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
                 for (int i = 0; i < gwlist.Length; i++)
                 {
@@ -1811,14 +1816,14 @@ namespace sjbgWebService
                                 gwlist[i].QianShouQingKuang = "只读";
                             }
                         }
-                        else
+                        else //不是段长、书记直接发给中层的，标记为未签收
                         {
                             gwlist[i].ShiFouQianShou = 0;
                             gwlist[i].QianShouQingKuang = "未签收";
                         }
                         
                     }
-                    else //签收时间不为空
+                    else //签收时间不为空，已签收
                     {
                         gwlist[i].ShiFouQianShou = 1;
                         gwlist[i].QianShouQingKuang = "已签收";
@@ -1896,12 +1901,16 @@ namespace sjbgWebService
 
         internal static INT addNewGongWen2016(int uid, string ht, string dw, string wh, string bt, string zw, string yj, int xzid, int lxid, string ip, string jsr, string[] gwfj)
         {
+            //工号转换为字符
             string work_no = uid.toWorkNo();
-            if (!ht.isValidString() || !wh.isValidString() || !bt.isValidString() || !zw.isValidString())
+
+            //判断参数是否含有非法字符
+            if (!ht.isValidString() || !dw.isValidString() || !wh.isValidString() || !bt.isValidString() || !zw.isValidString() || !yj.isValidString())
             {
                 return new INT(-1, "文件信息中包含非法字符。");
             }
 
+            //调用数据操作层函数添加公文
             return DAL.addNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, ip, jsr, gwfj);
         }
 

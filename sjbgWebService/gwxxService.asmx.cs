@@ -173,12 +173,31 @@ namespace sjbgWebService.gwxx
 
 
         #region 2016新版公文
+
+        /// <summary>
+        /// 发布新公文
+        /// </summary>
+        /// <param name="uid">发布人工号</param>
+        /// <param name="ht">文件红头</param>
+        /// <param name="dw">发文单位</param>
+        /// <param name="wh"文号</param>
+        /// <param name="bt">文件标题</param>
+        /// <param name="zw">正文</param>
+        /// <param name="yj">呈送意见</param>
+        /// <param name="xzid">公文性质,1行政，2党群</param>
+        /// <param name="lxid">公文类型，1路局，2段发</param>
+        /// <param name="ip">发布人IP</param>
+        /// <param name="jsr">接收人工号列表</param>
+        /// <param name="gwfj">附件列表</param>
+        /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public INT addNewGongWen2016(int uid ,string ht,string dw,string wh,string bt,string zw,string yj,int xzid,int lxid,string ip,string jsr,string[] gwfj )
         {
-            if (!sjbgHeader.checkValid()) return null;
-            return BLL.addNewGongWen2016(uid, ht, dw,wh, bt, zw,yj, xzid, lxid, ip, jsr, gwfj);
+            //判断传过来的header是否合法
+            if (!sjbgHeader.checkValid()) return new INT(-1, "非法接入程序");
+            //直接调用业务逻辑层函数进行添加操作
+            return BLL.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, ip, jsr, gwfj);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -224,6 +243,9 @@ namespace sjbgWebService.gwxx
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
+        
+
+        
         public GongWenList[] getGongWenList(string jsr,string fsr ,string keyWord,string sTime,string eTime,int gwtype,int ksxh,int count)
         {
             if (!sjbgHeader.checkValid()) return null;

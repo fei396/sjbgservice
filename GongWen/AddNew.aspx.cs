@@ -12,16 +12,17 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using gwxxService;
+using YouJianFuWu;
 using System.Text;
 
 public partial class AddNew : System.Web.UI.Page
 {
     gwxxWebService s = new gwxxWebService();
+    //youjianService y = new youjianService();
     private StringBuilder sb = new StringBuilder();//用来获取上传时出错信息
-    int uid;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        //判断用户是否合法
         GongWenYongHu user = Session["user"] as GongWenYongHu;
         if (user == null)
         {
@@ -31,75 +32,90 @@ public partial class AddNew : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            
+            //初始化页面
             initPage();
+            
         }
     }
     void initPage()
     {
 
-
+        //设置webservice传输header格式
         s.SjbgSoapHeaderValue = Security.getSoapHeader();
         Security.SetCertificatePolicy();
+
+
+        //绑定公文类型
         GongWenLeiXing[] gwlx = s.getLeiXing();
-        ddlLeiXing.Items.Clear();
-        ddlXingZhi.Items.Clear();
-        for (int i = 0; i < gwlx.Length; i++)
-        {
-            ListItem li = new ListItem(gwlx[i].LXMC, gwlx[i].LXID.ToString());
-            ddlLeiXing.Items.Add(li);
-        }
+        ddlLeiXing.DataSource = gwlx;
+        ddlLeiXing.DataTextField = "LXMC";
+        ddlLeiXing.DataValueField = "LXID";
+        //ddlLeiXing.Items.Clear();
+        ddlLeiXing.DataBind();
+        
+        
+        //for (int i = 0; i < gwlx.Length; i++)
+        //{
+        //    ListItem li = new ListItem(gwlx[i].LXMC, gwlx[i].LXID.ToString());
+        //    ddlLeiXing.Items.Add(li);
+        //}
+
+        //绑定公文性质
         GongWenXingZhi[] gwxz = s.getXingZhi();
-        ddlXingZhi.Items.Clear();
-        for (int i = 0; i < gwxz.Length; i++)
-        {
-            ListItem li = new ListItem(gwxz[i].XZMC, gwxz[i].XZID.ToString());
-            ddlXingZhi.Items.Add(li);
-        }
+        //ddlXingZhi.Items.Clear();
+        ddlXingZhi.DataSource = gwxz;
+        ddlXingZhi.DataTextField = "XZMC";
+        ddlXingZhi.DataValueField = "XZID";
+        ddlXingZhi.DataBind();
+        //for (int i = 0; i < gwxz.Length; i++)
+        //{
+        //    ListItem li = new ListItem(gwxz[i].XZMC, gwxz[i].XZID.ToString());
+        //    ddlXingZhi.Items.Add(li);
+        //}
+
+        //绑定送阅领导
         GongWenYongHu[] lingdao = s.getLingDao(new int[]{21});
-        ddlLingDao.Items.Clear();
-        for (int i = 0; i < lingdao.Length; i++)
-        {
-            ListItem li = new ListItem(lingdao[i].NiCheng + "(" + lingdao[i].XingMing + ")", lingdao[i].GongHao);
-            ddlLingDao.Items.Add(li);
-        }
+        ddlLingDao.DataSource = lingdao;
+        ddlLingDao.DataTextField = "XingMing";
+        ddlLingDao.DataValueField = "GongHao";
+        ddlLingDao.DataBind();
+        //ddlLingDao.Items.Clear();
+        //for (int i = 0; i < lingdao.Length; i++)
+        //{
+        //    ListItem li = new ListItem(lingdao[i].NiCheng + "(" + lingdao[i].XingMing + ")", lingdao[i].GongHao);
+        //    ddlLingDao.Items.Add(li);
+        //}
+
+        //设置文本框内容初始化
         txtBt.Text = "";
         txtFwdw.Text = "";
         txtHt.Text = "";
         txtWh.Text = "";
         txtYj.Text = "";
         txtZw.Text = "";
-        //txtTitle.Text = "";
-        //txtContent.Text = "";
-        //txtSetTime.Text = "";
-        //User[] autiors = s.getAqxxptShenHe();
-        //ddlAuditor.DataSource = autiors;
-        //ddlAuditor.DataValueField = "userno";
-        //ddlAuditor.DataTextField = "username";
-        //ddlAuditor.DataBind();
-        //cbLeaderAll.Checked = false;
-        //cbLeader0001.Checked = false;
-        //cbLeader0002.Checked = false;
-        //cbLeader0007.Checked = false;
-        //cbLeader0008.Checked = false;
+        
     }
 
 
 
     protected void AddButton_Click(object sender, EventArgs e)
     {
+        //判断用户是否合法
         GongWenYongHu user = Session["user"] as GongWenYongHu;
         if (user == null)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
 
+        //获取附件信息
         string[] files =uploadfile();
         if (files == null)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "uploadError", "alert('上传文件出错!')", true);
             return;
         }
+
+        //获取公文相关内容
         int uid = Convert.ToInt32(user.GongHao);
         string ht = txtHt.Text;
         string dw = txtFwdw.Text;
@@ -110,8 +126,9 @@ public partial class AddNew : System.Web.UI.Page
         int xzid = Convert.ToInt32(ddlXingZhi.SelectedValue);
         string yj = txtYj.Text;
         string jsr = ddlLingDao.SelectedValue;
-        gwxxService.gwxxWebService g = new gwxxWebService();
-        INT i = g.addNewGongWen2016(uid, ht, dw, wh, bt, zw,yj, xzid, lxid,pbModule.getIP(), jsr, files);
+        
+        //调用web服务添加公文
+        INT i = s.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, pbModule.getIP(), jsr, files);
         if (i.Number != 1)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "发布公文出错", "alert('" + i.Message + "')", true);
@@ -124,6 +141,10 @@ public partial class AddNew : System.Web.UI.Page
         }
     }
 
+    /// <summary>
+    /// 获取javascript控件上传的附件
+    /// </summary>
+    /// <returns></returns>
     private string[] uploadfile()
     {
         HttpFileCollection files = HttpContext.Current.Request.Files;//获取上传控件的个数  
@@ -181,6 +202,8 @@ public partial class AddNew : System.Web.UI.Page
         }
         
     }
+    
+    
     /// <summary>  
     /// 判断是否有上传文件  
     /// </summary>  
@@ -196,6 +219,8 @@ public partial class AddNew : System.Web.UI.Page
         }
         return flag;
     }
+    
+    
     /// <summary>  
     ///  判断上传文件是否有错  
     /// 上传文件有错return false  
@@ -229,6 +254,10 @@ public partial class AddNew : System.Web.UI.Page
         return flag;
     }
 
+    protected void btnReset_Click(object sender, EventArgs e)
+    {
+        initPage();
+    }
 }
 
 

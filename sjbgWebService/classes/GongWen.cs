@@ -252,7 +252,7 @@ namespace sjbgWebService.gwxx
         public string BiaoTi { get; set; }
         public string FaBuRen { get; set; }
         public string FaBuRenXM { get; set; }
-        public string JieShouRen{get;set;}
+        public string JieShouRen { get; set; }
         public string JieShouRenXM { get; set; }
         public string FaBuShiJian { get; set; }
         public bool ShiFouLiuZhuanWanCheng { get; set; }
@@ -278,49 +278,49 @@ namespace sjbgWebService.gwxx
         public string[] FuJian { get; set; }
     }
 
-        public class GongWenLiuZhuan
-        {
-            public int LiuZhuanID { get; set; }
-            public int GongWenID { get; set; }
-            public string FaSongRen { get; set; }
-            public string FaSongRenXM { get; set; }
-            public string JieShouRen { get; set; }
-            public string JieShouRenXM { get; set; }
-            public string FaSongShiJian { get; set; }
-            public string QianShouShiJian { get; set; }
-            public string QianShouNeiRong { get; set; }
-        }
+    public class GongWenLiuZhuan
+    {
+        public int LiuZhuanID { get; set; }
+        public int GongWenID { get; set; }
+        public string FaSongRen { get; set; }
+        public string FaSongRenXM { get; set; }
+        public string JieShouRen { get; set; }
+        public string JieShouRenXM { get; set; }
+        public string FaSongShiJian { get; set; }
+        public string QianShouShiJian { get; set; }
+        public string QianShouNeiRong { get; set; }
+    }
 
-        public class ZiDingYiDuanYu
-        {
-            public int ID { get; set; }
-            public bool SiYou { get; set; }
-            public string DuanYuNeiRong { get; set; }
-        }
+    public class ZiDingYiDuanYu
+    {
+        public int ID { get; set; }
+        public bool SiYou { get; set; }
+        public string DuanYuNeiRong { get; set; }
+    }
 
-        public class ZiDingYiBuMen
-        {
-            public int ID { get; set; }
-            public string MingCheng { get; set; }
+    public class ZiDingYiBuMen
+    {
+        public int ID { get; set; }
+        public string MingCheng { get; set; }
 
-        }
+    }
 
-        public class BuMenRenYuan
-        {
-            public string GongHao { get; set; }
-            public string XianShiMingCheng { get; set; }
-            public string NiCheng { get; set; }
-        }
-        public class BuMenFenLei
-        {
-            public int FenLeiID { get; set; }
-            public int BuMenID { get; set; }
-            public string BuMenMingCheng { get; set; }
-            public string FenLeiMingCheng { get; set; }
-            public string FenLeiZongCheng { get; set; }
+    public class BuMenRenYuan
+    {
+        public string GongHao { get; set; }
+        public string XianShiMingCheng { get; set; }
+        public string NiCheng { get; set; }
+    }
+    public class BuMenFenLei
+    {
+        public int FenLeiID { get; set; }
+        public int BuMenID { get; set; }
+        public string BuMenMingCheng { get; set; }
+        public string FenLeiMingCheng { get; set; }
+        public string FenLeiZongCheng { get; set; }
 
-            public BuMenRenYuan[] RenYuan { get; set; }
+        public BuMenRenYuan[] RenYuan { get; set; }
 
-        }
-    
+    }
+
 }

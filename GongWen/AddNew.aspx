@@ -131,7 +131,7 @@
                     <td style="height: 50" colspan="6" width="100%" align="center">
                         <asp:Button ID="btnAdd" runat="server" Text="确  定" OnClick="AddButton_Click" />
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <asp:Button ID="btnReset" runat="server" Text="取  消" OnClick="AddButton_Click" />
+                        <asp:Button ID="btnReset" runat="server" Text="取  消" OnClick="btnReset_Click" />
                     </td>
 
                 </tr>
