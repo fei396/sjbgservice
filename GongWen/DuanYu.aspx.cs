@@ -60,7 +60,7 @@ public partial class DuanYu : System.Web.UI.Page
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
-        ZiDingYiDuanYu[] dyList = s.getZiDingYiDuanYu(uid, true);
+        GongWenZiDingYiDuanYu[] dyList = s.getZiDingYiDuanYu(uid, true);
         
         gvList.DataSource = dyList;
 

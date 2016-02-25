@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MaintainScrollPositionOnPostback="true"  AutoEventWireup="true" CodeFile="ViewGongWen.aspx.cs" Inherits="ViewGongWen" %>
+<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" AutoEventWireup="true" CodeFile="ViewGongWen.aspx.cs" Inherits="ViewGongWen" %>
 
 <html>
 <head>
@@ -78,9 +78,10 @@
                 <tr>
                     <td colspan="2">
                         <br />
+
                         <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False"
-                            BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4"
-                            ForeColor="#333333" Width="100%" Caption="文件签收情况" Font-Size="Medium">
+                            BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4" DataKeyNames="LiuZhuanID"
+                            ForeColor="#333333" Width="100%" Caption="文件签收情况" Font-Size="Medium" OnSelectedIndexChanged="gvList_SelectedIndexChanged">
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
 
                             <PagerStyle HorizontalAlign="Center" />
@@ -89,11 +90,49 @@
                             </EmptyDataTemplate>
 
                             <Columns>
-                                <asp:BoundField DataField="FaSongRenXM" HeaderText="发送人" />
-                                <asp:BoundField DataField="FaSongShiJian" HeaderText="发送时间" />
-                                <asp:BoundField DataField="JieShouRenXM" HeaderText="接收人" />
-                                <asp:BoundField DataField="QianShouShiJian" HeaderText="签收时间" />
+                                <asp:BoundField DataField="FaSongRenXM" HeaderText="发送人">
+                                    <HeaderStyle Width="50px" />
+                                    <ItemStyle Width="50px" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="FaSongShiJian" HeaderText="发送时间">
+                                    <HeaderStyle Width="100px" />
+                                    <ItemStyle Width="120px" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="JieShouRenXM" HeaderText="接收人">
+                                    <HeaderStyle Width="50px" />
+                                    <ItemStyle Width="50px" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="JieShouRenBM" HeaderText="接收人部门">
+                                    <HeaderStyle Width="70px" />
+                                    <ItemStyle Width="70px" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="QianShouShiJian" HeaderText="签收时间">
+                                    <HeaderStyle Width="100px" />
+                                    <ItemStyle Width="120px" />
+                                </asp:BoundField>
                                 <asp:BoundField DataField="QianShouNeiRong" HeaderText="签收内容" />
+                                <asp:TemplateField HeaderText="转发人数">
+
+                                    <ItemTemplate>
+                                        <asp:Label ID="Label2" runat="server" Text='<%#  Convert.ToInt32( Eval("LiuZhuanShu")) >0?Eval("LiuZhuanShu"):"N/A" %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle Width="50px" />
+                                    <ItemStyle Width="50px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="签收人数">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Label1" runat="server"  Text='<%#  Convert.ToInt32( Eval("WanChengShu")) >0 ?Eval("WanChengShu"): Convert.ToInt32( Eval("LiuZhuanShu")) >0?"0":  "N/A" %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle Width="50px" />
+                                    <ItemStyle Width="50px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Select" Text="查看详情" Visible='<%#Convert.ToInt32( Eval("LiuZhuanShu")) >0?true:false %>'></asp:LinkButton>
+                                    </ItemTemplate>
+                                    <HeaderStyle Width="60px" />
+                                    <ItemStyle Width="60px" />
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </td>
@@ -132,7 +171,7 @@
                                                 <asp:Label ID="Label3" runat="server" Text="自定义部门：" Font-Size="Medium"></asp:Label></td>
                                             <td width="20%">
                                                 <asp:CheckBox ID="cbAll" runat="server" AutoPostBack="True" OnCheckedChanged="cbAll_CheckedChanged" Text="各科室、各车间" />
-                                                </td>
+                                            </td>
                                             <td width="80%" align="left">
 
                                                 <asp:CheckBoxList Font-Size="Medium" ID="cblZdybm" runat="server" AutoPostBack="True" OnSelectedIndexChanged="cblZdybm_SelectedIndexChanged" RepeatDirection="Horizontal">
@@ -152,9 +191,10 @@
                 </tr>--%>
                             <tr>
                                 <td>
+
                                     <asp:GridView ID="gvListBuMen" runat="server" AutoGenerateColumns="False"
                                         BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4"
-                                        ForeColor="#333333" Width="100%">
+                                        ForeColor="#333333" Width="100%" OnRowDataBound="gvListBuMen_RowDataBound">
 
                                         <HeaderStyle Height="0px" />
 
@@ -164,8 +204,8 @@
                                         <Columns>
                                             <asp:BoundField DataField="FenLeiMingCheng">
                                                 <ControlStyle Font-Size="Medium" />
-                                            <HeaderStyle Width="10%" />
-                                            <ItemStyle Width="10%" />
+                                                <HeaderStyle Width="10%" />
+                                                <ItemStyle Width="10%" />
                                             </asp:BoundField>
                                             <asp:TemplateField>
                                                 <ItemTemplate>

@@ -205,7 +205,14 @@ namespace sjbgWebService.gwxx
         public INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr,int []zdybm)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.signGongWen2016(gwid ,lzid,fsr ,jsr,qsnr,zdybm);
+            return BLL.signGongWen2016(gwid ,lzid,fsr ,jsr,qsnr,zdybm,"网页");
+        }
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT signGongWen2016Mobile(int gwid, int lzid, int fsr, string jsr, string qsnr)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.signGongWen2016Mobile(gwid, lzid, fsr, jsr, qsnr);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -246,18 +253,18 @@ namespace sjbgWebService.gwxx
         
 
         
-        public GongWenList[] getGongWenList(string jsr,string fsr ,string keyWord,string sTime,string eTime,int gwtype,int ksxh,int count)
+        public GongWenList[] getGongWenList(int uid,string fsr ,string keyWord,string sTime,string eTime,int gwtype,int ksxh,int count)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.getGongWenList(jsr, fsr, -1, -1, keyWord, sTime, eTime, gwtype ,ksxh, count);
+            return BLL.getGongWenList(uid , fsr, -1, -1, keyWord, sTime, eTime, gwtype ,ksxh, count);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public int getGongWenCount(string jsr, string fsr, string keyWord, string sTime, string eTime, int gwtype)
+        public int getGongWenCount(int uid, string fsr, string keyWord, string sTime, string eTime, int gwtype)
         {
             if (!sjbgHeader.checkValid()) return -1;
-            return BLL.getGongWenCount(jsr, fsr, -1, -1, keyWord, sTime, eTime, gwtype);
+            return BLL.getGongWenCount(uid, fsr, -1, -1, keyWord, sTime, eTime, gwtype);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -270,15 +277,15 @@ namespace sjbgWebService.gwxx
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public GongWenLiuZhuan[] getLiuZhuanXian(int lzid)
+        public GongWenLiuZhuan[] getLiuZhuanXian(bool sfbr,int lzid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.getLiuZhuanXianByLzId(lzid);
+            return BLL.getLiuZhuanXianByLzId(sfbr,lzid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public ZiDingYiDuanYu[] getZiDingYiDuanYu(int uid,bool onlyPrivate)
+        public GongWenZiDingYiDuanYu[] getZiDingYiDuanYu(int uid,bool onlyPrivate)
         {
             if (!sjbgHeader.checkValid()) return null;
             return BLL.getZiDingYiDuanYu(uid ,onlyPrivate);
@@ -327,7 +334,7 @@ namespace sjbgWebService.gwxx
         }
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public ZiDingYiBuMen[] getZiDingYiBuMen(int uid)
+        public GongWenZiDingYiBuMen[] getZiDingYiBuMen(int uid)
         {
             if (!sjbgHeader.checkValid()) return null;
             return BLL.getZiDingYiBuMen(uid);
@@ -366,7 +373,7 @@ namespace sjbgWebService.gwxx
         }
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public BuMenRenYuan[] getZiDingYiBuMenRenYuan(int zdybmid,bool added)
+        public GongWenBuMenRenYuan[] getZiDingYiBuMenRenYuan(int zdybmid,bool added)
         {
             if (!sjbgHeader.checkValid()) return null;
             return BLL.getZiDingYiBuMenRenYuan(zdybmid, added);
@@ -382,7 +389,7 @@ namespace sjbgWebService.gwxx
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public BuMenRenYuan[] getBuMenRenYuan(int bmid)
+        public GongWenBuMenRenYuan[] getBuMenRenYuan(int bmid)
         {
             if (!sjbgHeader.checkValid()) return null;
             return BLL.getBuMenRenYuan(bmid);
@@ -410,6 +417,29 @@ namespace sjbgWebService.gwxx
         {
             if (!sjbgHeader.checkValid()) return null;
             return BLL.getYongHuXinXiByGh(uid,gh);
+        }
+
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public string getFuJianNeiRong(string fileName)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            try
+            {
+                string fileFullName = SjbgConfig.FuJianPath + fileName;
+                FileStream fs = new FileStream(fileFullName, FileMode.Open, FileAccess.Read);
+
+                byte[] b = new byte[(int)fs.Length];
+                int k = fs.Read(b, 0, (int)fs.Length);
+                fs.Close();
+                string base64 = Convert.ToBase64String(b);
+                return base64;
+            }
+            catch
+            {
+                return null;
+            }
         }
         #endregion
     }

@@ -78,12 +78,12 @@ public partial class ListGongWen : System.Web.UI.Page
         s.SjbgSoapHeaderValue = Security.getSoapHeader();
         Security.SetCertificatePolicy();
 
-        
+        int uid = Convert.ToInt32(user.GongHao);
         //获取公文总数
-        if (allCount == 0) allCount = s.getGongWenCount(user.GongHao, "", key, sTime, ETime, gwtype);
+        if (allCount == 0) allCount = s.getGongWenCount(uid, "", key, sTime, ETime, gwtype);
 
         //获取公文列表
-        GongWenList[] gwlist = s.getGongWenList(user.GongHao, "", key, sTime, ETime, gwtype, (page - 1) * pageCount + 1, pageCount);
+        GongWenList[] gwlist = s.getGongWenList(uid, "", key, sTime, ETime, gwtype, (page - 1) * pageCount + 1, pageCount);
 
         //设置最大页数和当前页数
         maxPage = (int)((allCount - 0.1) / pageCount) + 1;

@@ -103,7 +103,7 @@ public partial class ViewGongWen : System.Web.UI.Page
 
     protected string duanyu()
     {
-        gwxxService.ZiDingYiDuanYu[] zdydy = s.getZiDingYiDuanYu(uid,false);
+        gwxxService.GongWenZiDingYiDuanYu[] zdydy = s.getZiDingYiDuanYu(uid,false);
         System.Text.StringBuilder duanyu = new System.Text.StringBuilder();
         duanyu.Append("<tr><td>");
         for (int i = 0; i < zdydy.Length;i++ )
@@ -122,7 +122,7 @@ public partial class ViewGongWen : System.Web.UI.Page
 
     private void bumen(int uid)
     {
-        gwxxService.ZiDingYiBuMen[] zdybm = s.getZiDingYiBuMen(uid);
+        gwxxService.GongWenZiDingYiBuMen[] zdybm = s.getZiDingYiBuMen(uid);
         if (zdybm.Equals(null))
         {
             tableZdybm.Visible = false;
@@ -213,17 +213,23 @@ public partial class ViewGongWen : System.Web.UI.Page
             }
             
         }
-        gwxxService.GongWenLiuZhuan[] gwlz = s.getLiuZhuanXian(lzid);
-        
-        gvList.DataSource = gwlz;
-        gvList.DataBind();
+
 
  
         gvListBuMen.DataSource = bmfl;
         gvListBuMen.DataBind();
+        bindLiuZhuanData(true,lzid);
     }
 
-    protected gwxxService.BuMenRenYuan[] GetCKBLDataSource(int index)
+    private void bindLiuZhuanData(bool sfbr ,int lzid)
+    {
+        gwxxService.GongWenLiuZhuan[] gwlz = s.getLiuZhuanXian(sfbr ,lzid);
+
+        gvList.DataSource = gwlz;
+        gvList.DataBind();
+    }
+
+    protected gwxxService.GongWenBuMenRenYuan[] GetCKBLDataSource(int index)
     {
         return bmfl[index].RenYuan;
 
@@ -238,10 +244,10 @@ public partial class ViewGongWen : System.Web.UI.Page
         if (this.cblZdybm.Items[strIndex].Selected)
         {
             txtQianShouNeiRong.Text += this.cblZdybm.Items[strIndex].Text.Trim() + "、";
-            BuMenRenYuan[] ry = s.getZiDingYiBuMenRenYuan(Convert.ToInt32(this.cblZdybm.Items[strIndex].Value),true);
+            GongWenBuMenRenYuan[] ry = s.getZiDingYiBuMenRenYuan(Convert.ToInt32(this.cblZdybm.Items[strIndex].Value), true);
             if (ry != null)
             {
-                foreach(BuMenRenYuan r in ry)
+                foreach (GongWenBuMenRenYuan r in ry)
                 {
                     jsr.Add(r.GongHao);
                 }
@@ -250,10 +256,10 @@ public partial class ViewGongWen : System.Web.UI.Page
         else
         {
             txtQianShouNeiRong.Text = txtQianShouNeiRong.Text.Replace(this.cblZdybm.Items[strIndex].Text.Trim() + "、", "");
-            BuMenRenYuan[] ry = s.getZiDingYiBuMenRenYuan(Convert.ToInt32(this.cblZdybm.Items[strIndex].Value), true);
+            GongWenBuMenRenYuan[] ry = s.getZiDingYiBuMenRenYuan(Convert.ToInt32(this.cblZdybm.Items[strIndex].Value), true);
             if (ry != null)
             {
-                foreach (BuMenRenYuan r in ry)
+                foreach (GongWenBuMenRenYuan r in ry)
                 {
                     jsr.Remove(r.GongHao);
                 }
@@ -292,7 +298,7 @@ public partial class ViewGongWen : System.Web.UI.Page
         if (chb.Checked)
         {
             txtQianShouNeiRong.Text += chb.Text + "、";
-            foreach(gwxxService.BuMenRenYuan ry in bmfl[row].RenYuan)
+            foreach(gwxxService.GongWenBuMenRenYuan ry in bmfl[row].RenYuan)
             {
                 jsr.Add(ry.GongHao);
             }
@@ -300,7 +306,7 @@ public partial class ViewGongWen : System.Web.UI.Page
         else
         {
             txtQianShouNeiRong.Text = txtQianShouNeiRong.Text.Replace(chb.Text + "、", "");
-            foreach (gwxxService.BuMenRenYuan ry in bmfl[row].RenYuan)
+            foreach (gwxxService.GongWenBuMenRenYuan ry in bmfl[row].RenYuan)
             {
                 jsr.Remove(ry.GongHao);
             }
@@ -355,7 +361,7 @@ public partial class ViewGongWen : System.Web.UI.Page
             foreach (BuMenFenLei b in bmfl)
             {
                 if (b.FenLeiID == 1) continue;
-                foreach (BuMenRenYuan r in b.RenYuan)
+                foreach (GongWenBuMenRenYuan r in b.RenYuan)
                 {
                     jsr.Add(r.GongHao);
                 }
@@ -368,7 +374,7 @@ public partial class ViewGongWen : System.Web.UI.Page
             foreach (BuMenFenLei b in bmfl)
             {
                 if (b.FenLeiID == 1) continue;
-                foreach (BuMenRenYuan r in b.RenYuan)
+                foreach (GongWenBuMenRenYuan r in b.RenYuan)
                 {
                     jsr.Remove(r.GongHao);
                 }
@@ -398,5 +404,30 @@ public partial class ViewGongWen : System.Web.UI.Page
                 }
             }
         }
+    }
+    protected void gvListBuMen_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowIndex < 0) return;
+        CheckBoxList cbl = e.Row.FindControl("cbl") as CheckBoxList;
+        if (cbl == null) return;
+        switch (bmfl[e.Row.RowIndex].FenLeiID )
+        {
+            case 0:
+            case 1:
+                cbl.RepeatColumns = 8;
+                break;
+            case 2:
+                cbl.RepeatColumns = 8;
+                break;
+            default:
+                cbl.RepeatColumns = 6;
+                break;
+        }
+        
+    }
+    protected void gvList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int lzid = Convert.ToInt32( gvList.SelectedValue.ToString());
+        bindLiuZhuanData(false,lzid);
     }
 }

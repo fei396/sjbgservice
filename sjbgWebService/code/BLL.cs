@@ -53,6 +53,18 @@ namespace sjbgWebService
             return str;
         }
 
+        public static string[] ToStringList( this string str ,string[] separator)
+        {
+            if (str.IndexOf(",") > 0)
+            {
+                return str.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                return new string[0];
+            }
+        }
+
         public static string ToJsonString(this MqttMessage mm)
         {
             int types = mm.Type;
@@ -354,6 +366,15 @@ namespace sjbgWebService
                 u.UserDept = Convert.ToInt32(dt.Rows[0]["bumen_id"]);
                 u.GwLevel = getGwLevel(u.Uid).Number;
                 u.TqLevel = getTqLevel(u.Uid).Number;
+                GongWenYongHu gwyh = getGongWenYongHuByUid(u.Uid);
+                if (gwyh == null)
+                {
+                    u.GwRoleID = 0;
+                }
+                else
+                {
+                    u.GwRoleID = gwyh.RoleID;
+                }
             }
             return u;
 
@@ -1772,10 +1793,11 @@ namespace sjbgWebService
             if (count > 0) return false;
             else return true;
         }
-        internal static GongWenList[] getGongWenList(string jsr, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype, int ksxh, int count)
+        internal static GongWenList[] getGongWenList(int uid , string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype, int ksxh, int count)
         {
 
             //调用数据操作层的函数获取公文列表DataTable
+            string jsr = uid.toWorkNo();
             DataTable dt = DAL.getGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
 
             //如果获取数据过程错误，返回null
@@ -1803,7 +1825,7 @@ namespace sjbgWebService
                     
                     if (qssj.Equals(string.Empty))//签收时间为空
                     {
-                        if (fsr_rid==21 && jsr_rid ==23)//并且是段长书记直接发给中层的
+                        if (fsr_rid==21 && (jsr_rid ==23 || jsr_rid == 24))//并且是段长书记直接发给中层的
                         {
                             if (isBanZiChengYuanFinished(gwlist[i].GongWenID)) //判断班子成员是否都已经完成签收
                             {
@@ -1886,8 +1908,9 @@ namespace sjbgWebService
             }
         }
 
-        internal static int getGongWenCount(string jsr, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype)
+        internal static int getGongWenCount(int uid, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype)
         {
+            string jsr = uid.toWorkNo();
             DataTable dt = DAL.getGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
             if (dt.TableName.Equals("error!"))
             {
@@ -1914,7 +1937,7 @@ namespace sjbgWebService
             return DAL.addNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, ip, jsr, gwfj);
         }
 
-        internal static INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm)
+        internal static INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm ,string device)
         {
             string work_no = fsr.toWorkNo();
             GongWenYongHu gwyh = getGongWenYongHuByUid(fsr);
@@ -1934,7 +1957,14 @@ namespace sjbgWebService
                 jsr = jsr.Concat(zdyjsr).ToArray();
             }
             jsr = jsr.Distinct().ToArray();
-            return DAL.SignGongWen2016(gwid, lzid, work_no, jsr, gw.BiaoTi,gwyh.XingMing,gwyh.RoleID, qsnr);
+            return DAL.SignGongWen2016(gwid, lzid, work_no, jsr, gw.BiaoTi,gwyh.XingMing,gwyh.RoleID, qsnr,device);
+        }
+
+        internal static INT signGongWen2016Mobile(int gwid, int lzid, int fsr, string jsr, string qsnr)
+        {
+            string[] jsrs = jsr.ToStringList(new string[] { "," });
+
+            return signGongWen2016(gwid, lzid, fsr, jsrs, qsnr,new int[0],"手机");
         }
 
 
@@ -2071,10 +2101,10 @@ namespace sjbgWebService
             return null;
         }
 
-        internal static GongWenLiuZhuan[] getLiuZhuanXianByLzId(int lzid)
+        internal static GongWenLiuZhuan[] getLiuZhuanXianByLzId(bool sfbr, int lzid)
         {
 
-            DataTable dt = DAL.getLiuZhuanXianByLzId(lzid);
+            DataTable dt = DAL.getLiuZhuanXianByLzId(sfbr ,lzid);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2095,6 +2125,9 @@ namespace sjbgWebService
                     gwlz[i].JieShouRenXM = Convert.ToString(dt.Rows[i]["jsrxm"]);
                     gwlz[i].QianShouNeiRong = Convert.ToString(dt.Rows[i]["qsnr"]);
                     gwlz[i].QianShouShiJian = Convert.ToString(dt.Rows[i]["qssj"]);
+                    gwlz[i].LiuZhuanShu = Convert.ToInt32(dt.Rows[i]["liuzhuan"]);
+                    gwlz[i].WanChengShu = Convert.ToInt32(dt.Rows[i]["wancheng"]);
+                    gwlz[i].JieShouRenBM = Convert.ToString(dt.Rows[i]["jsr_bm"]);
                 }
                 return gwlz;
             }
@@ -2129,7 +2162,7 @@ namespace sjbgWebService
             return DAL.addDuanYu(work_no, dynr);
         }
 
-        internal static ZiDingYiDuanYu[] getZiDingYiDuanYu(int uid, bool onlyPrivate)
+        internal static GongWenZiDingYiDuanYu[] getZiDingYiDuanYu(int uid, bool onlyPrivate)
         {
             string work_no = uid.toWorkNo();
             DataTable dt = DAL.getZiDingYiDuanYu(work_no, onlyPrivate);
@@ -2140,10 +2173,10 @@ namespace sjbgWebService
             }
             else
             {
-                ZiDingYiDuanYu[] duanyu = new ZiDingYiDuanYu[dt.Rows.Count];
+                GongWenZiDingYiDuanYu[] duanyu = new GongWenZiDingYiDuanYu[dt.Rows.Count];
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    duanyu[i] = new ZiDingYiDuanYu();
+                    duanyu[i] = new GongWenZiDingYiDuanYu();
                     duanyu[i].ID = Convert.ToInt32(dt.Rows[i]["id"]);
                     duanyu[i].DuanYuNeiRong = dt.Rows[i]["dynr"].ToString();
                     if (dt.Rows[i]["uid"].ToString().Equals("0"))
@@ -2158,7 +2191,7 @@ namespace sjbgWebService
                 return duanyu;
             }
         }
-        internal static ZiDingYiBuMen[] getZiDingYiBuMen(int uid)
+        internal static GongWenZiDingYiBuMen[] getZiDingYiBuMen(int uid)
         {
             string work_no = uid.toWorkNo();
             DataTable dt = DAL.getZiDingYiBuMen(work_no);
@@ -2169,10 +2202,10 @@ namespace sjbgWebService
             }
             else
             {
-                ZiDingYiBuMen[] bumen = new ZiDingYiBuMen[dt.Rows.Count];
+                GongWenZiDingYiBuMen[] bumen = new GongWenZiDingYiBuMen[dt.Rows.Count];
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    bumen[i] = new ZiDingYiBuMen();
+                    bumen[i] = new GongWenZiDingYiBuMen();
                     bumen[i].ID = Convert.ToInt32(dt.Rows[i]["ID"].ToString());
                     bumen[i].MingCheng = Convert.ToString(dt.Rows[i]["bmnr"].ToString());
                 }
@@ -2192,7 +2225,11 @@ namespace sjbgWebService
             }
             else if (rid == 23)
             {
-                return getBuMenFenLeiZhongCeng(work_no);
+                return getBuMenFenLeiKeShi(work_no,rid);
+            }
+            else if (rid == 24)
+            {
+                return getBuMenFenLeiZhongCeng(work_no,rid);
             }
             else return null;
         }
@@ -2203,7 +2240,7 @@ namespace sjbgWebService
             return DAL.setZiDingYiBuMenRenYuan(zdybmid, user_no);
         }
 
-        internal static BuMenRenYuan[] getZiDingYiBuMenRenYuan(int zdybmid,bool added)
+        internal static GongWenBuMenRenYuan[] getZiDingYiBuMenRenYuan(int zdybmid,bool added)
         {
             DataTable dt = DAL.getZiDingYiBuMenRenYuan(zdybmid, added);
             if (dt.TableName.Equals("error!"))
@@ -2213,18 +2250,19 @@ namespace sjbgWebService
             }
             else
             {
-                BuMenRenYuan[] bmry = new BuMenRenYuan[dt.Rows.Count];
+                GongWenBuMenRenYuan[] bmry = new GongWenBuMenRenYuan[dt.Rows.Count];
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    bmry[i] = new BuMenRenYuan();
+                    bmry[i] = new GongWenBuMenRenYuan();
                     bmry[i].GongHao = Convert.ToString(dt.Rows[i]["user_no"].ToString());
                     bmry[i].XianShiMingCheng = Convert.ToString(dt.Rows[i]["xsmc"].ToString());
+                    bmry[i].NiCheng = Convert.ToString(dt.Rows[i]["xsmc"].ToString());
                 }
                 return bmry;
             }
         }
 
-        internal static BuMenRenYuan[] getBuMenRenYuan(int bmid)
+        internal static GongWenBuMenRenYuan[] getBuMenRenYuan(int bmid)
         {
             DataTable dt = DAL.getBuMenRenYuan(bmid);
             if (dt.TableName.Equals("error!"))
@@ -2234,10 +2272,10 @@ namespace sjbgWebService
             }
             else
             {
-                BuMenRenYuan[] bmry = new BuMenRenYuan[dt.Rows.Count];
+                GongWenBuMenRenYuan[] bmry = new GongWenBuMenRenYuan[dt.Rows.Count];
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    bmry[i] = new BuMenRenYuan();
+                    bmry[i] = new GongWenBuMenRenYuan();
                     bmry[i].GongHao = Convert.ToString(dt.Rows[i]["user_no"].ToString());
                     bmry[i].XianShiMingCheng = Convert.ToString(dt.Rows[i]["user_name"].ToString());
                 }
@@ -2245,7 +2283,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static BuMenFenLei[] getBuMenFenLeiZhongCeng(string work_no)
+        internal static BuMenFenLei[] getBuMenFenLeiZhongCeng(string work_no,int rid)
         {
 
             DataTable dt = DAL.getBenBuMenRenYuan(work_no);
@@ -2263,12 +2301,21 @@ namespace sjbgWebService
                 bmfl[0] = new BuMenFenLei();
                 bmfl[0].FenLeiMingCheng = Convert.ToString(dt.Rows[0]["bm_mc"]);
                 bmfl[0].FenLeiZongCheng = "全体人员";
-                BuMenRenYuan[] ry = new BuMenRenYuan[dt.Rows.Count];
+                bmfl[0].FenLeiID = 0;
+                GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dt.Rows.Count];
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    ry[i] = new BuMenRenYuan();
+                    
+                    ry[i] = new GongWenBuMenRenYuan();
                     ry[i].GongHao = Convert.ToString(dt.Rows[i]["user_no"].ToString());
-                    ry[i].XianShiMingCheng = Convert.ToString(dt.Rows[i]["user_name"].ToString());
+                    if (rid == 24)
+                    {
+                        ry[i].XianShiMingCheng = Convert.ToString(dt.Rows[i]["ziwu"].ToString());
+                    }
+                    else
+                    {
+                        ry[i].XianShiMingCheng = Convert.ToString(dt.Rows[i]["user_name"].ToString());
+                    }
                     ry[i].NiCheng = Convert.ToString(dt.Rows[i]["nc"].ToString());
                 }
                 bmfl[0].RenYuan = ry;
@@ -2276,10 +2323,17 @@ namespace sjbgWebService
             }
         }
 
+        internal static BuMenFenLei[] getBuMenFenLeiKeShi(string work_no,int rid)
+        {
+
+            BuMenFenLei[] bmfl = getBuMenFenLeiZhongCeng(work_no,rid);
+            return bmfl.Concat(getBuMenFenLeiLingDao(work_no, rid).ToList()).ToArray();
+        }
+
         internal static BuMenFenLei[] getBuMenFenLeiLingDao(string work_no,int rid)
         {
             DataTable dt = DAL.getBuMenFenLei(rid);
-            if (rid != 21 && rid != 22) return null;//只有领导有权限
+            if (rid != 21 && rid != 22&& rid != 23) return null;//只有领导有权限
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2296,10 +2350,10 @@ namespace sjbgWebService
                     bumen[i].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
 
                     DataTable dtyh = DAL.getBuMenFenLeiYongHu(work_no, bumen[i].FenLeiID);
-                    BuMenRenYuan[] ry = new BuMenRenYuan[dtyh.Rows.Count];
+                    GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dtyh.Rows.Count];
                     for (int j = 0; j < dtyh.Rows.Count; j++)
                     {
-                        ry[j] = new BuMenRenYuan();
+                        ry[j] = new GongWenBuMenRenYuan();
                         ry[j].GongHao = Convert.ToString(dtyh.Rows[j]["user_no"].ToString());
                         ry[j].XianShiMingCheng = Convert.ToString(dtyh.Rows[j]["xsmc"].ToString());
                         ry[j].NiCheng = Convert.ToString(dtyh.Rows[j]["nc"].ToString());
@@ -2330,25 +2384,25 @@ namespace sjbgWebService
             {
                 return new INT(-1, "无权限添加新公文用户。");
             }
-            if (rid <=20 || rid > 24)
+            if (rid <=20 || rid > 25)
             {
                 return new INT(-1, "错误的角色ID。");
             }
-            if (gwyh.RoleID == 21 || gwyh.RoleID == 22 || gwyh.RoleID == 24) //段领导和基层管理人员
+            if (gwyh.RoleID == 21 || gwyh.RoleID == 22 || gwyh.RoleID == 25) //段领导和基层管理人员
             {
                 return new INT(-1, "无权限添加新公文用户。");
             }
              
             else if (gwyh.RoleID == 20)//公文处理员
             {
-                if (rid == 24)//公文处理员不能直接添加基层用户
+                if (rid == 25)//公文处理员不能直接添加基层用户
                 {
                     return new INT(-1, "无权限添加新公文用户。");
                 }
             }
             else //中层干部
             {
-                if (rid != 24)
+                if (rid != 25)
                 {
                     return new INT(-1, "无权限添加新公文用户。");
                 }
@@ -2370,29 +2424,29 @@ namespace sjbgWebService
             GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
             if (gwyh == null)
             {
-                return new INT(-1, "无权限删除新公文用户。");
+                return new INT(-1, "无权限删除公文用户。");
             }
-            if (rid <= 20 || rid > 24)
+            if (rid <= 20 || rid > 25)
             {
                 return new INT(-1, "错误的角色ID。");
             }
-            if (gwyh.RoleID == 21 || gwyh.RoleID == 22 || gwyh.RoleID == 24) //段领导和基层管理人员
+            if (gwyh.RoleID == 21 || gwyh.RoleID == 22 || gwyh.RoleID == 25) //段领导和基层管理人员
             {
-                return new INT(-1, "无权限删除新公文用户。");
+                return new INT(-1, "无权限删除公文用户。");
             }
 
             else if (gwyh.RoleID == 20)//公文处理员
             {
-                if (rid == 24)//公文处理员不能直接添加基层用户
+                if (rid == 25)//公文处理员不能直接添加基层用户
                 {
-                    return new INT(-1, "无权限删除新公文用户。");
+                    return new INT(-1, "无权限删除公文用户。");
                 }
             }
             else //中层干部
             {
-                if (rid != 24)
+                if (rid != 25)
                 {
-                    return new INT(-1, "无权限删除新公文用户。");
+                    return new INT(-1, "无权限删除公文用户。");
                 }
 
             }
@@ -2410,7 +2464,7 @@ namespace sjbgWebService
             {
                 return null;
             }
-            if (gwyh.RoleID != 20 && gwyh.RoleID!= 23)
+            if (gwyh.RoleID != 20 && gwyh.RoleID!= 23 && gwyh.RoleID != 24)
             {
                 return null;
             }
@@ -2428,7 +2482,7 @@ namespace sjbgWebService
             r.XingMing = Convert.ToString(dt.Rows[0]["user_name"]);
             r.BuMen = Convert.ToString(dt.Rows[0]["bm_mc"]);
             r.BuMenID = Convert.ToInt32(dt.Rows[0]["bm_id"]);
-            if (gwyh.RoleID ==23 && gwyh.BuMenID != r.BuMenID)
+            if ((gwyh.RoleID ==23 || gwyh.RoleID==24) && gwyh.BuMenID != r.BuMenID)
             {
                 return null;
             }

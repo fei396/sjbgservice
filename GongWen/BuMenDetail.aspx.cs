@@ -56,8 +56,8 @@ public partial class BuMenDetail : System.Web.UI.Page
         string zdybmmc = Convert.ToString(Request["mc"]);
         lblBuMen.Text = "自定义部门：" + zdybmmc;
 
-        BuMenRenYuan[] added = s.getZiDingYiBuMenRenYuan(zdybmid,true);
-        BuMenRenYuan[] notadded = s.getZiDingYiBuMenRenYuan(zdybmid, false);
+        GongWenBuMenRenYuan[] added = s.getZiDingYiBuMenRenYuan(zdybmid, true);
+        GongWenBuMenRenYuan[] notadded = s.getZiDingYiBuMenRenYuan(zdybmid, false);
 
         lbDRn.Items.Clear();
         lbDR.Items.Clear();

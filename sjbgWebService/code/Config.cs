@@ -35,5 +35,8 @@ namespace sjbgWebService
 
         //Sendfile
         public static string SendFilePath = System.Configuration.ConfigurationManager.AppSettings["SendFile"];
+
+        //公文附件
+        public static string FuJianPath = System.Configuration.ConfigurationManager.AppSettings["FuJian"];
     }
 }

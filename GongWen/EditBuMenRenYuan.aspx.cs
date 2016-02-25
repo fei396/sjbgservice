@@ -60,7 +60,7 @@ public partial class EditBuMenRenYuan : System.Web.UI.Page
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
-        BuMenRenYuan[] bmry = s.getBuMenRenYuan(user.BuMenID);
+        GongWenBuMenRenYuan[] bmry = s.getBuMenRenYuan(user.BuMenID);
         
         gvList.DataSource = bmry;
 
@@ -184,7 +184,7 @@ public partial class EditBuMenRenYuan : System.Web.UI.Page
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
-        INT result = s.addGongWenRenYuan(uid, gh, 24);
+        INT result = s.addGongWenRenYuan(uid, gh, 25);
         if (result.Number == 1)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "添加成功", "alert('添加部门人员成功')", true);
@@ -226,7 +226,7 @@ public partial class EditBuMenRenYuan : System.Web.UI.Page
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
-        INT result = s.deleteGongWenRenYuan(uid, gh, 24);
+        INT result = s.deleteGongWenRenYuan(uid, gh, 25);
         if (result.Number == 1)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "删除成功", "alert('删除部门人员成功')", true);

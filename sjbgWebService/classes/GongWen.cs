@@ -289,23 +289,27 @@ namespace sjbgWebService.gwxx
         public string FaSongShiJian { get; set; }
         public string QianShouShiJian { get; set; }
         public string QianShouNeiRong { get; set; }
+        public int LiuZhuanShu { get; set; }
+        public int WanChengShu { get; set; }
+
+        public string JieShouRenBM { get; set; }
     }
 
-    public class ZiDingYiDuanYu
+    public class GongWenZiDingYiDuanYu
     {
         public int ID { get; set; }
         public bool SiYou { get; set; }
         public string DuanYuNeiRong { get; set; }
     }
 
-    public class ZiDingYiBuMen
+    public class GongWenZiDingYiBuMen
     {
         public int ID { get; set; }
         public string MingCheng { get; set; }
 
     }
 
-    public class BuMenRenYuan
+    public class GongWenBuMenRenYuan
     {
         public string GongHao { get; set; }
         public string XianShiMingCheng { get; set; }
@@ -319,7 +323,7 @@ namespace sjbgWebService.gwxx
         public string FenLeiMingCheng { get; set; }
         public string FenLeiZongCheng { get; set; }
 
-        public BuMenRenYuan[] RenYuan { get; set; }
+        public GongWenBuMenRenYuan[] RenYuan { get; set; }
 
     }
 

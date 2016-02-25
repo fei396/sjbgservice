@@ -118,16 +118,28 @@ init = function (rid) {
             break;
         case 23:
             case 24:
-            Menus = {
+            //Menus = {
 
-                "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListGongWen.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1", "管理本部门人员": "EditBuMenRenYuan.aspx", "自定义短语": "DuanYu.aspx" } }
+            //    "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListGongWen.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1", "管理本部门人员": "EditBuMenRenYuan.aspx", "自定义短语": "DuanYu.aspx" } }
 
-            };
+                //};
+                Menus = {
+
+                    "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListGongWen.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1",  "自定义短语": "DuanYu.aspx" } }
+
+                };
             break;
         case 20:
             Menus = {
 
-                "操作菜单": { "row": 1, "show": true, "menu": { "发新公文": "AddNew.aspx", "未签完公文": "ListGongWenGuiDang.aspx?type=0","所有公文":"ListGongWenGuiDang.aspx?type=1" } }
+                "操作菜单": { "row": 1, "show": true, "menu": { "发新公文": "AddNew.aspx", "未签完公文": "ListGongWenGuiDang.aspx?type=0", "所有公文": "ListGongWenGuiDang.aspx?type=1" } }
+
+            };
+            break;
+        case 25:
+            Menus = {
+
+                "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListGongWen.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1", "自定义短语": "DuanYu.aspx" } }
 
             };
             break;

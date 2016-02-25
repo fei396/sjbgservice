@@ -24,13 +24,18 @@ public partial class mDefault : System.Web.UI.Page
                 //公文处理员
                 break;
             case 21:
+                //段长、书记
+                break;
             case 22:
                 //段领导
                 break;
             case 23:
-                //中层干部
+                //科室中层干部
                 break;
             case 24:
+                //车间中层干部
+                break;
+            case 25:
                 //基层管理人员
                 break;
             default:

@@ -60,7 +60,7 @@ public partial class BuMen : System.Web.UI.Page
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
-        ZiDingYiBuMen[] bmList = s.getZiDingYiBuMen(uid);
+        GongWenZiDingYiBuMen[] bmList = s.getZiDingYiBuMen(uid);
         
         gvList.DataSource = bmList;
 

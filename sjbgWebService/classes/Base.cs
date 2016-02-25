@@ -134,6 +134,7 @@ namespace sjbgWebService
         {
             // TODO: Complete member initialization
             this.Number = p;
+            this.Message = "";
         }
 	}
 
@@ -152,7 +153,7 @@ namespace sjbgWebService
         
         public int TqLevel { get; set; }
         public int GwLevel { get; set; }
-
+        public int GwRoleID { get; set; }
 		public User()
 		{
 			Uid = 0;

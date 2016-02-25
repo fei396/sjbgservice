@@ -12,7 +12,6 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using gwxxService;
-using YouJianFuWu;
 using System.Text;
 
 public partial class AddNew : System.Web.UI.Page
