@@ -125,9 +125,9 @@ public partial class AddNew : System.Web.UI.Page
         int xzid = Convert.ToInt32(ddlXingZhi.SelectedValue);
         string yj = txtYj.Text;
         string jsr = ddlLingDao.SelectedValue;
-        
+        string jinji = ddlJinJi.SelectedValue;
         //调用web服务添加公文
-        INT i = s.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, pbModule.getIP(), jsr, files);
+        INT i = s.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, jinji, pbModule.getIP(), jsr, files);
         if (i.Number != 1)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "发布公文出错", "alert('" + i.Message + "')", true);

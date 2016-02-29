@@ -187,6 +187,7 @@
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="BiaoTi" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaSongShiJian" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ShiFouQianShou" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JinJi" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="QianShouQingKuang" type="s:string" />
         </s:sequence>
       </s:complexType>
@@ -309,6 +310,7 @@
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JieShouRen" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JieShouRenXM" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaBuShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JinJi" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ShiFouLiuZhuanWanCheng" type="s:boolean" />
         </s:sequence>
       </s:complexType>
@@ -473,6 +475,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="BiaoTi" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="FaSongShiJian" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="ShiFouQianShou" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="JinJi" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="QianShouQingKuang" type="s:string" />
         </s:sequence>
       </s:complexType>
@@ -595,6 +598,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="JieShouRen" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="JieShouRenXM" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="FaBuShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JinJi" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="ShiFouLiuZhuanWanCheng" type="s:boolean" />
         </s:sequence>
       </s:complexType>
@@ -728,6 +732,7 @@
     <wsdl:part name="yj" type="s:string" />
     <wsdl:part name="xzid" type="s:int" />
     <wsdl:part name="lxid" type="s:int" />
+    <wsdl:part name="jinji" type="s:string" />
     <wsdl:part name="ip" type="s:string" />
     <wsdl:part name="jsr" type="s:string" />
     <wsdl:part name="gwfj" type="tns:ArrayOfString" />
@@ -1040,6 +1045,16 @@
   <wsdl:message name="getFuJianNeiRongSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
+  <wsdl:message name="deleteGongWen2016SoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="gwid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWen2016SoapOut">
+    <wsdl:part name="deleteGongWen2016Result" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWen2016SjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
   <wsdl:message name="getLeaderListHttpGetIn" />
   <wsdl:message name="getLeaderListHttpGetOut">
     <wsdl:part name="Body" element="s1:ArrayOfUserGw" />
@@ -1122,6 +1137,7 @@
     <wsdl:part name="yj" type="s:string" />
     <wsdl:part name="xzid" type="s:string" />
     <wsdl:part name="lxid" type="s:string" />
+    <wsdl:part name="jinji" type="s:string" />
     <wsdl:part name="ip" type="s:string" />
     <wsdl:part name="jsr" type="s:string" />
     <wsdl:part name="gwfj" type="s2:StringArray" />
@@ -1344,6 +1360,13 @@
   <wsdl:message name="getFuJianNeiRongHttpGetOut">
     <wsdl:part name="Body" element="s1:string" />
   </wsdl:message>
+  <wsdl:message name="deleteGongWen2016HttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWen2016HttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
   <wsdl:message name="getLeaderListHttpPostIn" />
   <wsdl:message name="getLeaderListHttpPostOut">
     <wsdl:part name="Body" element="s1:ArrayOfUserGw" />
@@ -1426,6 +1449,7 @@
     <wsdl:part name="yj" type="s:string" />
     <wsdl:part name="xzid" type="s:string" />
     <wsdl:part name="lxid" type="s:string" />
+    <wsdl:part name="jinji" type="s:string" />
     <wsdl:part name="ip" type="s:string" />
     <wsdl:part name="jsr" type="s:string" />
     <wsdl:part name="gwfj" type="s2:StringArray" />
@@ -1648,6 +1672,13 @@
   <wsdl:message name="getFuJianNeiRongHttpPostOut">
     <wsdl:part name="Body" element="s1:string" />
   </wsdl:message>
+  <wsdl:message name="deleteGongWen2016HttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteGongWen2016HttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
   <wsdl:portType name="gwxxWebServiceSoap">
     <wsdl:operation name="getLeaderList">
       <wsdl:input message="tns:getLeaderListSoapIn" />
@@ -1812,6 +1843,10 @@
     <wsdl:operation name="getFuJianNeiRong">
       <wsdl:input message="tns:getFuJianNeiRongSoapIn" />
       <wsdl:output message="tns:getFuJianNeiRongSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWen2016">
+      <wsdl:input message="tns:deleteGongWen2016SoapIn" />
+      <wsdl:output message="tns:deleteGongWen2016SoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="gwxxWebServiceHttpGet">
@@ -1979,6 +2014,10 @@
       <wsdl:input message="tns:getFuJianNeiRongHttpGetIn" />
       <wsdl:output message="tns:getFuJianNeiRongHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="deleteGongWen2016">
+      <wsdl:input message="tns:deleteGongWen2016HttpGetIn" />
+      <wsdl:output message="tns:deleteGongWen2016HttpGetOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="gwxxWebServiceHttpPost">
     <wsdl:operation name="getLeaderList">
@@ -2144,6 +2183,10 @@
     <wsdl:operation name="getFuJianNeiRong">
       <wsdl:input message="tns:getFuJianNeiRongHttpPostIn" />
       <wsdl:output message="tns:getFuJianNeiRongHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWen2016">
+      <wsdl:input message="tns:deleteGongWen2016HttpPostIn" />
+      <wsdl:output message="tns:deleteGongWen2016HttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="gwxxWebServiceSoap" type="tns:gwxxWebServiceSoap">
@@ -2553,6 +2596,16 @@
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
         <soap:header message="tns:getFuJianNeiRongSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWen2016">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/deleteGongWen2016" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:deleteGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -2971,6 +3024,16 @@
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="deleteGongWen2016">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/deleteGongWen2016" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:deleteGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="gwxxWebServiceHttpGet" type="tns:gwxxWebServiceHttpGet">
     <http:binding verb="GET" />
@@ -3343,6 +3406,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="deleteGongWen2016">
+      <http:operation location="/deleteGongWen2016" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="gwxxWebServiceHttpPost" type="tns:gwxxWebServiceHttpPost">
     <http:binding verb="POST" />
@@ -3708,6 +3780,15 @@
     </wsdl:operation>
     <wsdl:operation name="getFuJianNeiRong">
       <http:operation location="/getFuJianNeiRong" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGongWen2016">
+      <http:operation location="/deleteGongWen2016" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

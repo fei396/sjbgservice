@@ -3493,7 +3493,7 @@ namespace sjbgWebService
 
 
         #region 2016新公文流转系统
-        internal static INT addNewGongWen2016(string ht, string dw, string wh, string bt, string zw, string yj, int wjxzID, int wjlxID, string fbr, string ip, string jsr, string[] gwfj)
+        internal static INT addNewGongWen2016(string ht, string dw, string wh, string bt, string zw, string yj, int wjxzID, int wjlxID, string fbr, string jinji,string ip, string jsr, string[] gwfj)
         {
             SqlConnection conn = new SqlConnection(baseConnStr);
             SqlCommand comm = new SqlCommand();
@@ -3516,8 +3516,8 @@ namespace sjbgWebService
                 
                 
                 //先插入公文信息表
-                comm.CommandText = "INSERT INTO [dbo].[T_GongWen_GWXX] (ht,dw,wh,bt,zw,csyj,wjxzID,wjlxID,fbr,fbrq,ip)";
-                comm.CommandText += " VALUES (@ht,@dw,@wh,@bt,@zw,@csyj,@wjxzID,@wjlxID,@fbr,getdate(),@ip)";
+                comm.CommandText = "INSERT INTO [dbo].[T_GongWen_GWXX] (ht,dw,wh,bt,zw,csyj,wjxzID,wjlxID,fbr,fbrq,ip,jinji)";
+                comm.CommandText += " VALUES (@ht,@dw,@wh,@bt,@zw,@csyj,@wjxzID,@wjlxID,@fbr,getdate(),@ip,@jinji)";
                 comm.CommandText += " ;select scope_identity();";//获取新插入的行ID
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("@ht", ht);
@@ -3530,7 +3530,7 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("@wjlxid", wjlxID);
                 comm.Parameters.AddWithValue("@fbr", fbr);
                 comm.Parameters.AddWithValue("@ip", ip);
-
+                comm.Parameters.AddWithValue("@jinji", jinji);
                 //因为在insert语句后加入了select scope_identity();
                 //所以可以用ExecuteScalar获取scope_identity()的内容，即insert以后新生成的ID
                 int gid = Convert.ToInt32(comm.ExecuteScalar());
@@ -3555,8 +3555,17 @@ namespace sjbgWebService
                 comm.ExecuteNonQuery();
 
                 //发短信通知
-                INT r = sendMobileMessage(jsr, "您有一件新公文需要签阅。公文标题：" + bt);
-                // INT r = sendMobileMessage("3974", "您有一件新公文未签阅。公文标题：" + bt);
+                string message;
+                if (jinji.Equals("一般"))
+                {
+                    message =  "您有一件新公文需要签阅。公文标题：" + bt;
+                }
+                else
+                {
+                    message = "您有一件新公文需要签阅。公文标题：" + bt + "。该公文是" + jinji +"公文，请务必尽快签阅。";
+                }
+                INT r = sendMobileMessage(jsr,message);
+                // INT r = sendMobileMessage("3974", message);
                 if (r.Number == 1)
                 {
                     //所有操作都成功完成，提交事务，确认操作
@@ -3765,7 +3774,7 @@ namespace sjbgWebService
             SqlConnection conn = new SqlConnection(baseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
-            comm.CommandText = "SELECT  gwid, lzID, ht,dw, wh, bt, zw, wjxzID, wjlxID, fbr, fbrq, wjlx, wjxz, fbrxm, pID,fsr, fsrxm, jsr, jsrxm, fssj, qssj, qsnr,fsr_rid,jsr_rid FROM V_GongWen_List_All where jsr=@jsr ";
+            comm.CommandText = "SELECT  gwid, lzID, ht,dw, wh, bt, zw, wjxzID, wjlxID, fbr, fbrq, wjlx, wjxz, fbrxm, pID,fsr, fsrxm, jsr, jsrxm, fssj, qssj, qsnr,fsr_rid,jsr_rid,jinji FROM V_GongWen_List_All where jsr=@jsr ";
             
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("jsr", jsr);
@@ -3829,7 +3838,7 @@ namespace sjbgWebService
             SqlConnection conn = new SqlConnection(baseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
-            comm.CommandText = "SELECT gwid,lzid, wh, bt, fbr, fbrq, fbrxm, jsr, jsrxm, dbo.liu_zhuan_wan_cheng(gwid) AS ShiFouLiuZhuanWanCheng FROM V_GongWen_List_All WHERE (pID = 0) AND fbr=@fbr ";
+            comm.CommandText = "SELECT gwid,lzid, wh, bt, fbr, fbrq, fbrxm, jsr, jsrxm,jinji, dbo.liu_zhuan_wan_cheng(gwid) AS ShiFouLiuZhuanWanCheng FROM V_GongWen_List_All WHERE (pID = 0) AND fbr=@fbr ";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("fbr", fbr);
            
@@ -4548,6 +4557,36 @@ namespace sjbgWebService
             {
                 conn.Open();
                 comm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                return new INT(-1, ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return new INT(1);
+        }
+
+        internal static INT deleteGongWen2016(int uid, int gwid)
+        {
+            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "update T_GongWen_GWXX  set isvalid =0,fbrq =getdate() where fbr=@uid and id=@gwid";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("uid", uid);
+            comm.Parameters.AddWithValue("gwid", gwid);
+
+            try
+            {
+                conn.Open();
+                int r = comm.ExecuteNonQuery();
+                if (r == 0)
+                {
+                    return new INT(-1, "该公文不是你发布的，不能删除。");
+                }
             }
             catch (Exception ex)
             {

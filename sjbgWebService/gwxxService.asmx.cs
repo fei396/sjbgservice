@@ -192,12 +192,12 @@ namespace sjbgWebService.gwxx
         /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public INT addNewGongWen2016(int uid ,string ht,string dw,string wh,string bt,string zw,string yj,int xzid,int lxid,string ip,string jsr,string[] gwfj )
+        public INT addNewGongWen2016(int uid ,string ht,string dw,string wh,string bt,string zw,string yj,int xzid,int lxid,string jinji,string ip,string jsr,string[] gwfj )
         {
             //判断传过来的header是否合法
             if (!sjbgHeader.checkValid()) return new INT(-1, "非法接入程序");
             //直接调用业务逻辑层函数进行添加操作
-            return BLL.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, ip, jsr, gwfj);
+            return BLL.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, jinji, ip, jsr, gwfj);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -441,6 +441,15 @@ namespace sjbgWebService.gwxx
                 return null;
             }
         }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT deleteGongWen2016(int uid ,int gwid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.deleteGongWen2016(uid, gwid);
+        }
+
         #endregion
     }
 }

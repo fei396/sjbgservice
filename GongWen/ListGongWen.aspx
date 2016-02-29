@@ -74,7 +74,7 @@
                     <asp:BoundField DataField="WenHao" HeaderText="文号" />
                     <asp:BoundField DataField="BiaoTi" HeaderText="标题" />
                     <asp:BoundField DataField="FaSongShiJian" HeaderText="时间" />
-
+                    <asp:BoundField DataField="JinJi" HeaderText="紧急程度" />
                     <asp:TemplateField>
                         <HeaderTemplate>
                             签收情况

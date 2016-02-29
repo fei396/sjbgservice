@@ -239,7 +239,7 @@ namespace sjbgWebService.gwxx
         public string BiaoTi { get; set; }
         public string FaSongShiJian { get; set; }
         public int ShiFouQianShou { get; set; }
-
+        public string JinJi { get; set; }
         public string QianShouQingKuang { get; set; }
     }
 
@@ -255,6 +255,8 @@ namespace sjbgWebService.gwxx
         public string JieShouRen { get; set; }
         public string JieShouRenXM { get; set; }
         public string FaBuShiJian { get; set; }
+
+        public string JinJi { get; set; }
         public bool ShiFouLiuZhuanWanCheng { get; set; }
     }
 

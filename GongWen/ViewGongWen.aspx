@@ -50,16 +50,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td align="left">
-                        <asp:Label ID="lblLeiXing" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>
-                    <td align="left">
+                    <%--<td align="left" class="auto-style1">
+                        <asp:Label ID="lblLeiXing" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>--%>
+                    <td align="left" class="auto-style1">
                         <asp:Label ID="lblYiJian" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>
                 </tr>
                 <tr>
                     <td align="left">
-                        <asp:Label ID="lblFaWenDanWei" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>
-                    <td align="lfet">
-                        <asp:Label ID="lblFaWenShiJian" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>
+                        <asp:Label ID="lblFaWenDanWeiHeShiJian" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>
+                    <%--<td align="lfet">
+                        <asp:Label ID="lblFaWenShiJian" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>--%>
                 </tr>
                 <tr>
                     <td colspan="2">

@@ -196,4 +196,24 @@ public partial class ListGongWenGuiDang : System.Web.UI.Page
     {
         getData(1 ,txtBiaoTi.Text ,txtStart.Text ,txtEnd.Text);
     }
+    protected void gvList_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        int gwid = Convert.ToInt32(e.Keys[0].ToString());
+        GongWenYongHu user = Session["user"] as GongWenYongHu;
+        if (user == null)
+        {
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+        }
+        int uid = Convert.ToInt32(user.GongHao);
+        INT r = s.deleteGongWen2016(uid, gwid);
+        if (r.Number == 1)
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "delete", "alert('删除公文成功')", true);
+            getData(cpage);
+        }
+        else
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "delete", "alert('删除公文失败：" + r.Message + "')", true);
+        }
+    }
 }

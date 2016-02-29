@@ -197,10 +197,10 @@ public partial class ViewGongWen : System.Web.UI.Page
             lblHongTou.Text = gw.HongTou;
             lblWenHao.Text = gw.WenHao;
             txtZhengWen.Text = gw.ZhengWen;
-            lblLeiXing.Text = "公文分类：" + gw.WenJianLeiXing;
+            //lblLeiXing.Text = "公文分类：" + gw.WenJianLeiXing;
             lblYiJian.Text = "呈送意见：" + gw.ChengSongYiJian;
-            lblFaWenDanWei.Text = "发文单位：" + gw.FaWenDanWei;
-            lblFaWenShiJian.Text = "发布时间：" + gw.FaBuShiJian;
+            lblFaWenDanWeiHeShiJian.Text = gw.FaWenDanWei + "                   " + Convert.ToDateTime(gw.FaBuShiJian).ToString("yyyy年M月d日") + "发";
+            //lblFaWenShiJian.Text = "发布时间：" + gw.FaBuShiJian;
             
             if (gw.FuJian != null)
             {

@@ -30,10 +30,10 @@
         <hr align="center" color="#00cc00" noshade="noshade" width="96%" />
         
         <div align="center">
-            <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False"
+            <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False" DataKeyNames="GongWenID"
                 BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4"
                 ForeColor="#333333" Width="80%" OnRowDataBound="GridView1_RowDataBound" OnSorting="GridView1_Sorting"
-                PageSize="15" OnPageIndexChanging="GridView1_PageIndexChanging">
+                PageSize="15" OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDeleting="gvList_RowDeleting">
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                 <PagerTemplate>
                     <%--  <table width="100%">
@@ -71,7 +71,7 @@
                     <asp:BoundField DataField="WenHao" HeaderText="文号" />
                     <asp:BoundField DataField="BiaoTi" HeaderText="标题" />
                     <asp:BoundField DataField="FaBuShiJian" HeaderText="发布时间" />
-
+                    <asp:BoundField DataField="JinJi" HeaderText="紧急程度" />
                     <asp:TemplateField>
                         <HeaderTemplate>
                             完成情况
@@ -89,6 +89,12 @@
                             <asp:HyperLink ID="HyperLink1" runat="server"
                                 NavigateUrl='<%#"ViewGongWen.aspx?lzid=" + Eval("LiuZhuanID") + "&gwid=" + Eval("GongWenID")+ "&type=" + (Eval("ShiFouLiuZhuanWanCheng").Equals(true)?"1":"0") %>'
                                 Text="查看详情"></asp:HyperLink>
+                               </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField ShowHeader="False">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" OnClientClick="return confirm('你确定要删除吗？');" CommandName="Delete" Text="删除" Visible='<%#Eval("ShiFouLiuZhuanWanCheng").Equals(true)?false:true%>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
 

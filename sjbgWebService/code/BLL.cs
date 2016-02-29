@@ -1819,6 +1819,7 @@ namespace sjbgWebService
                     gwlist[i].WenHao = Convert.ToString(dt.Rows[i + ksxh - 1]["wh"]);
                     gwlist[i].FaSongRen = Convert.ToString(dt.Rows[i + ksxh - 1]["fsrxm"]);
                     gwlist[i].FaSongShiJian = Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fssj"]).ToString("yyyy-MM-dd HH:mm:ss");
+                    gwlist[i].JinJi = Convert.ToString(dt.Rows[i + ksxh - 1]["jinji"]);
                     string qssj = Convert.ToString(dt.Rows[i + ksxh - 1]["qssj"]);
                     int fsr_rid =  Convert.ToInt32(dt.Rows[i + ksxh - 1]["fsr_rid"]);
                     int jsr_rid = Convert.ToInt32(dt.Rows[i + ksxh - 1]["jsr_rid"]);
@@ -1891,6 +1892,7 @@ namespace sjbgWebService
                     gwlist[i].WenHao = Convert.ToString(dt.Rows[i + ksxh - 1]["wh"]);
                     gwlist[i].FaBuRen = Convert.ToString(dt.Rows[i + ksxh - 1]["fbr"]);
                     gwlist[i].FaBuRenXM = Convert.ToString(dt.Rows[i + ksxh - 1]["fbrxm"]);
+                    gwlist[i].JinJi = Convert.ToString(dt.Rows[i + ksxh - 1]["jinji"]);
                     gwlist[i].FaBuShiJian = Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fbrq"]).ToString("yyyy-MM-dd HH:mm:ss");
                     gwlist[i].JieShouRen = Convert.ToString(dt.Rows[i + ksxh - 1]["jsr"]);
                     gwlist[i].JieShouRenXM = Convert.ToString(dt.Rows[i + ksxh - 1]["jsrxm"]);
@@ -1922,7 +1924,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static INT addNewGongWen2016(int uid, string ht, string dw, string wh, string bt, string zw, string yj, int xzid, int lxid, string ip, string jsr, string[] gwfj)
+        internal static INT addNewGongWen2016(int uid, string ht, string dw, string wh, string bt, string zw, string yj, int xzid, int lxid,string jinji, string ip, string jsr, string[] gwfj)
         {
             //工号转换为字符
             string work_no = uid.toWorkNo();
@@ -1934,7 +1936,7 @@ namespace sjbgWebService
             }
 
             //调用数据操作层函数添加公文
-            return DAL.addNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, ip, jsr, gwfj);
+            return DAL.addNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, jinji, ip, jsr, gwfj);
         }
 
         internal static INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm ,string device)
@@ -2455,6 +2457,20 @@ namespace sjbgWebService
                 return new INT(-1, "不是公文用户，不能删除");
             }
             return DAL.deleteGongWenRenYuan(gh, rid);
+        }
+
+        internal static INT deleteGongWen2016(int uid, int gwid)
+        {
+            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            if (gwyh == null)
+            {
+                return new INT(-1, "无权限删除公文。");
+            }
+            if (gwyh.RoleID != 20)
+            {
+                return new INT(-1, "无权限删除公文。");
+            }
+            return DAL.deleteGongWen2016(uid, gwid);
         }
 
         internal static GongWenYongHu getYongHuXinXiByGh(int uid,string gh)

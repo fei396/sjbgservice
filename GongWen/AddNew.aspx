@@ -105,8 +105,8 @@
                         <asp:TextBox ID="txtYj" runat="server" Width="90%"
                             ></asp:TextBox>
                     </td>
-
-                <tr height="50">
+                    </tr>
+               <tr style="height: 50px">
                     <td align="right" width="10%">文件类型：
                     </td>
                     <td align="center" valign="middle" width="20%">
@@ -119,13 +119,25 @@
                         <asp:DropDownList ID="ddlXingZhi" runat="server">
                         </asp:DropDownList>
                     </td>
+                    
+                </tr>
+                <tr style="height: 50px">
+                    <td align="right" width="10%">紧急程度：
+                    </td>
+                    <td align="center" valign="middle">
+                        <asp:DropDownList ID="ddlJinJi" runat="server">
+                            <asp:ListItem>一般</asp:ListItem>
+                            <asp:ListItem>特急</asp:ListItem>
+                            <asp:ListItem>特急</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
                     <td align="right" width="10%">送阅领导：
                     </td>
                     <td align="center" valign="middle">
                         <asp:DropDownList ID="ddlLingDao" runat="server">
                         </asp:DropDownList>
                     </td>
-                </tr>
+                    </tr>
                 <tr>
 
                     <td style="height: 50" colspan="6" width="100%" align="center">
