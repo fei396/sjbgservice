@@ -104,16 +104,31 @@ namespace sjbgWebService
         {
             return true;
         }
+
+        /// <summary>
+        /// 设置用户密码
+        /// </summary>
+        /// <param name="gh">工号</param>
+        /// <param name="pass">密码</param>
+        /// <returns></returns>
         public static string setEncryptPass(string gh, string pass)
         {
+            //以工号为salt，简单的用(工号+密码)的md5值存入数据库
             return ToMD5String(gh + pass);
         }
 
         public static string toWorkNo(this int uid)
         {
-            int length = 4;
-            if (uid <= 0 || uid >= Math.Pow(10, length)) throw new ArgumentOutOfRangeException("uid", "工号只能在0001-9999中间");
-            return uid.ToString().PadLeft(length, '0');
+            if (uid > 9999 && uid < 100000)
+            {
+                return uid.ToString();
+            }
+            else
+            {
+                int length = 4;
+                if (uid <= 0 || uid >= Math.Pow(10, length)) throw new ArgumentOutOfRangeException("uid", "工号只能在0001-9999中间");
+                return uid.ToString().PadLeft(length, '0');
+            }
         }
 
 
@@ -1820,6 +1835,7 @@ namespace sjbgWebService
                     gwlist[i].FaSongRen = Convert.ToString(dt.Rows[i + ksxh - 1]["fsrxm"]);
                     gwlist[i].FaSongShiJian = Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fssj"]).ToString("yyyy-MM-dd HH:mm:ss");
                     gwlist[i].JinJi = Convert.ToString(dt.Rows[i + ksxh - 1]["jinji"]);
+                    gwlist[i].ShiFouCheXiao = Convert.ToInt32(dt.Rows[i + ksxh - 1]["chexiao"]);
                     string qssj = Convert.ToString(dt.Rows[i + ksxh - 1]["qssj"]);
                     int fsr_rid =  Convert.ToInt32(dt.Rows[i + ksxh - 1]["fsr_rid"]);
                     int jsr_rid = Convert.ToInt32(dt.Rows[i + ksxh - 1]["jsr_rid"]);
@@ -1948,16 +1964,16 @@ namespace sjbgWebService
                 return new INT(-1, "尚未设置签阅公文权限");
             }
             GongWen2016 gw = getGongWen2016ById(gwid);
-            if (!zdybm.Equals(null) && zdybm.Length > 0)
-            {
-                DataTable dt = DAL.getZiDingYiBuMenRenYuan(zdybm);
-                string[] zdyjsr = new string[dt.Rows.Count];
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    zdyjsr[i] = dt.Rows[i]["user_no"].ToString();
-                }
-                jsr = jsr.Concat(zdyjsr).ToArray();
-            }
+            //if (!zdybm.Equals(null) && zdybm.Length > 0)
+            //{
+            //    DataTable dt = DAL.getZiDingYiBuMenRenYuan(zdybm);
+            //    string[] zdyjsr = new string[dt.Rows.Count];
+            //    for (int i = 0; i < dt.Rows.Count; i++)
+            //    {
+            //        zdyjsr[i] = dt.Rows[i]["user_no"].ToString();
+            //    }
+            //    jsr = jsr.Concat(zdyjsr).ToArray();
+            //}
             jsr = jsr.Distinct().ToArray();
             return DAL.SignGongWen2016(gwid, lzid, work_no, jsr, gw.BiaoTi,gwyh.XingMing,gwyh.RoleID, qsnr,device);
         }
@@ -2301,7 +2317,7 @@ namespace sjbgWebService
             {
                 BuMenFenLei[] bmfl = new BuMenFenLei[1];
                 bmfl[0] = new BuMenFenLei();
-                bmfl[0].FenLeiMingCheng = Convert.ToString(dt.Rows[0]["bm_mc"]);
+                bmfl[0].FenLeiMingCheng = Convert.ToString(dt.Rows[dt.Rows.Count -1]["bm_mc"]);
                 bmfl[0].FenLeiZongCheng = "全体人员";
                 bmfl[0].FenLeiID = 0;
                 GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dt.Rows.Count];
@@ -2329,7 +2345,12 @@ namespace sjbgWebService
         {
 
             BuMenFenLei[] bmfl = getBuMenFenLeiZhongCeng(work_no,rid);
-            return bmfl.Concat(getBuMenFenLeiLingDao(work_no, rid).ToList()).ToArray();
+            BuMenFenLei[] bmfl1 = getBuMenFenLeiLingDao(work_no, rid);
+            if (bmfl != null)
+            {
+                bmfl1 = bmfl.Concat(bmfl1.ToList()).ToArray();
+            }
+            return bmfl1;
         }
 
         internal static BuMenFenLei[] getBuMenFenLeiLingDao(string work_no,int rid)
@@ -2505,6 +2526,10 @@ namespace sjbgWebService
             return r;
         }
 
+        internal static INT undoSignGongWen2016(int uid,int lzid)
+        {
+            return DAL.undoSignGongWen2016(uid,lzid);
+        }
         #endregion
 
 

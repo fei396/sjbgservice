@@ -80,58 +80,60 @@
                         <br />
 
                         <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False"
-                            BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4" DataKeyNames="LiuZhuanID"
+                            BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4" DataKeyNames="LiuZhuanID" 
                             ForeColor="#333333" Width="100%" Caption="文件签收情况" Font-Size="Medium" OnSelectedIndexChanged="gvList_SelectedIndexChanged">
-                            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-
-                            <PagerStyle HorizontalAlign="Center" />
+                         
                             <EmptyDataTemplate>
                                 尚无人签收
                             </EmptyDataTemplate>
 
                             <Columns>
                                 <asp:BoundField DataField="FaSongRenXM" HeaderText="发送人">
-                                    <HeaderStyle Width="50px" />
-                                    <ItemStyle Width="50px" />
+                                    <HeaderStyle Width="8%" />
+                                    <ItemStyle Width="8%" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="FaSongShiJian" HeaderText="发送时间">
-                                    <HeaderStyle Width="100px" />
-                                    <ItemStyle Width="120px" />
+                                    <HeaderStyle Width="9%" />
+                                    <ItemStyle Width="9%" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="JieShouRenXM" HeaderText="接收人">
-                                    <HeaderStyle Width="50px" />
-                                    <ItemStyle Width="50px" />
+                                    <HeaderStyle Width="8%" />
+                                    <ItemStyle Width="8%" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="JieShouRenBM" HeaderText="接收人部门">
-                                    <HeaderStyle Width="70px" />
-                                    <ItemStyle Width="70px" />
+                                    <HeaderStyle Width="9%" />
+                                    <ItemStyle Width="9%" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="QianShouShiJian" HeaderText="签收时间">
-                                    <HeaderStyle Width="100px" />
-                                    <ItemStyle Width="120px" />
+                                    <HeaderStyle Width="9%" />
+                                    <ItemStyle Width="9%" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="QianShouNeiRong" HeaderText="签收内容" />
+                                <asp:BoundField DataField="QianShouNeiRong" HeaderText="签收内容" >
+                                    
+                                     <HeaderStyle Width="20%" />
+                                    <ItemStyle Width="20%" />
+                                  </asp:BoundField>
                                 <asp:TemplateField HeaderText="转发人数">
 
                                     <ItemTemplate>
                                         <asp:Label ID="Label2" runat="server" Text='<%#  Convert.ToInt32( Eval("LiuZhuanShu")) >0?Eval("LiuZhuanShu"):"N/A" %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle Width="50px" />
-                                    <ItemStyle Width="50px" />
+                                    <HeaderStyle Width="7%" />
+                                    <ItemStyle Width="7%" />
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="签收人数">
                                     <ItemTemplate>
                                         <asp:Label ID="Label1" runat="server"  Text='<%#  Convert.ToInt32( Eval("WanChengShu")) >0 ?Eval("WanChengShu"): Convert.ToInt32( Eval("LiuZhuanShu")) >0?"0":  "N/A" %>'></asp:Label>
                                     </ItemTemplate>
-                                    <HeaderStyle Width="50px" />
-                                    <ItemStyle Width="50px" />
+                                    <HeaderStyle Width="7%" />
+                                    <ItemStyle Width="7%" />
                                 </asp:TemplateField>
                                 <asp:TemplateField ShowHeader="False">
                                     <ItemTemplate>
                                         <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Select" Text="查看详情" Visible='<%#Convert.ToInt32( Eval("LiuZhuanShu")) >0?true:false %>'></asp:LinkButton>
                                     </ItemTemplate>
-                                    <HeaderStyle Width="60px" />
-                                    <ItemStyle Width="60px" />
+                                    <HeaderStyle Width="7%" />
+                                    <ItemStyle Width="7%" />
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>

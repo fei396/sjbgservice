@@ -33,8 +33,8 @@
             <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False"
                 BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4"
                 ForeColor="#333333" Width="80%" 
-                PageSize="15" >
-                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                PageSize="15" OnRowDeleting="gvList_RowDeleting"  DataKeyNames="LiuZhuanID">
+                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White"  />
                 <PagerTemplate>
                     <%--  <table width="100%">
                 <tr>
@@ -92,6 +92,8 @@
                             <asp:HyperLink ID="HyperLink1" runat="server"
                                 NavigateUrl='<%#"ViewGongWen.aspx?lzid=" + Eval("LiuZhuanID") + "&gwid=" + Eval("GongWenID") + "&type=" + Eval("ShiFouQianShou") %>'
                                 Text='<%#Convert.ToInt32(Eval("ShiFouQianShou"))==0?"签收文件":"查看详情" %>'></asp:HyperLink>
+                            &nbsp;&nbsp
+                            <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" OnClientClick="return confirm('撤销签阅你确定要撤销吗？');" CommandName="Delete" Text="撤销批阅" Visible='<%#Convert.ToInt32(Eval("ShiFouCheXiao"))==1?true:false%>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
 

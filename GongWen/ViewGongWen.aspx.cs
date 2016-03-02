@@ -54,16 +54,19 @@ public partial class ViewGongWen : System.Web.UI.Page
             {
                 tableZdybm.Visible = true;
                 bumen(uid);
+                lblYiJian.Visible = true;
             }
             else
             {
                 tableZdybm.Visible = false;
+                lblYiJian.Visible = false;
             }
             int type = Convert.ToInt32(Request["type"]);
 
             
             if (rid == 20)//公文处理员
             {
+                lblYiJian.Visible = true;
                 tableGuiDang.Visible = true;
                 tableQianShou.Visible = false;
                 if (type == 1)//已经流转完成
@@ -315,15 +318,37 @@ public partial class ViewGongWen : System.Web.UI.Page
     }
     protected void btnQianShou_Click(object sender, EventArgs e)
     {
+
+        GongWenYongHu user = Session["user"] as GongWenYongHu;
+        //uid = Convert.ToInt32(user);
+
+        if (user == null)
+        {
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+        }
         int[] zdy = zdybm.ToArray();
         string[] jsry = jsr.ToArray();
         string pishi = txtQianShouNeiRong.Text.Trim();
         if (pishi.Equals(""))
         {
-            Page.ClientScript.RegisterStartupScript(GetType(), "签收公文失败", "alert('签收公文失败：请输入签阅内容。')", true);
+            //Page.ClientScript.RegisterStartupScript(GetType(), "签收公文失败", "alert('签收公文失败：请输入签阅内容。')", true);
+            pishi = "阅。";
         }
-        else
-        { 
+        
+
+
+        try
+        {
+            gwid = Convert.ToInt32(Request["gwid"]);
+            lzid = Convert.ToInt32(Request["lzid"]);
+            uid = Convert.ToInt32(user.GongHao);
+        }
+        catch
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "签收公文失败", "alert('登录已过期。')", true);
+            return;
+        }
+
         INT i= s.signGongWen2016(gwid, lzid, uid, jsry, pishi,zdy);
         if (i.Number == 1)
         {
@@ -334,7 +359,7 @@ public partial class ViewGongWen : System.Web.UI.Page
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "签收公文失败", "alert('签收公文失败：" + i.Message + "')", true);
         }
-    }
+    
     }
     protected void btnGuiDang_Click(object sender, EventArgs e)
     {

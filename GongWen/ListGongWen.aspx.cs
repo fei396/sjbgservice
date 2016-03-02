@@ -180,4 +180,30 @@ public partial class ListGongWen : System.Web.UI.Page
     {
         getData(1, txtBiaoTi.Text.Trim(), txtStart.Text.Trim(), txtEnd.Text.Trim());
     }
+    protected void gvList_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        try
+        {
+            int lzid = Convert.ToInt32(e.Keys["LiuZhuanID"].ToString());
+            GongWenYongHu user = Session["user"] as GongWenYongHu;
+            if (user == null)
+            {
+                Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            }
+            int uid = Convert.ToInt32(user.GongHao);
+            INT r = s.undoGongWen2016(uid, lzid);
+            if (r.Number != 1)
+            {
+                Response.Write(" <script> alert( '撤销签阅失败：" + r.Message + " ') </script> ");
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            Response.Write(" <script> alert( '撤销签阅失败：" + ex.Message+ " ') </script> ");
+            return;
+        }
+        Response.Write(" <script> alert( '撤销签阅成功，请重新签阅该文件。') </script> ");
+        getData(cpage);
+    }
 }

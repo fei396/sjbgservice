@@ -241,6 +241,7 @@ namespace sjbgWebService.gwxx
         public int ShiFouQianShou { get; set; }
         public string JinJi { get; set; }
         public string QianShouQingKuang { get; set; }
+        public int ShiFouCheXiao { get; set; }
     }
 
     public class GongWenGuiDangList

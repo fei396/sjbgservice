@@ -207,6 +207,15 @@ namespace sjbgWebService.gwxx
             if (!sjbgHeader.checkValid()) return null;
             return BLL.signGongWen2016(gwid ,lzid,fsr ,jsr,qsnr,zdybm,"网页");
         }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT undoGongWen2016(int uid,int lzid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.undoSignGongWen2016(uid,lzid);
+        }
+
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public INT signGongWen2016Mobile(int gwid, int lzid, int fsr, string jsr, string qsnr)

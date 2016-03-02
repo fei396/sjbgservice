@@ -45,10 +45,10 @@
         </div>
         <div align="center" valign="middle">
             <table width="700" border="1" cellspacing="0" rules="all">
-                <tr style="height: 50px">
-                    <td align="right" width="10%" style="height: 50px">文件红头：</td>
-                    <td colspan="5" style="height: 50px" align="center" valign="middle">
-                        <asp:TextBox ID="txtHt" runat="server" Width="90%"></asp:TextBox>
+                <tr style="height: 80px">
+                    <td align="right" width="10%" >文件红头：</td>
+                    <td colspan="5" align="center" valign="middle">
+                        <asp:TextBox ID="txtHt" runat="server" Width="90%" TextMode="MultiLine" Height="50"></asp:TextBox>
                     </td>
                 </tr>
                 <tr style="height: 50px">
@@ -65,11 +65,11 @@
                         <asp:TextBox ID="txtWh" runat="server" Width="90%"></asp:TextBox>
                     </td>
                 </tr>
-                <tr height="300" style="height: 50px">
-                    <td align="right" width="10%">标  题：
+                <tr height="300" style="height: 80px">
+                    <td align="right" width="10%" >标  题：
                     </td>
                     <td colspan="5" align="center" valign="middle">
-                        <asp:TextBox ID="txtBt" runat="server" Width="90%"
+                        <asp:TextBox ID="txtBt" runat="server" Width="90%" TextMode="MultiLine" Height="50"
                             ></asp:TextBox>
                     </td>
                 </tr>

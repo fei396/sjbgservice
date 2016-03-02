@@ -16,7 +16,7 @@ public partial class ListGongWenGuiDang : System.Web.UI.Page
 {
     gwxxService.gwxxWebService s = new gwxxService.gwxxWebService();
     static int maxPage;
-    const int pageCount = 4;
+    const int pageCount = 15;
     static int cpage;
     static int allCount;
     protected void Page_Load(object sender, EventArgs e)
