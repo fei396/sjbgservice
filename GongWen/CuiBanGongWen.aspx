@@ -1,12 +1,11 @@
-<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" AutoEventWireup="true" CodeFile="ViewGongWen.aspx.cs" Inherits="ViewGongWen" %>
+<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" AutoEventWireup="true" CodeFile="CuiBanGongWen.aspx.cs" Inherits="CuiBanGongWen" %>
 
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
     <title></title>
-   <%-- <link href="css/reset.css" rel="stylesheet" type="text/css" />
-    <link href="css/common.css" rel="stylesheet" type="text/css" />--%>
-    <link href="css/test.css" rel="stylesheet" type="text/css" />
+    <link href="css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="css/common.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         function qing(x) {
             var y = document.getElementById("txtQianShouNeiRong").value;
@@ -18,17 +17,13 @@
                 document.getElementById("txtQianShouNeiRong").innerHTML = y.substring(y, y.length) + x;
             }
         }
-        function check()
-        {
-            document.get
-        }
+
 
     </script>
     <style type="text/css">
         .auto-style1 {
             height: 28px;
         }
-
     </style>
 </head>
 <body style="background-color: #F7Feff" align="center">
@@ -51,7 +46,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
-                        <asp:TextBox CssClass="Text_Multi" valign="middle" ID="txtZhengWen" runat="server"   ReadOnly="True" TextMode="MultiLine"  ></asp:TextBox>
+                        <asp:TextBox valign="middle" ID="txtZhengWen" runat="server" Height="200px" ReadOnly="True" TextMode="MultiLine" Width="100%" Font-Size="Medium"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -140,97 +135,39 @@
                                     <HeaderStyle Width="7%" />
                                     <ItemStyle Width="7%" />
                                 </asp:TemplateField>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:HyperLink ID="HyperLink1" runat="server" CausesValidation="False" NavigateUrl='<%#"BuGongWen.aspx?lzid=" + Eval("LiuZhuanID") + "&gwid=" + Eval("GongWenID") + "&uid=" + Eval("JieShouRen")%>' Text="文件补阅" ></asp:HyperLink>
+                                    </ItemTemplate>
+                                    <HeaderStyle Width="7%" />
+                                    <ItemStyle Width="7%" />
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </td>
                 </tr>
-
+                                <tr>
+                    <td colspan="2" align="center">
+                        <asp:Label ID="lblCuiBanDuiXiang" runat="server" Text="催办对象：" Font-Size="Medium"></asp:Label>
+                        <asp:DropDownList ID="ddlCuiBanDuiXiang" runat="server" Font-Size="Medium">
+                            <asp:ListItem Value="21">段长、书记</asp:ListItem>
+                            <asp:ListItem Value="22">班子成员</asp:ListItem>
+                            <asp:ListItem Value="23">科室中层</asp:ListItem>
+                            <asp:ListItem Value="24">车间中层</asp:ListItem>
+                            <asp:ListItem Value="25">基层人员</asp:ListItem>
+                        </asp:DropDownList></td>
+                </tr>
                 <tr>
                     <td colspan="2">
-
-                        <table runat="server" id="tableQianShou" width="100%">
-                            <tr>
-                                <td>
-                                    <br />
-                                    <asp:Label ID="Label2" runat="server" Text="签阅内容：" Font-Size="Medium" Font-Bold="True"></asp:Label>
-
-                                    <asp:TextBox ID="txtQianShouNeiRong" runat="server" TextMode="MultiLine"  CssClass="Text_Multi" ></asp:TextBox>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <%=duanyu()%>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table runat="server" id="tableZdybm" width="100%">
-                                        <tr>
-                                            <td width="20%">
-                                                <asp:Label ID="Label3" runat="server" Text="自定义部门：" Font-Size="Medium"></asp:Label></td>
-                                            <td width="20%">
-                                                <asp:CheckBox ID="cbAll" runat="server" AutoPostBack="True" OnCheckedChanged="cbAll_CheckedChanged" Text="各科室、各车间" />
-                                            </td>
-                                            <td width="80%" align="left">
-
-                                                <asp:CheckBoxList Font-Size="Medium" ID="cblZdybm" runat="server" AutoPostBack="True" OnSelectedIndexChanged="cblZdybm_SelectedIndexChanged" RepeatDirection="Horizontal">
-                                                </asp:CheckBoxList>
-
-                                            </td>
-                                        </tr>
-
-                                    </table>
-                                </td>
-                            </tr>
-                            <%--                <tr>
-                    <td colspan="2">
-                        <asp:Table ID="tableBm" runat="server" Width="100%">
-                        </asp:Table>
-                    </td>
-                </tr>--%>
-                            <tr>
-                                <td>
-
-                                    <asp:GridView ID="gvListBuMen" runat="server" AutoGenerateColumns="False"
-                                        BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4"
-                                        ForeColor="#333333" Width="100%" OnRowDataBound="gvListBuMen_RowDataBound">
-
-                                        <HeaderStyle Height="0px" />
-
-                                        <PagerStyle HorizontalAlign="Center" />
-
-
-                                        <Columns>
-                                            <asp:BoundField DataField="FenLeiMingCheng">
-                                                <ControlStyle Font-Size="Medium" />
-                                                <HeaderStyle Width="10%" />
-                                                <ItemStyle Width="10%" />
-                                            </asp:BoundField>
-                                            <asp:TemplateField>
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="chb" AutoPostBack="true" OnCheckedChanged="chb_CheckedChanged" runat="server" Text='<%# Eval("FenLeiZongCheng") %>' />
-                                                </ItemTemplate>
-                                                <HeaderStyle Width="10%" />
-                                                <ItemStyle Width="10%" />
-                                            </asp:TemplateField>
-                                            <asp:TemplateField>
-                                                <ItemTemplate>
-                                                    <asp:CheckBoxList ID="cbl" runat="server" OnSelectedIndexChanged="cbl_SelectedIndexChanged" RepeatColumns="5" RepeatDirection="Horizontal" DataTextField="XianShiMingCheng" DataValueField="GongHao" DataSource='<%# GetCKBLDataSource(Container.DataItemIndex)%>' AutoPostBack="True" CellPadding="5" CellSpacing="5">
-                                                    </asp:CheckBoxList>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-
-                                        </Columns>
-                                    </asp:GridView>
-                                </td>
-                            </tr>
+                        <table runat="server" id="tableGuiDang" width="100%">
                             <tr>
                                 <td align="center">
-                                    <asp:Button ID="btnQianShou" runat="server" OnClick="btnQianShou_Click" Text=" 签  阅" />
+                                    <asp:Button ID="btnGuiDang" runat="server" Text="归  档" OnClick="btnGuiDang_Click" />
+                                    <asp:Button ID="btnCuiBan" runat="server" Text="催  办" OnClick="btnCuiBan_Click" />
                                 </td>
                             </tr>
                         </table>
+                
                     </td>
                 </tr>
 

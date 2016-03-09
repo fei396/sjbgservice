@@ -20,5 +20,11 @@ html { line-height:20px; }
 .f_14, .f_14 a { font-size:14px; }
 .float_l { float:left }
 .float_r { float:right }
-.text_input { border:solid 1px #999; border-color:#aaa #ddd #ddd #aaa; width:160px;};
-
+.text_input { border:solid 1px #999; border-color:#aaa #ddd #ddd #aaa; width:160px;}
+.text_box{ width:90% ;height:200px;  }
+        .Text_Multi
+  { 
+  font: 12pt verdana; 
+  height:200px;
+  width:100%;
+  }

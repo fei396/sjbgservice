@@ -132,7 +132,8 @@ init = function (rid) {
         case 20:
             Menus = {
 
-                "操作菜单": { "row": 1, "show": true, "menu": { "发新公文": "AddNew.aspx", "未签完公文": "ListGongWenGuiDang.aspx?type=0", "所有公文": "ListGongWenGuiDang.aspx?type=1" } }
+                "公文处理员": { "row": 1, "show": true, "menu": { "发新公文": "AddNew.aspx", "未签完公文": "ListGongWenGuiDang.aspx?type=0", "所有公文": "ListGongWenGuiDang.aspx?type=1" } },
+                "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListGongWen.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1", "自定义短语": "DuanYu.aspx" } }
 
             };
             break;

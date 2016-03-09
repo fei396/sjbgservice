@@ -87,7 +87,7 @@
                         </HeaderTemplate>
                         <ItemTemplate>
                             <asp:HyperLink ID="HyperLink1" runat="server"
-                                NavigateUrl='<%#"ViewGongWen.aspx?lzid=" + Eval("LiuZhuanID") + "&gwid=" + Eval("GongWenID")+ "&type=" + (Eval("ShiFouLiuZhuanWanCheng").Equals(true)?"1":"0") %>'
+                                NavigateUrl='<%#"CuiBanGongWen.aspx?lzid=" + Eval("LiuZhuanID") + "&gwid=" + Eval("GongWenID")+ "&type=" + (Eval("ShiFouLiuZhuanWanCheng").Equals(true)?"1":"0") %>'
                                 Text="²é¿´ÏêÇé"></asp:HyperLink>
                                </ItemTemplate>
                     </asp:TemplateField>

@@ -12,15 +12,17 @@ using System.Data.SqlClient;
 using System.Text;
 using System.IO;
 using gwxxService;
+using System.Collections.Generic;
 public partial class ViewGongWen : System.Web.UI.Page
 {
     gwxxService.gwxxWebService s = new gwxxService.gwxxWebService();
-    static int uid, rid,gwid,lzid;
-    static gwxxService.BuMenFenLei[] bmfl;
-    static System.Collections.Generic.List<string> jsr;
-    static System.Collections.Generic.List<int> zdybm;
+    
+    //static gwxxService.BuMenFenLei[] bmfl;
+    //static System.Collections.Generic.List<string> jsr;
+    //static System.Collections.Generic.List<int> zdybm;
     protected void Page_Load(object sender, EventArgs e)
     {
+        int uid, rid, gwid, lzid;
         GongWenYongHu user = Session["user"] as GongWenYongHu;
         //uid = Convert.ToInt32(user);
 
@@ -29,10 +31,11 @@ public partial class ViewGongWen : System.Web.UI.Page
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
         btnQianShou.Attributes["OnClick"] = "return confirm('确定签阅该文件？')";
-        btnCuiBan.Attributes["OnClick"] = "return confirm('确定催办未签收该文件的人员？')";
+        
         
         if (!IsPostBack)
         {
+
             try
             {
                 gwid = Convert.ToInt32(Request["gwid"]);
@@ -43,13 +46,11 @@ public partial class ViewGongWen : System.Web.UI.Page
             catch
             {
                 Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+                return;
             }
-            //string cj = Session["udept"] as string;
-            //SqlDataSource1.SelectCommand = "SELECT    xmmc, cj , rygh, work_name , sfhg , kkid FROM V_CQKK_RYCJB  ";
-            //if (cj != "_所有") SqlDataSource1.SelectCommand += " where cj='" + cj + "'";
 
-            //SqlDataSource1.SelectCommand += " order by  xmmc,cj,rygh";
-            bmfl= s.getBuMenFenLei(uid,rid);
+            gwxxService.BuMenFenLei[] bmfl = s.getBuMenFenLei(uid, rid);
+            Session["bmfl"] = bmfl;
             if (rid == 21 || rid == 22)
             {
                 tableZdybm.Visible = true;
@@ -63,49 +64,48 @@ public partial class ViewGongWen : System.Web.UI.Page
             }
             int type = Convert.ToInt32(Request["type"]);
 
-            
-            if (rid == 20)//公文处理员
+            if (type == 1 || type == 2)
             {
-                lblYiJian.Visible = true;
-                tableGuiDang.Visible = true;
                 tableQianShou.Visible = false;
-                if (type == 1)//已经流转完成
-                {
-                    btnGuiDang.Visible = true;
-                    btnCuiBan.Visible = false;
-                }
-                else
-                {
-                    btnGuiDang.Visible = false;
-                    btnCuiBan.Visible = true;
-                }
+
             }
-            else //其它人员
+            else
             {
-                tableGuiDang.Visible = false;
-                
-                if (type == 1 || type ==2)
-                {
-                    tableQianShou.Visible = false;
-                    
-                }
-                else
-                {
-                    tableQianShou.Visible = true;
-                }
+                tableQianShou.Visible = true;
             }
-            jsr = new System.Collections.Generic.List<string>();
-            zdybm = new System.Collections.Generic.List<int>();
+
+            List<string> jsr = new System.Collections.Generic.List<string>();
+            Session["jsr"] = jsr;
+            //zdybm = new System.Collections.Generic.List<int>();
             //s.SjbgSoapHeaderValue = Security.getSoapHeader();
             //Security.SetCertificatePolicy();
 
             
-            getData(gwid, lzid);
+            getData(gwid, lzid,bmfl);
         }
     }
 
     protected string duanyu()
     {
+        int uid;
+        GongWenYongHu user = Session["user"] as GongWenYongHu;
+        //uid = Convert.ToInt32(user);
+       
+        if (user == null)
+        {
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return "";
+        }
+        try
+        {
+            uid = Convert.ToInt32(user.GongHao);
+            
+        }
+        catch
+        {
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return "";
+        }
         gwxxService.GongWenZiDingYiDuanYu[] zdydy = s.getZiDingYiDuanYu(uid,false);
         System.Text.StringBuilder duanyu = new System.Text.StringBuilder();
         duanyu.Append("<tr><td>");
@@ -182,7 +182,7 @@ public partial class ViewGongWen : System.Web.UI.Page
         //}
     }
 
-    private void getData(int gwid, int lzid)
+    private void getData(int gwid, int lzid ,BuMenFenLei[] bmfl)
     {
 
        
@@ -234,6 +234,8 @@ public partial class ViewGongWen : System.Web.UI.Page
 
     protected gwxxService.GongWenBuMenRenYuan[] GetCKBLDataSource(int index)
     {
+        BuMenFenLei[] bmfl = Session["bmfl"] as BuMenFenLei[];
+        if (bmfl == null) return null;
         return bmfl[index].RenYuan;
 
     }
@@ -241,7 +243,10 @@ public partial class ViewGongWen : System.Web.UI.Page
 
     protected void cblZdybm_SelectedIndexChanged(object sender, EventArgs e)
     {
-      
+        BuMenFenLei[] bmfl = Session["bmfl"] as BuMenFenLei[];
+        if (bmfl == null) return;
+        List<string> jsr = Session["jsr"] as List<string>;
+        if (jsr == null) return;
         string strCheck = Request.Form["__EVENTTARGET"].ToString();
         int strIndex = Convert.ToInt32(strCheck.Substring(strCheck.LastIndexOf("$") + 1));
         if (this.cblZdybm.Items[strIndex].Selected)
@@ -269,11 +274,15 @@ public partial class ViewGongWen : System.Web.UI.Page
             }
             //zdybm.Remove(Convert.ToInt32(this.cblZdybm.Items[strIndex].Value));
         }
+        Session["jsr"] = jsr;
         setCheckBoxListItemSelected();
 
     }
     protected void cbl_SelectedIndexChanged(object sender, EventArgs e)
     {
+        BuMenFenLei[] bmfl = Session["bmfl"] as BuMenFenLei[];
+        if (bmfl == null) return;
+        List<string> jsr = Session["jsr"] as List<string>;
         CheckBoxList cbl = (CheckBoxList)(sender);
         string strCheck = Request.Form["__EVENTTARGET"].ToString();
         int strIndex = Convert.ToInt32(strCheck.Substring(strCheck.LastIndexOf("$") + 1));
@@ -291,17 +300,21 @@ public partial class ViewGongWen : System.Web.UI.Page
             txtQianShouNeiRong.Text = txtQianShouNeiRong.Text.Replace(txt + "、", "");
             jsr.Remove(cbl.Items[strIndex].Value);
         }
-
+        Session["jsr"] = jsr;
     }
     protected void chb_CheckedChanged(object sender, EventArgs e)
     {
+        BuMenFenLei[] bmfl = Session["bmfl"] as BuMenFenLei[];
+        if (bmfl == null) return;
+        List<string> jsr = Session["jsr"] as List<string>;
+        if (jsr == null) return;
         CheckBox chb = (CheckBox)(sender);
         string strCheck = Request.Form["__EVENTTARGET"].ToString();
         int row = Convert.ToInt32(strCheck.Substring(strCheck.IndexOf("$") + 4, 2)) - 2;
         if (chb.Checked)
         {
             txtQianShouNeiRong.Text += chb.Text + "、";
-            foreach(gwxxService.GongWenBuMenRenYuan ry in bmfl[row].RenYuan)
+            foreach (gwxxService.GongWenBuMenRenYuan ry in bmfl[row].RenYuan)
             {
                 jsr.Add(ry.GongHao);
             }
@@ -314,19 +327,39 @@ public partial class ViewGongWen : System.Web.UI.Page
                 jsr.Remove(ry.GongHao);
             }
         }
+        Session["jsr"] = jsr;
         setCheckBoxListItemSelected();
+    }
+
+    private List<string > getJsrList()
+    {
+        List<string> jsrList = new List<string>();
+        foreach (GridViewRow row in gvListBuMen.Rows)
+        {
+            CheckBoxList cbl = row.FindControl("cbl") as CheckBoxList;
+            if (cbl == null) continue;
+            foreach (ListItem item in cbl.Items)
+            {
+                if (item.Selected == true)
+                {
+                    jsrList.Add(item.Value);
+                }
+            }
+        }
+        return jsrList;
     }
     protected void btnQianShou_Click(object sender, EventArgs e)
     {
-
+        List<string> jsr = Session["jsr"] as List<string>;
+        if (jsr == null) return;
         GongWenYongHu user = Session["user"] as GongWenYongHu;
         //uid = Convert.ToInt32(user);
-
+        int uid, gwid, lzid;
         if (user == null)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
-        int[] zdy = zdybm.ToArray();
+        int[] zdy = null;
         string[] jsry = jsr.ToArray();
         string pishi = txtQianShouNeiRong.Text.Trim();
         if (pishi.Equals(""))
@@ -335,8 +368,6 @@ public partial class ViewGongWen : System.Web.UI.Page
             pishi = "阅。";
         }
         
-
-
         try
         {
             gwid = Convert.ToInt32(Request["gwid"]);
@@ -349,10 +380,15 @@ public partial class ViewGongWen : System.Web.UI.Page
             return;
         }
 
-        INT i= s.signGongWen2016(gwid, lzid, uid, jsry, pishi,zdy);
+        INT i= s.signGongWen2016(gwid, lzid, uid, jsry, pishi,zdy,pbModule.getIP());
         if (i.Number == 1)
         {
+            jsr.Clear();
+            Session["jsr"] = null;
+            Session["bmfl"] = null;
+            //zdybm.Clear();
             Page.ClientScript.RegisterStartupScript(GetType(), "签收公文成功", "alert('签收公文成功');window.open('mdefault.aspx','_parent');", true);
+            
             //Response.Redirect("ListGongWen.aspx?type=0");
         }
         else
@@ -361,25 +397,13 @@ public partial class ViewGongWen : System.Web.UI.Page
         }
     
     }
-    protected void btnGuiDang_Click(object sender, EventArgs e)
-    {
-
-    }
-    protected void btnCuiBan_Click(object sender, EventArgs e)
-    {
-        INT i= s.makeCuiBan(gwid);
-        if (i.Number == 1)
-        {
-            Page.ClientScript.RegisterStartupScript(GetType(), "催办成功", "alert('催办成功');window.location.href='mdefault.aspx'", true);
-            //Response.Redirect("ListGongWen.aspx?type=0");
-        }
-        else
-        {
-            Page.ClientScript.RegisterStartupScript(GetType(), "催办失败", "alert('催办失败：" + i.Message + "')", true);
-        }
-    }
+   
     protected void cbAll_CheckedChanged(object sender, EventArgs e)
     {
+        BuMenFenLei[] bmfl = Session["bmfl"] as BuMenFenLei[];
+        if (bmfl == null) return;
+        List<string> jsr = Session["jsr"] as List<string>;
+        if (jsr == null) return;
         if (cbAll.Checked)
         {
             txtQianShouNeiRong.Text += cbAll.Text + "、";
@@ -406,10 +430,13 @@ public partial class ViewGongWen : System.Web.UI.Page
             }
             
         }
+        Session["jsr"] = jsr;
         setCheckBoxListItemSelected();
     }
     private void setCheckBoxListItemSelected()
     {
+        List<string> jsr = Session["jsr"] as List<string>;
+        if (jsr == null) return;
         foreach (GridViewRow row in gvListBuMen.Rows) 
         {
             CheckBoxList cbl = row.FindControl("cbl") as CheckBoxList;
@@ -433,6 +460,8 @@ public partial class ViewGongWen : System.Web.UI.Page
     protected void gvListBuMen_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowIndex < 0) return;
+        BuMenFenLei[] bmfl = Session["bmfl"] as BuMenFenLei[];
+        if (bmfl == null) return;
         CheckBoxList cbl = e.Row.FindControl("cbl") as CheckBoxList;
         if (cbl == null) return;
         switch (bmfl[e.Row.RowIndex].FenLeiID )
