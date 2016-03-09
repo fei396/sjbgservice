@@ -1955,9 +1955,76 @@ namespace sjbgWebService
             return DAL.addNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, jinji, ip, jsr, gwfj);
         }
 
-        internal static INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm ,string device)
+        internal static INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm ,string device,string ip)
         {
             string work_no = fsr.toWorkNo();
+            GongWenYongHu gwyh = getGongWenYongHuByUid(fsr);
+            if (gwyh == null)
+            {
+                return new INT(-1, "尚未设置签阅公文权限");
+            }
+            GongWen2016 gw = getGongWen2016ById(gwid);
+            
+            //if (!zdybm.Equals(null) && zdybm.Length > 0)
+            //{
+            //    DataTable dt = DAL.getZiDingYiBuMenRenYuan(zdybm);
+            //    string[] zdyjsr = new string[dt.Rows.Count];
+            //    for (int i = 0; i < dt.Rows.Count; i++)
+            //    {
+            //        zdyjsr[i] = dt.Rows[i]["user_no"].ToString();
+            //    }
+            //    jsr = jsr.Concat(zdyjsr).ToArray();
+            //}
+            string throwJsr = "";
+            List<string> jsrList = jsr.Distinct().ToList();
+            jsr = jsrList.ToArray();
+            BuMenFenLei[] bmfl = BLL.getBuMenFenLei(fsr, gwyh.RoleID);
+            if (bmfl == null)
+            {
+                if (jsrList.Count > 0)
+                {
+                    foreach(string gh in jsrList)
+                    {
+                        throwJsr += gh + ",";
+
+                    }
+                    
+                }
+                jsrList.Clear();
+            }
+            else
+            {
+                List<string> allJsr = new List<string>();
+                foreach (BuMenFenLei fl in bmfl)
+                {
+                    foreach (GongWenBuMenRenYuan ry in fl.RenYuan)
+                    {
+                        allJsr.Add(ry.GongHao);
+                    }
+                }
+                foreach (string gh in jsr)
+                {
+                    if (allJsr.IndexOf(gh) < 0)
+                    {
+                        jsrList.Remove(gh);
+                        throwJsr += gh + ",";
+                    }
+                }
+                
+            }
+            jsr = jsrList.ToArray();
+            if (!throwJsr.Equals(""))
+            {
+                throwJsr = "舍弃接收人： " + throwJsr;
+                DAL.SignGongWen2016Log(gwid, lzid, work_no, throwJsr);
+            }
+            return DAL.SignGongWen2016(gwid, lzid, work_no, jsr, gw.BiaoTi,gwyh.XingMing,gwyh.RoleID, qsnr,device,ip);
+        }
+
+        internal static INT BuGongWen2016(int gwid, int lzid, int fsr, int buid,string[] jsr)
+        {
+            string work_no = fsr.toWorkNo();
+            string buyueren = buid.toWorkNo();
             GongWenYongHu gwyh = getGongWenYongHuByUid(fsr);
             if (gwyh == null)
             {
@@ -1975,14 +2042,14 @@ namespace sjbgWebService
             //    jsr = jsr.Concat(zdyjsr).ToArray();
             //}
             jsr = jsr.Distinct().ToArray();
-            return DAL.SignGongWen2016(gwid, lzid, work_no, jsr, gw.BiaoTi,gwyh.XingMing,gwyh.RoleID, qsnr,device);
+            return DAL.BuGongWen2016(gwid, lzid, work_no, gwyh.XingMing,gw.BiaoTi, jsr ,buyueren);
         }
 
         internal static INT signGongWen2016Mobile(int gwid, int lzid, int fsr, string jsr, string qsnr)
         {
             string[] jsrs = jsr.ToStringList(new string[] { "," });
 
-            return signGongWen2016(gwid, lzid, fsr, jsrs, qsnr,new int[0],"手机");
+            return signGongWen2016(gwid, lzid, fsr, jsrs, qsnr,new int[0],"手机","手机");
         }
 
 
@@ -2372,7 +2439,7 @@ namespace sjbgWebService
                     bumen[i].FenLeiMingCheng = Convert.ToString(dt.Rows[i]["flmc"].ToString());
                     bumen[i].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
 
-                    DataTable dtyh = DAL.getBuMenFenLeiYongHu(work_no, bumen[i].FenLeiID);
+                    DataTable dtyh = DAL.getBuMenFenLeiYongHu(rid,work_no, bumen[i].FenLeiID);
                     GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dtyh.Rows.Count];
                     for (int j = 0; j < dtyh.Rows.Count; j++)
                     {
@@ -2388,14 +2455,14 @@ namespace sjbgWebService
         }
 
 
-        internal static INT makeCuiBan(int gwid)
+        internal static INT makeCuiBan(int gwid,int rid)
         {
             GongWen2016 gw = getGongWen2016ById(gwid);
             if (gw == null)
             {
                 return new INT(-1, "无此公文");
             }
-            return DAL.makeCuiBan(gwid, gw.BiaoTi);
+            return DAL.makeCuiBan(gwid, rid,gw.BiaoTi);
         }
 
 

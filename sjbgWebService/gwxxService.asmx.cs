@@ -202,10 +202,19 @@ namespace sjbgWebService.gwxx
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr,int []zdybm)
+        public INT buGongWen2016(int gwid, int lzid, int fsr, int buid, string[] jsr)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.signGongWen2016(gwid ,lzid,fsr ,jsr,qsnr,zdybm,"网页");
+            return BLL.BuGongWen2016(gwid, lzid, fsr,buid, jsr);
+        }
+
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr,int []zdybm,string ip)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.signGongWen2016(gwid ,lzid,fsr ,jsr,qsnr,zdybm,"网页",ip);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -375,10 +384,10 @@ namespace sjbgWebService.gwxx
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public INT makeCuiBan(int gwid)
+        public INT makeCuiBan(int gwid,int rid)
         {
             if (!sjbgHeader.checkValid()) return new INT(-1);
-            return BLL.makeCuiBan(gwid);
+            return BLL.makeCuiBan(gwid,rid);
         }
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
