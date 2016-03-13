@@ -68,9 +68,10 @@ public partial class CuiBanGongWen : System.Web.UI.Page
             {
                
             }
-           
-            
+
+
             getData(gwid, lzid);
+
         }
     }
 
@@ -120,6 +121,11 @@ public partial class CuiBanGongWen : System.Web.UI.Page
 
         gvList.DataSource = gwlz;
         gvList.DataBind();
+        HyperLink hylSuoYouWeiQian = gvList.HeaderRow.FindControl("hylSuoYouWeiQian") as HyperLink;
+        if (hylSuoYouWeiQian != null)
+        {
+            hylSuoYouWeiQian.NavigateUrl = "SuoYouWeiQian.aspx?gwid=" + Request["gwid"];
+        }
     }
 
 
@@ -161,5 +167,9 @@ public partial class CuiBanGongWen : System.Web.UI.Page
     {
         int lzid = Convert.ToInt32( gvList.SelectedValue.ToString());
         bindLiuZhuanData(false,lzid);
+    }
+    protected void hylSuoYouWeiQian_Click(object sender, EventArgs e)
+    {
+        Response.Write("<script>window.open ('SuoYouWeiQian.aspx?gwid=" + Request["gwid"] + "', 'newwindow', 'height=1, width=1, top=1,left=1, toolbar=no, menubar=no, scrollbars=yes, resizable=no,location=no, status=no');</script>");
     }
 }

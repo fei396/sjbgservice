@@ -32,7 +32,7 @@
         <div align="center">
             <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False"
                 BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4"
-                ForeColor="#333333" Width="80%" 
+                ForeColor="#333333" Width="90%" 
                 PageSize="15" OnRowDeleting="gvList_RowDeleting"  DataKeyNames="LiuZhuanID">
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White"  />
                 <PagerTemplate>

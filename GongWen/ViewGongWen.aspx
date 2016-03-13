@@ -80,6 +80,17 @@
                         </table>
                     </td>
                 </tr>
+                                <tr>
+                    <td colspan="2">
+                        <table width="100%" runat ="server" id="tableAllLingDao">
+                            <tr>
+                                <td align="right" >
+                                    <asp:LinkButton ID="hyLinkLingDaoPiShi" runat="server" Text="查看段领导批示" OnClick="hyLinkLingDaoPiShi_Click"></asp:LinkButton></td>
+                            </tr>
+                         
+                        </table>
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="2">
                         <br />

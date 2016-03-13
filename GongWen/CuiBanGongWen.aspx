@@ -129,6 +129,9 @@
                                     <ItemStyle Width="7%" />
                                 </asp:TemplateField>
                                 <asp:TemplateField ShowHeader="False">
+                                    <HeaderTemplate>
+                                        <asp:LinkButton ID="hylSuoYouWeiQian" OnClick="hylSuoYouWeiQian_Click"  runat="server">所有未签收</asp:LinkButton>
+                                    </HeaderTemplate>
                                     <ItemTemplate>
                                         <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Select" Text="查看详情" Visible='<%#Convert.ToInt32( Eval("LiuZhuanShu")) >0?true:false %>'></asp:LinkButton>
                                     </ItemTemplate>

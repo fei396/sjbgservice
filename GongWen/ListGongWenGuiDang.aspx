@@ -32,7 +32,7 @@
         <div align="center">
             <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False" DataKeyNames="GongWenID"
                 BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4"
-                ForeColor="#333333" Width="80%" OnRowDataBound="GridView1_RowDataBound" OnSorting="GridView1_Sorting"
+                ForeColor="#333333" Width="90%" OnRowDataBound="GridView1_RowDataBound" OnSorting="GridView1_Sorting"
                 PageSize="15" OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDeleting="gvList_RowDeleting">
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                 <PagerTemplate>
@@ -97,6 +97,8 @@
                             <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" OnClientClick="return confirm('ÄãÈ·¶¨ÒªÉ¾³ýÂð£¿');" CommandName="Delete" Text="É¾³ý" Visible='<%#Eval("ShiFouLiuZhuanWanCheng").Equals(true)?false:true%>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
+
+                  
 
                 </Columns>
             </asp:GridView>

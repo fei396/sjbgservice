@@ -877,6 +877,26 @@
   <wsdl:message name="getLiuZhuanXianSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
+  <wsdl:message name="getLingDaoPiShiSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="gwid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getLingDaoPiShiSoapOut">
+    <wsdl:part name="getLingDaoPiShiResult" type="tns:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
+  <wsdl:message name="getLingDaoPiShiSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getSuoYouWeiQianSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="gwid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getSuoYouWeiQianSoapOut">
+    <wsdl:part name="getSuoYouWeiQianResult" type="tns:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
+  <wsdl:message name="getSuoYouWeiQianSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
   <wsdl:message name="getZiDingYiDuanYuSoapIn">
     <wsdl:part name="uid" type="s:int" />
     <wsdl:part name="onlyPrivate" type="s:boolean" />
@@ -1000,6 +1020,16 @@
     <wsdl:part name="makeCuiBanResult" type="tns:INT" />
   </wsdl:message>
   <wsdl:message name="makeCuiBanSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanByRenYuanSoapIn">
+    <wsdl:part name="gwid" type="s:int" />
+    <wsdl:part name="jsr" type="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanByRenYuanSoapOut">
+    <wsdl:part name="makeCuiBanByRenYuanResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanByRenYuanSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
   <wsdl:message name="getZiDingYiBuMenRenYuanSoapIn">
@@ -1268,6 +1298,20 @@
   <wsdl:message name="getLiuZhuanXianHttpGetOut">
     <wsdl:part name="Body" element="s1:ArrayOfGongWenLiuZhuan" />
   </wsdl:message>
+  <wsdl:message name="getLingDaoPiShiHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getLingDaoPiShiHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
+  <wsdl:message name="getSuoYouWeiQianHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getSuoYouWeiQianHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
   <wsdl:message name="getZiDingYiDuanYuHttpGetIn">
     <wsdl:part name="uid" type="s:string" />
     <wsdl:part name="onlyPrivate" type="s:string" />
@@ -1355,6 +1399,13 @@
     <wsdl:part name="rid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="makeCuiBanHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanByRenYuanHttpGetIn">
+    <wsdl:part name="gwid" type="s:string" />
+    <wsdl:part name="jsr" type="s2:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanByRenYuanHttpGetOut">
     <wsdl:part name="Body" element="s1:INT" />
   </wsdl:message>
   <wsdl:message name="getZiDingYiBuMenRenYuanHttpGetIn">
@@ -1599,6 +1650,20 @@
   <wsdl:message name="getLiuZhuanXianHttpPostOut">
     <wsdl:part name="Body" element="s1:ArrayOfGongWenLiuZhuan" />
   </wsdl:message>
+  <wsdl:message name="getLingDaoPiShiHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getLingDaoPiShiHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
+  <wsdl:message name="getSuoYouWeiQianHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="gwid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getSuoYouWeiQianHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenLiuZhuan" />
+  </wsdl:message>
   <wsdl:message name="getZiDingYiDuanYuHttpPostIn">
     <wsdl:part name="uid" type="s:string" />
     <wsdl:part name="onlyPrivate" type="s:string" />
@@ -1686,6 +1751,13 @@
     <wsdl:part name="rid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="makeCuiBanHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanByRenYuanHttpPostIn">
+    <wsdl:part name="gwid" type="s:string" />
+    <wsdl:part name="jsr" type="s2:StringArray" />
+  </wsdl:message>
+  <wsdl:message name="makeCuiBanByRenYuanHttpPostOut">
     <wsdl:part name="Body" element="s1:INT" />
   </wsdl:message>
   <wsdl:message name="getZiDingYiBuMenRenYuanHttpPostIn">
@@ -1841,6 +1913,14 @@
       <wsdl:input message="tns:getLiuZhuanXianSoapIn" />
       <wsdl:output message="tns:getLiuZhuanXianSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="getLingDaoPiShi">
+      <wsdl:input message="tns:getLingDaoPiShiSoapIn" />
+      <wsdl:output message="tns:getLingDaoPiShiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSuoYouWeiQian">
+      <wsdl:input message="tns:getSuoYouWeiQianSoapIn" />
+      <wsdl:output message="tns:getSuoYouWeiQianSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="getZiDingYiDuanYu">
       <wsdl:input message="tns:getZiDingYiDuanYuSoapIn" />
       <wsdl:output message="tns:getZiDingYiDuanYuSoapOut" />
@@ -1888,6 +1968,10 @@
     <wsdl:operation name="makeCuiBan">
       <wsdl:input message="tns:makeCuiBanSoapIn" />
       <wsdl:output message="tns:makeCuiBanSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBanByRenYuan">
+      <wsdl:input message="tns:makeCuiBanByRenYuanSoapIn" />
+      <wsdl:output message="tns:makeCuiBanByRenYuanSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="getZiDingYiBuMenRenYuan">
       <wsdl:input message="tns:getZiDingYiBuMenRenYuanSoapIn" />
@@ -2019,6 +2103,14 @@
       <wsdl:input message="tns:getLiuZhuanXianHttpGetIn" />
       <wsdl:output message="tns:getLiuZhuanXianHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="getLingDaoPiShi">
+      <wsdl:input message="tns:getLingDaoPiShiHttpGetIn" />
+      <wsdl:output message="tns:getLingDaoPiShiHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSuoYouWeiQian">
+      <wsdl:input message="tns:getSuoYouWeiQianHttpGetIn" />
+      <wsdl:output message="tns:getSuoYouWeiQianHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="getZiDingYiDuanYu">
       <wsdl:input message="tns:getZiDingYiDuanYuHttpGetIn" />
       <wsdl:output message="tns:getZiDingYiDuanYuHttpGetOut" />
@@ -2066,6 +2158,10 @@
     <wsdl:operation name="makeCuiBan">
       <wsdl:input message="tns:makeCuiBanHttpGetIn" />
       <wsdl:output message="tns:makeCuiBanHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBanByRenYuan">
+      <wsdl:input message="tns:makeCuiBanByRenYuanHttpGetIn" />
+      <wsdl:output message="tns:makeCuiBanByRenYuanHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="getZiDingYiBuMenRenYuan">
       <wsdl:input message="tns:getZiDingYiBuMenRenYuanHttpGetIn" />
@@ -2197,6 +2293,14 @@
       <wsdl:input message="tns:getLiuZhuanXianHttpPostIn" />
       <wsdl:output message="tns:getLiuZhuanXianHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="getLingDaoPiShi">
+      <wsdl:input message="tns:getLingDaoPiShiHttpPostIn" />
+      <wsdl:output message="tns:getLingDaoPiShiHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getSuoYouWeiQian">
+      <wsdl:input message="tns:getSuoYouWeiQianHttpPostIn" />
+      <wsdl:output message="tns:getSuoYouWeiQianHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="getZiDingYiDuanYu">
       <wsdl:input message="tns:getZiDingYiDuanYuHttpPostIn" />
       <wsdl:output message="tns:getZiDingYiDuanYuHttpPostOut" />
@@ -2244,6 +2348,10 @@
     <wsdl:operation name="makeCuiBan">
       <wsdl:input message="tns:makeCuiBanHttpPostIn" />
       <wsdl:output message="tns:makeCuiBanHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBanByRenYuan">
+      <wsdl:input message="tns:makeCuiBanByRenYuanHttpPostIn" />
+      <wsdl:output message="tns:makeCuiBanByRenYuanHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="getZiDingYiBuMenRenYuan">
       <wsdl:input message="tns:getZiDingYiBuMenRenYuanHttpPostIn" />
@@ -2520,6 +2628,26 @@
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getLingDaoPiShi">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getLingDaoPiShi" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getLingDaoPiShiSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSuoYouWeiQian">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getSuoYouWeiQian" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getSuoYouWeiQianSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getZiDingYiDuanYu">
       <soap:operation soapAction="http://sjbg.xxjwd.org/getZiDingYiDuanYu" style="rpc" />
       <wsdl:input>
@@ -2635,6 +2763,16 @@
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
         <soap:header message="tns:makeCuiBanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBanByRenYuan">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/makeCuiBanByRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:makeCuiBanByRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -2963,6 +3101,26 @@
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getLingDaoPiShi">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getLingDaoPiShi" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getLingDaoPiShiSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSuoYouWeiQian">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getSuoYouWeiQian" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getSuoYouWeiQianSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getZiDingYiDuanYu">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/getZiDingYiDuanYu" style="rpc" />
       <wsdl:input>
@@ -3078,6 +3236,16 @@
       <wsdl:input>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
         <soap12:header message="tns:makeCuiBanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBanByRenYuan">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/makeCuiBanByRenYuan" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:makeCuiBanByRenYuanSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
@@ -3382,6 +3550,24 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getLingDaoPiShi">
+      <http:operation location="/getLingDaoPiShi" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSuoYouWeiQian">
+      <http:operation location="/getSuoYouWeiQian" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getZiDingYiDuanYu">
       <http:operation location="/getZiDingYiDuanYu" />
       <wsdl:input>
@@ -3483,6 +3669,15 @@
     </wsdl:operation>
     <wsdl:operation name="makeCuiBan">
       <http:operation location="/makeCuiBan" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBanByRenYuan">
+      <http:operation location="/makeCuiBanByRenYuan" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -3781,6 +3976,24 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getLingDaoPiShi">
+      <http:operation location="/getLingDaoPiShi" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSuoYouWeiQian">
+      <http:operation location="/getSuoYouWeiQian" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getZiDingYiDuanYu">
       <http:operation location="/getZiDingYiDuanYu" />
       <wsdl:input>
@@ -3882,6 +4095,15 @@
     </wsdl:operation>
     <wsdl:operation name="makeCuiBan">
       <http:operation location="/makeCuiBan" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="makeCuiBanByRenYuan">
+      <http:operation location="/makeCuiBanByRenYuan" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

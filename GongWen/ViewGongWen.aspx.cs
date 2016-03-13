@@ -62,6 +62,16 @@ public partial class ViewGongWen : System.Web.UI.Page
                 tableZdybm.Visible = false;
                 lblYiJian.Visible = false;
             }
+            if (rid == 23 || rid == 24)
+            {
+                tableAllLingDao.Visible = true;
+                
+            }
+            else
+            {
+                tableAllLingDao.Visible = false;
+                
+            }
             int type = Convert.ToInt32(Request["type"]);
 
             if (type == 1 || type == 2)
@@ -483,5 +493,10 @@ public partial class ViewGongWen : System.Web.UI.Page
     {
         int lzid = Convert.ToInt32( gvList.SelectedValue.ToString());
         bindLiuZhuanData(false,lzid);
+    }
+    protected void hyLinkLingDaoPiShi_Click(object sender, EventArgs e)
+    {
+        
+        Response.Write("<script>window.open ('LingDaoPiShi.aspx?gwid=" + Request["gwid"] + "', 'newwindow', 'height=1, width=1, top=1,left=1, toolbar=no, menubar=no, scrollbars=yes, resizable=no,location=no, status=no');</script>");
     }
 }
