@@ -200,6 +200,16 @@ namespace sjbgWebService.gwxx
             return BLL.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, jinji, ip, jsr, gwfj);
         }
 
+
+        /// <summary>
+        /// 补签公文，公文处理员对领导遗漏的人员进行补充添加
+        /// </summary>
+        /// <param name="gwid">公文ID</param>
+        /// <param name="lzid">流转ID</param>
+        /// <param name="fsr">发送人，指领导</param>
+        /// <param name="buid">补签人工号，指进行补签操作的公文处理员</param>
+        /// <param name="jsr">接收人，补充添加的人员工号数组</param>
+        /// <returns>成功标识</returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public INT buGongWen2016(int gwid, int lzid, int fsr, int buid, string[] jsr)
@@ -208,7 +218,17 @@ namespace sjbgWebService.gwxx
             return BLL.BuGongWen2016(gwid, lzid, fsr,buid, jsr);
         }
 
-
+        /// <summary>
+        /// 签收公文
+        /// </summary>
+        /// <param name="gwid">公文ID</param>
+        /// <param name="lzid">流转ID</param>
+        /// <param name="fsr">签收人工号</param>
+        /// <param name="jsr">接收人工号数组</param>
+        /// <param name="qsnr">签阅内容</param>
+        /// <param name="zdybm">自定义部门（已取消，无效）</param>
+        /// <param name="ip">ip地址</param>
+        /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr,int []zdybm,string ip)
@@ -217,14 +237,15 @@ namespace sjbgWebService.gwxx
             return BLL.signGongWen2016(gwid ,lzid,fsr ,jsr,qsnr,zdybm,"网页",ip);
         }
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
-        [SoapRpcMethod, WebMethod]
-        public INT undoGongWen2016(int uid,int lzid)
-        {
-            if (!sjbgHeader.checkValid()) return null;
-            return BLL.undoSignGongWen2016(uid,lzid);
-        }
-
+        /// <summary>
+        /// 手机端签收公文
+        /// </summary>
+        /// <param name="gwid">公文ID</param>
+        /// <param name="lzid">流转ID</param>
+        /// <param name="fsr">签收人工号</param>
+        /// <param name="jsr">接收人工号字符串</param>
+        /// <param name="qsnr">签阅内容</param>
+        /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public INT signGongWen2016Mobile(int gwid, int lzid, int fsr, string jsr, string qsnr)
@@ -233,6 +254,25 @@ namespace sjbgWebService.gwxx
             return BLL.signGongWen2016Mobile(gwid, lzid, fsr, jsr, qsnr);
         }
 
+        /// <summary>
+        /// 撤销签约公文
+        /// </summary>
+        /// <param name="uid">撤销人工号</param>
+        /// <param name="lzid">流转ID</param>
+        /// <returns></returns>
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT undoGongWen2016(int uid,int lzid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.undoSignGongWen2016(uid,lzid);
+        }
+
+        
+        /// <summary>
+        /// 获取公文性质列表
+        /// </summary>
+        /// <returns>公文性质列表</returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public GongWenXingZhi[] getXingZhi()
@@ -241,6 +281,10 @@ namespace sjbgWebService.gwxx
             return BLL.getGongWenXingZhi();
         }
 
+        /// <summary>
+        /// 获取公文类型列表
+        /// </summary>
+        /// <returns>公文类型列表</returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public GongWenLeiXing[] getLeiXing()
@@ -249,6 +293,11 @@ namespace sjbgWebService.gwxx
             return BLL.getGongWenLeiXing();
         }
 
+        /// <summary>
+        /// 获取领导信息
+        /// </summary>
+        /// <param name="roleid">要获取的领导的角色id列表</param>
+        /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public GongWenYongHu[] getLingDao(int[] roleid)
@@ -258,6 +307,11 @@ namespace sjbgWebService.gwxx
         }
 
 
+        /// <summary>
+        /// 通过工号获取公文用户信息
+        /// </summary>
+        /// <param name="uid">工号</param>
+        /// <returns>公文用户信息</returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public GongWenYongHu getGongWenYongHuByUid(int uid)
@@ -266,11 +320,20 @@ namespace sjbgWebService.gwxx
             return BLL.getGongWenYongHuByUid(uid);
         }
 
+        /// <summary>
+        /// 获取公文列表
+        /// </summary>
+        /// <param name="uid">接收人工号</param>
+        /// <param name="fsr">发送人工号（暂时无用）</param>
+        /// <param name="keyWord">关键字（文号或标题）</param>
+        /// <param name="sTime">开始时间</param>
+        /// <param name="eTime">截至时间</param>
+        /// <param name="gwtype">公文类型，1：所有公文，0：未签公文</param>
+        /// <param name="ksxh">开始序号</param>
+        /// <param name="count">数量</param>
+        /// <returns>公文列表</returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        
-
-        
         public GongWenList[] getGongWenList(int uid,string fsr ,string keyWord,string sTime,string eTime,int gwtype,int ksxh,int count)
         {
             if (!sjbgHeader.checkValid()) return null;
@@ -299,6 +362,22 @@ namespace sjbgWebService.gwxx
         {
             if (!sjbgHeader.checkValid()) return null;
             return BLL.getLiuZhuanXianByLzId(sfbr,lzid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public GongWenLiuZhuan[] getLingDaoPiShi(int uid,int gwid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.getLingDaoPiShi(uid, gwid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public GongWenLiuZhuan[] getSuoYouWeiQian(int uid, int gwid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.getSuoYouWeiQian(uid, gwid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -389,6 +468,15 @@ namespace sjbgWebService.gwxx
             if (!sjbgHeader.checkValid()) return new INT(-1);
             return BLL.makeCuiBan(gwid,rid);
         }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT makeCuiBanByRenYuan(int gwid, string[] jsr)
+        {
+            if (!sjbgHeader.checkValid()) return new INT(-1);
+            return BLL.makeCuiBan(gwid, jsr);
+        }
+
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public GongWenBuMenRenYuan[] getZiDingYiBuMenRenYuan(int zdybmid,bool added)

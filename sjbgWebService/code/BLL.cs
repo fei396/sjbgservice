@@ -1842,7 +1842,8 @@ namespace sjbgWebService
                     
                     if (qssj.Equals(string.Empty))//签收时间为空
                     {
-                        if (fsr_rid==21 && (jsr_rid ==23 || jsr_rid == 24))//并且是段长书记直接发给中层的
+                        if (jsr_rid ==23 || jsr_rid == 24)//中层能否签收首先看班子成员是否都已经完成签收
+                        //if (fsr_rid == 21 && (jsr_rid == 23 || jsr_rid == 24))//并且是段长书记直接发给中层的
                         {
                             if (isBanZiChengYuanFinished(gwlist[i].GongWenID)) //判断班子成员是否都已经完成签收
                             {
@@ -2219,6 +2220,60 @@ namespace sjbgWebService
 
         }
 
+        internal static GongWenLiuZhuan[] getLingDaoPiShi(int uid, int gwid)
+        {
+            GongWenYongHu gwyh = BLL.getGongWenYongHuByUid(uid);
+            if (gwyh == null) return null;
+            if (gwyh.RoleID != 23 && gwyh.RoleID != 24) return null;
+            DataTable dt = DAL.getLingDaoPiShi(gwid);
+            if (dt.TableName.Equals("error!"))
+            {
+
+                return null;
+            }
+            else
+            {
+                GongWenLiuZhuan[] gwlz = new GongWenLiuZhuan[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    gwlz[i] = new GongWenLiuZhuan();
+                    gwlz[i].JieShouRenXM = Convert.ToString(dt.Rows[i]["jsrxm"]);
+                    gwlz[i].QianShouNeiRong = Convert.ToString(dt.Rows[i]["qsnr"]);
+                    gwlz[i].QianShouShiJian = Convert.ToString(dt.Rows[i]["qssj"]);
+                }
+                return gwlz;
+            }
+
+        }
+
+        internal static GongWenLiuZhuan[] getSuoYouWeiQian(int uid, int gwid)
+        {
+            GongWenYongHu gwyh = BLL.getGongWenYongHuByUid(uid);
+            if (gwyh == null) return null;
+            if (gwyh.RoleID != 20) return null;
+            DataTable dt = DAL.getSuoYouWeiQian(gwid);
+            if (dt.TableName.Equals("error!"))
+            {
+
+                return null;
+            }
+            else
+            {
+                GongWenLiuZhuan[] gwlz = new GongWenLiuZhuan[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    gwlz[i] = new GongWenLiuZhuan();
+                    gwlz[i].JieShouRenXM = Convert.ToString(dt.Rows[i]["jsrxm"]);
+                    gwlz[i].JieShouRen = Convert.ToString(dt.Rows[i]["jsr"]);
+                    gwlz[i].JieShouRenBM= Convert.ToString(dt.Rows[i]["jsr_bm"]);
+                    gwlz[i].FaSongShiJian = Convert.ToString(dt.Rows[i]["fssj"]);
+    
+                }
+                return gwlz;
+            }
+
+        }
+
         internal static INT updateDuanYu(int id, string newTxt)
         {
             return DAL.updateDuanYu(id, newTxt);
@@ -2465,7 +2520,15 @@ namespace sjbgWebService
             return DAL.makeCuiBan(gwid, rid,gw.BiaoTi);
         }
 
-
+        internal static INT makeCuiBan(int gwid, string[] jsr)
+        {
+            GongWen2016 gw = getGongWen2016ById(gwid);
+            if (gw == null)
+            {
+                return new INT(-1, "无此公文");
+            }
+            return DAL.makeCuiBan( jsr, gw.BiaoTi);
+        }
 
         internal static INT addGongWenRenYuan(int uid,string gh, int rid)
         {
