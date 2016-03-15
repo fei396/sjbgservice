@@ -1,41 +1,36 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Data.SqlClient;
-using System.Text;
-using System.IO;
 using gwxxService;
 using System.Collections.Generic;
+
+
+
 public partial class ViewGongWen : System.Web.UI.Page
 {
-    gwxxService.gwxxWebService s = new gwxxService.gwxxWebService();
+    readonly gwxxWebService s = new gwxxWebService();
     
     //static gwxxService.BuMenFenLei[] bmfl;
     //static System.Collections.Generic.List<string> jsr;
     //static System.Collections.Generic.List<int> zdybm;
     protected void Page_Load(object sender, EventArgs e)
     {
-        int uid, rid, gwid, lzid;
         GongWenYongHu user = Session["user"] as GongWenYongHu;
         //uid = Convert.ToInt32(user);
 
         if (user == null)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
         }
         btnQianShou.Attributes["OnClick"] = "return confirm('确定签阅该文件？')";
         
         
         if (!IsPostBack)
         {
-
+            int lzid;
+            int gwid;
+            int rid;
+            int uid;
             try
             {
                 gwid = Convert.ToInt32(Request["gwid"]);

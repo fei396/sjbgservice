@@ -42,7 +42,6 @@ namespace sjbgWebService
         }
 
 
-        
         /// <summary>
         /// 提交安全信息申请，由段领导审核
         /// </summary>
@@ -51,6 +50,8 @@ namespace sjbgWebService
         /// <param name="title">标题</param>
         /// <param name="content">内容</param>
         /// <param name="buMens">部门列表</param>
+        /// <param name="setTime">设置的发送短信时间</param>
+        /// <param name="lingDaos">随安全信息发送的领导列表</param>
         /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
@@ -108,6 +109,7 @@ namespace sjbgWebService
         /// <param name="xxid">安全信息id</param>
         /// <param name="auditor">审核人</param>
         /// <param name="result">审核结果，0：不通过；1：通过，直接发送；2：通过，由申请人发送</param>
+        /// <param name="title">标题</param>
         /// <param name="txt">审批意见</param>
         /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]

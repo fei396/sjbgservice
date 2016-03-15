@@ -23,12 +23,14 @@ namespace sjbgWebService
     {
 		public SjbgSoapHeader sjbgHeader = new SjbgSoapHeader();
 
-        
+
         /// <summary>
         /// 获取uid的文件接收列表
         /// </summary>
         /// <param name="uid">人员工号</param>
         /// <param name="type">文件列表类型1:所有文件;0未接收文件</param>
+        /// <param name="ksxh">开始序号</param>
+        /// <param name="count">数量</param>
         /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
@@ -74,7 +76,7 @@ namespace sjbgWebService
         {
             if (!sjbgHeader.checkValid()) return null;
             //FileStream fs = new FileStream(SjbgConfig.SendFilePath + fid.ToString() + "." + extName, FileMode.Open, FileAccess.Read);
-            return DAL.getFileToReceiveFromDataBase(fid);
+            return DAL.GetFileToReceiveFromDataBase(fid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -122,7 +124,7 @@ namespace sjbgWebService
         public INT SendFiletest(string sender,string topic,string content,int type)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.sendMqttMessage(sender, topic, content, type);
+            return DAL.SendMqttMessage(sender, topic, content, type);
         }
     }
 }

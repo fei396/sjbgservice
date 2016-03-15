@@ -37,12 +37,12 @@ public partial class DuanYu : System.Web.UI.Page
             Security.SetCertificatePolicy();
 
 
-            getData();
+            GetData();
         }
     }
 
 
-    private void getData()
+    private void GetData()
     {
         GongWenYongHu user = Session["user"] as GongWenYongHu;
         if (user == null)
@@ -188,7 +188,7 @@ public partial class DuanYu : System.Web.UI.Page
         if (result.Number == 1)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "添加成功", "alert('添加自定义短语成功')", true);
-            getData();
+            GetData();
 
         }
         else
@@ -199,7 +199,7 @@ public partial class DuanYu : System.Web.UI.Page
     protected void gvList_RowEditing(object sender, GridViewEditEventArgs e)
     {
         gvList.EditIndex = e.NewEditIndex;
-        getData();
+        GetData();
 
     }
     protected void gvList_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -212,7 +212,7 @@ public partial class DuanYu : System.Web.UI.Page
         catch (Exception ex)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "更新失败", "alert('更新自定义短语失败：" + ex.Message + "')", true);
-            getData();
+            GetData();
             return;
         }
         string newTxt = e.NewValues[0].ToString();
@@ -227,12 +227,12 @@ public partial class DuanYu : System.Web.UI.Page
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "更新失败", "alert('更新自定义短语失败：" + result.Message + "')", true);
         }
-        getData();
+        GetData();
     }
     protected void gvList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
         gvList.EditIndex = -1;
-        getData();
+        GetData();
     }
     protected void gvList_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
@@ -244,7 +244,7 @@ public partial class DuanYu : System.Web.UI.Page
         catch (Exception ex)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "删除失败", "alert('删除自定义短语失败：" + ex.Message + "')", true);
-            getData();
+            GetData();
             return;
         }
         INT result = s.deleteDuanYu(id);
@@ -258,6 +258,6 @@ public partial class DuanYu : System.Web.UI.Page
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "删除失败", "alert('删除自定义短语失败：" + result.Message + "')", true);
         }
-        getData();
+        GetData();
     }
 }

@@ -36,7 +36,7 @@ namespace sjbgWebService.pub
         {
             //if (!sjbgHeader.checkValid()) return null;
 
-            return DAL.gpscs(work_no, work_name, JingDu, WeiDu, WeiZhi, ShiJian);
+            return DAL.Gpscs(work_no, work_name, JingDu, WeiDu, WeiZhi, ShiJian);
 
         }
     }

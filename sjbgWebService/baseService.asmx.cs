@@ -28,7 +28,7 @@ namespace sjbgWebService.pub
         public bool setPassword(int uid,string password)
         {
             if (!sjbgHeader.checkValid()) return false;
-            return DAL.setPassword(uid,password);
+            return DAL.SetPassword(uid,password);
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -36,14 +36,14 @@ namespace sjbgWebService.pub
 		public bool initPassword()
 		{
 			if (!sjbgHeader.checkValid()) return false;
-			return DAL.initPassword();
+			return DAL.InitPassword();
 		}
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
 		[SoapRpcMethod, WebMethod]
 		public bool setTqyjPassword(int uid, string newPass)
 		{
 			if (!sjbgHeader.checkValid()) return false;
-			return DAL.setTqjyPassword(uid, newPass);
+			return DAL.SetTqjyPassword(uid, newPass);
 		}
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
 		[SoapRpcMethod, WebMethod]

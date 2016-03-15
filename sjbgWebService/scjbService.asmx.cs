@@ -78,7 +78,6 @@ namespace sjbgWebService
         [SoapRpcMethod, WebMethod]
         public string getScjbExcel(string jbrq)
         {
-            string result = "";
             string filePath = strScjbFilePath;
             string fileName = Convert.ToDateTime(jbrq).ToString("yyyy-M-d") + ".xls";
             string fileFullPath = filePath + fileName;
@@ -102,7 +101,7 @@ namespace sjbgWebService
                 }
                 catch
                 {
-                    return( "NotFound");
+                    return"NotFound";
                 }
             }
             

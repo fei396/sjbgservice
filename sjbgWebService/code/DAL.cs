@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using sjbgWebService.gwxx;
@@ -12,20 +11,23 @@ using AE.Net.Mail;
 namespace sjbgWebService
 {
 
+    // ReSharper disable once InconsistentNaming
     public static class DAL
     {
-        private static string gwConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["gwxxConnectionString"].ConnectionString;
-        private static string baseConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["centerConnectionString"].ConnectionString;
-        private static string yyConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["yyConnectionString"].ConnectionString;
-        private static string zbConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["zbConnectionString"].ConnectionString;
-        private static string ysConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["ysConnectionString"].ConnectionString;
+        private static readonly string GwConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["gwxxConnectionString"].ConnectionString;
+        private static readonly string BaseConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["centerConnectionString"].ConnectionString;
+        private static readonly string YyConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["yyConnectionString"].ConnectionString;
+        private static readonly string ZbConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["zbConnectionString"].ConnectionString;
+        private static readonly string YsConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["ysConnectionString"].ConnectionString;
         private static string cbConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["cbConnectionString"].ConnectionString;
-        private static string mqttConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["mqttConnectionString"].ConnectionString;
+        private static readonly string MqttConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["mqttConnectionString"].ConnectionString;
+
+        private static bool _sendMessageForDebug = false;
 
 
-        public static DataTable getProductByPid(string pname)
+        public static DataTable GetProductByPid(string pname)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
@@ -52,12 +54,12 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getXwlx()
+        internal static DataTable GetXwlx()
         {
             DataTable dt = new DataTable();
 
             string sql = "SELECT id, sclb FROM dic_wlsclb where isvalid=1";
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -74,12 +76,12 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getXwlb(int xwlx)
+        public static DataTable GetXwlb(int xwlx)
         {
             DataTable dt = new DataTable();
 
             string sql = "SELECT     id, WYBT, WJMC, wjnr, SCRQ, SCLB,sclbid, yhbm,path FROM V_SJBG_wlscxx where isvalid=1 and sclbid=@xwlx order by scrq desc";
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -98,9 +100,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static BOOLEAN isSigned(GongWen gw, UserGw user)
+        public static BOOLEAN IsSigned(GongWen gw, UserGw user)
         {
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             if (user.Yhqx == 6) //领导
@@ -147,12 +149,12 @@ namespace sjbgWebService
             return new BOOLEAN(true, "");
         }
 
-        public static BOOLEAN leaderSign(GongWen gw, UserGw user, Instruction ins, UserGw[] nextUsers)
+        public static BOOLEAN LeaderSign(GongWen gw, UserGw user, Instruction ins, UserGw[] nextUsers)
         {
             string wh = gw.Number;
             if (wh.Equals("")) return new BOOLEAN(false, "");
             if (user.Yhbh == 0) return new BOOLEAN(false, "");
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             SqlTransaction trans;
@@ -207,12 +209,12 @@ namespace sjbgWebService
             }
             return new BOOLEAN(true, "");
         }
-        public static BOOLEAN sign(GongWen gw, UserGw user)
+        public static BOOLEAN Sign(GongWen gw, UserGw user)
         {
             string wh = gw.Number;
             if (wh.Equals("")) return new BOOLEAN(false, "");
             if (user.Yhbh == 0) return new BOOLEAN(false, "");
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             string sql = "update dat_qswj set qsbz = 1, qsr = @qsr ,qsrq='" + DateTime.Now.ToString("yyyy年MM月dd日HH时mm分") + "' where wh = @wh ";
             if (user.ShuangQian == 1)
             {
@@ -250,13 +252,13 @@ namespace sjbgWebService
             return new BOOLEAN(true, "");
         }
 
-        public static DataTable getLdps(GongWen gw)
+        public static DataTable GetLdps(GongWen gw)
         {
             string wh = gw.Number;
             DataTable dt = new DataTable();
 
             string sql = "select id,wh,psr,psnr,psrq from dat_ldps where wh=@wh order by id";
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -275,7 +277,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getAllGwlb(UserGw user, gwlx gwlx, dwlx dwlx)
+        public static DataTable GetAllGwlb(UserGw user, gwlx gwlx, dwlx dwlx)
         {
             DataTable dt = new DataTable();
 
@@ -311,7 +313,7 @@ namespace sjbgWebService
                     break;
             }
             sql += " order by fwrq desc,id desc";
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -328,7 +330,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getUnfinishedGwlb(UserGw user, dwlx dwlx)
+        public static DataTable GetUnfinishedGwlb(UserGw user, dwlx dwlx)
         {
             DataTable dt = new DataTable();
 
@@ -362,7 +364,7 @@ namespace sjbgWebService
                     break;
             }
             sql += " order by fwrq desc,a.id desc";
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -379,9 +381,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getGwxxByWh(string wh)
+        public static DataTable GetGwxxByWh(string wh)
         {
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
@@ -408,9 +410,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getUserGwByUid(int uid)
+        public static DataTable GetUserGwByUid(int uid)
         {
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
@@ -437,9 +439,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getUserGwByUserName(string userName)
+        public static DataTable GetUserGwByUserName(string userName)
         {
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
@@ -466,9 +468,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static int getSsxzbmBySsbm(int ssbm)
+        public static int GetSsxzbmBySsbm(int ssbm)
         {
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
@@ -490,17 +492,17 @@ namespace sjbgWebService
             }
         }
 
-        public static bool setPassword(int uid, string pass)
+        public static bool SetPassword(int uid, string pass)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update dic_user set user_mima=@pass where user_no=@work_no";
-            string work_no = uid.toWorkNo();
+            string workNo = uid.toWorkNo();
             pass = BLL.setEncryptPass(pass, pass);
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("pass", pass);
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             try
             {
                 conn.Open();
@@ -518,9 +520,9 @@ namespace sjbgWebService
             return true;
         }
 
-        public static bool initPassword()
+        public static bool InitPassword()
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select user_no from dic_user where bumen_id=34";
@@ -529,13 +531,13 @@ namespace sjbgWebService
             sda.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                string work_no = Convert.ToString(dt.Rows[i]["user_no"]);
-                string pass = BLL.setEncryptPass(work_no, work_no);
+                string workNo = Convert.ToString(dt.Rows[i]["user_no"]);
+                string pass = BLL.setEncryptPass(workNo, workNo);
                 comm.Connection = conn;
                 comm.CommandText = "update dic_user set user_mima=@pass where user_no=@work_no";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("pass", pass);
-                comm.Parameters.AddWithValue("work_no", work_no);
+                comm.Parameters.AddWithValue("work_no", workNo);
                 try
                 {
                     conn.Open();
@@ -553,9 +555,9 @@ namespace sjbgWebService
             return true;
         }
 
-        public static bool setTqjyPassword(int uid, string newpass)
+        public static bool SetTqjyPassword(int uid, string newpass)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             string pass = BLL.setEncryptPass(uid.ToString(), newpass);
             comm.Connection = conn;
@@ -580,9 +582,9 @@ namespace sjbgWebService
             return true;
         }
 
-        public static string getProductUserIdByBaseNum(string user_no, int pid)
+        public static string GetProductUserIdByBaseNum(string userNo, int pid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select is_work_no_login from dic_yyxt where xt_id=@pid";
@@ -604,14 +606,14 @@ namespace sjbgWebService
             }
             if (Convert.ToInt32(dt.Rows[0]["is_work_no_login"]) == 1)
             {
-                return user_no;
+                return userNo;
             }
             else
             {
                 comm.CommandText = "select yyxt_userbh from dat_UserDuiYing where yyxt_id=@pid and xtbg_user=@user_no";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("pid", pid);
-                comm.Parameters.AddWithValue("user_no", user_no);
+                comm.Parameters.AddWithValue("user_no", userNo);
                 try
                 {
                     dt = new DataTable();
@@ -629,15 +631,15 @@ namespace sjbgWebService
             }
         }
 
-        public static DataTable getUserByNum(string user_no)
+        public static DataTable GetUserByNum(string userNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "select user_no,user_name,Bumen_id from dic_user where user_no=@user_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -658,16 +660,16 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static INT loginDirect(string user_no, string user_pass, string code, string ip, string deviceInfo, string deviceVer)
+        internal static INT LoginDirect(string userNo, string userPass, string code, string ip, string deviceInfo, string deviceVer)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             DataTable dt = new DataTable();
             comm.Connection = conn;
 
             comm.CommandText = "select user_mima from dic_user where user_no=@user_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
 
             try
@@ -685,38 +687,38 @@ namespace sjbgWebService
             else
             {
                 string pass1 = Convert.ToString(dt.Rows[0]["user_mima"]);
-                user_pass = BLL.setEncryptPass(user_no, user_pass);
-                if (!user_pass.Equals(pass1)) return new INT(-3, "密码错误");//密码错误
+                userPass = BLL.setEncryptPass(userNo, userPass);
+                if (!userPass.Equals(pass1)) return new INT(-3, "密码错误");//密码错误
             }
 
             comm.CommandText = "select mobile from dat_user_mobile where work_no=@user_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             conn.Open();
             string mobile = comm.ExecuteScalar().ToString();
 
 
             comm.CommandText = "insert into dat_User_Device (work_no,deviceID,mobile, isvalid) values(@user_no,@code,@mobile,1)";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             comm.Parameters.AddWithValue("code", code);
             comm.Parameters.AddWithValue("mobile", mobile);
             comm.ExecuteNonQuery();
             conn.Close();
-            return recordLogin(user_no, code, ip, deviceInfo, deviceVer);
+            return RecordLogin(userNo, code, ip, deviceInfo, deviceVer);
 
         }
 
-        public static INT login(string user_no, string user_pass, string code, string ip, string deviceInfo, string deviceVer)
+        public static INT Login(string userNo, string userPass, string code, string ip, string deviceInfo, string deviceVer)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             DataTable dt = new DataTable();
             comm.Connection = conn;
 
             comm.CommandText = "select user_mima from dic_user where user_no=@user_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
 
             try
@@ -734,13 +736,13 @@ namespace sjbgWebService
             else
             {
                 string pass1 = Convert.ToString(dt.Rows[0]["user_mima"]);
-                user_pass = BLL.setEncryptPass(user_no, user_pass);
-                if (!user_pass.Equals(pass1)) return new INT(-3, "密码错误");//密码错误
+                userPass = BLL.setEncryptPass(userNo, userPass);
+                if (!userPass.Equals(pass1)) return new INT(-3, "密码错误");//密码错误
             }
 
             comm.CommandText = "select * from dat_User_Device where work_no=@user_no and isvalid=1";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             dt = new DataTable();
             try
             {
@@ -768,11 +770,11 @@ namespace sjbgWebService
                 }
                 if (isin == false)
                 {
-                    if (hasLoginInfo(user_no, deviceInfo, deviceVer))
+                    if (HasLoginInfo(userNo, deviceInfo, deviceVer))
                     {
                         comm.CommandText = "insert into dat_user_device (work_no, deviceID,mobile,isValid) values(@work_no, @did ,'1234567890',1)";
                         comm.Parameters.Clear();
-                        comm.Parameters.AddWithValue("work_no", user_no);
+                        comm.Parameters.AddWithValue("work_no", userNo);
                         comm.Parameters.AddWithValue("did", code);
                         try
                         {
@@ -794,17 +796,17 @@ namespace sjbgWebService
                         return new INT(-1, "该设备未注册");
                     }
                 }
-                return recordLogin(user_no, code, ip, deviceInfo, deviceVer);
+                return RecordLogin(userNo, code, ip, deviceInfo, deviceVer);
             }
         }
 
-        private static bool hasLoginInfo(string work_no, string dInfo, string dVer)
+        private static bool HasLoginInfo(string workNo, string dInfo, string dVer)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.CommandText = "select count(*) from dat_logininfo where uid=@work_no and  deviceInfo=@dInfo and deviceVer = @dVer";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             comm.Parameters.AddWithValue("dInfo", dInfo);
             comm.Parameters.AddWithValue("dVer", dVer);
             comm.Connection = conn;
@@ -820,14 +822,14 @@ namespace sjbgWebService
             }
         }
 
-        private static INT recordLogin(string user_no, string code, string ip, string deviceInfo, string deviceVer)
+        private static INT RecordLogin(string userNo, string code, string ip, string deviceInfo, string deviceVer)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "insert into dat_logininfo(uid,deviceId,deviceInfo,deviceVer,ipAddress) values(@user_no,@code,@deviceInfo,@deviceVer,@ip)";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             comm.Parameters.AddWithValue("code", code);
             comm.Parameters.AddWithValue("deviceInfo", deviceInfo);
             comm.Parameters.AddWithValue("deviceVer", deviceVer);
@@ -849,9 +851,9 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        public static DataTable getZbPerson(DateTime dateTime, int isNight)
+        public static DataTable GetZbPerson(DateTime dateTime, int isNight)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
@@ -880,9 +882,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static string getZbLdps(DateTime dateTime)
+        public static string GetZbLdps(DateTime dateTime)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select ldps from dat_ziban where zbrq=@zbrq and bm='段领导'";
@@ -903,11 +905,11 @@ namespace sjbgWebService
             }
         }
 
-        internal static DataTable getLeaderList()
+        internal static DataTable GetLeaderList()
         {
             DataTable dt = new DataTable();
             string sql = "select yhbh,yhmc,yhsm,yhnc,ssbm,yhmm,yhqx,wjxz,dld_order,shuangqian from V_BanZiChengYuan order by dld_order";
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -924,11 +926,11 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getGwbmList(int lbid)
+        internal static DataTable GetGwbmList(int lbid)
         {
             DataTable dt = new DataTable();
             string sql = "select bmbh,bmmc,lbmc,ssxzbm,dic_bmlb.id as lbid from dic_bmlb,dic_bmxx where dic_bmlb.id = dic_bmxx.bmlb and dic_bmlb.id=@lbid order by dic_bmlb.orders,dic_bmxx.orders";
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -947,11 +949,11 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getGwbmlbList()
+        internal static DataTable GetGwbmlbList()
         {
             DataTable dt = new DataTable();
             string sql = "select lbmc ,id from dic_bmlb order by orders";
-            SqlConnection conn = new SqlConnection(gwConnStr);
+            SqlConnection conn = new SqlConnection(GwConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -968,11 +970,11 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getJianBaoBuMen()
+        internal static DataTable GetJianBaoBuMen()
         {
             DataTable dt = new DataTable();
             string sql = "select bmmc from dic_jb_bm order by orders";
-            SqlConnection conn = new SqlConnection(zbConnStr);
+            SqlConnection conn = new SqlConnection(ZbConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -989,11 +991,11 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getJianBao(string dept, DateTime datetime)
+        internal static DataTable GetJianBao(string dept, DateTime datetime)
         {
             DataTable dt = new DataTable();
             string sql = "select bm ,jbxm,jbnr,jbrq,orders from dat_scjb INNER JOIN dic_jb_bm ON dat_scjb.bm = dic_jb_bm.bmmc where jbrq=@jbrq  and (bm=@bm or @bm='all') order by orders,dat_scjb.id";
-            SqlConnection conn = new SqlConnection(zbConnStr);
+            SqlConnection conn = new SqlConnection(ZbConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -1013,14 +1015,14 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static INT getTqUidByWorkNo(string work_no)
+        internal static INT GetTqUidByWorkNo(string workNo)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select uid from T_TQYJ_USER where work_no=@work_no and isValid=1";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             try
             {
                 conn.Open();
@@ -1036,9 +1038,9 @@ namespace sjbgWebService
             }
         }
 
-        internal static INT getTqUtypeByUid(int uid)
+        internal static INT GetTqUtypeByUid(int uid)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select utype from T_TQYJ_USER where uid=@uid and isValid=1";
@@ -1059,9 +1061,9 @@ namespace sjbgWebService
             }
         }
 
-        internal static INT getTqUDeptByUid(int uid)
+        internal static INT GetTqUDeptByUid(int uid)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select deptid from T_TQYJ_USER where uid=@uid and isValid=1";
@@ -1082,9 +1084,9 @@ namespace sjbgWebService
             }
         }
 
-        internal static BOOLEAN replyTq(int uid, int tid, string replayContent)
+        internal static BOOLEAN ReplyTq(int uid, int tid, string replayContent)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select umid from T_TQYJ_USER_MESSAGE where uid=@uid and mid=@tid and isValid=1";
@@ -1096,7 +1098,7 @@ namespace sjbgWebService
             {
                 conn.Open();
                 umid = Convert.ToInt32(comm.ExecuteScalar());
-                return setTqReply(umid, replayContent);
+                return SetTqReply(umid, replayContent);
             }
             catch (Exception ex)
             {
@@ -1108,9 +1110,9 @@ namespace sjbgWebService
             }
         }
 
-        public static BOOLEAN setTqReply(int umid, string txt)
+        public static BOOLEAN SetTqReply(int umid, string txt)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             conn.Open();
@@ -1152,11 +1154,11 @@ namespace sjbgWebService
             return new BOOLEAN(true, "");
         }
 
-        internal static DataTable getTeQingByUid(int uid)
+        internal static DataTable GetTeQingByUid(int uid)
         {
             DataTable dt = new DataTable();
             string sql = "SELECT [uid], [umid], [mid], [senderId],[mtitle], [rGh], [rName], [rRmark], [mtext], [sendTime], [needReply], [sGh], [sName], [sRemark], [deptid], [deptName], [readTime] FROM [V_TQYJ_User_Message] WHERE ([uid] = @uid) order by sendtime desc";
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -1175,13 +1177,13 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable checkReply(int uid)
+        internal static DataTable CheckReply(int uid)
         {
             DataTable dt = new DataTable();
-            int udept = getTqUDeptByUid(uid).Number;
-            int utype = getTqUtypeByUid(uid).Number;
+            int udept = GetTqUDeptByUid(uid).Number;
+            int utype = GetTqUtypeByUid(uid).Number;
             string sql;
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
 
@@ -1208,11 +1210,11 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable checkReplyDetails(int tid)
+        internal static DataTable CheckReplyDetails(int tid)
         {
             DataTable dt = new DataTable();
             string sql = "SELECT txt, rGh, rName, rRmark, mtext, sendTime, needReply,readTime,rdeptname FROM V_TQYJ_Message_Reply WHERE ([mid] = @mid)";
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = sql;
@@ -1231,22 +1233,22 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static BOOLEAN setNewPass(string user_no, string oldPass, string newPass)
+        internal static BOOLEAN SetNewPass(string userNo, string oldPass, string newPass)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
-            string pass = BLL.setEncryptPass(user_no, newPass);
+            string pass = BLL.setEncryptPass(userNo, newPass);
             comm.Connection = conn;
 
             //验证旧密码
             comm.CommandText = "select user_mima from dic_user where user_no=@user_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             try
             {
                 conn.Open();
                 string passDataBase = Convert.ToString(comm.ExecuteScalar());
-                if (!passDataBase.Equals(BLL.setEncryptPass(user_no, oldPass)))
+                if (!passDataBase.Equals(BLL.setEncryptPass(userNo, oldPass)))
                 {
                     return new BOOLEAN(false, "原密码不正确。");
                 }
@@ -1263,7 +1265,7 @@ namespace sjbgWebService
             comm.CommandText = "update dic_user set user_mima=@pwd where user_no=@user_no";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("pwd", pass);
-            comm.Parameters.AddWithValue("user_no", user_no);
+            comm.Parameters.AddWithValue("user_no", userNo);
             try
             {
                 conn.Open();
@@ -1281,9 +1283,9 @@ namespace sjbgWebService
             return new BOOLEAN(true, "");
         }
 
-        internal static DateTime getServerTime()
+        internal static DateTime GetServerTime()
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             conn.Open();
@@ -1291,10 +1293,10 @@ namespace sjbgWebService
             return Convert.ToDateTime(comm.ExecuteScalar());
         }
 
-        internal static INT insertRegisterCode(int work_no, string mobile, string code, string uniqueCode)
+        internal static INT InsertRegisterCode(int workNo, string mobile, string code, string uniqueCode)
         {
-            string workno = work_no.ToString().PadLeft(4, '0');
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            string workno = workNo.ToString().PadLeft(4, '0');
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             conn.Open();
@@ -1315,7 +1317,7 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("mobile", mobile);
                 comm.Parameters.AddWithValue("code", code);
                 comm.Parameters.AddWithValue("deviceID", uniqueCode);
-                comm.Parameters.AddWithValue("releaseTime", getServerTime().AddMinutes(2));
+                comm.Parameters.AddWithValue("releaseTime", GetServerTime().AddMinutes(2));
                 comm.ExecuteNonQuery();
                 sqlTran.Commit();
             }
@@ -1331,19 +1333,19 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT sendMobileMessage(int work_no, string content)
+        internal static INT sendMobileMessage(int workNo, string content)
         {
-            return sendMobileMessage(work_no.toWorkNo(), content);
+            return sendMobileMessage(workNo.toWorkNo(), content);
         }
 
-        internal static INT sendMobileMessage(string work_no, string content)
+        internal static INT sendMobileMessage(string workNo, string content)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "insert into dataexchange (data_no,data_content) values(@work_no,@content)";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             comm.Parameters.AddWithValue("content", content);
             try
             {
@@ -1362,9 +1364,9 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT sendMobileMessage(string[] work_no, string content)
+        internal static INT sendMobileMessage(string[] workNo, string content)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -1381,11 +1383,11 @@ namespace sjbgWebService
             {
                 comm.Transaction = trans;
 
-                for (int i = 0; i < work_no.Length; i++)
+                for (int i = 0; i < workNo.Length; i++)
                 {
                     comm.CommandText = "insert into dataexchange (data_no,data_content) values(@work_no,@content)";
                     comm.Parameters.Clear();
-                    comm.Parameters.AddWithValue("work_no", work_no[i]);
+                    comm.Parameters.AddWithValue("work_no", workNo[i]);
                     comm.Parameters.AddWithValue("content", content);
                     comm.ExecuteNonQuery();
                 }
@@ -1410,16 +1412,16 @@ namespace sjbgWebService
         /// <summary>
         /// 检查用户手机号和移动设备时候已经注册。0未注册，1已注册，-100数据库错误，-1没有该工号,-2工号重复，-3没有该手机号，-4手机号重复，-5移动设备重复
         /// </summary>
-        /// <param name="work_no">工号</param>
+        /// <param name="workNo">工号</param>
         /// <param name="mobile">手机号</param>
         /// <param name="uniqueCode">移动设备唯一号</param>
         /// <returns>0未注册，1已注册，-100数据库错误，-1没有该工号,-2工号重复，-3没有该手机号，-4手机号重复，-5移动设备重复</returns>
-        internal static INT checkUserMobile(int work_no, string mobile, string uniqueCode)
+        internal static INT CheckUserMobile(int workNo, string mobile, string uniqueCode)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
-            string workno = work_no.ToString().PadLeft(4, '0');
+            string workno = workNo.ToString().PadLeft(4, '0');
             //工号是否在人员信息库内
             comm.CommandText = "select count(*)  from dic_user where user_no=@work_no";
             comm.Parameters.Clear();
@@ -1519,17 +1521,21 @@ namespace sjbgWebService
         /// <summary>
         /// 注册移动设备
         /// </summary>
-        /// <param name="work_no">工号</param>
+        /// <param name="workNo">工号</param>
         /// <param name="mobile">手机号</param>
         /// <param name="uniqueCode">移动设备唯一号</param>
+        /// <param name="rCode">注册码</param>
+        /// <param name="sq">安全问题</param>
+        /// <param name="sa">安全问题答案</param>
+        /// <param name="email">邮件地址</param>
         /// <returns>0已注册,-98验证码不正确</returns>
-        internal static INT registerDevice(int work_no, string mobile, string uniqueCode, string rCode, string sq, string sa, string email)
+        internal static INT RegisterDevice(int workNo, string mobile, string uniqueCode, string rCode, string sq, string sa, string email)
         {
-            string workno = work_no.ToString().PadLeft(4, '0');
-            INT i = checkUserMobile(work_no, mobile, uniqueCode);
+            string workno = workNo.ToString().PadLeft(4, '0');
+            INT i = CheckUserMobile(workNo, mobile, uniqueCode);
             if (i.Number < 0) return i;
             else if (i.Number == 1) return new INT(0, i.Message);
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
 
@@ -1606,7 +1612,7 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static WenJianJia selectMailBox(int uid, string mailBoxName)
+        internal static WenJianJia SelectMailBox(int uid, string mailBoxName)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             string strTrueMailBoxName = WenJianJia.NameToTrueName(mailBoxName);
@@ -1618,7 +1624,7 @@ namespace sjbgWebService
             return wjj;
         }
 
-        internal static YouJian getMailMessage(int uid, int muid, string mailBoxName)
+        internal static YouJian GetMailMessage(int uid, int muid, string mailBoxName)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             string strTrueMailBoxName = WenJianJia.NameToTrueName(mailBoxName);
@@ -1721,7 +1727,7 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static YouJianSimple[] getMailMessages(int uid, int muids, int muide, string mailBoxName)
+        internal static YouJianSimple[] GetMailMessages(int uid, int muids, int muide, string mailBoxName)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             string strTrueMailBoxName = WenJianJia.NameToTrueName(mailBoxName);
@@ -1751,9 +1757,9 @@ namespace sjbgWebService
             return yjs;
         }
 
-        internal static string[] getTKMPuser(string workno)
+        internal static string[] GetTkmPuser(string workno)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select yyxt_userbh,yyxt_user,yyxt_usermm from dat_userDuiYing where yyxt_id = 3 and xtbg_user=" + workno;
@@ -1769,10 +1775,10 @@ namespace sjbgWebService
             return userinfo;
         }
 
-        internal static YouJianSimple[] getMailMessagesTKMP(int uid, int startId, int count, bool asc)
+        internal static YouJianSimple[] GetMailMessagesTkmp(int uid, int startId, int count, bool asc)
         {
             string workno = uid.toWorkNo();
-            string[] userinfo = getTKMPuser(workno);
+            string[] userinfo = GetTkmPuser(workno);
             string user = userinfo[0];
             string pass = userinfo[1];
             YouJianTKMP yjt = new YouJianTKMP(user, pass);
@@ -1780,7 +1786,7 @@ namespace sjbgWebService
 
         }
 
-        internal static YouJianFuJian[] getMailAttachment(int uid, int muid, string mailBoxName, int pos)
+        internal static YouJianFuJian[] GetMailAttachment(int uid, int muid, string mailBoxName, int pos)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             string strTrueMailBoxName = WenJianJia.NameToTrueName(mailBoxName);
@@ -1801,11 +1807,11 @@ namespace sjbgWebService
             else return new YouJianFuJian[] { yjfj[pos - 1] };
         }
 
-        internal static YouJian getMailMessageTKMP(int uid, int muid)
+        internal static YouJian GetMailMessageTkmp(int uid, int muid)
         {
             string workno = uid.toWorkNo();
 
-            string[] userinfo = getTKMPuser(workno);
+            string[] userinfo = GetTkmPuser(workno);
             string user = userinfo[0];
             string pass = userinfo[1];
             YouJianTKMP yjt = new YouJianTKMP(user, pass);
@@ -1813,7 +1819,7 @@ namespace sjbgWebService
             return yj;
         }
 
-        internal static WenJianJia[] getMailBoxList(int uid)
+        internal static WenJianJia[] GetMailBoxList(int uid)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             ImapClient ic = new ImapClient(SjbgConfig.MailHost, workno + "@" + SjbgConfig.MailDomain, SjbgConfig.MailPassword);
@@ -1828,7 +1834,7 @@ namespace sjbgWebService
             return wjj;
         }
 
-        internal static INT deleteMailMessage(int uid, int muid, string mailBoxName)
+        internal static INT DeleteMailMessage(int uid, int muid, string mailBoxName)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             string strTrueMailBoxName = WenJianJia.NameToTrueName(mailBoxName);
@@ -1854,7 +1860,7 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT moveMailMessage(int uid, int muid, string oldMailBox, string newMailBox)
+        internal static INT MoveMailMessage(int uid, int muid, string oldMailBox, string newMailBox)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             string strOldTrueMailBoxName = WenJianJia.NameToTrueName(oldMailBox);
@@ -1874,7 +1880,7 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT deleteMailBox(int uid, string mailBoxName)
+        internal static INT DeleteMailBox(int uid, string mailBoxName)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             string strTrueMailBoxName = WenJianJia.NameToTrueName(mailBoxName);
@@ -1897,7 +1903,7 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT renameMailBox(int uid, string oldMailBoxName, string newMailBoxName)
+        internal static INT RenameMailBox(int uid, string oldMailBoxName, string newMailBoxName)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             string strTrueMailBoxName = WenJianJia.NameToTrueName(newMailBoxName);
@@ -1918,15 +1924,15 @@ namespace sjbgWebService
 
         //2014-8-22  GPS读取
 
-        public static DataTable getGpsByNum(string gps_data)
+        public static DataTable GetGpsByNum(string gpsData)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "SELECT work_no,work_name,JingDu,WeiDu,WeiZhi,ShiJian FROM dat_gps";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("gps_data", gps_data);
+            comm.Parameters.AddWithValue("gps_data", gpsData);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -1944,19 +1950,19 @@ namespace sjbgWebService
         }
 
 
-        internal static INT gpscs(string work_no, string work_name, string JingDu, string WeiDu, string WeiZhi, string ShiJian)
+        internal static INT Gpscs(string workNo, string workName, string jingDu, string weiDu, string weiZhi, string shiJian)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "insert into dat_gps (work_no,work_name,JingDu,WeiDu,WeiZhi,ShiJian) values(@work_no,@work_name,@JingDu,@WeiDu,@WeiZhi,@ShiJian)";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
-            comm.Parameters.AddWithValue("work_name", work_name);
-            comm.Parameters.AddWithValue("JingDu", Convert.ToDouble(JingDu));
-            comm.Parameters.AddWithValue("WeiDu", Convert.ToDouble(WeiDu));
-            comm.Parameters.AddWithValue("WeiZhi", WeiZhi);
-            comm.Parameters.AddWithValue("ShiJian", ShiJian);
+            comm.Parameters.AddWithValue("work_no", workNo);
+            comm.Parameters.AddWithValue("work_name", workName);
+            comm.Parameters.AddWithValue("JingDu", Convert.ToDouble(jingDu));
+            comm.Parameters.AddWithValue("WeiDu", Convert.ToDouble(weiDu));
+            comm.Parameters.AddWithValue("WeiZhi", weiZhi);
+            comm.Parameters.AddWithValue("ShiJian", shiJian);
             try
             {
                 conn.Open();
@@ -1974,15 +1980,15 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static DataTable getUserRole(string work_no)
+        internal static DataTable GetUserRole(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "SELECT rid,rname,descr FROM v_user_role where user_no=@work_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -1999,15 +2005,15 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getUserMenu(string work_no)
+        internal static DataTable GetUserMenu(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "SELECT DISTINCT M2Id, M2Name, M1Id, M1Name, Enabled,ImageRes,ActivityName,Params,order1,order2 FROM V_User_Menu WHERE user_no = @work_no order by order1,order2";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2027,15 +2033,15 @@ namespace sjbgWebService
         //2014-09-18 add by zhh for运用
         //2014-9-15  机车计划读取
 
-        public static DataTable getJcjhByNum(string jcjh_data)
+        public static DataTable GetJcjhByNum(string jcjhData)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "SELECT plan_date,open_time,locus,engi_brand,engi_no FROM duty_cq  order by plan_date desc,open_time desc";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("jcjh_data", jcjh_data);
+            comm.Parameters.AddWithValue("jcjh_data", jcjhData);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2054,15 +2060,15 @@ namespace sjbgWebService
 
         //2014-9-16  人员计划读取
 
-        public static DataTable getRyjhByNum(string ryjh_data)
+        public static DataTable GetRyjhByNum(string ryjhData)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "SELECT plan_date + ' ' + Open_time AS plan_date,locus,engi_brand+engi_no AS engi_no,Roadway,ZunDian_time,driver_1no+driver_1name as driver_1no,driver_2no+driver_2name as driver_2no,driver_3no+driver_3name as driver_3no FROM duty_cq  order by plan_date desc";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("ryjh_data", ryjh_data);
+            comm.Parameters.AddWithValue("ryjh_data", ryjhData);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2081,14 +2087,14 @@ namespace sjbgWebService
 
         //2014-9-17  待乘计划读取
 
-        public static DataTable getDcjhByNum(string dcjh_data)
+        public static DataTable GetDcjhByNum(string dcjhData)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT convert(varchar(10),Wait_date,111) + ' ' + left(Wait_time,5) AS plan_date,dri_Room_no,convert(varchar(4),Drive_no)+Drive_name as Drive_name,convert(varchar(5),Dri_time,8) as Dri_time,convert(varchar(4),Ass_no)+Ass_name as Ass_name,convert(varchar(5),Ass_time,8) as Ass_time,convert(varchar(4),Student_no)+Student_name as Student_name,convert(varchar(5),Stu_time,8) as Stu_time FROM Wait_Duty where datediff(day,Wait_date,getdate())='0' order by wait_time desc";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("dcjh_data", dcjh_data);
+            comm.Parameters.AddWithValue("dcjh_data", dcjhData);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2107,15 +2113,15 @@ namespace sjbgWebService
 
         //2014-9-17  检修计划读取
 
-        public static DataTable getJxjhByNum(string jxjh_data)
+        public static DataTable GetJxjhByNum(string jxjhData)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "SELECT plan_date + ' ' + Open_time AS plan_date,locus,engi_brand+engi_no AS engi_no,Roadway,ZunDian_time,driver_1no,driver_2no,driver_3no FROM duty_cq";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("jxjh_data", jxjh_data);
+            comm.Parameters.AddWithValue("jxjh_data", jxjhData);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2134,15 +2140,15 @@ namespace sjbgWebService
 
         //2014-9-17  测酒记录读取
 
-        public static DataTable getCjcxByNum(string cjcx_data)
+        public static DataTable GetCjcxByNum(string cjcxData)
         {
-            SqlConnection conn = new SqlConnection(yyConnStr);
+            SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "SELECT top 10  LEFT(日期, 10) + ' ' + LEFT(时间, 5) AS plan_date, 用户名 AS dd, 工号+姓名 AS work_no, 结果 AS cjjg FROM recordset where datediff(dd,日期,getdate())='0' order by 日期 desc,时间 desc";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("cjcx_data", cjcx_data);
+            comm.Parameters.AddWithValue("cjcx_data", cjcxData);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2161,16 +2167,16 @@ namespace sjbgWebService
         //2014-0918 add by zhh for运用
 
 
-        private static string getConnStringByDataBase(int database)
+        private static string GetConnStringByDataBase(int database)
         {
             string connString;
             switch (database)
             {
                 case 1: //运用
-                    connString = yyConnStr;
+                    connString = YyConnStr;
                     break;
                 case 2://月山
-                    connString = ysConnStr;
+                    connString = YsConnStr;
                     break;
                 default:
                     connString = "";
@@ -2179,9 +2185,9 @@ namespace sjbgWebService
             return connString;
         }
 
-        internal static DataTable getMingPaiByXianBie(int database, string line_or_workno, int type)
+        internal static DataTable GetMingPaiByXianBie(int database, string lineOrWorkno, int type)
         {
-            SqlConnection conn = new SqlConnection(getConnStringByDataBase(database));
+            SqlConnection conn = new SqlConnection(GetConnStringByDataBase(database));
 
 
             SqlCommand comm = new SqlCommand();
@@ -2200,7 +2206,7 @@ namespace sjbgWebService
             }
             comm.CommandText += " order by banci,weizhi";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("param", line_or_workno);
+            comm.Parameters.AddWithValue("param", lineOrWorkno);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2217,16 +2223,16 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getMingPaiByGongHao(int database, string work_no)
+        internal static DataTable GetMingPaiByGongHao(int database, string workNo)
         {
-            SqlConnection conn = new SqlConnection(getConnStringByDataBase(database));
+            SqlConnection conn = new SqlConnection(GetConnStringByDataBase(database));
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
             comm.CommandText = "select work_no,line_mode,state from person_active where work_no=@work_no ";
 
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2257,17 +2263,17 @@ namespace sjbgWebService
             }
             if (type == 3)
             {
-                return getMingPaiByXianBie(database, work_no, type);
+                return GetMingPaiByXianBie(database, workNo, type);
             }
             else
             {
-                return getMingPaiByXianBie(database, dt.Rows[0]["line_mode"].ToString(), type);
+                return GetMingPaiByXianBie(database, dt.Rows[0]["line_mode"].ToString(), type);
             }
         }
 
-        internal static DataTable getXianBie(int database)
+        internal static DataTable GetXianBie(int database)
         {
-            SqlConnection conn = new SqlConnection(getConnStringByDataBase(database));
+            SqlConnection conn = new SqlConnection(GetConnStringByDataBase(database));
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
@@ -2289,11 +2295,11 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getDaMingPai(int database, string line, int type, string filter)
+        internal static DataTable GetDaMingPai(int database, string line, int type, string filter)
         {
-            SqlConnection conn = new SqlConnection(getConnStringByDataBase(database));
+            SqlConnection conn = new SqlConnection(GetConnStringByDataBase(database));
             SqlCommand comm = new SqlCommand();
-            line = getXbidByXbmc(database, line);
+            line = GetXbidByXbmc(database, line);
             if (line == null) return null;
             comm.Connection = conn;
             comm.CommandText = "select * from V_SJBG_DaMingPai where 1=1 ";
@@ -2329,9 +2335,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static string getXbidByXbmc(int database, string xbmc)
+        public static string GetXbidByXbmc(int database, string xbmc)
         {
-            SqlConnection conn = new SqlConnection(getConnStringByDataBase(database));
+            SqlConnection conn = new SqlConnection(GetConnStringByDataBase(database));
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
@@ -2353,10 +2359,10 @@ namespace sjbgWebService
             }
         }
 
-        public static DataTable getCanBu(string work_no, DateTime kssj, DateTime jssj)
+        public static DataTable GetCanBu(string workNo, DateTime kssj, DateTime jssj)
         {
             EcardService.Service s = new EcardService.Service();
-            return s.getCanBu(work_no, kssj, jssj);
+            return s.getCanBu(workNo, kssj, jssj);
             //SqlConnection conn = new SqlConnection(cbConnStr);
             //SqlCommand comm = new SqlCommand();
             //comm.Connection = conn;
@@ -2381,12 +2387,12 @@ namespace sjbgWebService
             //return dt;
         }
 
-        public static DataTable getFyyjcZt()
+        public static DataTable GetFyyjcZt()
         {
             OracleService.fyyjcService os = new OracleService.fyyjcService();
             return os.getFyyjcZt();
         }
-        public static DataTable getFyyjc(string jczt)
+        public static DataTable GetFyyjc(string jczt)
         {
             OracleService.fyyjcService os = new OracleService.fyyjcService();
             return os.getFyyjc(jczt);
@@ -2421,17 +2427,17 @@ namespace sjbgWebService
         //}
 
         //电子书名读取
-        public static DataTable getBookName(string bookname_data)
+        public static DataTable GetBookName(string booknameData)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT id, Name,Address FROM Book_Name";
-            if (!bookname_data.Equals(""))
+            if (!booknameData.Equals(""))
             {
                 comm.CommandText += " where id = @id";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("id", bookname_data);
+                comm.Parameters.AddWithValue("id", booknameData);
             }
 
             SqlDataAdapter sda = new SqlDataAdapter(comm);
@@ -2451,14 +2457,14 @@ namespace sjbgWebService
         }
 
         //电子书内容读取
-        public static DataTable getBookNr(string book_Nr_id)
+        public static DataTable GetBookNr(string bookNrId)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT id, Txt FROM Book_NR_zhh where id = @id";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("id", book_Nr_id);
+            comm.Parameters.AddWithValue("id", bookNrId);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2481,14 +2487,14 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static int getDutyRoomIdByWork_no(string work_no)
+        internal static int getDutyRoomIdByWork_no(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT drid FROM V_SendFile_DutyRoom_Receiver where work_no = @work_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             try
             {
                 conn.Open();
@@ -2504,14 +2510,14 @@ namespace sjbgWebService
             }
         }
 
-        internal static DataTable getSentFiles(string work_no)
+        internal static DataTable GetSentFiles(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT fid, fileName, sendTime, allCount, receiveCount,  senderDeptName + senderName  as sender FROM  V_SendFile_SentFiles where sender=@sender ORDER BY sendTime DESC";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("sender", work_no);
+            comm.Parameters.AddWithValue("sender", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2527,9 +2533,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getSentFileDetails(int fid)
+        internal static DataTable GetSentFileDetails(int fid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT     fileName + '.' + extName AS filename, sendTime, dutyroom, receiverName, receive_time FROM V_SendFile_File_DutyRoom_User WHERE  (fid = @fid) order by drid";
@@ -2550,9 +2556,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getFilesToReceive(int drid, int type)
+        internal static DataTable GetFilesToReceive(int drid, int type)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT fid, fileName, extName, filedesc, sendTime, sender, senderName, senderDept, senderDeptName, drid, dutyroom, receiver, receive_time,  id, receiverName,dutyroom_bmid,dutyroom_bmmc FROM V_SendFile_File_DutyRoom_User where drid=@drid ";
@@ -2582,9 +2588,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static INT receiveFile(int fdrid, string work_no)
+        internal static INT ReceiveFile(int fdrid, string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
 
@@ -2612,7 +2618,7 @@ namespace sjbgWebService
             //判断该工号是否具有该值班室接收文件权限
             comm.CommandText = "select count(*) from V_SendFile_DutyRoom_Receiver where drid=@drid and work_no=@work_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             comm.Parameters.AddWithValue("drid", drid);
             int count = 0;
             try
@@ -2633,7 +2639,7 @@ namespace sjbgWebService
 
             comm.CommandText = "update T_SendFile_File_DutyRoom set receiver=@work_no,receive_time=getdate() where id=@fdrid";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             comm.Parameters.AddWithValue("fdrid", fdrid);
             try
             {
@@ -2656,9 +2662,9 @@ namespace sjbgWebService
 
 
 
-        internal static DataTable getSendFileDept(int did)
+        internal static DataTable GetSendFileDept(int did)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT bm_id, bm_mc FROM dic_bumen";
@@ -2680,9 +2686,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getDutyRoomByDeptId(int did)
+        internal static DataTable GetDutyRoomByDeptId(int did)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT id, position,bm_id,bm_mc FROM V_SendFile_DutyRoom";
@@ -2706,7 +2712,7 @@ namespace sjbgWebService
 
         internal static INT SendFile(string sender, string fileName, string extName, string fileDesc, string fileContent, string drs)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
 
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
@@ -2784,14 +2790,14 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT AddFeedBack(string work_no, string txt)
+        internal static INT AddFeedBack(string workNo, string txt)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "insert into T_Sjbg_Feedback (work_no,txt) values( @work_no,@txt)";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             comm.Parameters.AddWithValue("txt", txt);
             try
             {
@@ -2810,14 +2816,14 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static DataTable GetLoginRecord(string work_no)
+        internal static DataTable GetLoginRecord(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  id, uid, deviceId, deviceInfo, deviceVer, IpAddress, loginTime FROM dat_LoginInfo where uid=@uid order by loginTime desc";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("uid", work_no);
+            comm.Parameters.AddWithValue("uid", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2834,10 +2840,10 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static string getFileToReceiveFromDataBase(int fid)
+        internal static string GetFileToReceiveFromDataBase(int fid)
         {
 
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select  fileContent from T_SendFile_Files where id = @fid";
@@ -2847,7 +2853,7 @@ namespace sjbgWebService
             try
             {
                 conn.Open();
-                result = Convert.ToBase64String((byte[])(comm.ExecuteScalar()));
+                result = Convert.ToBase64String((byte[])comm.ExecuteScalar());
             }
             catch (Exception ex)
             {
@@ -2860,14 +2866,14 @@ namespace sjbgWebService
             return result;
         }
 
-        internal static DataTable getUnsubTopics(string work_no)
+        internal static DataTable GetUnsubTopics(string workNo)
         {
-            SqlConnection conn = new SqlConnection(mqttConnStr);
+            SqlConnection conn = new SqlConnection(MqttConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  id,topic FROM V_User_Topics where work_no=@work_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -2884,9 +2890,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static INT setTopicsSubed(string tids)
+        internal static INT SetTopicsSubed(string tids)
         {
-            SqlConnection conn = new SqlConnection(mqttConnStr);
+            SqlConnection conn = new SqlConnection(MqttConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update T_User_Topics set isSubed=1, lastSubTime =getdate() where id in (" + tids + ")";
@@ -2906,14 +2912,14 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT setMqttStatus(string work_no, int type, string clientId)
+        internal static INT SetMqttStatus(string workNo, int type, string clientId)
         {
-            SqlConnection conn = new SqlConnection(mqttConnStr);
+            SqlConnection conn = new SqlConnection(MqttConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select count(*) from T_User_session where work_no=@work_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             int isin = 0;
             try
             {
@@ -2938,7 +2944,7 @@ namespace sjbgWebService
                 comm.CommandText = "insert into T_User_Session (isOnline,lastUpdateTime,work_no,clientid) values(@type,getdate(), @work_no,@clientId)";
             }
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             comm.Parameters.AddWithValue("type", type);
             comm.Parameters.AddWithValue("clientId", clientId);
             try
@@ -2957,14 +2963,14 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT getMqttStatus(string work_no)
+        internal static INT GetMqttStatus(string workNo)
         {
-            SqlConnection conn = new SqlConnection(mqttConnStr);
+            SqlConnection conn = new SqlConnection(MqttConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select isOnline from T_User_session where work_no=@work_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             int status = 0;
             try
             {
@@ -2990,9 +2996,9 @@ namespace sjbgWebService
         /// <param name="message">消息内容</param>
         /// <param name="type">消息类型:2：提醒型消息；3：警告型信息</param>
         /// <returns></returns>
-        internal static INT sendMqttMessage(string sender, string topic, string message, int type)
+        internal static INT SendMqttMessage(string sender, string topic, string message, int type)
         {
-            SqlConnection conn = new SqlConnection(mqttConnStr);
+            SqlConnection conn = new SqlConnection(MqttConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -3065,14 +3071,14 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static DataTable getSystemMessage(string work_no, int type)
+        internal static DataTable GetSystemMessage(string workNo, int type)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT     id, toUser, Type, Content, Command, createTime, hasRead, readTime FROM T_System_Message where toUser=@work_no and (hasread=@type or @type=-1) order by createTime desc";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             comm.Parameters.AddWithValue("type", type);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
@@ -3090,9 +3096,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static INT readSystemMessage(int mid)
+        internal static INT ReadSystemMessage(int mid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update T_System_message set hasread=1 , readtime=getdate() where id=@mid";
@@ -3114,15 +3120,15 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static INT readMqttMessage(string work_no, int mid)
+        internal static INT ReadMqttMessage(string workNo, int mid)
         {
-            SqlConnection conn = new SqlConnection(mqttConnStr);
+            SqlConnection conn = new SqlConnection(MqttConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update T_Mqtt_message_user set hasread=1 , readtime=getdate() where uid=@uid and mid=@mid";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("mid", mid);
-            comm.Parameters.AddWithValue("uid", work_no);
+            comm.Parameters.AddWithValue("uid", workNo);
             try
             {
                 conn.Open();
@@ -3140,14 +3146,14 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static DataTable getUnReadMqttMessage(string work_no)
+        internal static DataTable GetUnReadMqttMessage(string workNo)
         {
-            SqlConnection conn = new SqlConnection(mqttConnStr);
+            SqlConnection conn = new SqlConnection(MqttConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select json from V_Mqtt_Message_User where  uid=@uid and hasRead=0";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("uid", work_no);
+            comm.Parameters.AddWithValue("uid", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -3169,7 +3175,7 @@ namespace sjbgWebService
         {
 
 
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
@@ -3193,7 +3199,7 @@ namespace sjbgWebService
         {
 
 
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
@@ -3215,11 +3221,11 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getAqxxptShenHe()
+        public static DataTable GetAqxxptShenHe()
         {
 
 
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
@@ -3241,7 +3247,7 @@ namespace sjbgWebService
 
         public static INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens, DateTime setTime, string lingDaos)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             int xxid = 0;
             try
             {
@@ -3290,9 +3296,9 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("xxid", xxid);
                 comm.Parameters.AddWithValue("auditor", auditor);
                 comm.ExecuteNonQuery();
-                if (1 == 1)//(DAL.sendMqttMessage(sender, auditor, "有一条安全信息需要您审核。", 2).Number == 1)
+                if (true)//(DAL.sendMqttMessage(sender, auditor, "有一条安全信息需要您审核。", 2).Number == 1)
                 {
-                    DAL.sendMobileMessage(Convert.ToInt32(auditor), "有一条安全信息需要您审核。");
+                    sendMobileMessage(Convert.ToInt32(auditor), "有一条安全信息需要您审核。");
                     trans.Commit();
                 }
                 else
@@ -3316,7 +3322,7 @@ namespace sjbgWebService
 
         internal static INT AuditAqxx(int xxid, string auditor, int result, string title, string txt)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             try
             {
                 conn.Open();
@@ -3347,9 +3353,9 @@ namespace sjbgWebService
                     comm.Parameters.Clear();
                     comm.Parameters.AddWithValue("xxid", xxid);
                     string sender = Convert.ToString(comm.ExecuteScalar());
-                    if (DAL.sendMqttMessage("提醒信息：", sender, "安全信息审核未通过，原因：" + txt, 2).Number == 1)
+                    if (SendMqttMessage("提醒信息：", sender, "安全信息审核未通过，原因：" + txt, 2).Number == 1)
                     {
-                        DAL.sendMobileMessage(Convert.ToInt32(sender), "安全信息审核未通过，原因：" + txt);
+                        sendMobileMessage(Convert.ToInt32(sender), "安全信息审核未通过，原因：" + txt);
                         trans.Commit();
                     }
                     else
@@ -3394,9 +3400,9 @@ namespace sjbgWebService
         }
 
 
-        internal static DataTable getAqxxToAudit(string auditor, int xxid)
+        internal static DataTable GetAqxxToAudit(string auditor, int xxid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
@@ -3420,9 +3426,9 @@ namespace sjbgWebService
         }
 
 
-        internal static DataTable getAqxxInfo(int did, int xxid)
+        internal static DataTable GetAqxxInfo(int did, int xxid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
@@ -3445,9 +3451,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getAqxxDetail(int xxid)
+        internal static DataTable GetAqxxDetail(int xxid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
@@ -3469,9 +3475,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getAqxxContent(int xxid)
+        internal static DataTable GetAqxxContent(int xxid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
@@ -3497,9 +3503,9 @@ namespace sjbgWebService
 
 
         #region 2016新公文流转系统
-        internal static INT addNewGongWen2016(string ht, string dw, string wh, string bt, string zw, string yj, int wjxzID, int wjlxID, string fbr, string jinji, string ip, string jsr, string[] gwfj)
+        internal static INT AddNewGongWen2016(string ht, string dw, string wh, string bt, string zw, string yj, int wjxzId, int wjlxId, string fbr, string jinji, string ip, string jsr, string[] gwfj)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -3530,8 +3536,8 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("@bt", bt);
                 comm.Parameters.AddWithValue("@zw", zw);
                 comm.Parameters.AddWithValue("@csyj", yj);
-                comm.Parameters.AddWithValue("@wjxzid", wjxzID);
-                comm.Parameters.AddWithValue("@wjlxid", wjlxID);
+                comm.Parameters.AddWithValue("@wjxzid", wjxzId);
+                comm.Parameters.AddWithValue("@wjlxid", wjlxId);
                 comm.Parameters.AddWithValue("@fbr", fbr);
                 comm.Parameters.AddWithValue("@ip", ip);
                 comm.Parameters.AddWithValue("@jinji", jinji);
@@ -3568,8 +3574,16 @@ namespace sjbgWebService
                 {
                     message = "您有一件新公文需要签阅。公文标题：" + bt + "。该公文是" + jinji + "公文，请务必尽快签阅。";
                 }
-                //INT r = sendMobileMessage(jsr, message);
-                 INT r = sendMobileMessage("3974", message);
+                
+                 INT r;
+                if (_sendMessageForDebug)
+                {
+                    r =sendMobileMessage("3974", message);
+                }
+                else
+                {
+                    r = sendMobileMessage(jsr, message);
+                }
                 if (r.Number == 1)
                 {
                     //所有操作都成功完成，提交事务，确认操作
@@ -3603,7 +3617,7 @@ namespace sjbgWebService
         internal static DataTable getZiDingYiBuMenRenYuan(int[] zdybmid)
         {
             string strZdybm = zdybmid.ToListString();
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select distinct user_no from V_GongWen_ZDYBM_USERNO where zdyid in (" + strZdybm + ")";
@@ -3625,10 +3639,10 @@ namespace sjbgWebService
 
         }
 
-        internal static DataTable getBuMenRenYuan(int bmid)
+        internal static DataTable GetBuMenRenYuan(int bmid)
         {
 
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select user_no,user_name from V_GongWen_YongHu where bm_id =@bmid and (rid=25 or rid=20 or rid=26) order by user_no";
@@ -3654,7 +3668,7 @@ namespace sjbgWebService
 
         internal static INT BuGongWen2016(int gwid, int lzid, string fsr, string fsrxm, string bt, string[] jsrs, string buyueren)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -3717,9 +3731,9 @@ namespace sjbgWebService
         }
 
 
-        internal static void SignGongWen2016Log(int gwid, int lzid, string work_no, string throwJsr)
+        internal static void SignGongWen2016Log(int gwid, int lzid, string workNo, string throwJsr)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -3727,22 +3741,21 @@ namespace sjbgWebService
                 conn.Open();
                 comm.CommandText = "insert into t_GongWen_QianShouRiZhi (uid,gwid,lzid,logTxt) values(@uid,@gwid,@lzid,@logTxt)";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("uid", work_no);
+                comm.Parameters.AddWithValue("uid", workNo);
                 comm.Parameters.AddWithValue("gwid", gwid);
                 comm.Parameters.AddWithValue("lzid", lzid);
                 comm.Parameters.AddWithValue("logTxt", throwJsr);
                 comm.ExecuteNonQuery();
             }
-            catch
+            catch (Exception)
             {
-
+                // ignored
             }
-
         }
 
         internal static INT SignGongWen2016(int gwid, int lzid, string fsr, string[] jsr, string bt, string fsrxm, int rid, string qsnr, string device, string ip)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -3792,15 +3805,14 @@ namespace sjbgWebService
 
                 if (jsr != null && jsr.Length > 0)
                 {
-
-                    for (int i = 0; i < jsr.Length; i++)
+                    foreach (string jsrStr in jsr)
                     {
                         comm.CommandText = "insert into t_gongwen_lz (gwid,pid,fsr,jsr,fssj) values(@gwid,@pid,@fsr ,@jsr, getdate())";
                         comm.Parameters.Clear();
                         comm.Parameters.AddWithValue("@gwid", gwid);
                         comm.Parameters.AddWithValue("@pid", lzid);
                         comm.Parameters.AddWithValue("@fsr", fsr);
-                        comm.Parameters.AddWithValue("@jsr", jsr[i]);
+                        comm.Parameters.AddWithValue("@jsr", jsrStr);
                         comm.ExecuteNonQuery();
                         //if (rid == 22)
                         //{
@@ -3812,8 +3824,18 @@ namespace sjbgWebService
                         //}
                     }
                     //发短信通知
-                    //INT r = sendMobileMessage(jsr, "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
-                    INT r = sendMobileMessage("3974", "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                    
+                    INT r;
+                    if (_sendMessageForDebug)
+                    {
+                        r = sendMobileMessage("3974", "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt); 
+                    }
+                    else
+                    {
+                        r = sendMobileMessage(jsr, "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                    }
+                    
+                    
                     if (r.Number == 1)
                     {
                         trans.Commit();
@@ -3844,9 +3866,9 @@ namespace sjbgWebService
         }
 
 
-        internal static int unfinishedBanZiChengYuanRenShu(int gwid)
+        internal static int UnfinishedBanZiChengYuanRenShu(int gwid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  count(*)  FROM V_GongWen_List_All where gwid=@gwid and qssj is null and jsr_rid in (21,22) ";
@@ -3879,9 +3901,9 @@ namespace sjbgWebService
         /// <param name="eTime">截至时间</param>
         /// <param name="gwtype">公文类型，0，未签公文，1，全部公文</param>
         /// <returns>包含公文信息的DataTable</returns>
-        internal static DataTable getGongWenList(string jsr, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype)
+        internal static DataTable GetGongWenList(string jsr, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  gwid, lzID, ht,dw, wh, bt, zw, wjxzID, wjlxID, fbr, fbrq, wjlx, wjxz, fbrxm, pID,fsr, fsrxm, jsr, jsrxm, fssj, qssj, qsnr,fsr_rid,jsr_rid,jinji, case when qssj is null then 0 when getdate()-qssj <48/24 then 1 else 0 end as chexiao FROM V_GongWen_List_All where jsr=@jsr ";
@@ -3943,9 +3965,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getGongWenGuiDangList(string fbr, string keyWord, string sTime, string eTime, int type)
+        internal static DataTable GetGongWenGuiDangList(string fbr, string keyWord, string sTime, string eTime, int type)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT gwid,lzid, wh, bt, fbr, fbrq, fbrxm, jsr, jsrxm,jinji, dbo.liu_zhuan_wan_cheng(gwid) AS ShiFouLiuZhuanWanCheng FROM V_GongWen_List_All WHERE (pID = 0) AND fbr=@fbr ";
@@ -3988,9 +4010,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getGongWenXingZhi()
+        internal static DataTable GetGongWenXingZhi()
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT id, wjxz FROM V_GongWen_GWXZ  order by paixu";
@@ -4010,9 +4032,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getGongWenLeiXing()
+        internal static DataTable GetGongWenLeiXing()
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT id, wjlx FROM V_GongWen_GWLX  order by paixu";
@@ -4032,15 +4054,15 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getGongWenYongHu(string work_no)
+        internal static DataTable getGongWenYongHu(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
 
             comm.CommandText = "SELECT  user_no, user_name, bm_id, bm_mc, sjh, rid, nc FROM V_GongWen_YongHu where user_no=@work_no  ";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -4059,7 +4081,7 @@ namespace sjbgWebService
 
         internal static DataTable getGongWenYongHu(int[] rid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
 
@@ -4085,9 +4107,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getLiuZhuanXianByLzId(bool sfbr, int lzid)
+        internal static DataTable GetLiuZhuanXianByLzId(bool sfbr, int lzid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select b.jsr_bm,b.lzid,b.gwid,b.fsr,b.fsrxm,b.fssj,b.jsr,b.jsrxm,b.qssj,b.qsnr ,case when b.lzid<@lzid then -1 else dbo.xia_ji_liu_zhuan_wan_cheng_shu(b.lzID) end AS wancheng, ";
@@ -4127,9 +4149,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getLingDaoPiShi(int gwid)
+        internal static DataTable GetLingDaoPiShi(int gwid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select jsrxm,qssj,qsnr from V_GongWen_LiuZhuan where jsr_rid in (21,22) and gwid=@gwid order by lzid";
@@ -4152,9 +4174,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getSuoYouWeiQian(int gwid)
+        internal static DataTable GetSuoYouWeiQian(int gwid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select gwid,jsr,jsrxm,min(fssj) as fssj ,jsr_bm from V_GongWen_LiuZhuan a join dic_bumen b on a.jsr_bmid = b.bm_id where qssj is null  and gwid=@gwid group by gwid,jsr,jsrxm,jsr_bm,px order by b.px ";
@@ -4177,9 +4199,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getGongWen2016ById(int gwid)
+        internal static DataTable GetGongWen2016ById(int gwid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  ID as gwid, ht, dw, wh, bt, zw, csyj, wjxzID, wjlxID, fbr, fbrq, wjlx, wjxz, fbrxm FROM V_GongWen_GWXX where id=@gwid";
@@ -4201,9 +4223,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getGongWenFuJian2016ById(int gwid)
+        internal static DataTable GetGongWenFuJian2016ById(int gwid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  fjmc FROM V_GongWen_FuJian where gwid=@gwid order by paixu";
@@ -4225,9 +4247,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static INT updateDuanYu(int id, string newTxt)
+        internal static INT UpdateDuanYu(int id, string newTxt)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update T_GongWen_ZDYDY set dynr=@dynr,createTime =getdate() where id=@id";
@@ -4253,9 +4275,9 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static INT deleteDuanYu(int id)
+        internal static INT DeleteDuanYu(int id)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update  T_GongWen_ZDYDY set isvalid=0 ,createTime =getdate() where id=@id";
@@ -4277,9 +4299,9 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static INT addDuanYu(string work_no, string dynr)
+        internal static INT AddDuanYu(string workNo, string dynr)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -4297,12 +4319,12 @@ namespace sjbgWebService
                 comm.Transaction = trans;
                 comm.CommandText = "select case when max(paixu) is null then 0 else max(paixu) end from V_GongWen_ZiDingYi_DuanYu where uid=@work_no";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("work_no", work_no);
+                comm.Parameters.AddWithValue("work_no", workNo);
                 int max = Convert.ToInt32(comm.ExecuteScalar());
-                max = ((max / 100) + 1) * 100;
+                max = (max / 100 + 1) * 100;
                 comm.CommandText = "insert into T_GongWen_ZDYDY (uid,dynr,paixu) values(@work_no,@dynr,@paixu)";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("work_no", work_no);
+                comm.Parameters.AddWithValue("work_no", workNo);
                 comm.Parameters.AddWithValue("dynr", dynr);
                 comm.Parameters.AddWithValue("paixu", max);
                 comm.ExecuteNonQuery();
@@ -4320,9 +4342,9 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static INT updateZdybm(int id, string newTxt)
+        internal static INT UpdateZdybm(int id, string newTxt)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update  T_GongWen_ZDYBM set bmnr=@dynr,createTime =getdate() where id=@id";
@@ -4345,9 +4367,9 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static INT deleteZdybm(int id)
+        internal static INT DeleteZdybm(int id)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update  T_GongWen_ZDYBM set isvalid=0 ,createTime =getdate() where id=@id";
@@ -4369,9 +4391,9 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static INT addZdybm(string work_no, string dynr)
+        internal static INT AddZdybm(string workNo, string dynr)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -4389,12 +4411,12 @@ namespace sjbgWebService
                 comm.Transaction = trans;
                 comm.CommandText = "select case when max(paixu) is null then 0 else max(paixu) end from V_GongWen_ZiDingYiBuMen where uid=@work_no";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("work_no", work_no);
+                comm.Parameters.AddWithValue("work_no", workNo);
                 int max = Convert.ToInt32(comm.ExecuteScalar());
-                max = ((max / 100) + 1) * 100;
+                max = (max / 100 + 1) * 100;
                 comm.CommandText = "insert into T_GongWen_ZDYBM (uid,bmnr,paixu) values(@work_no,@dynr,@paixu)";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("work_no", work_no);
+                comm.Parameters.AddWithValue("work_no", workNo);
                 comm.Parameters.AddWithValue("dynr", dynr);
                 comm.Parameters.AddWithValue("paixu", max);
                 comm.ExecuteNonQuery();
@@ -4413,9 +4435,9 @@ namespace sjbgWebService
         }
 
 
-        internal static DataTable getZiDingYiDuanYu(string work_no, bool onlyPrivate)
+        internal static DataTable GetZiDingYiDuanYu(string workNo, bool onlyPrivate)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  uid,id,dynr FROM V_GongWen_ZiDingYi_DuanYu ";
@@ -4429,7 +4451,7 @@ namespace sjbgWebService
             }
             comm.CommandText += " order by uid ,paixu ";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("uid", work_no);
+            comm.Parameters.AddWithValue("uid", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -4446,9 +4468,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getBuMenFenLei(int rid)
+        internal static DataTable GetBuMenFenLei(int rid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT flid,flmc, flzc FROM V_GongWen_BuMenFenLei ";
@@ -4484,9 +4506,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getBuMenFenLeiYongHu(int rid, string work_no, int flid)
+        internal static DataTable GetBuMenFenLeiYongHu(int rid, string workNo, int flid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT user_no ,case when nc is null then user_name else nc end as nc,case when flid=1 then user_name when flid=2 then bm_mc else bm_mc+zhiwu end as xsmc FROM V_GongWen_YongHu_BuMenFenLei where flid=@flid and user_no <>@work_no ";
@@ -4497,7 +4519,7 @@ namespace sjbgWebService
             comm.CommandText += " order by paixu,px,ncpaixu,zhiwu desc";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("flid", flid);
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -4514,15 +4536,15 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable getZiDingYiBuMen(string work_no)
+        internal static DataTable GetZiDingYiBuMen(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT ID, bmnr FROM V_GongWen_ZiDingYiBuMen where uid=@uid order by paixu";
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("uid", work_no);
+            comm.Parameters.AddWithValue("uid", workNo);
             DataTable dt = new DataTable();
             try
             {
@@ -4540,14 +4562,14 @@ namespace sjbgWebService
 
 
 
-        internal static DataTable getBenBuMenRenYuan(string work_no)
+        internal static DataTable GetBenBuMenRenYuan(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT  count(*)  FROM v_user_role where user_no=@work_no and (rid=23 or rid=24)";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             try
             {
                 conn.Open();
@@ -4565,7 +4587,7 @@ namespace sjbgWebService
 
             comm.CommandText = "SELECT user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 25 or rid=20 or rid= 26) AND (bm_id IN (SELECT bm_id FROM V_User WHERE (user_no = @work_no))) order by zwpaixu";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
             try
@@ -4577,11 +4599,11 @@ namespace sjbgWebService
                 dt.TableName = "error!";
                 return dt;
             }
-            if (work_no.Equals("0971"))
+            if (workNo.Equals("0971"))
             {
                 comm.CommandText = "SELECT user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 23) AND (bm_id IN (58,59,39))";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("work_no", work_no);
+                comm.Parameters.AddWithValue("work_no", workNo);
                 DataTable dt1 = new DataTable();
                 sda.Fill(dt1);
                 for (int i = 0; i < dt1.Rows.Count; i++)
@@ -4595,11 +4617,11 @@ namespace sjbgWebService
                     dt.Rows.InsertAt(dr, 0);
                 }
             }
-            if (work_no.Equals("0112"))
+            if (workNo.Equals("0112"))
             {
                 comm.CommandText = "SELECT user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 23) AND (bm_id IN (40))";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("work_no", work_no);
+                comm.Parameters.AddWithValue("work_no", workNo);
                 DataTable dt1 = new DataTable();
                 sda.Fill(dt1);
                 for (int i = 0; i < dt1.Rows.Count; i++)
@@ -4620,16 +4642,25 @@ namespace sjbgWebService
 
         internal static INT makeCuiBan(string[] jsr,string bt)
         {
-            //INT r = sendMobileMessage(jsr, "公文处理员提醒您，请尽快签收公文：" + bt);
+            
 
-            INT r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
+            INT r;
+            if (_sendMessageForDebug)
+            {
+                r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
+            }
+            else
+            {
+                r = sendMobileMessage(jsr, "公文处理员提醒您，请尽快签收公文：" + bt);
+
+            }
             if (r.Number == 1) r.Message = "已成功催办" + jsr.Length.ToString() + "人。";
             return r;
         }
 
         internal static INT makeCuiBan(int gwid, int rid, string bt)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT jsr,jsrxm from V_GongWen_List_All where qssj is null and gwid=@gwid and jsr_rid=@rid";
@@ -4653,16 +4684,24 @@ namespace sjbgWebService
                 jsr.Add(dt.Rows[i]["jsr"].ToString());
                 jsrxm.Add(dt.Rows[i]["jsrxm"].ToString());
             }
-            //INT r = sendMobileMessage(jsr.ToArray(), "公文处理员提醒您，请尽快签收公文：" + bt);
+            
 
-            INT r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
+            INT r ;
+            if (_sendMessageForDebug)
+            {
+                r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
+            }
+            else
+            {
+                r = sendMobileMessage(jsr.ToArray(), "公文处理员提醒您，请尽快签收公文：" + bt);
+            }
             if (r.Number == 1) r.Message = jsrxm.ToArray().ToListString();
             return r;
         }
 
-        internal static INT setZiDingYiBuMenRenYuan(int zdybmid, string[] user_no)
+        internal static INT SetZiDingYiBuMenRenYuan(int zdybmid, string[] userNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             try
@@ -4678,7 +4717,7 @@ namespace sjbgWebService
             try
             {
                 comm.Transaction = trans;
-                if (user_no == null || user_no.Length == 0)
+                if (userNo == null || userNo.Length == 0)
                 {
                     comm.CommandText = "update  T_GongWen_ZDYBM_User set isvalid=0,createtime=getdate() where zdyid=@zdyid ";
                     comm.Parameters.Clear();
@@ -4687,7 +4726,7 @@ namespace sjbgWebService
                 }
                 else
                 {
-                    string usernoString = user_no.ToListString();
+                    string usernoString = userNo.ToListString();
 
                     comm.CommandText = "update  T_GongWen_ZDYBM_User set isvalid=0,createtime=getdate() where zdyid=@zdyid and user_no not in (" + usernoString + ")";
                     comm.Parameters.Clear();
@@ -4713,13 +4752,13 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static DataTable getZiDingYiBuMenRenYuan(int zdybmid, bool Added)
+        internal static DataTable getZiDingYiBuMenRenYuan(int zdybmid, bool added)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT user_no, bm_mc + '(' + user_name + ')' as xsmc FROM V_GongWen_YongHu WHERE (rid = 23) AND (user_no ";
-            if (Added)
+            if (added)
             {
                 comm.CommandText += " in ";
             }
@@ -4747,14 +4786,14 @@ namespace sjbgWebService
         }
 
 
-        internal static INT addGongWenRenYuan(string work_no, int rid)
+        internal static INT AddGongWenRenYuan(string workNo, int rid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "insert into dat_user_role (uid,rid) values(@work_no,@rid)";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             comm.Parameters.AddWithValue("rid", rid);
 
             try
@@ -4774,9 +4813,9 @@ namespace sjbgWebService
         }
 
 
-        internal static INT deleteGongWenRenYuan(string gh, int rid)
+        internal static INT DeleteGongWenRenYuan(string gh, int rid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update dat_user_role  set isvalid =0,createtime =getdate() where uid=@gh and rid=@rid";
@@ -4800,9 +4839,9 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static INT deleteGongWen2016(int uid, int gwid)
+        internal static INT DeleteGongWen2016(int uid, int gwid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "update T_GongWen_GWXX  set isvalid =0,fbrq =getdate() where fbr=@uid and id=@gwid";
@@ -4830,14 +4869,14 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static bool isGongWenYongHu(string work_no)
+        internal static bool IsGongWenYongHu(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT count(*) FROM V_GongWen_YongHu WHERE user_no=@work_no";
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             int count = 0;
             try
             {
@@ -4862,20 +4901,20 @@ namespace sjbgWebService
             }
         }
 
-        internal static DataTable getYongHuXinXiByGh(string work_no)
+        internal static DataTable GetYongHuXinXiByGh(string workNo)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
 
             comm.Connection = conn;
-            if (isGongWenYongHu(work_no))
+            if (IsGongWenYongHu(workNo))
             {
                 return null;
             }
             comm.CommandText = "SELECT user_no, user_name,bm_mc,bm_id  FROM V_user WHERE user_no=@work_no";
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             comm.Parameters.Clear();
-            comm.Parameters.AddWithValue("work_no", work_no);
+            comm.Parameters.AddWithValue("work_no", workNo);
             DataTable dt = new DataTable();
             try
             {
@@ -4891,9 +4930,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static INT undoSignGongWen2016(int uid, int lzid)
+        internal static INT UndoSignGongWen2016(int uid, int lzid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             //测试一下看看数据库链接是否正常
             try
@@ -4994,9 +5033,9 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static DataTable getUserNameInPiShi(int rid)
+        internal static DataTable GetUserNameInPiShi(int rid)
         {
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "select user_no as gh,";
@@ -5017,13 +5056,13 @@ namespace sjbgWebService
         /// <param name="zw">职务，公文系统显示用</param>
         /// <param name="gz">工种，暂时没用</param>
         /// <returns></returns>
-        internal static INT addUserBaseInfo(string gh, string xm, int bmid, string sjh, string zw, string gz)
+        internal static INT AddUserBaseInfo(string gh, string xm, int bmid, string sjh, string zw, string gz)
         {
             //初始密码和工号一样，获取初始密码的md5值
             string mm = BLL.setEncryptPass(gh, gh);
 
 
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             //测试一下看看数据库链接是否正常
             try
@@ -5082,13 +5121,13 @@ namespace sjbgWebService
             return new INT(1);
         }
 
-        internal static INT deleteUserBaseInfo(string gh, string xm, int bmid, string sjh, string zw, string gz)
+        internal static INT DeleteUserBaseInfo(string gh, string xm, int bmid, string sjh, string zw, string gz)
         {
             //初始密码和工号一样，获取初始密码的md5值
             string mm = BLL.setEncryptPass(gh, gh);
 
 
-            SqlConnection conn = new SqlConnection(baseConnStr);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             //测试一下看看数据库链接是否正常
             try

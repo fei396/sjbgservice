@@ -76,13 +76,22 @@ namespace sjbgWebService
 
         public static string ToMD5String(this string s)
         {
-            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5").ToUpper();
+            string md5 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5");
+            if (md5 == null)
+            {
+                return null;
+            }
+            else
+            {
+                return md5.ToUpper();
+            }
+            
         }
 
         public static string ToMD5String(this int i)
         {
             string s = i.ToString();
-            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5").ToUpper();
+            return s.ToMD5String();
         }
         public static bool isValidUserNo(this string str)
         {
@@ -162,7 +171,7 @@ namespace sjbgWebService
             {
                 if (fj.FileName != string.Empty)
                 {
-                    atts.Add(new System.Net.Mail.Attachment(new System.IO.MemoryStream(System.Convert.FromBase64String(fj.Base64Code)), fj.FileName));
+                    atts.Add(new System.Net.Mail.Attachment(new MemoryStream(Convert.FromBase64String(fj.Base64Code)), fj.FileName));
                 }
             }
             return atts;
@@ -172,7 +181,7 @@ namespace sjbgWebService
         {
 
             GongWen gw = new GongWen();
-            DataTable dt = DAL.getGwxxByWh(wh);
+            DataTable dt = DAL.GetGwxxByWh(wh);
             if (dt.TableName.Equals("wh"))
             {
                 gw.Id = Convert.ToInt32(dt.Rows[0]["id"]);
@@ -198,7 +207,7 @@ namespace sjbgWebService
 
         public static UserGw getUserGwByUid(int uid)
         {
-            DataTable dt = DAL.getUserGwByUid(uid);
+            DataTable dt = DAL.GetUserGwByUid(uid);
             UserGw u = new UserGw();
             if (dt.TableName.Equals("usergw"))
             {
@@ -210,7 +219,7 @@ namespace sjbgWebService
                 u.Yhqx = Convert.ToInt32(dt.Rows[0]["yhqx"]);
                 u.ShuangQian = Convert.ToInt32(dt.Rows[0]["shuangqian"]);
                 //u.Wjxz = Convert.ToInt32(dt.Rows[0]["wjxz"]);
-                u.Ssxzbm = DAL.getSsxzbmBySsbm(u.Ssbm);
+                u.Ssxzbm = DAL.GetSsxzbmBySsbm(u.Ssbm);
 
             }
             return u;
@@ -218,7 +227,7 @@ namespace sjbgWebService
         public static UserGw getUserGwByUserName(string userName)
         {
 
-            DataTable dt = DAL.getUserGwByUserName(userName);
+            DataTable dt = DAL.GetUserGwByUserName(userName);
             UserGw u = new UserGw();
             if (dt.TableName.Equals("usergw"))
             {
@@ -230,7 +239,7 @@ namespace sjbgWebService
                 u.Yhqx = Convert.ToInt32(dt.Rows[0]["yhqx"]);
                 u.ShuangQian = Convert.ToInt32(dt.Rows[0]["shuangqian"]);
                 //u.Wjxz = Convert.ToInt32(dt.Rows[0]["wjxz"]);
-                u.Ssxzbm = DAL.getSsxzbmBySsbm(u.Ssbm);
+                u.Ssxzbm = DAL.GetSsxzbmBySsbm(u.Ssbm);
             }
             return u;
         }
@@ -240,7 +249,7 @@ namespace sjbgWebService
             int uid;
             try
             {
-                uid = Convert.ToInt32(DAL.getProductUserIdByBaseNum(gh.ToString().PadLeft(4, '0'), 2));
+                uid = Convert.ToInt32(DAL.GetProductUserIdByBaseNum(gh.ToString().PadLeft(4, '0'), 2));
             }
             catch (Exception ex)
             {
@@ -263,11 +272,11 @@ namespace sjbgWebService
                     nextUser[j] = new UserGw();
                     nextUser[j++].Yhbh = Convert.ToInt32(uidStr);
                 }
-                return DAL.leaderSign(gw, user, ins, nextUser);
+                return DAL.LeaderSign(gw, user, ins, nextUser);
             }
             else//中层签收
             {
-                return DAL.sign(gw, user);
+                return DAL.Sign(gw, user);
             }
 
         }
@@ -277,7 +286,7 @@ namespace sjbgWebService
             int uid;
             try
             {
-                uid = Convert.ToInt32(DAL.getProductUserIdByBaseNum(gh.ToString().PadLeft(4, '0'), 2));
+                uid = Convert.ToInt32(DAL.GetProductUserIdByBaseNum(gh.ToString().PadLeft(4, '0'), 2));
             }
             catch
             {
@@ -285,13 +294,13 @@ namespace sjbgWebService
             }
             GongWen gw = getGongWenByWh(wh);
             UserGw user = getUserGwByUid(uid);
-            return DAL.isSigned(gw, user);
+            return DAL.IsSigned(gw, user);
         }
 
         public static Instruction[] getLdps(string wh)
         {
             GongWen gw = getGongWenByWh(wh);
-            DataTable dt = DAL.getLdps(gw);
+            DataTable dt = DAL.GetLdps(gw);
 
             Instruction[] instruction = new Instruction[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -313,7 +322,7 @@ namespace sjbgWebService
             int uid;
             try
             {
-                uid = Convert.ToInt32(DAL.getProductUserIdByBaseNum(gh.ToString().PadLeft(4, '0'), 2));
+                uid = Convert.ToInt32(DAL.GetProductUserIdByBaseNum(gh.ToString().PadLeft(4, '0'), 2));
             }
             catch
             {
@@ -323,11 +332,11 @@ namespace sjbgWebService
             DataTable dt = new DataTable();
             if (lblx == 1)//所有文件列表
             {
-                dt = DAL.getAllGwlb(user, gwlx, dwlx);
+                dt = DAL.GetAllGwlb(user, gwlx, dwlx);
             }
             else//未批阅或签收文件列表
             {
-                dt = DAL.getUnfinishedGwlb(user, dwlx);
+                dt = DAL.GetUnfinishedGwlb(user, dwlx);
             }
             if (ksxh > dt.Rows.Count) return null;
             GongWen[] gws = new GongWen[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
@@ -371,7 +380,7 @@ namespace sjbgWebService
 
         public static User getUserByNum(string user_no)
         {
-            DataTable dt = DAL.getUserByNum(user_no);
+            DataTable dt = DAL.GetUserByNum(user_no);
             User u = new User();
             if (dt.TableName.Equals("user"))
             {
@@ -401,19 +410,19 @@ namespace sjbgWebService
         {
             if (!isValidPass(user_pass)) return new INT(0, "工号或密码不正确");
             if (!isValidUserNo(user_no)) return new INT(0, "工号或密码不正确");
-            return DAL.login(user_no, user_pass, code, ip, deviceInfo, deviceVersion);
+            return DAL.Login(user_no, user_pass, code, ip, deviceInfo, deviceVersion);
         }
 
         public static INT loginDirect(string user_no, string user_pass, string code, string ip, string deviceInfo, string deviceVersion)
         {
             if (!isValidPass(user_pass)) return new INT(0, "工号或密码不正确");
             if (!isValidUserNo(user_no)) return new INT(0, "工号或密码不正确");
-            return DAL.loginDirect(user_no, user_pass, code, ip, deviceInfo, deviceVersion);
+            return DAL.LoginDirect(user_no, user_pass, code, ip, deviceInfo, deviceVersion);
         }
 
         public static XinWen[] getXinWen(int xwlx, int ksxh, int count)
         {
-            DataTable dt = DAL.getXwlb(xwlx);
+            DataTable dt = DAL.GetXwlb(xwlx);
             XinWen[] xws = new XinWen[count < dt.Rows.Count ? count : dt.Rows.Count];
             for (int i = 0; i < xws.Length; i++)
             {
@@ -432,7 +441,7 @@ namespace sjbgWebService
 
         public static XinWenLeiXing[] getXinWenLeiXing()
         {
-            DataTable dt = DAL.getXwlx();
+            DataTable dt = DAL.GetXwlx();
             XinWenLeiXing[] xwlx = new XinWenLeiXing[dt.Rows.Count];
             for (int i = 0; i < xwlx.Length; i++)
             {
@@ -445,7 +454,7 @@ namespace sjbgWebService
 
         public static Product getProductByPname(string pname)
         {
-            DataTable dt = DAL.getProductByPid(pname);
+            DataTable dt = DAL.GetProductByPid(pname);
             Product p = new Product();
             if (dt.TableName.Equals("product"))
             {
@@ -458,7 +467,7 @@ namespace sjbgWebService
 
         public static ZbPerson[] getZbPersons(DateTime dateTime, int isNight)
         {
-            DataTable dt = DAL.getZbPerson(dateTime, isNight);
+            DataTable dt = DAL.GetZbPerson(dateTime, isNight);
             ZbPerson[] persons = new ZbPerson[dt.Rows.Count];
             for (int i = 0; i < persons.Length; i++)
             {
@@ -476,12 +485,12 @@ namespace sjbgWebService
         }
         public static string getZbLdps(DateTime dateTime)
         {
-            return DAL.getZbLdps(dateTime);
+            return DAL.GetZbLdps(dateTime);
         }
 
         internal static UserGw[] getLeaderList()
         {
-            DataTable dt = DAL.getLeaderList();
+            DataTable dt = DAL.GetLeaderList();
             if (dt.TableName.Equals("leaderList") && dt.Rows.Count > 0)
             {
                 UserGw[] users = new UserGw[dt.Rows.Count];
@@ -496,7 +505,7 @@ namespace sjbgWebService
                     users[i].Yhqx = Convert.ToInt32(dt.Rows[i]["yhqx"]);
                     users[i].ShuangQian = Convert.ToInt32(dt.Rows[i]["shuangqian"]);
                     //u.Wjxz = Convert.ToInt32(dt.Rows[0]["wjxz"]);
-                    users[i].Ssxzbm = DAL.getSsxzbmBySsbm(users[i].Ssbm);
+                    users[i].Ssxzbm = DAL.GetSsxzbmBySsbm(users[i].Ssbm);
 
                 }
                 return users;
@@ -509,7 +518,7 @@ namespace sjbgWebService
 
         internal static BuMenGw[] getBmList(int lbid)
         {
-            DataTable dt = DAL.getGwbmList(lbid);
+            DataTable dt = DAL.GetGwbmList(lbid);
             if (dt.TableName.Equals("bmList") && dt.Rows.Count > 0)
             {
                 BuMenGw[] bumen = new BuMenGw[dt.Rows.Count];
@@ -540,7 +549,7 @@ namespace sjbgWebService
 
         internal static BuMenLeiBie[] getBmlbList()
         {
-            DataTable dt = DAL.getGwbmlbList();
+            DataTable dt = DAL.GetGwbmlbList();
             if (dt.TableName.Equals("bmlbList") && dt.Rows.Count > 0)
             {
                 BuMenLeiBie[] bmlb = new BuMenLeiBie[dt.Rows.Count];
@@ -561,7 +570,7 @@ namespace sjbgWebService
 
         internal static string[] getJianBaoBuMen()
         {
-            DataTable dt = DAL.getJianBaoBuMen();
+            DataTable dt = DAL.GetJianBaoBuMen();
             if (dt.TableName.Equals("jbbm") && dt.Rows.Count > 0)
             {
                 string[] bms = new string[dt.Rows.Count];
@@ -580,7 +589,7 @@ namespace sjbgWebService
 
         internal static JianBao[] getJianBao(string dept, DateTime dateTime)
         {
-            DataTable dt = DAL.getJianBao(dept, dateTime);
+            DataTable dt = DAL.GetJianBao(dept, dateTime);
             if (dt.TableName.Equals("JianBao") && dt.Rows.Count > 0)
             {
                 JianBao[] jbs = new JianBao[dt.Rows.Count];
@@ -602,7 +611,7 @@ namespace sjbgWebService
 
         internal static JianBao[] getAllJianBao(DateTime dateTime)
         {
-            DataTable dt = DAL.getJianBao("all", dateTime);
+            DataTable dt = DAL.GetJianBao("all", dateTime);
             if (dt.TableName.Equals("JianBao") && dt.Rows.Count > 0)
             {
                 JianBao[] jbs = new JianBao[dt.Rows.Count];
@@ -634,22 +643,22 @@ namespace sjbgWebService
         public static INT getTqUidByWorkNo(int workno)
         {
             string work_no = workno.ToString().PadLeft(4, '0');
-            return DAL.getTqUidByWorkNo(work_no);
+            return DAL.GetTqUidByWorkNo(work_no);
         }
 
         public static INT getTqUtypeByUid(int uid)
         {
-            return DAL.getTqUtypeByUid(uid);
+            return DAL.GetTqUtypeByUid(uid);
         }
         public static INT getTqUDeptByUid(int uid)
         {
-            return DAL.getTqUDeptByUid(uid);
+            return DAL.GetTqUDeptByUid(uid);
         }
 
         internal static TeQing[] getTeQingByWorkNo(int workno, int ksxh, int count)
         {
             int uid = getTqUidByWorkNo(workno).Number;
-            DataTable dt = DAL.getTeQingByUid(uid);
+            DataTable dt = DAL.GetTeQingByUid(uid);
             if (dt == null || dt.Rows.Count == 0 || !dt.TableName.Equals("getTeQingByUid")) return null;
             TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
             for (int i = 0; i < tqs.Length; i++)
@@ -672,13 +681,13 @@ namespace sjbgWebService
         internal static BOOLEAN replyTq(int workno, int tid, string replayContent)
         {
             int uid = getTqUidByWorkNo(workno).Number;
-            return DAL.replyTq(uid, tid, replayContent);
+            return DAL.ReplyTq(uid, tid, replayContent);
         }
 
         internal static TeQing[] checkReply(int senderno, int ksxh, int count)
         {
             int uid = getTqUidByWorkNo(senderno).Number;
-            DataTable dt = DAL.checkReply(uid);
+            DataTable dt = DAL.CheckReply(uid);
             if (dt.TableName != "checkReply" || dt == null || dt.Rows.Count == 0) return null;
             TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
             for (int i = 0; i < tqs.Length; i++)
@@ -698,7 +707,7 @@ namespace sjbgWebService
 
         internal static TeQing[] checkReplyDetails(int tid, int ksxh, int count)
         {
-            DataTable dt = DAL.checkReplyDetails(tid);
+            DataTable dt = DAL.CheckReplyDetails(tid);
             if (dt.TableName != "checkReplyDetails" || dt == null || dt.Rows.Count == 0) return null;
             TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
             for (int i = 0; i < tqs.Length; i++)
@@ -725,7 +734,7 @@ namespace sjbgWebService
             int uid;
             try
             {
-                uid = Convert.ToInt32(DAL.getProductUserIdByBaseNum(workno.ToString().PadLeft(4, '0'), 2));
+                uid = Convert.ToInt32(DAL.GetProductUserIdByBaseNum(workno.ToString().PadLeft(4, '0'), 2));
             }
             catch (Exception ex)
             {
@@ -738,10 +747,10 @@ namespace sjbgWebService
 
         internal static INT registerDevice(RegisterInfo ri)
         {
-            INT registerCode = DAL.checkUserMobile(ri.WorkNo, ri.Mobile, ri.UniqueCode);
+            INT registerCode = DAL.CheckUserMobile(ri.WorkNo, ri.Mobile, ri.UniqueCode);
             if (registerCode.Number == 0)//判断该设备是否已经注册
             {
-                return DAL.registerDevice(ri.WorkNo, ri.Mobile, ri.UniqueCode, ri.RegisterCode, ri.SecurityQuestion, ri.SecurityAnswer, ri.EmailAddress);
+                return DAL.RegisterDevice(ri.WorkNo, ri.Mobile, ri.UniqueCode, ri.RegisterCode, ri.SecurityQuestion, ri.SecurityAnswer, ri.EmailAddress);
             }
             else if (registerCode.Number == 1) //设备已注册
             {
@@ -757,9 +766,9 @@ namespace sjbgWebService
         internal static INT requestRegisterCode(RegisterInfo ri)
         {
             string code = generateRegisterCode(ri.WorkNo, ri.Mobile);
-            INT i = DAL.checkUserMobile(ri.WorkNo, ri.Mobile, ri.UniqueCode);
+            INT i = DAL.CheckUserMobile(ri.WorkNo, ri.Mobile, ri.UniqueCode);
             if (i.Number < 0) return i;
-            i = DAL.insertRegisterCode(ri.WorkNo, ri.Mobile, code, ri.UniqueCode);
+            i = DAL.InsertRegisterCode(ri.WorkNo, ri.Mobile, code, ri.UniqueCode);
             if (i.Number == 1)
             {
                 return DAL.sendMobileMessage(ri.WorkNo, makeRegisterMobileMessageContent(code));
@@ -791,7 +800,7 @@ namespace sjbgWebService
 
         internal static GpsData[] getGpsByNum(string gps_data)
         {
-            DataTable dt = DAL.getGpsByNum(gps_data);
+            DataTable dt = DAL.GetGpsByNum(gps_data);
             if (dt.TableName.Equals("gpsRead") && dt.Rows.Count > 0)
             {
                 GpsData[] gps = new GpsData[dt.Rows.Count];
@@ -819,7 +828,7 @@ namespace sjbgWebService
         internal static UserRole[] getUserRoleByNum(int uid)
         {
             string work_no = uid.ToString().PadLeft(4, '0');
-            DataTable dt = DAL.getUserRole(work_no);
+            DataTable dt = DAL.GetUserRole(work_no);
             if (dt.TableName.Equals("getUserRole") && dt.Rows.Count > 0)
             {
                 UserRole[] ur = new UserRole[dt.Rows.Count];
@@ -843,7 +852,7 @@ namespace sjbgWebService
         internal static MenuItem[] getUserMenuByNum(int uid)
         {
             string work_no = uid.ToString().PadLeft(4, '0');
-            DataTable dt = DAL.getUserMenu(work_no);
+            DataTable dt = DAL.GetUserMenu(work_no);
             if (dt.TableName.Equals("getUserMenu") && dt.Rows.Count > 0)
             {
                 MenuItem[] mi = new MenuItem[dt.Rows.Count];
@@ -871,7 +880,7 @@ namespace sjbgWebService
         //机车计划处理数据
         internal static JcjhData[] getJcjhByNum(string jcjh_data)
         {
-            DataTable dt = DAL.getJcjhByNum(jcjh_data);
+            DataTable dt = DAL.GetJcjhByNum(jcjh_data);
             if (dt.TableName.Equals("jcjhRead") && dt.Rows.Count > 0)
             {
                 JcjhData[] jcjh = new JcjhData[dt.Rows.Count];
@@ -901,7 +910,7 @@ namespace sjbgWebService
         //人员计划处理数据
         internal static RyjhData[] getRyjhByNum(string ryjh_data)
         {
-            DataTable dt = DAL.getRyjhByNum(ryjh_data);
+            DataTable dt = DAL.GetRyjhByNum(ryjh_data);
             if (dt.TableName.Equals("ryjhRead") && dt.Rows.Count > 0)
             {
                 RyjhData[] ryjh = new RyjhData[dt.Rows.Count];
@@ -935,7 +944,7 @@ namespace sjbgWebService
         //待乘计划处理数据
         internal static DcjhData[] getDcjhByNum(string dcjh_data)
         {
-            DataTable dt = DAL.getDcjhByNum(dcjh_data);
+            DataTable dt = DAL.GetDcjhByNum(dcjh_data);
             if (dt.TableName.Equals("dcjhRead") && dt.Rows.Count > 0)
             {
                 DcjhData[] dcjh = new DcjhData[dt.Rows.Count];
@@ -966,7 +975,7 @@ namespace sjbgWebService
         //测酒结果查询处理数据
         internal static CjcxData[] getCjcxByNum(string cjcx_data)
         {
-            DataTable dt = DAL.getCjcxByNum(cjcx_data);
+            DataTable dt = DAL.GetCjcxByNum(cjcx_data);
             if (dt.TableName.Equals("cjcxRead") && dt.Rows.Count > 0)
             {
                 CjcxData[] cjcx = new CjcxData[dt.Rows.Count];
@@ -993,14 +1002,14 @@ namespace sjbgWebService
         internal static BOOLEAN setNewPass(int uid, string opass, string npass)
         {
             string work_no = uid.ToString().PadLeft(4, '0');
-            return DAL.setNewPass(work_no, opass, npass);
+            return DAL.SetNewPass(work_no, opass, npass);
 
         }
 
         internal static MingPai[] getMingPaiByXianBie(int database, string line_mode, int type)
         {
             DataTable dt = new DataTable();
-            dt = DAL.getMingPaiByXianBie(database, line_mode, type);
+            dt = DAL.GetMingPaiByXianBie(database, line_mode, type);
             if (dt.TableName.Equals("MingPai") && dt.Rows.Count > 0)
             {
                 MingPai[] mps = new MingPai[dt.Rows.Count];
@@ -1027,7 +1036,7 @@ namespace sjbgWebService
         {
             DataTable dt = new DataTable();
             string work_no = uid.ToString().PadLeft(4, '0');
-            dt = DAL.getMingPaiByGongHao(database, work_no);
+            dt = DAL.GetMingPaiByGongHao(database, work_no);
             if (dt.TableName.Equals("MingPai") && dt.Rows.Count > 0)
             {
                 MingPai[] mps = new MingPai[dt.Rows.Count];
@@ -1053,7 +1062,7 @@ namespace sjbgWebService
         internal static XianBie[] getXianBie(int database)
         {
             DataTable dt = new DataTable();
-            dt = DAL.getXianBie(database);
+            dt = DAL.GetXianBie(database);
             if (dt.TableName.Equals("getXianBie") && dt.Rows.Count > 0)
             {
                 XianBie[] xbs = new XianBie[dt.Rows.Count];
@@ -1078,7 +1087,7 @@ namespace sjbgWebService
         {
             DataTable dt = new DataTable();
 
-            dt = DAL.getDaMingPai(database, line, type, filter);
+            dt = DAL.GetDaMingPai(database, line, type, filter);
 
             if (!dt.TableName.Equals("getDaMingPai") || (ksxh > dt.Rows.Count)) return null;
             DaMingPai[] dmps = new DaMingPai[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
@@ -1110,7 +1119,7 @@ namespace sjbgWebService
             string strJssj = month + "-25 18:00:00";
             DateTime jssj = Convert.ToDateTime(strJssj);
             DateTime kssj = jssj.AddMonths(-1);
-            DataTable dt = DAL.getCanBu(work_no, kssj, jssj);
+            DataTable dt = DAL.GetCanBu(work_no, kssj, jssj);
             if (dt.TableName.Equals("getCanBu") && dt.Rows.Count > 0)
             {
                 CanBu[] cbs = new CanBu[dt.Rows.Count];
@@ -1150,7 +1159,7 @@ namespace sjbgWebService
         internal static FeiYunYongJiChe[] getFyyjc(string jczt)
         {
 
-            DataTable dt = DAL.getFyyjc(jczt);
+            DataTable dt = DAL.GetFyyjc(jczt);
             if (dt.TableName.Equals("fyyjc") && dt.Rows.Count > 0)
             {
                 FeiYunYongJiChe[] fyys = new FeiYunYongJiChe[dt.Rows.Count];
@@ -1176,7 +1185,7 @@ namespace sjbgWebService
 
         internal static string[] getFyyjcZt()
         {
-            DataTable dt = DAL.getFyyjcZt();
+            DataTable dt = DAL.GetFyyjcZt();
             if (dt.TableName.Equals("fyyjcZt") && dt.Rows.Count > 0)
             {
                 string[] zts = new string[dt.Rows.Count];
@@ -1223,7 +1232,7 @@ namespace sjbgWebService
         //电子书名查询处理数据
         internal static BookNameData[] getBookName(string bookname_data)
         {
-            DataTable dt = DAL.getBookName(bookname_data);
+            DataTable dt = DAL.GetBookName(bookname_data);
             if (dt.TableName.Equals("BookNameRead") && dt.Rows.Count > 0)
             {
                 BookNameData[] BookName = new BookNameData[dt.Rows.Count];
@@ -1247,7 +1256,7 @@ namespace sjbgWebService
         //电子书内容查询处理数据
         internal static BookNrData getBookNr(string book_Nr_id)
         {
-            DataTable dt = DAL.getBookNr(book_Nr_id);
+            DataTable dt = DAL.GetBookNr(book_Nr_id);
             if (dt.TableName.Equals("BookNrRead"))
             {
                 BookNrData BookNr = new BookNrData();
@@ -1270,7 +1279,7 @@ namespace sjbgWebService
         internal static SentFileList[] getSentFiles(int uid)
         {
             string work_no = uid.ToString().PadLeft(4, '0');
-            DataTable dt = DAL.getSentFiles(work_no);
+            DataTable dt = DAL.GetSentFiles(work_no);
             if (!dt.TableName.Equals("getSentFiles"))
             {
                 return null;
@@ -1295,7 +1304,7 @@ namespace sjbgWebService
 
         internal static SentFileDetail[] getSentFileDetails(int fid)
         {
-            DataTable dt = DAL.getSentFileDetails(fid);
+            DataTable dt = DAL.GetSentFileDetails(fid);
             if (!dt.TableName.Equals("getSentFileDetails"))
             {
                 return null;
@@ -1321,7 +1330,7 @@ namespace sjbgWebService
             string work_no = uid.ToString().PadLeft(4, '0');
             int drid = DAL.getDutyRoomIdByWork_no(work_no);
             if (drid == -1) return null;
-            DataTable dt = DAL.getFilesToReceive(drid, type);
+            DataTable dt = DAL.GetFilesToReceive(drid, type);
             if (!dt.TableName.Equals("getFilesToReceive") || (ksxh > dt.Rows.Count)) return null;
             else
             {
@@ -1356,7 +1365,7 @@ namespace sjbgWebService
         internal static INT receiveFile(int fdrid, int uid)
         {
             string work_no = uid.ToString().PadLeft(4, '0');
-            return DAL.receiveFile(fdrid, work_no);
+            return DAL.ReceiveFile(fdrid, work_no);
 
         }
 
@@ -1383,7 +1392,7 @@ namespace sjbgWebService
 
         public static Department[] getSendFileDept(int did)
         {
-            DataTable dt = DAL.getSendFileDept(did);
+            DataTable dt = DAL.GetSendFileDept(did);
             if (dt.TableName.Equals("getSendFileDept") && dt.Rows.Count > 0)
             {
                 Department[] depts = new Department[dt.Rows.Count];
@@ -1425,7 +1434,7 @@ namespace sjbgWebService
 
         internal static DutyRoom[] getDutyRooms(int did)
         {
-            DataTable dt = DAL.getDutyRoomByDeptId(did);
+            DataTable dt = DAL.GetDutyRoomByDeptId(did);
             if (dt.TableName.Equals("getDutyRoomByDeptId") && dt.Rows.Count > 0)
             {
                 DutyRoom[] drs = new DutyRoom[dt.Rows.Count];
@@ -1505,7 +1514,7 @@ namespace sjbgWebService
         {
             DataTable dt = new DataTable();
             string work_no = uid.ToString().PadLeft(4, '0');
-            dt = DAL.getUnsubTopics(work_no);
+            dt = DAL.GetUnsubTopics(work_no);
 
             if (!dt.TableName.Equals("getUnsubTopics")) return null;
             MqttTopic[] lis = new MqttTopic[dt.Rows.Count];
@@ -1522,26 +1531,26 @@ namespace sjbgWebService
 
         internal static INT setTopicsSubed(string tids)
         {
-            return DAL.setTopicsSubed(tids);
+            return DAL.SetTopicsSubed(tids);
         }
 
         internal static INT setMqttStaus(int uid, int type, string clientId)
         {
             string work_no = uid.toWorkNo();
-            return DAL.setMqttStatus(work_no, type, clientId);
+            return DAL.SetMqttStatus(work_no, type, clientId);
         }
 
         internal static INT getMqttStaus(int uid)
         {
             string work_no = uid.toWorkNo();
-            return DAL.getMqttStatus(work_no);
+            return DAL.GetMqttStatus(work_no);
         }
 
         internal static SystemMessage[] getSystemMessage(int uid, int type, int ksxh, int count)
         {
             DataTable dt = new DataTable();
             string work_no = uid.toWorkNo();
-            dt = DAL.getSystemMessage(work_no, type);
+            dt = DAL.GetSystemMessage(work_no, type);
 
             if (!dt.TableName.Equals("getSystemMessage") || (ksxh > dt.Rows.Count)) return null;
             SystemMessage[] sms = new SystemMessage[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
@@ -1567,19 +1576,19 @@ namespace sjbgWebService
 
         internal static INT readSystemMessage(int mid)
         {
-            return DAL.readSystemMessage(mid);
+            return DAL.ReadSystemMessage(mid);
         }
 
         internal static INT readMqttMessage(int uid, int mid)
         {
             string work_no = uid.toWorkNo();
-            return DAL.readMqttMessage(work_no, mid);
+            return DAL.ReadMqttMessage(work_no, mid);
         }
 
         internal static string[] getUnReadMqttMessage(int uid)
         {
             string work_no = uid.toWorkNo();
-            DataTable dt = DAL.getUnReadMqttMessage(work_no);
+            DataTable dt = DAL.GetUnReadMqttMessage(work_no);
             if (dt.TableName != "getUnReadMqttMessage" || dt.Rows.Count == 0) return null;
             string[] json = new string[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -1613,7 +1622,7 @@ namespace sjbgWebService
         {
             string auditor = uid.toWorkNo();
             DataTable dt = new DataTable();
-            dt = DAL.getAqxxToAudit(auditor, xxid);
+            dt = DAL.GetAqxxToAudit(auditor, xxid);
 
             if (!dt.TableName.Equals("getAqxxToAudit")) return null;
             AQXX[] aqxxs = new AQXX[dt.Rows.Count];
@@ -1635,7 +1644,7 @@ namespace sjbgWebService
         internal static User[] getAqxxptShenHe()
         {
             DataTable dt = new DataTable();
-            dt = DAL.getAqxxptShenHe();
+            dt = DAL.GetAqxxptShenHe();
 
             if (!dt.TableName.Equals("getAqxxptShenHe")) return null;
             User[] users = new User[dt.Rows.Count];
@@ -1687,7 +1696,7 @@ namespace sjbgWebService
             }
 
             DataTable dt = new DataTable();
-            dt = DAL.getAqxxInfo(user.UserDept, xxid);
+            dt = DAL.GetAqxxInfo(user.UserDept, xxid);
 
             if (!dt.TableName.Equals("getAqxxInfo")) return null;
             AqxxInfo[] ais = new AqxxInfo[dt.Rows.Count];
@@ -1717,7 +1726,7 @@ namespace sjbgWebService
             }
 
             DataTable dt = new DataTable();
-            dt = DAL.getAqxxInfo(user.UserDept, 0);
+            dt = DAL.GetAqxxInfo(user.UserDept, 0);
 
             return dt.Rows.Count;
         }
@@ -1733,7 +1742,7 @@ namespace sjbgWebService
             }
 
             DataTable dt = new DataTable();
-            dt = DAL.getAqxxInfo(user.UserDept, 0);
+            dt = DAL.GetAqxxInfo(user.UserDept, 0);
 
             if (!dt.TableName.Equals("getAqxxInfo")) return null;
             AqxxInfo[] ais = new AqxxInfo[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
@@ -1757,7 +1766,7 @@ namespace sjbgWebService
         internal static AqxxDetail[] getAqxxDetail(int xxid, int ksxh, int count)
         {
             DataTable dt = new DataTable();
-            dt = DAL.getAqxxDetail(xxid);
+            dt = DAL.GetAqxxDetail(xxid);
 
             if (!dt.TableName.Equals("getAqxxDetail") || (ksxh > dt.Rows.Count)) return null;
             AqxxDetail[] depts = new AqxxDetail[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
@@ -1779,7 +1788,7 @@ namespace sjbgWebService
         {
 
             DataTable dt = new DataTable();
-            dt = DAL.getAqxxContent(xxid);
+            dt = DAL.GetAqxxContent(xxid);
 
             if (!dt.TableName.Equals("getAqxxContent")) return null;
             AQXX[] aqxxs = new AQXX[dt.Rows.Count];
@@ -1804,7 +1813,7 @@ namespace sjbgWebService
 
         internal static bool isBanZiChengYuanFinished(int gwid)
         {
-            int count = DAL.unfinishedBanZiChengYuanRenShu(gwid);
+            int count = DAL.UnfinishedBanZiChengYuanRenShu(gwid);
             if (count > 0) return false;
             else return true;
         }
@@ -1813,7 +1822,7 @@ namespace sjbgWebService
 
             //调用数据操作层的函数获取公文列表DataTable
             string jsr = uid.toWorkNo();
-            DataTable dt = DAL.getGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
+            DataTable dt = DAL.GetGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
 
             //如果获取数据过程错误，返回null
             if (dt.TableName.Equals("error!"))
@@ -1876,7 +1885,7 @@ namespace sjbgWebService
         internal static int getGongWenGuiDangCount(int uid, int type, string keyWord, string sTime, string eTime )
         {
             string work_no = uid.toWorkNo();
-            DataTable dt = DAL.getGongWenGuiDangList(work_no, keyWord, sTime, eTime, type);
+            DataTable dt = DAL.GetGongWenGuiDangList(work_no, keyWord, sTime, eTime, type);
             if (dt.TableName.Equals("error!"))
             {
                 return -1;
@@ -1891,7 +1900,7 @@ namespace sjbgWebService
         internal static GongWenGuiDangList[] getGongWenGuiDangList(int uid, int type, string keyWord, string sTime, string eTime, int ksxh, int count)
         {
             string work_no = uid.toWorkNo();
-            DataTable dt = DAL.getGongWenGuiDangList(work_no, keyWord, sTime, eTime, type);
+            DataTable dt = DAL.GetGongWenGuiDangList(work_no, keyWord, sTime, eTime, type);
             if (dt.TableName.Equals("error!"))
             {
                 return null;
@@ -1930,7 +1939,7 @@ namespace sjbgWebService
         internal static int getGongWenCount(int uid, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype)
         {
             string jsr = uid.toWorkNo();
-            DataTable dt = DAL.getGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
+            DataTable dt = DAL.GetGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
             if (dt.TableName.Equals("error!"))
             {
                 return -1;
@@ -1953,12 +1962,12 @@ namespace sjbgWebService
             }
 
             //调用数据操作层函数添加公文
-            return DAL.addNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, jinji, ip, jsr, gwfj);
+            return DAL.AddNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, jinji, ip, jsr, gwfj);
         }
 
-        internal static INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm ,string device,string ip)
+        internal static INT SignGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm ,string device,string ip)
         {
-            string work_no = fsr.toWorkNo();
+            string workNo = fsr.toWorkNo();
             GongWenYongHu gwyh = getGongWenYongHuByUid(fsr);
             if (gwyh == null)
             {
@@ -1979,7 +1988,7 @@ namespace sjbgWebService
             string throwJsr = "";
             List<string> jsrList = jsr.Distinct().ToList();
             jsr = jsrList.ToArray();
-            BuMenFenLei[] bmfl = BLL.getBuMenFenLei(fsr, gwyh.RoleID);
+            BuMenFenLei[] bmfl = getBuMenFenLei(fsr, gwyh.RoleID);
             if (bmfl == null)
             {
                 if (jsrList.Count > 0)
@@ -2017,9 +2026,9 @@ namespace sjbgWebService
             if (!throwJsr.Equals(""))
             {
                 throwJsr = "舍弃接收人： " + throwJsr;
-                DAL.SignGongWen2016Log(gwid, lzid, work_no, throwJsr);
+                DAL.SignGongWen2016Log(gwid, lzid, workNo, throwJsr);
             }
-            return DAL.SignGongWen2016(gwid, lzid, work_no, jsr, gw.BiaoTi,gwyh.XingMing,gwyh.RoleID, qsnr,device,ip);
+            return DAL.SignGongWen2016(gwid, lzid, workNo, jsr, gw.BiaoTi, gwyh.XingMing, gwyh.RoleID, qsnr, device, ip);
         }
 
         internal static INT BuGongWen2016(int gwid, int lzid, int fsr, int buid,string[] jsr)
@@ -2050,13 +2059,13 @@ namespace sjbgWebService
         {
             string[] jsrs = jsr.ToStringList(new string[] { "," });
 
-            return signGongWen2016(gwid, lzid, fsr, jsrs, qsnr,new int[0],"手机","手机");
+            return SignGongWen2016(gwid, lzid, fsr, jsrs, qsnr,new int[0],"手机","手机");
         }
 
 
         internal static GongWenXingZhi[] getGongWenXingZhi()
         {
-            DataTable dt = DAL.getGongWenXingZhi();
+            DataTable dt = DAL.GetGongWenXingZhi();
             if (dt.TableName.Equals("error!"))
             {
                 return null;
@@ -2076,7 +2085,7 @@ namespace sjbgWebService
 
         internal static GongWenLeiXing[] getGongWenLeiXing()
         {
-            DataTable dt = DAL.getGongWenLeiXing();
+            DataTable dt = DAL.GetGongWenLeiXing();
             if (dt.TableName.Equals("error!"))
             {
                 return null;
@@ -2147,7 +2156,7 @@ namespace sjbgWebService
         internal static GongWen2016 getGongWen2016ById(int gwid)
         {
 
-            DataTable dt = DAL.getGongWen2016ById(gwid);
+            DataTable dt = DAL.GetGongWen2016ById(gwid);
             if (!dt.TableName.Equals("error!"))
             {
                 if (dt.Rows.Count == 1)
@@ -2167,7 +2176,7 @@ namespace sjbgWebService
                     gw.WenJianLeiXing = Convert.ToString(dt.Rows[0]["wjlx"]);
                     gw.WenJianXingZhi = Convert.ToString(dt.Rows[0]["wjxz"]);
                     gw.ZhengWen = Convert.ToString(dt.Rows[0]["zw"]);
-                    DataTable dtFj = DAL.getGongWenFuJian2016ById(gwid);
+                    DataTable dtFj = DAL.GetGongWenFuJian2016ById(gwid);
                     if (!dtFj.TableName.Equals("error!"))
                     {
                         if (dtFj.Rows.Count > 0)
@@ -2190,7 +2199,7 @@ namespace sjbgWebService
         internal static GongWenLiuZhuan[] getLiuZhuanXianByLzId(bool sfbr, int lzid)
         {
 
-            DataTable dt = DAL.getLiuZhuanXianByLzId(sfbr ,lzid);
+            DataTable dt = DAL.GetLiuZhuanXianByLzId(sfbr ,lzid);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2222,10 +2231,10 @@ namespace sjbgWebService
 
         internal static GongWenLiuZhuan[] getLingDaoPiShi(int uid, int gwid)
         {
-            GongWenYongHu gwyh = BLL.getGongWenYongHuByUid(uid);
+            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
             if (gwyh == null) return null;
             if (gwyh.RoleID != 23 && gwyh.RoleID != 24) return null;
-            DataTable dt = DAL.getLingDaoPiShi(gwid);
+            DataTable dt = DAL.GetLingDaoPiShi(gwid);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2248,10 +2257,10 @@ namespace sjbgWebService
 
         internal static GongWenLiuZhuan[] getSuoYouWeiQian(int uid, int gwid)
         {
-            GongWenYongHu gwyh = BLL.getGongWenYongHuByUid(uid);
+            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
             if (gwyh == null) return null;
             if (gwyh.RoleID != 20) return null;
-            DataTable dt = DAL.getSuoYouWeiQian(gwid);
+            DataTable dt = DAL.GetSuoYouWeiQian(gwid);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2276,36 +2285,36 @@ namespace sjbgWebService
 
         internal static INT updateDuanYu(int id, string newTxt)
         {
-            return DAL.updateDuanYu(id, newTxt);
+            return DAL.UpdateDuanYu(id, newTxt);
         }
         internal static INT deleteDuanYu(int id)
         {
-            return DAL.deleteDuanYu(id);
+            return DAL.DeleteDuanYu(id);
         }
         internal static INT addZdybm(int uid, string dynr)
         {
             string work_no = uid.toWorkNo();
-            return DAL.addZdybm(work_no, dynr);
+            return DAL.AddZdybm(work_no, dynr);
         }
 
         internal static INT updateZdybm(int id, string newTxt)
         {
-            return DAL.updateZdybm(id, newTxt);
+            return DAL.UpdateZdybm(id, newTxt);
         }
         internal static INT deleteZdybm(int id)
         {
-            return DAL.deleteZdybm(id);
+            return DAL.DeleteZdybm(id);
         }
         internal static INT addDuanYu(int uid, string dynr)
         {
             string work_no = uid.toWorkNo();
-            return DAL.addDuanYu(work_no, dynr);
+            return DAL.AddDuanYu(work_no, dynr);
         }
 
         internal static GongWenZiDingYiDuanYu[] getZiDingYiDuanYu(int uid, bool onlyPrivate)
         {
             string work_no = uid.toWorkNo();
-            DataTable dt = DAL.getZiDingYiDuanYu(work_no, onlyPrivate);
+            DataTable dt = DAL.GetZiDingYiDuanYu(work_no, onlyPrivate);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2334,7 +2343,7 @@ namespace sjbgWebService
         internal static GongWenZiDingYiBuMen[] getZiDingYiBuMen(int uid)
         {
             string work_no = uid.toWorkNo();
-            DataTable dt = DAL.getZiDingYiBuMen(work_no);
+            DataTable dt = DAL.GetZiDingYiBuMen(work_no);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2377,7 +2386,7 @@ namespace sjbgWebService
 
         internal static INT setZiDingYiBuMenRenYuan(int zdybmid, string[] user_no)
         {
-            return DAL.setZiDingYiBuMenRenYuan(zdybmid, user_no);
+            return DAL.SetZiDingYiBuMenRenYuan(zdybmid, user_no);
         }
 
         internal static GongWenBuMenRenYuan[] getZiDingYiBuMenRenYuan(int zdybmid,bool added)
@@ -2404,7 +2413,7 @@ namespace sjbgWebService
 
         internal static GongWenBuMenRenYuan[] getBuMenRenYuan(int bmid)
         {
-            DataTable dt = DAL.getBuMenRenYuan(bmid);
+            DataTable dt = DAL.GetBuMenRenYuan(bmid);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2426,7 +2435,7 @@ namespace sjbgWebService
         internal static BuMenFenLei[] getBuMenFenLeiZhongCeng(string work_no,int rid)
         {
 
-            DataTable dt = DAL.getBenBuMenRenYuan(work_no);
+            DataTable dt = DAL.GetBenBuMenRenYuan(work_no);
             if (dt.TableName.Equals("error!"))
             {
                 return null;
@@ -2478,7 +2487,7 @@ namespace sjbgWebService
         internal static BuMenFenLei[] getBuMenFenLeiLingDao(string work_no,int rid)
         {
             if (rid != 21 && rid != 22 && rid != 23) return null;//只有领导有权限
-            DataTable dt = DAL.getBuMenFenLei(rid);
+            DataTable dt = DAL.GetBuMenFenLei(rid);
             if (dt == null) return null;
             if (dt.TableName.Equals("error!"))
             {
@@ -2495,7 +2504,7 @@ namespace sjbgWebService
                     bumen[i].FenLeiMingCheng = Convert.ToString(dt.Rows[i]["flmc"].ToString());
                     bumen[i].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
 
-                    DataTable dtyh = DAL.getBuMenFenLeiYongHu(rid,work_no, bumen[i].FenLeiID);
+                    DataTable dtyh = DAL.GetBuMenFenLeiYongHu(rid,work_no, bumen[i].FenLeiID);
                     GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dtyh.Rows.Count];
                     for (int j = 0; j < dtyh.Rows.Count; j++)
                     {
@@ -2562,7 +2571,7 @@ namespace sjbgWebService
                 }
 
             }
-            if (DAL.isGongWenYongHu(gh))
+            if (DAL.IsGongWenYongHu(gh))
             {
                 return new INT(-1, "已经是公文用户，不能再次添加");
             }
@@ -2570,7 +2579,7 @@ namespace sjbgWebService
             {
                 return new INT(-1, "不是本部门人员，无法添加");
             }
-            return DAL.addGongWenRenYuan(gh, rid);
+            return DAL.AddGongWenRenYuan(gh, rid);
         }
 
         internal static INT deleteGongWenRenYuan(int uid, string gh, int rid)
@@ -2604,11 +2613,11 @@ namespace sjbgWebService
                 }
 
             }
-            if (!DAL.isGongWenYongHu(gh))
+            if (!DAL.IsGongWenYongHu(gh))
             {
                 return new INT(-1, "不是公文用户，不能删除");
             }
-            return DAL.deleteGongWenRenYuan(gh, rid);
+            return DAL.DeleteGongWenRenYuan(gh, rid);
         }
 
         internal static INT deleteGongWen2016(int uid, int gwid)
@@ -2622,7 +2631,7 @@ namespace sjbgWebService
             {
                 return new INT(-1, "无权限删除公文。");
             }
-            return DAL.deleteGongWen2016(uid, gwid);
+            return DAL.DeleteGongWen2016(uid, gwid);
         }
 
         internal static GongWenYongHu getYongHuXinXiByGh(int uid,string gh)
@@ -2636,7 +2645,7 @@ namespace sjbgWebService
             {
                 return null;
             }
-            DataTable dt = DAL.getYongHuXinXiByGh(gh);
+            DataTable dt = DAL.GetYongHuXinXiByGh(gh);
             if (dt== null)
             {
                 return null;
@@ -2659,7 +2668,7 @@ namespace sjbgWebService
 
         internal static INT undoSignGongWen2016(int uid,int lzid)
         {
-            return DAL.undoSignGongWen2016(uid,lzid);
+            return DAL.UndoSignGongWen2016(uid,lzid);
         }
         #endregion
 

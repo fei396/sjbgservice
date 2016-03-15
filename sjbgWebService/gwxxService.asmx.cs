@@ -82,16 +82,17 @@ namespace sjbgWebService.gwxx
 			return  BLL.signGw(wh, uid, ins, nextUsers);
 		}
 
-		/// <summary>
-		/// 获取符合条件的公文列表
-		/// </summary>
-		/// <param name="lblx">列表类型，1：已批阅列表，0：未批阅列表</param>
-		/// <param name="gwlx">公文类型，1：行政，0：党群</param>
-		/// <param name="dwlx">发文单位类型，1：局文，0：段文</param>
-		/// <param name="ksxh">列表开始序号，按时间倒叙</param>
-		/// <param name="count">列表公文数量</param>
-		/// <returns>公文列表</returns>
-		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+	    /// <summary>
+	    /// 获取符合条件的公文列表
+	    /// </summary>
+	    /// <param name="gh">工号</param>
+	    /// <param name="lblx">列表类型，1：已批阅列表，0：未批阅列表</param>
+	    /// <param name="gwlx">公文类型，1：行政，0：党群</param>
+	    /// <param name="dwlx">发文单位类型，1：局文，0：段文</param>
+	    /// <param name="ksxh">列表开始序号，按时间倒叙</param>
+	    /// <param name="count">列表公文数量</param>
+	    /// <returns>公文列表</returns>
+	    [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
 		[SoapRpcMethod, WebMethod]
 		public GongWen[] getGwlb(int gh,int lblx, int gwlx, int dwlx, int ksxh, int count)
 		{
@@ -174,26 +175,28 @@ namespace sjbgWebService.gwxx
 
         #region 2016新版公文
 
-        /// <summary>
-        /// 发布新公文
-        /// </summary>
-        /// <param name="uid">发布人工号</param>
-        /// <param name="ht">文件红头</param>
-        /// <param name="dw">发文单位</param>
-        /// <param name="wh"文号</param>
-        /// <param name="bt">文件标题</param>
-        /// <param name="zw">正文</param>
-        /// <param name="yj">呈送意见</param>
-        /// <param name="xzid">公文性质,1行政，2党群</param>
-        /// <param name="lxid">公文类型，1路局，2段发</param>
-        /// <param name="ip">发布人IP</param>
-        /// <param name="jsr">接收人工号列表</param>
-        /// <param name="gwfj">附件列表</param>
-        /// <returns></returns>
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+	    /// <summary>
+	    /// 发布新公文
+	    /// </summary>
+	    /// <param name="uid">发布人工号</param>
+	    /// <param name="ht">文件红头</param>
+	    /// <param name="dw">发文单位</param>
+	    /// <param name="wh">文号</param>
+	    /// <param name="bt">文件标题</param>
+	    /// <param name="zw">正文</param>
+	    /// <param name="yj">呈送意见</param>
+	    /// <param name="xzid">公文性质,1行政，2党群</param>
+	    /// <param name="lxid">公文类型，1路局，2段发</param>
+	    /// <param name="jinji">公文紧急程度</param>
+	    /// <param name="ip">发布人IP</param>
+	    /// <param name="jsr">接收人工号列表</param>
+	    /// <param name="gwfj">附件列表</param>
+	    /// <returns></returns>
+	    [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public INT addNewGongWen2016(int uid ,string ht,string dw,string wh,string bt,string zw,string yj,int xzid,int lxid,string jinji,string ip,string jsr,string[] gwfj )
         {
+            if (dw == null) throw new ArgumentNullException(nameof(dw));
             //判断传过来的header是否合法
             if (!sjbgHeader.checkValid()) return new INT(-1, "非法接入程序");
             //直接调用业务逻辑层函数进行添加操作
@@ -234,7 +237,7 @@ namespace sjbgWebService.gwxx
         public INT signGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr,int []zdybm,string ip)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.signGongWen2016(gwid ,lzid,fsr ,jsr,qsnr,zdybm,"网页",ip);
+            return BLL.SignGongWen2016(gwid ,lzid,fsr ,jsr,qsnr,zdybm,"网页",ip);
         }
 
         /// <summary>

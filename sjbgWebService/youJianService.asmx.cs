@@ -30,7 +30,7 @@ namespace sjbgWebService.youjian
 		public WenJianJia selectMailBox(int uid,string mailBoxName)
 		{
 			if (!sjbgHeader.checkValid()) return null;
-            return DAL.selectMailBox(uid, mailBoxName);
+            return DAL.SelectMailBox(uid, mailBoxName);
 		}
 
 
@@ -39,7 +39,7 @@ namespace sjbgWebService.youjian
         public YouJianSimple[] getMailMessageList(int uid, int muids, int muide, string mailBoxName)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.getMailMessages(uid, muids, muide, mailBoxName);
+            return DAL.GetMailMessages(uid, muids, muide, mailBoxName);
         }
 
 
@@ -48,7 +48,7 @@ namespace sjbgWebService.youjian
         public YouJian getMailMessage(int uid, int muid, string mailBoxName)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.getMailMessage(uid,muid,mailBoxName);
+            return DAL.GetMailMessage(uid,muid,mailBoxName);
 
         }
 
@@ -57,7 +57,7 @@ namespace sjbgWebService.youjian
         public YouJianFuJian[] getAttachment(int uid, int muid, string mailBoxName,int pos)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.getMailAttachment(uid, muid, mailBoxName,pos);
+            return DAL.GetMailAttachment(uid, muid, mailBoxName,pos);
 
         }
 
@@ -66,7 +66,7 @@ namespace sjbgWebService.youjian
         public WenJianJia[] listMailBoxes(int uid )
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.getMailBoxList(uid);
+            return DAL.GetMailBoxList(uid);
 
         }
 
@@ -93,7 +93,7 @@ namespace sjbgWebService.youjian
         public INT deleteMailMessage(int uid, int muid ,string mailBoxName)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.deleteMailMessage(uid, muid, mailBoxName);
+            return DAL.DeleteMailMessage(uid, muid, mailBoxName);
 
         }
 
@@ -102,7 +102,7 @@ namespace sjbgWebService.youjian
         public INT moveMailMessage(int uid, int muid, string oldMailBox , string newMailBox)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.moveMailMessage(uid, muid, oldMailBox, newMailBox);
+            return DAL.MoveMailMessage(uid, muid, oldMailBox, newMailBox);
 
         }
 
@@ -112,7 +112,7 @@ namespace sjbgWebService.youjian
         public INT deleteMailBox(int uid, string mailBoxName)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.deleteMailBox(uid, mailBoxName);
+            return DAL.DeleteMailBox(uid, mailBoxName);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -120,7 +120,7 @@ namespace sjbgWebService.youjian
         public INT renameMailBox(int uid, string oldMailBoxName , string newMailBoxName)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.renameMailBox(uid, oldMailBoxName, newMailBoxName);
+            return DAL.RenameMailBox(uid, oldMailBoxName, newMailBoxName);
         }
 
 
@@ -129,7 +129,7 @@ namespace sjbgWebService.youjian
         public YouJianSimple[] getMailMessageListTKMP(int uid, int start, int count,bool asc)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.getMailMessagesTKMP(uid, start, count, asc);
+            return DAL.GetMailMessagesTkmp(uid, start, count, asc);
         }
 
 
@@ -138,7 +138,7 @@ namespace sjbgWebService.youjian
         public YouJian getMailMessageTKMP(int uid, int muid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.getMailMessageTKMP(uid, muid);
+            return DAL.GetMailMessageTkmp(uid, muid);
 
         }
      

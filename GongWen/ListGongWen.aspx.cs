@@ -1,22 +1,14 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Data.SqlClient;
-using System.Text;
-using System.IO;
 using gwxxService;
+
+
+
 public partial class ListGongWen : System.Web.UI.Page
 {
-    gwxxService.gwxxWebService s = new gwxxService.gwxxWebService();
-    static int cpage,maxPage,allCount;
-    const int pageCount = 15;
+    gwxxWebService s = new gwxxWebService();
+    static int _cpage,_maxPage,_allCount;
+    const int PageCount = 15;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,24 +16,34 @@ public partial class ListGongWen : System.Web.UI.Page
         if (user == null)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
         }
         int type = Convert.ToInt32(Request["type"]);
         if (type == 0)
         {
             tableChaXun.Visible = false;
         }
-
+        if (user.RoleID == 23 || user.RoleID == 24)
+        {
+            gvList.Caption = "只读状态的公文需等待段领导全部签阅完毕后才能签收。";
+            
+            
+        }
+        else
+        {
+            gvList.Caption = "";
+        }
         if (!IsPostBack)
         {
-            cpage = 1;
-            allCount = 0;
-            getData(cpage);
+            _cpage = 1;
+            _allCount = 0;
+            GetData(_cpage);
         }
     }
 
-    private void getData(int page)
+    private void GetData(int page)
     {
-        getData(page, "", "", "");
+        GetData(page, "", "", "");
     }
 
 
@@ -51,8 +53,8 @@ public partial class ListGongWen : System.Web.UI.Page
     /// <param name="page">页数</param>
     /// <param name="key">关键字</param>
     /// <param name="sTime">开始日期</param>
-    /// <param name="ETime">截至日期</param>
-    private void getData(int page, string key, string sTime, string ETime)
+    /// <param name="eTime">截至日期</param>
+    private void GetData(int page, string key, string sTime, string eTime)
     {
 
         //判断用户是否合法
@@ -60,6 +62,7 @@ public partial class ListGongWen : System.Web.UI.Page
         if (user == null)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
         }
 
         //从request获取公文类型，0是未签公文，1是所有公文
@@ -80,16 +83,16 @@ public partial class ListGongWen : System.Web.UI.Page
 
         int uid = Convert.ToInt32(user.GongHao);
         //获取公文总数
-        if (allCount == 0) allCount = s.getGongWenCount(uid, "", key, sTime, ETime, gwtype);
+        if (_allCount == 0) _allCount = s.getGongWenCount(uid, "", key, sTime, eTime, gwtype);
 
         //获取公文列表
-        GongWenList[] gwlist = s.getGongWenList(uid, "", key, sTime, ETime, gwtype, (page - 1) * pageCount + 1, pageCount);
+        GongWenList[] gwlist = s.getGongWenList(uid, "", key, sTime, eTime, gwtype, (page - 1) * PageCount + 1, PageCount);
 
         //设置最大页数和当前页数
-        maxPage = (int)((allCount - 0.1) / pageCount) + 1;
+        _maxPage = (int)((_allCount - 0.1) / PageCount) + 1;
         if (page < 1) page = 1;
-        if ((page - 1) * pageCount >= allCount) page = maxPage;
-        cpage = page;
+        if ((page - 1) * PageCount >= _allCount) page = _maxPage;
+        _cpage = page;
         
         //绑定数据
         gvList.DataSource = gwlist;
@@ -98,12 +101,12 @@ public partial class ListGongWen : System.Web.UI.Page
         
         //设置分页按钮显示内容
         lblcurPage.Text = page.ToString();
-        lblPageCount.Text = maxPage.ToString();
+        lblPageCount.Text = _maxPage.ToString();
         if (page == 1)
         {
             cmdFirstPage.Enabled = false;
             cmdPreview.Enabled = false;
-            if (maxPage > 1)
+            if (_maxPage > 1)
             {
                 cmdNext.Enabled = true;
                 cmdLastPage.Enabled = true;
@@ -114,7 +117,7 @@ public partial class ListGongWen : System.Web.UI.Page
                 cmdLastPage.Enabled = false;
             }
         }
-        else if (page >= maxPage)
+        else if (page >= _maxPage)
         {
             cmdFirstPage.Enabled = true;
             cmdPreview.Enabled = true;
@@ -137,28 +140,28 @@ public partial class ListGongWen : System.Web.UI.Page
 
     protected void First_Click(object sender, EventArgs e)
     {
-        getData(1);
+        GetData(1);
     }
 
     protected void Last_Click(object sender, EventArgs e)
     {
-        getData(maxPage);
+        GetData(_maxPage);
     }
     protected void Pre_Click(object sender, EventArgs e)
     {
-        getData(cpage - 1);
+        GetData(_cpage - 1);
     }
     protected void Next_Click(object sender, EventArgs e)
     {
-        getData(cpage + 1);
+        GetData(_cpage + 1);
     }
     protected void Custom_Click(object sender, EventArgs e)
     {
         int pcount = Convert.ToInt32(txtGoPage.Text);
-        if (pcount > maxPage) pcount = maxPage;
+        if (pcount > _maxPage) pcount = _maxPage;
         if (pcount < 1) pcount = 1;
         txtGoPage.Text = pcount.ToString();
-        getData(pcount);
+        GetData(pcount);
     }
 
     protected void Button1_Click(object sender, EventArgs e)
@@ -178,7 +181,7 @@ public partial class ListGongWen : System.Web.UI.Page
 
     protected void btnChaXun_Click(object sender, EventArgs e)
     {
-        getData(1, txtBiaoTi.Text.Trim(), txtStart.Text.Trim(), txtEnd.Text.Trim());
+        GetData(1, txtBiaoTi.Text.Trim(), txtStart.Text.Trim(), txtEnd.Text.Trim());
     }
     protected void gvList_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
@@ -189,6 +192,7 @@ public partial class ListGongWen : System.Web.UI.Page
             if (user == null)
             {
                 Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+                return;
             }
             int uid = Convert.ToInt32(user.GongHao);
             INT r = s.undoGongWen2016(uid, lzid);
@@ -204,6 +208,6 @@ public partial class ListGongWen : System.Web.UI.Page
             return;
         }
         Response.Write(" <script> alert( '撤销签阅成功，请重新签阅该文件。') </script> ");
-        getData(cpage);
+        GetData(_cpage);
     }
 }

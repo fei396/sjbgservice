@@ -33,21 +33,21 @@ namespace sjbgWebService
         public RegisterInfo(int workno, string mobile, string ucode, string rcode, string sq, string sa, string email)
         {
             // TODO: Complete member initialization
-            this.WorkNo = workno;
-            this.Mobile = mobile;
-            this.UniqueCode = ucode;
-            this.RegisterCode = rcode;
-            this.SecurityQuestion = sq;
-            this.SecurityAnswer = sa;
-            this.EmailAddress = email;
+            WorkNo = workno;
+            Mobile = mobile;
+            UniqueCode = ucode;
+            RegisterCode = rcode;
+            SecurityQuestion = sq;
+            SecurityAnswer = sa;
+            EmailAddress = email;
         }
 
         public RegisterInfo(int workno, string mobile, string ucode)
         {
             // TODO: Complete member initialization
-            this.WorkNo = workno;
-            this.Mobile = mobile;
-            this.UniqueCode = ucode;
+            WorkNo = workno;
+            Mobile = mobile;
+            UniqueCode = ucode;
         }
 		public bool isRegisterValid()
 		{
@@ -76,11 +76,11 @@ namespace sjbgWebService
 
 		public ApkInfo(int code, string name, string url, string filename,string updatecontent)
 		{
-			this.VerCode = code;
-			this.VerName = name;
-			this.URL = url;
-			this.FileName = filename;
-            this.UpdateContent = updatecontent;
+			VerCode = code;
+			VerName = name;
+			URL = url;
+			FileName = filename;
+            UpdateContent = updatecontent;
 		}
 	}
 
@@ -95,14 +95,14 @@ namespace sjbgWebService
             IsTrue = value;
             Message = str;
         }
-        //public BOOLEAN(bool value)
+        //public BOOLEANSystem.Web.Services.Description.Messagealue)
         //{
         //    this.IsTrue = value;
         //    Message = "";
         //}
 		public BOOLEAN()
 		{
-			this.IsTrue = false;
+			IsTrue = false;
             Message = "";
 		}
 	}
@@ -114,7 +114,7 @@ namespace sjbgWebService
         public string Message { get; set; }
 		public INT(int value ,string str)
 		{
-			this.Number = value;
+			Number = value;
             Message = str;
 		}
 
@@ -126,15 +126,15 @@ namespace sjbgWebService
 
 		public INT()
 		{
-			this.Number = 0;
+			Number = 0;
             Message = "";
 		}
 
         public INT(int p)
         {
             // TODO: Complete member initialization
-            this.Number = p;
-            this.Message = "";
+            Number = p;
+            Message = "";
         }
 	}
 
@@ -188,8 +188,8 @@ namespace sjbgWebService
 
 		public Department()
 		{
-			this.ID = 0;
-			this.Name = "";
+			ID = 0;
+			Name = "";
 		}
 	}
 
@@ -201,9 +201,9 @@ namespace sjbgWebService
         
         public UserRole()
         {
-            this.ID = 0;
-            this.Name = "";
-            this.Description = "";
+            ID = 0;
+            Name = "";
+            Description = "";
         }
     }
 

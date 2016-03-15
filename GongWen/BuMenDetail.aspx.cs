@@ -14,7 +14,7 @@ using System.IO;
 using gwxxService;
 public partial class BuMenDetail : System.Web.UI.Page
 {
-    gwxxWebService s = new gwxxWebService();
+    readonly gwxxWebService s = new gwxxWebService();
 
     protected void Page_Load(object sender, EventArgs e)
     {
