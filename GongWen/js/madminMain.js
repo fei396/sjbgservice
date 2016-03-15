@@ -138,6 +138,7 @@ init = function (rid) {
             };
             break;
         case 25:
+            case 26:
             Menus = {
 
                 "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListGongWen.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1", "自定义短语": "DuanYu.aspx" } }

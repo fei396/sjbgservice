@@ -21,6 +21,8 @@ namespace sjbgWebService
         private static string ysConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["ysConnectionString"].ConnectionString;
         private static string cbConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["cbConnectionString"].ConnectionString;
         private static string mqttConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["mqttConnectionString"].ConnectionString;
+
+
         public static DataTable getProductByPid(string pname)
         {
             SqlConnection conn = new SqlConnection(baseConnStr);
@@ -50,7 +52,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getXwlx()
+        internal static DataTable getXwlx()
         {
             DataTable dt = new DataTable();
 
@@ -3566,8 +3568,8 @@ namespace sjbgWebService
                 {
                     message = "您有一件新公文需要签阅。公文标题：" + bt + "。该公文是" + jinji + "公文，请务必尽快签阅。";
                 }
-                INT r = sendMobileMessage(jsr, message);
-                // INT r = sendMobileMessage("3974", message);
+                //INT r = sendMobileMessage(jsr, message);
+                 INT r = sendMobileMessage("3974", message);
                 if (r.Number == 1)
                 {
                     //所有操作都成功完成，提交事务，确认操作
@@ -3629,7 +3631,7 @@ namespace sjbgWebService
             SqlConnection conn = new SqlConnection(baseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
-            comm.CommandText = "select user_no,user_name from V_GongWen_YongHu where bm_id =@bmid and (rid=25 or rid=20) order by user_no";
+            comm.CommandText = "select user_no,user_name from V_GongWen_YongHu where bm_id =@bmid and (rid=25 or rid=20 or rid=26) order by user_no";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("bmid", bmid);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
@@ -3694,8 +3696,8 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("fsr", fsr);
                 comm.Parameters.AddWithValue("bz", buyueren + "补");
                 comm.ExecuteNonQuery();
-                INT r = sendMobileMessage(newJsr, "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
-                //INT r = sendMobileMessage("3974", "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                //INT r = sendMobileMessage(newJsr, "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                INT r = sendMobileMessage("3974", "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
                 if (r.Number == 1)
                 {
                     trans.Commit();
@@ -3810,8 +3812,8 @@ namespace sjbgWebService
                         //}
                     }
                     //发短信通知
-                    INT r = sendMobileMessage(jsr, "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
-                    //INT r = sendMobileMessage("3974", "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                    //INT r = sendMobileMessage(jsr, "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                    INT r = sendMobileMessage("3974", "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
                     if (r.Number == 1)
                     {
                         trans.Commit();
@@ -4410,6 +4412,7 @@ namespace sjbgWebService
             return new INT(1);
         }
 
+
         internal static DataTable getZiDingYiDuanYu(string work_no, bool onlyPrivate)
         {
             SqlConnection conn = new SqlConnection(baseConnStr);
@@ -4449,13 +4452,21 @@ namespace sjbgWebService
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT flid,flmc, flzc FROM V_GongWen_BuMenFenLei ";
-            if (rid == 22)
+            if (rid == 21)
+            {
+
+            }
+            else if (rid == 22)
             {
                 //comm.CommandText += " where flid<>1 ";
             }
             else if (rid == 23)
             {
                 comm.CommandText += " where flid<>1 and flid <> 2 ";
+            }
+            else
+            {
+                return null;
             }
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
@@ -4508,7 +4519,7 @@ namespace sjbgWebService
             SqlConnection conn = new SqlConnection(baseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
-            comm.CommandText = "SELECT   ID,  bmnr FROM V_GongWen_ZiDingYiBuMen where uid=@uid order by paixu";
+            comm.CommandText = "SELECT ID, bmnr FROM V_GongWen_ZiDingYiBuMen where uid=@uid order by paixu";
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("uid", work_no);
@@ -4552,7 +4563,7 @@ namespace sjbgWebService
             }
             conn.Close();
 
-            comm.CommandText = "SELECT user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 25 or rid=20) AND (bm_id IN (SELECT bm_id FROM V_User WHERE (user_no = @work_no))) order by zwpaixu";
+            comm.CommandText = "SELECT user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 25 or rid=20 or rid= 26) AND (bm_id IN (SELECT bm_id FROM V_User WHERE (user_no = @work_no))) order by zwpaixu";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("work_no", work_no);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
@@ -4609,9 +4620,9 @@ namespace sjbgWebService
 
         internal static INT makeCuiBan(string[] jsr,string bt)
         {
-            INT r = sendMobileMessage(jsr, "公文处理员提醒您，请尽快签收公文：" + bt);
+            //INT r = sendMobileMessage(jsr, "公文处理员提醒您，请尽快签收公文：" + bt);
 
-            //INT r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
+            INT r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
             if (r.Number == 1) r.Message = "已成功催办" + jsr.Length.ToString() + "人。";
             return r;
         }
@@ -4642,9 +4653,9 @@ namespace sjbgWebService
                 jsr.Add(dt.Rows[i]["jsr"].ToString());
                 jsrxm.Add(dt.Rows[i]["jsrxm"].ToString());
             }
-            INT r = sendMobileMessage(jsr.ToArray(), "公文处理员提醒您，请尽快签收公文：" + bt);
+            //INT r = sendMobileMessage(jsr.ToArray(), "公文处理员提醒您，请尽快签收公文：" + bt);
 
-            //INT r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
+            INT r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
             if (r.Number == 1) r.Message = jsrxm.ToArray().ToListString();
             return r;
         }
@@ -4932,19 +4943,43 @@ namespace sjbgWebService
                     comm.CommandText = "select getdate()";
                     DateTime now = Convert.ToDateTime(comm.ExecuteScalar());
                     TimeSpan ts = now - qssj;
-                    if (ts.TotalMinutes > 120)
+                    if (ts.TotalHours > 48)
                     {
-                        return new INT(0, "签阅已超过2小时，不能撤销。");
+                        return new INT(0, "签阅已超过48小时，不能撤销。");
                     }
                 }
-                comm.CommandText = "update T_GongWen_LZ set isvalid=0 where id=@lzid or pid=@lzid";
+
+                string jsrStr = jsr.toWorkNo();
+                comm.CommandText = "select gwid from  T_GongWen_LZ where id=@lzid and isvalid=1";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("lzid", lzid);
-                comm.ExecuteNonQuery();
-                comm.CommandText = "insert into T_GongWen_Lz (gwid,pid,fsr,jsr,fssj) select gwid,pid,fsr,jsr,fssj from t_gongwen_lz where id=@lzid";
+                int gwid = Convert.ToInt32(comm.ExecuteScalar());
+
+
+                comm.CommandText = "select id from  T_GongWen_LZ  where gwid=@gwid and (jsr=@jsr) and isvalid=1";
                 comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("lzid", lzid);
+                comm.Parameters.AddWithValue("gwid", gwid);
+                comm.Parameters.AddWithValue("jsr", jsrStr);
+                SqlDataAdapter sda = new SqlDataAdapter(comm);
+                DataTable dt = new DataTable();
+                var i = sda.Fill(dataTable: dt);
+
+                comm.CommandText = "update T_GongWen_LZ set isvalid=0 where gwid=@gwid and (jsr=@jsr or fsr=@jsr) and isvalid=1";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("gwid", gwid);
+                comm.Parameters.AddWithValue("jsr", jsrStr);
                 comm.ExecuteNonQuery();
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    int lzid1 = Convert.ToInt32(dataRow["id"]);
+                    comm.CommandText = "insert into T_GongWen_Lz (gwid,pid,fsr,jsr,fssj) select gwid,pid,fsr,jsr,fssj from t_gongwen_lz where id=@lzid";
+                    comm.Parameters.Clear();
+                    comm.Parameters.AddWithValue("lzid", lzid1);
+                    comm.ExecuteNonQuery();
+                }
+
+               
                 trans.Commit();
             }
             catch (Exception ex)

@@ -36,6 +36,7 @@ public partial class mDefault : System.Web.UI.Page
                 //车间中层干部
                 break;
             case 25:
+            case 26:
                 //基层管理人员
                 break;
             default:

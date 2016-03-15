@@ -157,7 +157,8 @@
                             <asp:ListItem Value="22">班子成员</asp:ListItem>
                             <asp:ListItem Value="23">科室中层</asp:ListItem>
                             <asp:ListItem Value="24">车间中层</asp:ListItem>
-                            <asp:ListItem Value="25">基层人员</asp:ListItem>
+                            <asp:ListItem Value="25">中层副职</asp:ListItem>
+                            <asp:ListItem Value="26">基层人员</asp:ListItem>
                         </asp:DropDownList></td>
                 </tr>
                 <tr>

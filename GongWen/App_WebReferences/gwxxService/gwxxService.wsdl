@@ -773,16 +773,6 @@
   <wsdl:message name="signGongWen2016SjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
-  <wsdl:message name="undoGongWen2016SoapIn">
-    <wsdl:part name="uid" type="s:int" />
-    <wsdl:part name="lzid" type="s:int" />
-  </wsdl:message>
-  <wsdl:message name="undoGongWen2016SoapOut">
-    <wsdl:part name="undoGongWen2016Result" type="tns:INT" />
-  </wsdl:message>
-  <wsdl:message name="undoGongWen2016SjbgSoapHeader">
-    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
-  </wsdl:message>
   <wsdl:message name="signGongWen2016MobileSoapIn">
     <wsdl:part name="gwid" type="s:int" />
     <wsdl:part name="lzid" type="s:int" />
@@ -794,6 +784,16 @@
     <wsdl:part name="signGongWen2016MobileResult" type="tns:INT" />
   </wsdl:message>
   <wsdl:message name="signGongWen2016MobileSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="undoGongWen2016SoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="lzid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="undoGongWen2016SoapOut">
+    <wsdl:part name="undoGongWen2016Result" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="undoGongWen2016SjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
   <wsdl:message name="getXingZhiSoapIn" />
@@ -1224,13 +1224,6 @@
   <wsdl:message name="signGongWen2016HttpGetOut">
     <wsdl:part name="Body" element="s1:INT" />
   </wsdl:message>
-  <wsdl:message name="undoGongWen2016HttpGetIn">
-    <wsdl:part name="uid" type="s:string" />
-    <wsdl:part name="lzid" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="undoGongWen2016HttpGetOut">
-    <wsdl:part name="Body" element="s1:INT" />
-  </wsdl:message>
   <wsdl:message name="signGongWen2016MobileHttpGetIn">
     <wsdl:part name="gwid" type="s:string" />
     <wsdl:part name="lzid" type="s:string" />
@@ -1239,6 +1232,13 @@
     <wsdl:part name="qsnr" type="s:string" />
   </wsdl:message>
   <wsdl:message name="signGongWen2016MobileHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="undoGongWen2016HttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="lzid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="undoGongWen2016HttpGetOut">
     <wsdl:part name="Body" element="s1:INT" />
   </wsdl:message>
   <wsdl:message name="getXingZhiHttpGetIn" />
@@ -1576,13 +1576,6 @@
   <wsdl:message name="signGongWen2016HttpPostOut">
     <wsdl:part name="Body" element="s1:INT" />
   </wsdl:message>
-  <wsdl:message name="undoGongWen2016HttpPostIn">
-    <wsdl:part name="uid" type="s:string" />
-    <wsdl:part name="lzid" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="undoGongWen2016HttpPostOut">
-    <wsdl:part name="Body" element="s1:INT" />
-  </wsdl:message>
   <wsdl:message name="signGongWen2016MobileHttpPostIn">
     <wsdl:part name="gwid" type="s:string" />
     <wsdl:part name="lzid" type="s:string" />
@@ -1591,6 +1584,13 @@
     <wsdl:part name="qsnr" type="s:string" />
   </wsdl:message>
   <wsdl:message name="signGongWen2016MobileHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="undoGongWen2016HttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="lzid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="undoGongWen2016HttpPostOut">
     <wsdl:part name="Body" element="s1:INT" />
   </wsdl:message>
   <wsdl:message name="getXingZhiHttpPostIn" />
@@ -1873,13 +1873,13 @@
       <wsdl:input message="tns:signGongWen2016SoapIn" />
       <wsdl:output message="tns:signGongWen2016SoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="undoGongWen2016">
-      <wsdl:input message="tns:undoGongWen2016SoapIn" />
-      <wsdl:output message="tns:undoGongWen2016SoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="signGongWen2016Mobile">
       <wsdl:input message="tns:signGongWen2016MobileSoapIn" />
       <wsdl:output message="tns:signGongWen2016MobileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="undoGongWen2016">
+      <wsdl:input message="tns:undoGongWen2016SoapIn" />
+      <wsdl:output message="tns:undoGongWen2016SoapOut" />
     </wsdl:operation>
     <wsdl:operation name="getXingZhi">
       <wsdl:input message="tns:getXingZhiSoapIn" />
@@ -2063,13 +2063,13 @@
       <wsdl:input message="tns:signGongWen2016HttpGetIn" />
       <wsdl:output message="tns:signGongWen2016HttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="undoGongWen2016">
-      <wsdl:input message="tns:undoGongWen2016HttpGetIn" />
-      <wsdl:output message="tns:undoGongWen2016HttpGetOut" />
-    </wsdl:operation>
     <wsdl:operation name="signGongWen2016Mobile">
       <wsdl:input message="tns:signGongWen2016MobileHttpGetIn" />
       <wsdl:output message="tns:signGongWen2016MobileHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="undoGongWen2016">
+      <wsdl:input message="tns:undoGongWen2016HttpGetIn" />
+      <wsdl:output message="tns:undoGongWen2016HttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="getXingZhi">
       <wsdl:input message="tns:getXingZhiHttpGetIn" />
@@ -2253,13 +2253,13 @@
       <wsdl:input message="tns:signGongWen2016HttpPostIn" />
       <wsdl:output message="tns:signGongWen2016HttpPostOut" />
     </wsdl:operation>
-    <wsdl:operation name="undoGongWen2016">
-      <wsdl:input message="tns:undoGongWen2016HttpPostIn" />
-      <wsdl:output message="tns:undoGongWen2016HttpPostOut" />
-    </wsdl:operation>
     <wsdl:operation name="signGongWen2016Mobile">
       <wsdl:input message="tns:signGongWen2016MobileHttpPostIn" />
       <wsdl:output message="tns:signGongWen2016MobileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="undoGongWen2016">
+      <wsdl:input message="tns:undoGongWen2016HttpPostIn" />
+      <wsdl:output message="tns:undoGongWen2016HttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="getXingZhi">
       <wsdl:input message="tns:getXingZhiHttpPostIn" />
@@ -2528,21 +2528,21 @@
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="undoGongWen2016">
-      <soap:operation soapAction="http://sjbg.xxjwd.org/undoGongWen2016" style="rpc" />
-      <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:undoGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="signGongWen2016Mobile">
       <soap:operation soapAction="http://sjbg.xxjwd.org/signGongWen2016Mobile" style="rpc" />
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
         <soap:header message="tns:signGongWen2016MobileSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="undoGongWen2016">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/undoGongWen2016" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:undoGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -3001,21 +3001,21 @@
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="undoGongWen2016">
-      <soap12:operation soapAction="http://sjbg.xxjwd.org/undoGongWen2016" style="rpc" />
-      <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:undoGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="signGongWen2016Mobile">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/signGongWen2016Mobile" style="rpc" />
       <wsdl:input>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
         <soap12:header message="tns:signGongWen2016MobileSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="undoGongWen2016">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/undoGongWen2016" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:undoGongWen2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
@@ -3460,8 +3460,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="undoGongWen2016">
-      <http:operation location="/undoGongWen2016" />
+    <wsdl:operation name="signGongWen2016Mobile">
+      <http:operation location="/signGongWen2016Mobile" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -3469,8 +3469,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="signGongWen2016Mobile">
-      <http:operation location="/signGongWen2016Mobile" />
+    <wsdl:operation name="undoGongWen2016">
+      <http:operation location="/undoGongWen2016" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -3886,8 +3886,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="undoGongWen2016">
-      <http:operation location="/undoGongWen2016" />
+    <wsdl:operation name="signGongWen2016Mobile">
+      <http:operation location="/signGongWen2016Mobile" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -3895,8 +3895,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="signGongWen2016Mobile">
-      <http:operation location="/signGongWen2016Mobile" />
+    <wsdl:operation name="undoGongWen2016">
+      <http:operation location="/undoGongWen2016" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

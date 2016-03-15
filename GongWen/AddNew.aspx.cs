@@ -27,7 +27,10 @@ public partial class AddNew : System.Web.UI.Page
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
-
+        if (user.RoleID != 20)
+        {
+            Response.Redirect("error.aspx?errCode=不能打开该页面");
+        }
 
         if (!IsPostBack)
         {
@@ -237,9 +240,9 @@ public partial class AddNew : System.Web.UI.Page
             {
                 string fileName = Path.GetFileName(path);//获取上传文件名  
                 string fex = Path.GetExtension(path);//获取上传文件的后缀名  
-                if (files[i].ContentLength / 4096 > 1024)//上传文件大于4M  
+                if (files[i].ContentLength / 102400 > 1024)//上传文件大于4M  
                 {
-                    sb.Append(fileName + "的大小超过4M!");
+                    sb.Append(fileName + "的大小超过100M!");
                     break;
                 }
                 if (fex == ".exe" || fex == ".EXE") //上传文件是exe文件  

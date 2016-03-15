@@ -2477,8 +2477,9 @@ namespace sjbgWebService
 
         internal static BuMenFenLei[] getBuMenFenLeiLingDao(string work_no,int rid)
         {
+            if (rid != 21 && rid != 22 && rid != 23) return null;//只有领导有权限
             DataTable dt = DAL.getBuMenFenLei(rid);
-            if (rid != 21 && rid != 22&& rid != 23) return null;//只有领导有权限
+            if (dt == null) return null;
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2537,7 +2538,7 @@ namespace sjbgWebService
             {
                 return new INT(-1, "无权限添加新公文用户。");
             }
-            if (rid <=20 || rid > 25)
+            if (rid <=20 || rid > 26)
             {
                 return new INT(-1, "错误的角色ID。");
             }
@@ -2548,14 +2549,14 @@ namespace sjbgWebService
              
             else if (gwyh.RoleID == 20)//公文处理员
             {
-                if (rid == 25)//公文处理员不能直接添加基层用户
+                if (rid == 25 || rid == 26)//公文处理员不能直接添加基层用户
                 {
                     return new INT(-1, "无权限添加新公文用户。");
                 }
             }
             else //中层干部
             {
-                if (rid != 25)
+                if (rid != 25 && rid != 26)
                 {
                     return new INT(-1, "无权限添加新公文用户。");
                 }
@@ -2579,25 +2580,25 @@ namespace sjbgWebService
             {
                 return new INT(-1, "无权限删除公文用户。");
             }
-            if (rid <= 20 || rid > 25)
+            if (rid <= 20 || rid > 26)
             {
                 return new INT(-1, "错误的角色ID。");
             }
-            if (gwyh.RoleID == 21 || gwyh.RoleID == 22 || gwyh.RoleID == 25) //段领导和基层管理人员
+            if (gwyh.RoleID == 21 || gwyh.RoleID == 22 || gwyh.RoleID == 25 || gwyh.RoleID == 26) //段领导和基层管理人员无权删除用户
             {
                 return new INT(-1, "无权限删除公文用户。");
             }
 
             else if (gwyh.RoleID == 20)//公文处理员
             {
-                if (rid == 25)//公文处理员不能直接添加基层用户
+                if (rid == 25 || rid == 26)//公文处理员不能直接删除基层用户
                 {
                     return new INT(-1, "无权限删除公文用户。");
                 }
             }
             else //中层干部
             {
-                if (rid != 25)
+                if (rid != 25 && rid != 26)
                 {
                     return new INT(-1, "无权限删除公文用户。");
                 }

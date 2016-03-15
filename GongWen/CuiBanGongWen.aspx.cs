@@ -25,6 +25,10 @@ public partial class CuiBanGongWen : System.Web.UI.Page
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
+        if (user.RoleID != 20)
+        {
+            Response.Redirect("error.aspx?errCode=不能打开该页面");
+        }
         btnCuiBan.Attributes["OnClick"] = "return confirm('确定催办未签收该文件的人员？')";
         int uid, rid, gwid, lzid;
         try
