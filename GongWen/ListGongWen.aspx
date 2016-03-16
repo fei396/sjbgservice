@@ -70,6 +70,7 @@
                 <EditRowStyle BackColor="Azure" />
                 <Columns>
                     <asp:BoundField DataField="XuHao" HeaderText="序号" />
+                    <asp:BoundField DataField="WenJianLeiXing" HeaderText="文件类型" />
                     <asp:BoundField DataField="FaSongRen" HeaderText="发送人" />
                     <asp:BoundField DataField="WenHao" HeaderText="文号" />
                     <asp:BoundField DataField="BiaoTi" HeaderText="标题" />
