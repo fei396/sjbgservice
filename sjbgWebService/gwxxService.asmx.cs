@@ -13,9 +13,9 @@ using System.Data;
 
 namespace sjbgWebService.gwxx
 {
-	/// <summary>
-	/// WebService1 的摘要说明
-	/// </summary>
+    /// <summary>
+    /// 公文服务
+    /// </summary>
 	[WebService(Namespace = "http://sjbg.xxjwd.org/")]
 
 	[System.ComponentModel.ToolboxItem(false)]
