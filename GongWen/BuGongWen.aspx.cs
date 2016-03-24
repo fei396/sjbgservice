@@ -85,7 +85,7 @@ public partial class BuGongWen : System.Web.UI.Page
         {
             lblBiaoti.Text = gw.BiaoTi;
         }
-        gwxxService.GongWenLiuZhuan[] gwlzs = s.getLiuZhuanXian(true, lzid);
+        gwxxService.GongWenLiuZhuan[] gwlzs = s.getLiuZhuanXian(true, 0, lzid);
         foreach (GongWenLiuZhuan gwlz in gwlzs)
         {
             if (Convert.ToInt32(gwlz.JieShouRen) == uid)
@@ -198,7 +198,7 @@ public partial class BuGongWen : System.Web.UI.Page
         INT i= s.buGongWen2016(gwid, lzid, uid, buid,jsry);
         if (i.Number == 1)
         {
-            Page.ClientScript.RegisterStartupScript(GetType(), "补阅公文成功", "alert('补阅公文成功');window.open('mdefault.aspx','_parent');", true);
+            Page.ClientScript.RegisterStartupScript(GetType(), "补阅公文成功", "alert('补阅公文成功');", true);
             //Response.Redirect("ListGongWen.aspx?type=0");
         }
         else

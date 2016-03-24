@@ -190,6 +190,7 @@
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JinJi" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="QianShouQingKuang" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ShiFouCheXiao" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="WenJianLeiXing" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="GongWen2016">
@@ -311,6 +312,7 @@
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JieShouRen" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JieShouRenXM" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="FaBuShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="WenJianLeiXing" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="JinJi" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ShiFouLiuZhuanWanCheng" type="s:boolean" />
         </s:sequence>
@@ -479,6 +481,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="JinJi" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="QianShouQingKuang" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="ShiFouCheXiao" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="WenJianLeiXing" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="int" type="s:int" />
@@ -600,6 +603,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="JieShouRen" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="JieShouRenXM" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="FaBuShiJian" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WenJianLeiXing" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="JinJi" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="ShiFouLiuZhuanWanCheng" type="s:boolean" />
         </s:sequence>
@@ -736,7 +740,7 @@
     <wsdl:part name="lxid" type="s:int" />
     <wsdl:part name="jinji" type="s:string" />
     <wsdl:part name="ip" type="s:string" />
-    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="jsr" type="tns:ArrayOfString" />
     <wsdl:part name="gwfj" type="tns:ArrayOfString" />
   </wsdl:message>
   <wsdl:message name="addNewGongWen2016SoapOut">
@@ -835,6 +839,7 @@
     <wsdl:part name="sTime" type="s:string" />
     <wsdl:part name="eTime" type="s:string" />
     <wsdl:part name="gwtype" type="s:int" />
+    <wsdl:part name="lxid" type="s:int" />
     <wsdl:part name="ksxh" type="s:int" />
     <wsdl:part name="count" type="s:int" />
   </wsdl:message>
@@ -844,6 +849,32 @@
   <wsdl:message name="getGongWenListSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
+  <wsdl:message name="getDuanWenListSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="ksxh" type="s:int" />
+    <wsdl:part name="count" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenListSoapOut">
+    <wsdl:part name="getDuanWenListResult" type="tns:ArrayOfGongWenList" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenListSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenCountSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenCountSoapOut">
+    <wsdl:part name="getDuanWenCountResult" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenCountSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
   <wsdl:message name="getGongWenCountSoapIn">
     <wsdl:part name="uid" type="s:int" />
     <wsdl:part name="fsr" type="s:string" />
@@ -851,6 +882,7 @@
     <wsdl:part name="sTime" type="s:string" />
     <wsdl:part name="eTime" type="s:string" />
     <wsdl:part name="gwtype" type="s:int" />
+    <wsdl:part name="lxid" type="s:int" />
   </wsdl:message>
   <wsdl:message name="getGongWenCountSoapOut">
     <wsdl:part name="getGongWenCountResult" type="s:int" />
@@ -869,6 +901,7 @@
   </wsdl:message>
   <wsdl:message name="getLiuZhuanXianSoapIn">
     <wsdl:part name="sfbr" type="s:boolean" />
+    <wsdl:part name="lzlvl" type="s:int" />
     <wsdl:part name="lzid" type="s:int" />
   </wsdl:message>
   <wsdl:message name="getLiuZhuanXianSoapOut">
@@ -1196,7 +1229,7 @@
     <wsdl:part name="lxid" type="s:string" />
     <wsdl:part name="jinji" type="s:string" />
     <wsdl:part name="ip" type="s:string" />
-    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="jsr" type="s2:StringArray" />
     <wsdl:part name="gwfj" type="s2:StringArray" />
   </wsdl:message>
   <wsdl:message name="addNewGongWen2016HttpGetOut">
@@ -1268,11 +1301,32 @@
     <wsdl:part name="sTime" type="s:string" />
     <wsdl:part name="eTime" type="s:string" />
     <wsdl:part name="gwtype" type="s:string" />
+    <wsdl:part name="lxid" type="s:string" />
     <wsdl:part name="ksxh" type="s:string" />
     <wsdl:part name="count" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getGongWenListHttpGetOut">
     <wsdl:part name="Body" element="s1:ArrayOfGongWenList" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenListHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenListHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenList" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenCountHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenCountHttpGetOut">
+    <wsdl:part name="Body" element="s1:int" />
   </wsdl:message>
   <wsdl:message name="getGongWenCountHttpGetIn">
     <wsdl:part name="uid" type="s:string" />
@@ -1281,6 +1335,7 @@
     <wsdl:part name="sTime" type="s:string" />
     <wsdl:part name="eTime" type="s:string" />
     <wsdl:part name="gwtype" type="s:string" />
+    <wsdl:part name="lxid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getGongWenCountHttpGetOut">
     <wsdl:part name="Body" element="s1:int" />
@@ -1293,6 +1348,7 @@
   </wsdl:message>
   <wsdl:message name="getLiuZhuanXianHttpGetIn">
     <wsdl:part name="sfbr" type="s:string" />
+    <wsdl:part name="lzlvl" type="s:string" />
     <wsdl:part name="lzid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getLiuZhuanXianHttpGetOut">
@@ -1548,7 +1604,7 @@
     <wsdl:part name="lxid" type="s:string" />
     <wsdl:part name="jinji" type="s:string" />
     <wsdl:part name="ip" type="s:string" />
-    <wsdl:part name="jsr" type="s:string" />
+    <wsdl:part name="jsr" type="s2:StringArray" />
     <wsdl:part name="gwfj" type="s2:StringArray" />
   </wsdl:message>
   <wsdl:message name="addNewGongWen2016HttpPostOut">
@@ -1620,11 +1676,32 @@
     <wsdl:part name="sTime" type="s:string" />
     <wsdl:part name="eTime" type="s:string" />
     <wsdl:part name="gwtype" type="s:string" />
+    <wsdl:part name="lxid" type="s:string" />
     <wsdl:part name="ksxh" type="s:string" />
     <wsdl:part name="count" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getGongWenListHttpPostOut">
     <wsdl:part name="Body" element="s1:ArrayOfGongWenList" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenListHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenListHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenList" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenCountHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="keyWord" type="s:string" />
+    <wsdl:part name="sTime" type="s:string" />
+    <wsdl:part name="eTime" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getDuanWenCountHttpPostOut">
+    <wsdl:part name="Body" element="s1:int" />
   </wsdl:message>
   <wsdl:message name="getGongWenCountHttpPostIn">
     <wsdl:part name="uid" type="s:string" />
@@ -1633,6 +1710,7 @@
     <wsdl:part name="sTime" type="s:string" />
     <wsdl:part name="eTime" type="s:string" />
     <wsdl:part name="gwtype" type="s:string" />
+    <wsdl:part name="lxid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getGongWenCountHttpPostOut">
     <wsdl:part name="Body" element="s1:int" />
@@ -1645,6 +1723,7 @@
   </wsdl:message>
   <wsdl:message name="getLiuZhuanXianHttpPostIn">
     <wsdl:part name="sfbr" type="s:string" />
+    <wsdl:part name="lzlvl" type="s:string" />
     <wsdl:part name="lzid" type="s:string" />
   </wsdl:message>
   <wsdl:message name="getLiuZhuanXianHttpPostOut">
@@ -1901,6 +1980,14 @@
       <wsdl:input message="tns:getGongWenListSoapIn" />
       <wsdl:output message="tns:getGongWenListSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="getDuanWenList">
+      <wsdl:input message="tns:getDuanWenListSoapIn" />
+      <wsdl:output message="tns:getDuanWenListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenCount">
+      <wsdl:input message="tns:getDuanWenCountSoapIn" />
+      <wsdl:output message="tns:getDuanWenCountSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="getGongWenCount">
       <wsdl:input message="tns:getGongWenCountSoapIn" />
       <wsdl:output message="tns:getGongWenCountSoapOut" />
@@ -2091,6 +2178,14 @@
       <wsdl:input message="tns:getGongWenListHttpGetIn" />
       <wsdl:output message="tns:getGongWenListHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="getDuanWenList">
+      <wsdl:input message="tns:getDuanWenListHttpGetIn" />
+      <wsdl:output message="tns:getDuanWenListHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenCount">
+      <wsdl:input message="tns:getDuanWenCountHttpGetIn" />
+      <wsdl:output message="tns:getDuanWenCountHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="getGongWenCount">
       <wsdl:input message="tns:getGongWenCountHttpGetIn" />
       <wsdl:output message="tns:getGongWenCountHttpGetOut" />
@@ -2280,6 +2375,14 @@
     <wsdl:operation name="getGongWenList">
       <wsdl:input message="tns:getGongWenListHttpPostIn" />
       <wsdl:output message="tns:getGongWenListHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenList">
+      <wsdl:input message="tns:getDuanWenListHttpPostIn" />
+      <wsdl:output message="tns:getDuanWenListHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenCount">
+      <wsdl:input message="tns:getDuanWenCountHttpPostIn" />
+      <wsdl:output message="tns:getDuanWenCountHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="getGongWenCount">
       <wsdl:input message="tns:getGongWenCountHttpPostIn" />
@@ -2593,6 +2696,26 @@
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
         <soap:header message="tns:getGongWenListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenList">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getDuanWenList" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getDuanWenListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenCount">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getDuanWenCount" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getDuanWenCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -3071,6 +3194,26 @@
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getDuanWenList">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getDuanWenList" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getDuanWenListSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenCount">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getDuanWenCount" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getDuanWenCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getGongWenCount">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/getGongWenCount" style="rpc" />
       <wsdl:input>
@@ -3523,6 +3666,24 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getDuanWenList">
+      <http:operation location="/getDuanWenList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenCount">
+      <http:operation location="/getDuanWenCount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getGongWenCount">
       <http:operation location="/getGongWenCount" />
       <wsdl:input>
@@ -3942,6 +4103,24 @@
     </wsdl:operation>
     <wsdl:operation name="getGongWenList">
       <http:operation location="/getGongWenList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenList">
+      <http:operation location="/getDuanWenList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDuanWenCount">
+      <http:operation location="/getDuanWenCount" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

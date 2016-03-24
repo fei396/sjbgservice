@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace sjbgWebService
 {
-    public static class BLL
+    public static class Bll
     {
 
         public static MqttMessageType ToMqttMessageType(this int type)
@@ -77,15 +77,7 @@ namespace sjbgWebService
         public static string ToMD5String(this string s)
         {
             string md5 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5");
-            if (md5 == null)
-            {
-                return null;
-            }
-            else
-            {
-                return md5.ToUpper();
-            }
-            
+            return md5?.ToUpper();
         }
 
         public static string ToMD5String(this int i)
@@ -93,23 +85,23 @@ namespace sjbgWebService
             string s = i.ToString();
             return s.ToMD5String();
         }
-        public static bool isValidUserNo(this string str)
+        public static bool IsValidUserNo(this string str)
         {
             return true;
         }
-        public static bool isValidPass(this string str)
+        public static bool IsValidPass(this string str)
         {
             return true;
         }
-        public static bool isValidEmail(this string str)
+        public static bool IsValidEmail(this string str)
         {
             return true;
         }
-        public static bool isValidMobile(this string str)
+        public static bool IsValidMobile(this string str)
         {
             return true;
         }
-        public static bool isValidString(this string str)
+        public static bool IsValidString(this string str)
         {
             return true;
         }
@@ -120,13 +112,13 @@ namespace sjbgWebService
         /// <param name="gh">工号</param>
         /// <param name="pass">密码</param>
         /// <returns></returns>
-        public static string setEncryptPass(string gh, string pass)
+        public static string SetEncryptPass(string gh, string pass)
         {
             //以工号为salt，简单的用(工号+密码)的md5值存入数据库
             return ToMD5String(gh + pass);
         }
 
-        public static string toWorkNo(this int uid)
+        public static string ToWorkNo(this int uid)
         {
             if (uid > 9999 && uid < 100000)
             {
@@ -177,7 +169,7 @@ namespace sjbgWebService
             return atts;
         }
 
-        public static GongWen getGongWenByWh(string wh)
+        public static GongWen GetGongWenByWh(string wh)
         {
 
             GongWen gw = new GongWen();
@@ -205,7 +197,7 @@ namespace sjbgWebService
 
         }
 
-        public static UserGw getUserGwByUid(int uid)
+        public static UserGw GetUserGwByUid(int uid)
         {
             DataTable dt = DAL.GetUserGwByUid(uid);
             UserGw u = new UserGw();
@@ -224,7 +216,7 @@ namespace sjbgWebService
             }
             return u;
         }
-        public static UserGw getUserGwByUserName(string userName)
+        public static UserGw GetUserGwByUserName(string userName)
         {
 
             DataTable dt = DAL.GetUserGwByUserName(userName);
@@ -244,7 +236,7 @@ namespace sjbgWebService
             return u;
         }
 
-        public static BOOLEAN signGw(string wh, int gh, string insStr, string nextUids)
+        public static BOOLEAN SignGw(string wh, int gh, string insStr, string nextUids)
         {
             int uid;
             try
@@ -255,9 +247,9 @@ namespace sjbgWebService
             {
                 return new BOOLEAN(false, ex.Message);
             }
-            GongWen gw = getGongWenByWh(wh);
+            GongWen gw = GetGongWenByWh(wh);
             if (gw.Id == 0) return new BOOLEAN(false, "");
-            UserGw user = getUserGwByUid(uid);
+            UserGw user = GetUserGwByUid(uid);
             if (user.Yhmc.Equals("")) return new BOOLEAN(false, "");
             if (user.Yhqx == 6) //领导权限
             {
@@ -281,7 +273,7 @@ namespace sjbgWebService
 
         }
 
-        public static BOOLEAN isSigned(string wh, int gh)
+        public static BOOLEAN IsSigned(string wh, int gh)
         {
             int uid;
             try
@@ -292,14 +284,14 @@ namespace sjbgWebService
             {
                 return new BOOLEAN(true, "");
             }
-            GongWen gw = getGongWenByWh(wh);
-            UserGw user = getUserGwByUid(uid);
+            GongWen gw = GetGongWenByWh(wh);
+            UserGw user = GetUserGwByUid(uid);
             return DAL.IsSigned(gw, user);
         }
 
-        public static Instruction[] getLdps(string wh)
+        public static Instruction[] GetLdps(string wh)
         {
-            GongWen gw = getGongWenByWh(wh);
+            GongWen gw = GetGongWenByWh(wh);
             DataTable dt = DAL.GetLdps(gw);
 
             Instruction[] instruction = new Instruction[dt.Rows.Count];
@@ -317,7 +309,7 @@ namespace sjbgWebService
 
 
 
-        public static GongWen[] getGwlb(int gh, int lblx, gwlx gwlx, dwlx dwlx, int ksxh, int count)
+        public static GongWen[] GetGwlb(int gh, int lblx, gwlx gwlx, dwlx dwlx, int ksxh, int count)
         {
             int uid;
             try
@@ -328,7 +320,7 @@ namespace sjbgWebService
             {
                 return null;
             }
-            UserGw user = getUserGwByUid(uid);
+            UserGw user = GetUserGwByUid(uid);
             DataTable dt = new DataTable();
             if (lblx == 1)//所有文件列表
             {
@@ -352,7 +344,7 @@ namespace sjbgWebService
             return gws;
         }
 
-        public static string makeGwString(GongWen gw)
+        public static string MakeGwString(GongWen gw)
         {
             if (gw == null || gw.Id == 0)
             {
@@ -378,9 +370,9 @@ namespace sjbgWebService
             return str;
         }
 
-        public static User getUserByNum(string user_no)
+        public static User GetUserByNum(string userNo)
         {
-            DataTable dt = DAL.GetUserByNum(user_no);
+            DataTable dt = DAL.GetUserByNum(userNo);
             User u = new User();
             if (dt.TableName.Equals("user"))
             {
@@ -388,9 +380,9 @@ namespace sjbgWebService
                 u.UserNo = Convert.ToString(dt.Rows[0]["user_no"]);
                 u.UserName = Convert.ToString(dt.Rows[0]["user_name"]);
                 u.UserDept = Convert.ToInt32(dt.Rows[0]["bumen_id"]);
-                u.GwLevel = getGwLevel(u.Uid).Number;
-                u.TqLevel = getTqLevel(u.Uid).Number;
-                GongWenYongHu gwyh = getGongWenYongHuByUid(u.Uid);
+                u.GwLevel = GetGwLevel(u.Uid).Number;
+                u.TqLevel = GetTqLevel(u.Uid).Number;
+                GongWenYongHu gwyh = GetGongWenYongHuByUid(u.Uid);
                 if (gwyh == null)
                 {
                     u.GwRoleID = 0;
@@ -406,21 +398,21 @@ namespace sjbgWebService
 
 
 
-        public static INT login(string user_no, string user_pass, string code, string ip, string deviceInfo, string deviceVersion)
+        public static INT Login(string userNo, string userPass, string code, string ip, string deviceInfo, string deviceVersion)
         {
-            if (!isValidPass(user_pass)) return new INT(0, "工号或密码不正确");
-            if (!isValidUserNo(user_no)) return new INT(0, "工号或密码不正确");
-            return DAL.Login(user_no, user_pass, code, ip, deviceInfo, deviceVersion);
+            if (!IsValidPass(userPass)) return new INT(0, "工号或密码不正确");
+            if (!IsValidUserNo(userNo)) return new INT(0, "工号或密码不正确");
+            return DAL.Login(userNo, userPass, code, ip, deviceInfo, deviceVersion);
         }
 
-        public static INT loginDirect(string user_no, string user_pass, string code, string ip, string deviceInfo, string deviceVersion)
+        public static INT LoginDirect(string userNo, string userPass, string code, string ip, string deviceInfo, string deviceVersion)
         {
-            if (!isValidPass(user_pass)) return new INT(0, "工号或密码不正确");
-            if (!isValidUserNo(user_no)) return new INT(0, "工号或密码不正确");
-            return DAL.LoginDirect(user_no, user_pass, code, ip, deviceInfo, deviceVersion);
+            if (!IsValidPass(userPass)) return new INT(0, "工号或密码不正确");
+            if (!IsValidUserNo(userNo)) return new INT(0, "工号或密码不正确");
+            return DAL.LoginDirect(userNo, userPass, code, ip, deviceInfo, deviceVersion);
         }
 
-        public static XinWen[] getXinWen(int xwlx, int ksxh, int count)
+        public static XinWen[] GetXinWen(int xwlx, int ksxh, int count)
         {
             DataTable dt = DAL.GetXwlb(xwlx);
             XinWen[] xws = new XinWen[count < dt.Rows.Count ? count : dt.Rows.Count];
@@ -439,7 +431,7 @@ namespace sjbgWebService
             return xws;
         }
 
-        public static XinWenLeiXing[] getXinWenLeiXing()
+        public static XinWenLeiXing[] GetXinWenLeiXing()
         {
             DataTable dt = DAL.GetXwlx();
             XinWenLeiXing[] xwlx = new XinWenLeiXing[dt.Rows.Count];
@@ -452,7 +444,7 @@ namespace sjbgWebService
             return xwlx;
         }
 
-        public static Product getProductByPname(string pname)
+        public static Product GetProductByPname(string pname)
         {
             DataTable dt = DAL.GetProductByPid(pname);
             Product p = new Product();
@@ -465,7 +457,7 @@ namespace sjbgWebService
             return p;
         }
 
-        public static ZbPerson[] getZbPersons(DateTime dateTime, int isNight)
+        public static ZbPerson[] GetZbPersons(DateTime dateTime, int isNight)
         {
             DataTable dt = DAL.GetZbPerson(dateTime, isNight);
             ZbPerson[] persons = new ZbPerson[dt.Rows.Count];
@@ -483,12 +475,12 @@ namespace sjbgWebService
             }
             return persons;
         }
-        public static string getZbLdps(DateTime dateTime)
+        public static string GetZbLdps(DateTime dateTime)
         {
             return DAL.GetZbLdps(dateTime);
         }
 
-        internal static UserGw[] getLeaderList()
+        internal static UserGw[] GetLeaderList()
         {
             DataTable dt = DAL.GetLeaderList();
             if (dt.TableName.Equals("leaderList") && dt.Rows.Count > 0)
@@ -516,7 +508,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static BuMenGw[] getBmList(int lbid)
+        internal static BuMenGw[] GetBmList(int lbid)
         {
             DataTable dt = DAL.GetGwbmList(lbid);
             if (dt.TableName.Equals("bmList") && dt.Rows.Count > 0)
@@ -547,7 +539,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static BuMenLeiBie[] getBmlbList()
+        internal static BuMenLeiBie[] GetBmlbList()
         {
             DataTable dt = DAL.GetGwbmlbList();
             if (dt.TableName.Equals("bmlbList") && dt.Rows.Count > 0)
@@ -568,7 +560,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static string[] getJianBaoBuMen()
+        internal static string[] GetJianBaoBuMen()
         {
             DataTable dt = DAL.GetJianBaoBuMen();
             if (dt.TableName.Equals("jbbm") && dt.Rows.Count > 0)
@@ -587,7 +579,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static JianBao[] getJianBao(string dept, DateTime dateTime)
+        internal static JianBao[] GetJianBao(string dept, DateTime dateTime)
         {
             DataTable dt = DAL.GetJianBao(dept, dateTime);
             if (dt.TableName.Equals("JianBao") && dt.Rows.Count > 0)
@@ -609,7 +601,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static JianBao[] getAllJianBao(DateTime dateTime)
+        internal static JianBao[] GetAllJianBao(DateTime dateTime)
         {
             DataTable dt = DAL.GetJianBao("all", dateTime);
             if (dt.TableName.Equals("JianBao") && dt.Rows.Count > 0)
@@ -634,30 +626,30 @@ namespace sjbgWebService
 
 
 
-        internal static ApkInfo getApkInfo()
+        internal static ApkInfo GetApkInfo()
         {
             return new ApkInfo(SjbgConfig.ApkVerCode, SjbgConfig.ApkVerName, SjbgConfig.ApkFilePath, SjbgConfig.ApkFileName, SjbgConfig.ApkUpdateContent);
         }
 
 
-        public static INT getTqUidByWorkNo(int workno)
+        public static INT GetTqUidByWorkNo(int workno)
         {
-            string work_no = workno.ToString().PadLeft(4, '0');
-            return DAL.GetTqUidByWorkNo(work_no);
+            string workNo = workno.ToString().PadLeft(4, '0');
+            return DAL.GetTqUidByWorkNo(workNo);
         }
 
-        public static INT getTqUtypeByUid(int uid)
+        public static INT GetTqUtypeByUid(int uid)
         {
             return DAL.GetTqUtypeByUid(uid);
         }
-        public static INT getTqUDeptByUid(int uid)
+        public static INT GetTqUDeptByUid(int uid)
         {
             return DAL.GetTqUDeptByUid(uid);
         }
 
-        internal static TeQing[] getTeQingByWorkNo(int workno, int ksxh, int count)
+        internal static TeQing[] GetTeQingByWorkNo(int workno, int ksxh, int count)
         {
-            int uid = getTqUidByWorkNo(workno).Number;
+            int uid = GetTqUidByWorkNo(workno).Number;
             DataTable dt = DAL.GetTeQingByUid(uid);
             if (dt == null || dt.Rows.Count == 0 || !dt.TableName.Equals("getTeQingByUid")) return null;
             TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
@@ -678,15 +670,15 @@ namespace sjbgWebService
 
 
 
-        internal static BOOLEAN replyTq(int workno, int tid, string replayContent)
+        internal static BOOLEAN ReplyTq(int workno, int tid, string replayContent)
         {
-            int uid = getTqUidByWorkNo(workno).Number;
+            int uid = GetTqUidByWorkNo(workno).Number;
             return DAL.ReplyTq(uid, tid, replayContent);
         }
 
-        internal static TeQing[] checkReply(int senderno, int ksxh, int count)
+        internal static TeQing[] CheckReply(int senderno, int ksxh, int count)
         {
-            int uid = getTqUidByWorkNo(senderno).Number;
+            int uid = GetTqUidByWorkNo(senderno).Number;
             DataTable dt = DAL.CheckReply(uid);
             if (dt.TableName != "checkReply" || dt == null || dt.Rows.Count == 0) return null;
             TeQing[] tqs = new TeQing[count < dt.Rows.Count ? count : dt.Rows.Count];
@@ -705,7 +697,7 @@ namespace sjbgWebService
             return tqs;
         }
 
-        internal static TeQing[] checkReplyDetails(int tid, int ksxh, int count)
+        internal static TeQing[] CheckReplyDetails(int tid, int ksxh, int count)
         {
             DataTable dt = DAL.CheckReplyDetails(tid);
             if (dt.TableName != "checkReplyDetails" || dt == null || dt.Rows.Count == 0) return null;
@@ -723,13 +715,13 @@ namespace sjbgWebService
         }
 
 
-        internal static INT getTqLevel(int workno)
+        internal static INT GetTqLevel(int workno)
         {
-            int tquid = getTqUidByWorkNo(workno).Number;
-            return getTqUtypeByUid(tquid);
+            int tquid = GetTqUidByWorkNo(workno).Number;
+            return GetTqUtypeByUid(tquid);
         }
 
-        internal static INT getGwLevel(int workno)
+        internal static INT GetGwLevel(int workno)
         {
             int uid;
             try
@@ -740,12 +732,12 @@ namespace sjbgWebService
             {
                 return new INT(-1, ex.Message);
             }
-            return new INT(getUserGwByUid(uid).Yhqx, "");
+            return new INT(GetUserGwByUid(uid).Yhqx, "");
         }
 
 
 
-        internal static INT registerDevice(RegisterInfo ri)
+        internal static INT RegisterDevice(RegisterInfo ri)
         {
             INT registerCode = DAL.CheckUserMobile(ri.WorkNo, ri.Mobile, ri.UniqueCode);
             if (registerCode.Number == 0)//判断该设备是否已经注册
@@ -763,15 +755,15 @@ namespace sjbgWebService
         }
 
 
-        internal static INT requestRegisterCode(RegisterInfo ri)
+        internal static INT RequestRegisterCode(RegisterInfo ri)
         {
-            string code = generateRegisterCode(ri.WorkNo, ri.Mobile);
+            string code = GenerateRegisterCode(ri.WorkNo, ri.Mobile);
             INT i = DAL.CheckUserMobile(ri.WorkNo, ri.Mobile, ri.UniqueCode);
             if (i.Number < 0) return i;
             i = DAL.InsertRegisterCode(ri.WorkNo, ri.Mobile, code, ri.UniqueCode);
             if (i.Number == 1)
             {
-                return DAL.sendMobileMessage(ri.WorkNo, makeRegisterMobileMessageContent(code));
+                return DAL.sendMobileMessage(ri.WorkNo, MakeRegisterMobileMessageContent(code));
 
             }
             else
@@ -779,15 +771,15 @@ namespace sjbgWebService
                 return i;
             }
         }
-        static string makeRegisterMobileMessageContent(string code)
+        static string MakeRegisterMobileMessageContent(string code)
         {
             string str = "您的手机办公系统注册验证码是：" + code + "，请在2分钟内完成注册，如非本人操作请忽略。";
             return str;
         }
 
-        static string generateRegisterCode(int work_no, string mobile)
+        static string GenerateRegisterCode(int workNo, string mobile)
         {
-            string strSeed = work_no.ToString() + mobile + Convert.ToString(DateTime.Now.Ticks);
+            string strSeed = workNo.ToString() + mobile + Convert.ToString(DateTime.Now.Ticks);
             strSeed = ToMD5String(strSeed);
             strSeed = strSeed.Substring(0, 2) + strSeed.Substring(8, 2) + strSeed.Substring(16, 2) + strSeed.Substring(24, 2);
             uint uSeed = uint.Parse(strSeed, System.Globalization.NumberStyles.HexNumber);
@@ -798,9 +790,9 @@ namespace sjbgWebService
             return strSeed;
         }
 
-        internal static GpsData[] getGpsByNum(string gps_data)
+        internal static GpsData[] GetGpsByNum(string gpsData)
         {
-            DataTable dt = DAL.GetGpsByNum(gps_data);
+            DataTable dt = DAL.GetGpsByNum(gpsData);
             if (dt.TableName.Equals("gpsRead") && dt.Rows.Count > 0)
             {
                 GpsData[] gps = new GpsData[dt.Rows.Count];
@@ -825,10 +817,10 @@ namespace sjbgWebService
 
         }
 
-        internal static UserRole[] getUserRoleByNum(int uid)
+        internal static UserRole[] GetUserRoleByNum(int uid)
         {
-            string work_no = uid.ToString().PadLeft(4, '0');
-            DataTable dt = DAL.GetUserRole(work_no);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            DataTable dt = DAL.GetUserRole(workNo);
             if (dt.TableName.Equals("getUserRole") && dt.Rows.Count > 0)
             {
                 UserRole[] ur = new UserRole[dt.Rows.Count];
@@ -849,10 +841,10 @@ namespace sjbgWebService
             }
         }
 
-        internal static MenuItem[] getUserMenuByNum(int uid)
+        internal static MenuItem[] GetUserMenuByNum(int uid)
         {
-            string work_no = uid.ToString().PadLeft(4, '0');
-            DataTable dt = DAL.GetUserMenu(work_no);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            DataTable dt = DAL.GetUserMenu(workNo);
             if (dt.TableName.Equals("getUserMenu") && dt.Rows.Count > 0)
             {
                 MenuItem[] mi = new MenuItem[dt.Rows.Count];
@@ -878,9 +870,9 @@ namespace sjbgWebService
 
         //20140918 add by zhh for 运用
         //机车计划处理数据
-        internal static JcjhData[] getJcjhByNum(string jcjh_data)
+        internal static JcjhData[] GetJcjhByNum(string jcjhData)
         {
-            DataTable dt = DAL.GetJcjhByNum(jcjh_data);
+            DataTable dt = DAL.GetJcjhByNum(jcjhData);
             if (dt.TableName.Equals("jcjhRead") && dt.Rows.Count > 0)
             {
                 JcjhData[] jcjh = new JcjhData[dt.Rows.Count];
@@ -908,9 +900,9 @@ namespace sjbgWebService
 
         //人员计划处理数据
         //人员计划处理数据
-        internal static RyjhData[] getRyjhByNum(string ryjh_data)
+        internal static RyjhData[] GetRyjhByNum(string ryjhData)
         {
-            DataTable dt = DAL.GetRyjhByNum(ryjh_data);
+            DataTable dt = DAL.GetRyjhByNum(ryjhData);
             if (dt.TableName.Equals("ryjhRead") && dt.Rows.Count > 0)
             {
                 RyjhData[] ryjh = new RyjhData[dt.Rows.Count];
@@ -942,9 +934,9 @@ namespace sjbgWebService
         //
 
         //待乘计划处理数据
-        internal static DcjhData[] getDcjhByNum(string dcjh_data)
+        internal static DcjhData[] GetDcjhByNum(string dcjhData)
         {
-            DataTable dt = DAL.GetDcjhByNum(dcjh_data);
+            DataTable dt = DAL.GetDcjhByNum(dcjhData);
             if (dt.TableName.Equals("dcjhRead") && dt.Rows.Count > 0)
             {
                 DcjhData[] dcjh = new DcjhData[dt.Rows.Count];
@@ -973,9 +965,9 @@ namespace sjbgWebService
         }
         //
         //测酒结果查询处理数据
-        internal static CjcxData[] getCjcxByNum(string cjcx_data)
+        internal static CjcxData[] GetCjcxByNum(string cjcxData)
         {
-            DataTable dt = DAL.GetCjcxByNum(cjcx_data);
+            DataTable dt = DAL.GetCjcxByNum(cjcxData);
             if (dt.TableName.Equals("cjcxRead") && dt.Rows.Count > 0)
             {
                 CjcxData[] cjcx = new CjcxData[dt.Rows.Count];
@@ -999,17 +991,17 @@ namespace sjbgWebService
         }
         //20140918 add by zhh for运用
 
-        internal static BOOLEAN setNewPass(int uid, string opass, string npass)
+        internal static BOOLEAN SetNewPass(int uid, string opass, string npass)
         {
-            string work_no = uid.ToString().PadLeft(4, '0');
-            return DAL.SetNewPass(work_no, opass, npass);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            return DAL.SetNewPass(workNo, opass, npass);
 
         }
 
-        internal static MingPai[] getMingPaiByXianBie(int database, string line_mode, int type)
+        internal static MingPai[] GetMingPaiByXianBie(int database, string lineMode, int type)
         {
             DataTable dt = new DataTable();
-            dt = DAL.GetMingPaiByXianBie(database, line_mode, type);
+            dt = DAL.GetMingPaiByXianBie(database, lineMode, type);
             if (dt.TableName.Equals("MingPai") && dt.Rows.Count > 0)
             {
                 MingPai[] mps = new MingPai[dt.Rows.Count];
@@ -1032,11 +1024,11 @@ namespace sjbgWebService
             }
         }
 
-        internal static MingPai[] getMingPaiByUid(int database, int uid)
+        internal static MingPai[] GetMingPaiByUid(int database, int uid)
         {
             DataTable dt = new DataTable();
-            string work_no = uid.ToString().PadLeft(4, '0');
-            dt = DAL.GetMingPaiByGongHao(database, work_no);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            dt = DAL.GetMingPaiByGongHao(database, workNo);
             if (dt.TableName.Equals("MingPai") && dt.Rows.Count > 0)
             {
                 MingPai[] mps = new MingPai[dt.Rows.Count];
@@ -1059,7 +1051,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static XianBie[] getXianBie(int database)
+        internal static XianBie[] GetXianBie(int database)
         {
             DataTable dt = new DataTable();
             dt = DAL.GetXianBie(database);
@@ -1083,7 +1075,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static DaMingPai[] getDaMingPaiByXianBie(int database, string line, int type, string filter, int ksxh, int count)
+        internal static DaMingPai[] GetDaMingPaiByXianBie(int database, string line, int type, string filter, int ksxh, int count)
         {
             DataTable dt = new DataTable();
 
@@ -1113,13 +1105,13 @@ namespace sjbgWebService
             return dmps;
         }
 
-        internal static CanBu[] getCanBu(int uid, string month)
+        internal static CanBu[] GetCanBu(int uid, string month)
         {
-            string work_no = uid.ToString().PadLeft(4, '0');
+            string workNo = uid.ToString().PadLeft(4, '0');
             string strJssj = month + "-25 18:00:00";
             DateTime jssj = Convert.ToDateTime(strJssj);
             DateTime kssj = jssj.AddMonths(-1);
-            DataTable dt = DAL.GetCanBu(work_no, kssj, jssj);
+            DataTable dt = DAL.GetCanBu(workNo, kssj, jssj);
             if (dt.TableName.Equals("getCanBu") && dt.Rows.Count > 0)
             {
                 CanBu[] cbs = new CanBu[dt.Rows.Count];
@@ -1143,7 +1135,7 @@ namespace sjbgWebService
             }
         }
 
-        static string fyySjzh(string sj)
+        static string FyySjzh(string sj)
         {
             string xsj = "";
             if (sj == null || sj == "") return "";
@@ -1156,7 +1148,7 @@ namespace sjbgWebService
             return xsj;
         }
 
-        internal static FeiYunYongJiChe[] getFyyjc(string jczt)
+        internal static FeiYunYongJiChe[] GetFyyjc(string jczt)
         {
 
             DataTable dt = DAL.GetFyyjc(jczt);
@@ -1170,8 +1162,8 @@ namespace sjbgWebService
                     fyys[i].JiCheBianHao = Convert.ToString(dt.Rows[i]["jcbh"]);
                     fyys[i].ZhuangTai = Convert.ToString(dt.Rows[i]["jczt"]);
                     fyys[i].DiDian = Convert.ToString(dt.Rows[i]["dd"]);
-                    fyys[i].ZhuanRuShiJian = fyySjzh(Convert.ToString(dt.Rows[i]["zrsj"]));
-                    fyys[i].ZhuanChuShiJian = fyySjzh(Convert.ToString(dt.Rows[i]["zcsj"]));
+                    fyys[i].ZhuanRuShiJian = FyySjzh(Convert.ToString(dt.Rows[i]["zrsj"]));
+                    fyys[i].ZhuanChuShiJian = FyySjzh(Convert.ToString(dt.Rows[i]["zcsj"]));
                     fyys[i].GongZuoShiJian = Convert.ToString(dt.Rows[i]["gzsj"]);
 
                 }
@@ -1183,7 +1175,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static string[] getFyyjcZt()
+        internal static string[] GetFyyjcZt()
         {
             DataTable dt = DAL.GetFyyjcZt();
             if (dt.TableName.Equals("fyyjcZt") && dt.Rows.Count > 0)
@@ -1230,20 +1222,20 @@ namespace sjbgWebService
         //}
 
         //电子书名查询处理数据
-        internal static BookNameData[] getBookName(string bookname_data)
+        internal static BookNameData[] GetBookName(string booknameData)
         {
-            DataTable dt = DAL.GetBookName(bookname_data);
+            DataTable dt = DAL.GetBookName(booknameData);
             if (dt.TableName.Equals("BookNameRead") && dt.Rows.Count > 0)
             {
-                BookNameData[] BookName = new BookNameData[dt.Rows.Count];
+                BookNameData[] bookName = new BookNameData[dt.Rows.Count];
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    BookName[i] = new BookNameData();
-                    BookName[i].id = Convert.ToString(dt.Rows[i]["id"]);
-                    BookName[i].Name = Convert.ToString(dt.Rows[i]["Name"]);
-                    BookName[i].Address = Convert.ToString(dt.Rows[i]["Address"]);
+                    bookName[i] = new BookNameData();
+                    bookName[i].id = Convert.ToString(dt.Rows[i]["id"]);
+                    bookName[i].Name = Convert.ToString(dt.Rows[i]["Name"]);
+                    bookName[i].Address = Convert.ToString(dt.Rows[i]["Address"]);
                 }
-                return BookName;
+                return bookName;
             }
             else
             {
@@ -1254,19 +1246,19 @@ namespace sjbgWebService
         }
 
         //电子书内容查询处理数据
-        internal static BookNrData getBookNr(string book_Nr_id)
+        internal static BookNrData GetBookNr(string bookNrId)
         {
-            DataTable dt = DAL.GetBookNr(book_Nr_id);
+            DataTable dt = DAL.GetBookNr(bookNrId);
             if (dt.TableName.Equals("BookNrRead"))
             {
-                BookNrData BookNr = new BookNrData();
+                BookNrData bookNr = new BookNrData();
 
 
-                BookNr.id = Convert.ToString(dt.Rows[0]["id"]);
-                BookNr.Txt = Convert.ToString(dt.Rows[0]["Txt"]);
+                bookNr.id = Convert.ToString(dt.Rows[0]["id"]);
+                bookNr.Txt = Convert.ToString(dt.Rows[0]["Txt"]);
 
 
-                return BookNr;
+                return bookNr;
             }
             else
             {
@@ -1276,10 +1268,10 @@ namespace sjbgWebService
 
         }
 
-        internal static SentFileList[] getSentFiles(int uid)
+        internal static SentFileList[] GetSentFiles(int uid)
         {
-            string work_no = uid.ToString().PadLeft(4, '0');
-            DataTable dt = DAL.GetSentFiles(work_no);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            DataTable dt = DAL.GetSentFiles(workNo);
             if (!dt.TableName.Equals("getSentFiles"))
             {
                 return null;
@@ -1302,7 +1294,7 @@ namespace sjbgWebService
         }
 
 
-        internal static SentFileDetail[] getSentFileDetails(int fid)
+        internal static SentFileDetail[] GetSentFileDetails(int fid)
         {
             DataTable dt = DAL.GetSentFileDetails(fid);
             if (!dt.TableName.Equals("getSentFileDetails"))
@@ -1325,10 +1317,10 @@ namespace sjbgWebService
             }
         }
 
-        internal static ReceiveFile[] getFilesToReceive(int uid, int type, int ksxh, int count)
+        internal static ReceiveFile[] GetFilesToReceive(int uid, int type, int ksxh, int count)
         {
-            string work_no = uid.ToString().PadLeft(4, '0');
-            int drid = DAL.getDutyRoomIdByWork_no(work_no);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            int drid = DAL.getDutyRoomIdByWork_no(workNo);
             if (drid == -1) return null;
             DataTable dt = DAL.GetFilesToReceive(drid, type);
             if (!dt.TableName.Equals("getFilesToReceive") || (ksxh > dt.Rows.Count)) return null;
@@ -1362,14 +1354,14 @@ namespace sjbgWebService
         }
 
 
-        internal static INT receiveFile(int fdrid, int uid)
+        internal static INT ReceiveFile(int fdrid, int uid)
         {
-            string work_no = uid.ToString().PadLeft(4, '0');
-            return DAL.ReceiveFile(fdrid, work_no);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            return DAL.ReceiveFile(fdrid, workNo);
 
         }
 
-        internal static Department[] getDeptsByDeptId(int did)
+        internal static Department[] GetDeptsByDeptId(int did)
         {
             switch (did)
             {
@@ -1378,11 +1370,11 @@ namespace sjbgWebService
                 case 19://长北
                 case 20://月山
                 case 21://安阳
-                    return getSendFileDept(did);
+                    return GetSendFileDept(did);
                 case 10:
                 case 11:
                 case 12:
-                    return getSendFileDept(0);
+                    return GetSendFileDept(0);
                 default:
                     return null;
             }
@@ -1390,7 +1382,7 @@ namespace sjbgWebService
         }
 
 
-        public static Department[] getSendFileDept(int did)
+        public static Department[] GetSendFileDept(int did)
         {
             DataTable dt = DAL.GetSendFileDept(did);
             if (dt.TableName.Equals("getSendFileDept") && dt.Rows.Count > 0)
@@ -1412,7 +1404,7 @@ namespace sjbgWebService
 
         }
 
-        internal static DutyRoom[] getDutyRoomByDeptId(int did)
+        internal static DutyRoom[] GetDutyRoomByDeptId(int did)
         {
             switch (did)
             {
@@ -1421,18 +1413,18 @@ namespace sjbgWebService
                 case 19://长北
                 case 20://月山
                 case 21://安阳
-                    return getDutyRooms(did);
+                    return GetDutyRooms(did);
                 case 10:
                 case 11:
                 case 12:
-                    return getDutyRooms(0);
+                    return GetDutyRooms(0);
                 default:
                     return null;
             }
 
         }
 
-        internal static DutyRoom[] getDutyRooms(int did)
+        internal static DutyRoom[] GetDutyRooms(int did)
         {
             DataTable dt = DAL.GetDutyRoomByDeptId(did);
             if (dt.TableName.Equals("getDutyRoomByDeptId") && dt.Rows.Count > 0)
@@ -1459,7 +1451,7 @@ namespace sjbgWebService
 
         internal static INT SendFile(int senderId, string fileFullName, string fileDesc, string fileContent, string receivers)
         {
-            User sender = getUserByNum(senderId.ToString().PadLeft(4, '0'));
+            User sender = GetUserByNum(senderId.ToString().PadLeft(4, '0'));
             if (sender == null) return new INT(-1, "发送人不存在");
             byte[] file;
             try
@@ -1481,15 +1473,15 @@ namespace sjbgWebService
 
         internal static INT SendFeedBack(int uid, string txt)
         {
-            string work_no = uid.ToString().PadLeft(4, '0');
-            return DAL.AddFeedBack(work_no, txt);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            return DAL.AddFeedBack(workNo, txt);
         }
 
         internal static LoginInfo[] GetLoginRecord(int uid, int ksxh, int count)
         {
             DataTable dt = new DataTable();
-            string work_no = uid.ToString().PadLeft(4, '0');
-            dt = DAL.GetLoginRecord(work_no);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            dt = DAL.GetLoginRecord(workNo);
 
             if (!dt.TableName.Equals("GetLoginRecord") || (ksxh > dt.Rows.Count)) return null;
             LoginInfo[] lis = new LoginInfo[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
@@ -1510,11 +1502,11 @@ namespace sjbgWebService
 
 
 
-        internal static MqttTopic[] getUnsubTopics(int uid)
+        internal static MqttTopic[] GetUnsubTopics(int uid)
         {
             DataTable dt = new DataTable();
-            string work_no = uid.ToString().PadLeft(4, '0');
-            dt = DAL.GetUnsubTopics(work_no);
+            string workNo = uid.ToString().PadLeft(4, '0');
+            dt = DAL.GetUnsubTopics(workNo);
 
             if (!dt.TableName.Equals("getUnsubTopics")) return null;
             MqttTopic[] lis = new MqttTopic[dt.Rows.Count];
@@ -1529,28 +1521,28 @@ namespace sjbgWebService
             return lis;
         }
 
-        internal static INT setTopicsSubed(string tids)
+        internal static INT SetTopicsSubed(string tids)
         {
             return DAL.SetTopicsSubed(tids);
         }
 
-        internal static INT setMqttStaus(int uid, int type, string clientId)
+        internal static INT SetMqttStaus(int uid, int type, string clientId)
         {
-            string work_no = uid.toWorkNo();
-            return DAL.SetMqttStatus(work_no, type, clientId);
+            string workNo = uid.ToWorkNo();
+            return DAL.SetMqttStatus(workNo, type, clientId);
         }
 
-        internal static INT getMqttStaus(int uid)
+        internal static INT GetMqttStaus(int uid)
         {
-            string work_no = uid.toWorkNo();
-            return DAL.GetMqttStatus(work_no);
+            string workNo = uid.ToWorkNo();
+            return DAL.GetMqttStatus(workNo);
         }
 
-        internal static SystemMessage[] getSystemMessage(int uid, int type, int ksxh, int count)
+        internal static SystemMessage[] GetSystemMessage(int uid, int type, int ksxh, int count)
         {
             DataTable dt = new DataTable();
-            string work_no = uid.toWorkNo();
-            dt = DAL.GetSystemMessage(work_no, type);
+            string workNo = uid.ToWorkNo();
+            dt = DAL.GetSystemMessage(workNo, type);
 
             if (!dt.TableName.Equals("getSystemMessage") || (ksxh > dt.Rows.Count)) return null;
             SystemMessage[] sms = new SystemMessage[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
@@ -1569,26 +1561,26 @@ namespace sjbgWebService
             return sms;
         }
 
-        internal static INT insertSystemMessage(int uid, int type)
+        internal static INT InsertSystemMessage(int uid, int type)
         {
             throw new NotImplementedException();
         }
 
-        internal static INT readSystemMessage(int mid)
+        internal static INT ReadSystemMessage(int mid)
         {
             return DAL.ReadSystemMessage(mid);
         }
 
-        internal static INT readMqttMessage(int uid, int mid)
+        internal static INT ReadMqttMessage(int uid, int mid)
         {
-            string work_no = uid.toWorkNo();
-            return DAL.ReadMqttMessage(work_no, mid);
+            string workNo = uid.ToWorkNo();
+            return DAL.ReadMqttMessage(workNo, mid);
         }
 
-        internal static string[] getUnReadMqttMessage(int uid)
+        internal static string[] GetUnReadMqttMessage(int uid)
         {
-            string work_no = uid.toWorkNo();
-            DataTable dt = DAL.GetUnReadMqttMessage(work_no);
+            string workNo = uid.ToWorkNo();
+            DataTable dt = DAL.GetUnReadMqttMessage(workNo);
             if (dt.TableName != "getUnReadMqttMessage" || dt.Rows.Count == 0) return null;
             string[] json = new string[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -1618,9 +1610,9 @@ namespace sjbgWebService
             return DAL.AuditAqxx(xxid, auditor, result, title, txt);
         }
 
-        internal static AQXX[] getAqxxToAudit(int uid, int xxid)
+        internal static AQXX[] GetAqxxToAudit(int uid, int xxid)
         {
-            string auditor = uid.toWorkNo();
+            string auditor = uid.ToWorkNo();
             DataTable dt = new DataTable();
             dt = DAL.GetAqxxToAudit(auditor, xxid);
 
@@ -1641,7 +1633,7 @@ namespace sjbgWebService
             return aqxxs;
         }
 
-        internal static User[] getAqxxptShenHe()
+        internal static User[] GetAqxxptShenHe()
         {
             DataTable dt = new DataTable();
             dt = DAL.GetAqxxptShenHe();
@@ -1659,7 +1651,7 @@ namespace sjbgWebService
             return users;
         }
 
-        internal static Department[] getAqxxptBm(int xxid)
+        internal static Department[] GetAqxxptBm(int xxid)
         {
             DataTable dt = new DataTable();
             if (xxid == 0)
@@ -1685,9 +1677,9 @@ namespace sjbgWebService
 
 
 
-        internal static AqxxInfo[] getAqxxInfo(int uid, int xxid)
+        internal static AqxxInfo[] GetAqxxInfo(int uid, int xxid)
         {
-            User user = getUserByNum(uid.toWorkNo());
+            User user = GetUserByNum(uid.ToWorkNo());
             if (user == null)
             {
                 AqxxInfo ai = new AqxxInfo();
@@ -1717,9 +1709,9 @@ namespace sjbgWebService
             return ais;
         }
 
-        internal static int getAqxxCount(int uid)
+        internal static int GetAqxxCount(int uid)
         {
-            User user = getUserByNum(uid.toWorkNo());
+            User user = GetUserByNum(uid.ToWorkNo());
             if (user == null)
             {
                 return -1;
@@ -1731,9 +1723,9 @@ namespace sjbgWebService
             return dt.Rows.Count;
         }
 
-        internal static AqxxInfo[] getAqxxInfos(int uid, int ksxh, int count)
+        internal static AqxxInfo[] GetAqxxInfos(int uid, int ksxh, int count)
         {
-            User user = getUserByNum(uid.toWorkNo());
+            User user = GetUserByNum(uid.ToWorkNo());
             if (user == null)
             {
                 AqxxInfo ai = new AqxxInfo();
@@ -1763,7 +1755,7 @@ namespace sjbgWebService
             return ais;
         }
 
-        internal static AqxxDetail[] getAqxxDetail(int xxid, int ksxh, int count)
+        internal static AqxxDetail[] GetAqxxDetail(int xxid, int ksxh, int count)
         {
             DataTable dt = new DataTable();
             dt = DAL.GetAqxxDetail(xxid);
@@ -1784,7 +1776,7 @@ namespace sjbgWebService
         }
 
 
-        internal static AQXX[] getAqxxContent(int xxid)
+        internal static AQXX[] GetAqxxContent(int xxid)
         {
 
             DataTable dt = new DataTable();
@@ -1811,17 +1803,17 @@ namespace sjbgWebService
 
         #region 2016新版公文流转系统
 
-        internal static bool isBanZiChengYuanFinished(int gwid)
+        internal static bool IsBanZiChengYuanFinished(int gwid)
         {
             int count = DAL.UnfinishedBanZiChengYuanRenShu(gwid);
             if (count > 0) return false;
             else return true;
         }
-        internal static GongWenList[] getGongWenList(int uid , string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype, int ksxh, int count)
+        internal static GongWenList[] GetGongWenList(int uid , string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype,int ksxh, int count)
         {
 
             //调用数据操作层的函数获取公文列表DataTable
-            string jsr = uid.toWorkNo();
+            string jsr = uid.ToWorkNo();
             DataTable dt = DAL.GetGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
 
             //如果获取数据过程错误，返回null
@@ -1845,32 +1837,35 @@ namespace sjbgWebService
                     gwlist[i].FaSongShiJian = Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fssj"]).ToString("yyyy-MM-dd HH:mm:ss");
                     gwlist[i].JinJi = Convert.ToString(dt.Rows[i + ksxh - 1]["jinji"]);
                     gwlist[i].ShiFouCheXiao = Convert.ToInt32(dt.Rows[i + ksxh - 1]["chexiao"]);
+                    gwlist[i].WenJianLeiXing = Convert.ToString(dt.Rows[i + ksxh - 1]["wjlx"]);
                     string qssj = Convert.ToString(dt.Rows[i + ksxh - 1]["qssj"]);
-                    int fsr_rid =  Convert.ToInt32(dt.Rows[i + ksxh - 1]["fsr_rid"]);
-                    int jsr_rid = Convert.ToInt32(dt.Rows[i + ksxh - 1]["jsr_rid"]);
+                    int fsrRid =  Convert.ToInt32(dt.Rows[i + ksxh - 1]["fsr_rid"]);
+                    int jsrRid = Convert.ToInt32(dt.Rows[i + ksxh - 1]["jsr_rid"]);
                     
                     if (qssj.Equals(string.Empty))//签收时间为空
                     {
-                        if (jsr_rid ==23 || jsr_rid == 24)//中层能否签收首先看班子成员是否都已经完成签收
-                        //if (fsr_rid == 21 && (jsr_rid == 23 || jsr_rid == 24))//并且是段长书记直接发给中层的
-                        {
-                            if (isBanZiChengYuanFinished(gwlist[i].GongWenID)) //判断班子成员是否都已经完成签收
-                            {
-                                gwlist[i].ShiFouQianShou = 0;//如果班子成员都签完了，标记为未签收
-                                gwlist[i].QianShouQingKuang = "未签收";
-                            }
-                            else
-                            {
-                                gwlist[i].ShiFouQianShou = 2;//否则标记为只读只读
-                                gwlist[i].QianShouQingKuang = "只读";
-                            }
-                        }
-                        else //不是段长、书记直接发给中层的，标记为未签收
-                        {
-                            gwlist[i].ShiFouQianShou = 0;
-                            gwlist[i].QianShouQingKuang = "未签收";
-                        }
-                        
+                        gwlist[i].ShiFouQianShou = 0;
+                        gwlist[i].QianShouQingKuang = "未签收";
+                        //if (jsrRid ==23 || jsrRid == 24)//中层能否签收首先看班子成员是否都已经完成签收
+                        ////if (fsr_rid == 21 && (jsr_rid == 23 || jsr_rid == 24))//并且是段长书记直接发给中层的
+                        //{
+                        //    if (IsBanZiChengYuanFinished(gwlist[i].GongWenID)) //判断班子成员是否都已经完成签收
+                        //    {
+                        //        gwlist[i].ShiFouQianShou = 0;//如果班子成员都签完了，标记为未签收
+                        //        gwlist[i].QianShouQingKuang = "未签收";
+                        //    }
+                        //    else
+                        //    {
+                        //        gwlist[i].ShiFouQianShou = 2;//否则标记为只读只读
+                        //        gwlist[i].QianShouQingKuang = "只读";
+                        //    }
+                        //}
+                        //else //不是段长、书记直接发给中层的，标记为未签收
+                        //{
+                        //    gwlist[i].ShiFouQianShou = 0;
+                        //    gwlist[i].QianShouQingKuang = "未签收";
+                        //}
+
                     }
                     else //签收时间不为空，已签收
                     {
@@ -1882,10 +1877,73 @@ namespace sjbgWebService
             }
         }
 
-        internal static int getGongWenGuiDangCount(int uid, int type, string keyWord, string sTime, string eTime )
+        internal static GongWenList[] GetDuanWenList(int uid,  string keyWord, string sTime, string eTime, int ksxh, int count)
         {
-            string work_no = uid.toWorkNo();
-            DataTable dt = DAL.GetGongWenGuiDangList(work_no, keyWord, sTime, eTime, type);
+
+            //调用数据操作层的函数获取公文列表DataTable
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(uid);
+            if (gwyh == null)
+            {
+                return null;
+            }
+            if (gwyh.RoleID != 21 && gwyh.RoleID != 22) //不是领导不能查看全部段文
+            {
+                return null;
+            }
+            DataTable dt = DAL.GetDuanWenList( keyWord, sTime, eTime);
+
+            //如果获取数据过程错误，返回null
+            if (dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else
+            {
+                //将DataTable转换为GongWenList
+                GongWenList[] gwlist = new GongWenList[ksxh + count - 1 < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
+                for (int i = 0; i < gwlist.Length; i++)
+                {
+                    gwlist[i] = new GongWenList();
+                    gwlist[i].GongWenID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["gwid"]);
+                    gwlist[i].LiuZhuanID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["lzID"]);
+                    gwlist[i].XuHao = i + 1;
+                    gwlist[i].BiaoTi = Convert.ToString(dt.Rows[i + ksxh - 1]["bt"]);
+                    gwlist[i].WenHao = Convert.ToString(dt.Rows[i + ksxh - 1]["wh"]);
+                    gwlist[i].FaSongRen = Convert.ToString(dt.Rows[i + ksxh - 1]["fbrxm"]);
+                    gwlist[i].FaSongShiJian = Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fbrq"]).ToString("yyyy-MM-dd HH:mm:ss");
+                    gwlist[i].JinJi = Convert.ToString(dt.Rows[i + ksxh - 1]["jinji"]);
+                   
+                }
+                return gwlist;
+            }
+        }
+
+        internal static int GetDuanWenCount(int uid,string keyWord, string sTime, string eTime)
+        {
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(uid);
+            if (gwyh == null)
+            {
+                return 0;
+            }
+            if (gwyh.RoleID != 21 && gwyh.RoleID != 22) //不是领导不能查看全部段文
+            {
+                return 0;
+            }
+            DataTable dt = DAL.GetDuanWenList(keyWord, sTime, eTime);
+            if (dt.TableName.Equals("error!"))
+            {
+                return -1;
+            }
+            else
+            {
+                return dt.Rows.Count;
+            }
+        }
+
+        internal static int GetGongWenGuiDangCount(int uid, int type, string keyWord, string sTime, string eTime )
+        {
+            string workNo = uid.ToWorkNo();
+            DataTable dt = DAL.GetGongWenGuiDangList(workNo, keyWord, sTime, eTime, type);
             if (dt.TableName.Equals("error!"))
             {
                 return -1;
@@ -1897,10 +1955,10 @@ namespace sjbgWebService
         }
 
 
-        internal static GongWenGuiDangList[] getGongWenGuiDangList(int uid, int type, string keyWord, string sTime, string eTime, int ksxh, int count)
+        internal static GongWenGuiDangList[] GetGongWenGuiDangList(int uid, int type, string keyWord, string sTime, string eTime, int ksxh, int count)
         {
-            string work_no = uid.toWorkNo();
-            DataTable dt = DAL.GetGongWenGuiDangList(work_no, keyWord, sTime, eTime, type);
+            string workNo = uid.ToWorkNo();
+            DataTable dt = DAL.GetGongWenGuiDangList(workNo, keyWord, sTime, eTime, type);
             if (dt.TableName.Equals("error!"))
             {
                 return null;
@@ -1919,9 +1977,10 @@ namespace sjbgWebService
                     gwlist[i].FaBuRen = Convert.ToString(dt.Rows[i + ksxh - 1]["fbr"]);
                     gwlist[i].FaBuRenXM = Convert.ToString(dt.Rows[i + ksxh - 1]["fbrxm"]);
                     gwlist[i].JinJi = Convert.ToString(dt.Rows[i + ksxh - 1]["jinji"]);
+                    gwlist[i].WenJianLeiXing = Convert.ToString(dt.Rows[i + ksxh - 1]["wjlx"]);
                     gwlist[i].FaBuShiJian = Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fbrq"]).ToString("yyyy-MM-dd HH:mm:ss");
-                    gwlist[i].JieShouRen = Convert.ToString(dt.Rows[i + ksxh - 1]["jsr"]);
-                    gwlist[i].JieShouRenXM = Convert.ToString(dt.Rows[i + ksxh - 1]["jsrxm"]);
+                    //gwlist[i].JieShouRen = Convert.ToString(dt.Rows[i + ksxh - 1]["jsr"]);
+                    //gwlist[i].JieShouRenXM = Convert.ToString(dt.Rows[i + ksxh - 1]["jsrxm"]);
                     int qswc = Convert.ToInt32(dt.Rows[i + ksxh - 1]["ShiFouLiuZhuanWanCheng"]);
                     if (qswc == 1)
                     {
@@ -1936,9 +1995,9 @@ namespace sjbgWebService
             }
         }
 
-        internal static int getGongWenCount(int uid, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype)
+        internal static int GetGongWenCount(int uid, string fsr, int xzid, int lxid, string keyWord, string sTime, string eTime, int gwtype)
         {
-            string jsr = uid.toWorkNo();
+            string jsr = uid.ToWorkNo();
             DataTable dt = DAL.GetGongWenList(jsr, fsr, xzid, lxid, keyWord, sTime, eTime, gwtype);
             if (dt.TableName.Equals("error!"))
             {
@@ -1950,30 +2009,30 @@ namespace sjbgWebService
             }
         }
 
-        internal static INT addNewGongWen2016(int uid, string ht, string dw, string wh, string bt, string zw, string yj, int xzid, int lxid,string jinji, string ip, string jsr, string[] gwfj)
+        internal static INT AddNewGongWen2016(int uid, string ht, string dw, string wh, string bt, string zw, string yj, int xzid, int lxid,string jinji, string ip, string[] jsr, string[] gwfj)
         {
             //工号转换为字符
-            string work_no = uid.toWorkNo();
+            string workNo = uid.ToWorkNo();
 
             //判断参数是否含有非法字符
-            if (!ht.isValidString() || !dw.isValidString() || !wh.isValidString() || !bt.isValidString() || !zw.isValidString() || !yj.isValidString())
+            if (!ht.IsValidString() || !dw.IsValidString() || !wh.IsValidString() || !bt.IsValidString() || !zw.IsValidString() || !yj.IsValidString())
             {
                 return new INT(-1, "文件信息中包含非法字符。");
             }
 
             //调用数据操作层函数添加公文
-            return DAL.AddNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, work_no, jinji, ip, jsr, gwfj);
+            return DAL.AddNewGongWen2016(ht, dw, wh, bt, zw, yj, xzid, lxid, workNo, jinji, ip, jsr, gwfj);
         }
 
         internal static INT SignGongWen2016(int gwid, int lzid, int fsr, string[] jsr, string qsnr, int[] zdybm ,string device,string ip)
         {
-            string workNo = fsr.toWorkNo();
-            GongWenYongHu gwyh = getGongWenYongHuByUid(fsr);
+            string workNo = fsr.ToWorkNo();
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(fsr);
             if (gwyh == null)
             {
                 return new INT(-1, "尚未设置签阅公文权限");
             }
-            GongWen2016 gw = getGongWen2016ById(gwid);
+            GongWen2016 gw = GetGongWen2016ById(gwid);
             
             //if (!zdybm.Equals(null) && zdybm.Length > 0)
             //{
@@ -1988,7 +2047,7 @@ namespace sjbgWebService
             string throwJsr = "";
             List<string> jsrList = jsr.Distinct().ToList();
             jsr = jsrList.ToArray();
-            BuMenFenLei[] bmfl = getBuMenFenLei(fsr, gwyh.RoleID);
+            BuMenFenLei[] bmfl = GetBuMenFenLei(fsr, gwyh.RoleID);
             if (bmfl == null)
             {
                 if (jsrList.Count > 0)
@@ -2028,19 +2087,24 @@ namespace sjbgWebService
                 throwJsr = "舍弃接收人： " + throwJsr;
                 DAL.SignGongWen2016Log(gwid, lzid, workNo, throwJsr);
             }
+            if (ip.Equals(("手机")))
+            {
+                DAL.SignGongWen2016Log(gwid, lzid, workNo, jsr.ToListString());
+
+            }
             return DAL.SignGongWen2016(gwid, lzid, workNo, jsr, gw.BiaoTi, gwyh.XingMing, gwyh.RoleID, qsnr, device, ip);
         }
 
         internal static INT BuGongWen2016(int gwid, int lzid, int fsr, int buid,string[] jsr)
         {
-            string work_no = fsr.toWorkNo();
-            string buyueren = buid.toWorkNo();
-            GongWenYongHu gwyh = getGongWenYongHuByUid(fsr);
+            string workNo = fsr.ToWorkNo();
+            string buyueren = buid.ToWorkNo();
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(fsr);
             if (gwyh == null)
             {
                 return new INT(-1, "尚未设置签阅公文权限");
             }
-            GongWen2016 gw = getGongWen2016ById(gwid);
+            GongWen2016 gw = GetGongWen2016ById(gwid);
             //if (!zdybm.Equals(null) && zdybm.Length > 0)
             //{
             //    DataTable dt = DAL.getZiDingYiBuMenRenYuan(zdybm);
@@ -2052,10 +2116,10 @@ namespace sjbgWebService
             //    jsr = jsr.Concat(zdyjsr).ToArray();
             //}
             jsr = jsr.Distinct().ToArray();
-            return DAL.BuGongWen2016(gwid, lzid, work_no, gwyh.XingMing,gw.BiaoTi, jsr ,buyueren);
+            return DAL.BuGongWen2016(gwid, lzid, workNo, gwyh.XingMing,gw.BiaoTi, jsr ,buyueren);
         }
 
-        internal static INT signGongWen2016Mobile(int gwid, int lzid, int fsr, string jsr, string qsnr)
+        internal static INT SignGongWen2016Mobile(int gwid, int lzid, int fsr, string jsr, string qsnr)
         {
             string[] jsrs = jsr.ToStringList(new string[] { "," });
 
@@ -2063,7 +2127,7 @@ namespace sjbgWebService
         }
 
 
-        internal static GongWenXingZhi[] getGongWenXingZhi()
+        internal static GongWenXingZhi[] GetGongWenXingZhi()
         {
             DataTable dt = DAL.GetGongWenXingZhi();
             if (dt.TableName.Equals("error!"))
@@ -2083,7 +2147,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static GongWenLeiXing[] getGongWenLeiXing()
+        internal static GongWenLeiXing[] GetGongWenLeiXing()
         {
             DataTable dt = DAL.GetGongWenLeiXing();
             if (dt.TableName.Equals("error!"))
@@ -2104,7 +2168,7 @@ namespace sjbgWebService
         }
 
 
-        internal static GongWenYongHu[] getGongWenYongHu(int[] rid)
+        internal static GongWenYongHu[] GetGongWenYongHu(int[] rid)
         {
             DataTable dt = DAL.getGongWenYongHu(rid);
             if (dt.TableName.Equals("error!"))
@@ -2127,10 +2191,10 @@ namespace sjbgWebService
             }
         }
 
-        internal static GongWenYongHu getGongWenYongHuByUid(int uid)
+        internal static GongWenYongHu GetGongWenYongHuByUid(int uid)
         {
-            string work_no = uid.toWorkNo();
-            DataTable dt = DAL.getGongWenYongHu(work_no);
+            string workNo = uid.ToWorkNo();
+            DataTable dt = DAL.getGongWenYongHu(workNo);
             if (dt.TableName.Equals("error!"))
             {
                 return null;
@@ -2153,7 +2217,7 @@ namespace sjbgWebService
         }
 
 
-        internal static GongWen2016 getGongWen2016ById(int gwid)
+        internal static GongWen2016 GetGongWen2016ById(int gwid)
         {
 
             DataTable dt = DAL.GetGongWen2016ById(gwid);
@@ -2196,10 +2260,10 @@ namespace sjbgWebService
             return null;
         }
 
-        internal static GongWenLiuZhuan[] getLiuZhuanXianByLzId(bool sfbr, int lzid)
+        internal static GongWenLiuZhuan[] GetLiuZhuanXianByLzId(bool sfbr,int lzlvl, int lzid)
         {
 
-            DataTable dt = DAL.GetLiuZhuanXianByLzId(sfbr ,lzid);
+            DataTable dt = DAL.GetLiuZhuanXianByLzId(sfbr ,lzlvl ,lzid);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2229,9 +2293,9 @@ namespace sjbgWebService
 
         }
 
-        internal static GongWenLiuZhuan[] getLingDaoPiShi(int uid, int gwid)
+        internal static GongWenLiuZhuan[] GetLingDaoPiShi(int uid, int gwid)
         {
-            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(uid);
             if (gwyh == null) return null;
             if (gwyh.RoleID != 23 && gwyh.RoleID != 24) return null;
             DataTable dt = DAL.GetLingDaoPiShi(gwid);
@@ -2255,9 +2319,9 @@ namespace sjbgWebService
 
         }
 
-        internal static GongWenLiuZhuan[] getSuoYouWeiQian(int uid, int gwid)
+        internal static GongWenLiuZhuan[] GetSuoYouWeiQian(int uid, int gwid)
         {
-            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(uid);
             if (gwyh == null) return null;
             if (gwyh.RoleID != 20) return null;
             DataTable dt = DAL.GetSuoYouWeiQian(gwid);
@@ -2283,38 +2347,38 @@ namespace sjbgWebService
 
         }
 
-        internal static INT updateDuanYu(int id, string newTxt)
+        internal static INT UpdateDuanYu(int id, string newTxt)
         {
             return DAL.UpdateDuanYu(id, newTxt);
         }
-        internal static INT deleteDuanYu(int id)
+        internal static INT DeleteDuanYu(int id)
         {
             return DAL.DeleteDuanYu(id);
         }
-        internal static INT addZdybm(int uid, string dynr)
+        internal static INT AddZdybm(int uid, string dynr)
         {
-            string work_no = uid.toWorkNo();
-            return DAL.AddZdybm(work_no, dynr);
+            string workNo = uid.ToWorkNo();
+            return DAL.AddZdybm(workNo, dynr);
         }
 
-        internal static INT updateZdybm(int id, string newTxt)
+        internal static INT UpdateZdybm(int id, string newTxt)
         {
             return DAL.UpdateZdybm(id, newTxt);
         }
-        internal static INT deleteZdybm(int id)
+        internal static INT DeleteZdybm(int id)
         {
             return DAL.DeleteZdybm(id);
         }
-        internal static INT addDuanYu(int uid, string dynr)
+        internal static INT AddDuanYu(int uid, string dynr)
         {
-            string work_no = uid.toWorkNo();
-            return DAL.AddDuanYu(work_no, dynr);
+            string workNo = uid.ToWorkNo();
+            return DAL.AddDuanYu(workNo, dynr);
         }
 
-        internal static GongWenZiDingYiDuanYu[] getZiDingYiDuanYu(int uid, bool onlyPrivate)
+        internal static GongWenZiDingYiDuanYu[] GetZiDingYiDuanYu(int uid, bool onlyPrivate)
         {
-            string work_no = uid.toWorkNo();
-            DataTable dt = DAL.GetZiDingYiDuanYu(work_no, onlyPrivate);
+            string workNo = uid.ToWorkNo();
+            DataTable dt = DAL.GetZiDingYiDuanYu(workNo, onlyPrivate);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2340,10 +2404,10 @@ namespace sjbgWebService
                 return duanyu;
             }
         }
-        internal static GongWenZiDingYiBuMen[] getZiDingYiBuMen(int uid)
+        internal static GongWenZiDingYiBuMen[] GetZiDingYiBuMen(int uid)
         {
-            string work_no = uid.toWorkNo();
-            DataTable dt = DAL.GetZiDingYiBuMen(work_no);
+            string workNo = uid.ToWorkNo();
+            DataTable dt = DAL.GetZiDingYiBuMen(workNo);
             if (dt.TableName.Equals("error!"))
             {
 
@@ -2365,31 +2429,31 @@ namespace sjbgWebService
 
 
 
-        internal static BuMenFenLei[] getBuMenFenLei(int uid, int rid)
+        internal static BuMenFenLei[] GetBuMenFenLei(int uid, int rid)
         {
-            string work_no = uid.toWorkNo();
-            if (rid == 21 || rid == 22)
+            string workNo = uid.ToWorkNo();
+            if (rid == 20 || rid == 21 || rid == 22)
             {
-                return getBuMenFenLeiLingDao(work_no,rid);
+                return GetBuMenFenLeiLingDao(workNo,rid);
             }
             else if (rid == 23)
             {
-                return getBuMenFenLeiKeShi(work_no,rid);
+                return GetBuMenFenLeiKeShi(workNo,rid);
             }
             else if (rid == 24)
             {
-                return getBuMenFenLeiZhongCeng(work_no,rid);
+                return GetBuMenFenLeiZhongCeng(workNo,rid);
             }
             else return null;
         }
 
 
-        internal static INT setZiDingYiBuMenRenYuan(int zdybmid, string[] user_no)
+        internal static INT SetZiDingYiBuMenRenYuan(int zdybmid, string[] userNo)
         {
-            return DAL.SetZiDingYiBuMenRenYuan(zdybmid, user_no);
+            return DAL.SetZiDingYiBuMenRenYuan(zdybmid, userNo);
         }
 
-        internal static GongWenBuMenRenYuan[] getZiDingYiBuMenRenYuan(int zdybmid,bool added)
+        internal static GongWenBuMenRenYuan[] GetZiDingYiBuMenRenYuan(int zdybmid,bool added)
         {
             DataTable dt = DAL.getZiDingYiBuMenRenYuan(zdybmid, added);
             if (dt.TableName.Equals("error!"))
@@ -2411,7 +2475,7 @@ namespace sjbgWebService
             }
         }
 
-        internal static GongWenBuMenRenYuan[] getBuMenRenYuan(int bmid)
+        internal static GongWenBuMenRenYuan[] GetBuMenRenYuan(int bmid)
         {
             DataTable dt = DAL.GetBuMenRenYuan(bmid);
             if (dt.TableName.Equals("error!"))
@@ -2432,10 +2496,10 @@ namespace sjbgWebService
             }
         }
 
-        internal static BuMenFenLei[] getBuMenFenLeiZhongCeng(string work_no,int rid)
+        internal static BuMenFenLei[] GetBuMenFenLeiZhongCeng(string workNo,int rid)
         {
 
-            DataTable dt = DAL.GetBenBuMenRenYuan(work_no);
+            DataTable dt = DAL.GetBenBuMenRenYuan(workNo);
             if (dt.TableName.Equals("error!"))
             {
                 return null;
@@ -2472,11 +2536,11 @@ namespace sjbgWebService
             }
         }
 
-        internal static BuMenFenLei[] getBuMenFenLeiKeShi(string work_no,int rid)
+        internal static BuMenFenLei[] GetBuMenFenLeiKeShi(string workNo,int rid)
         {
 
-            BuMenFenLei[] bmfl = getBuMenFenLeiZhongCeng(work_no,rid);
-            BuMenFenLei[] bmfl1 = getBuMenFenLeiLingDao(work_no, rid);
+            BuMenFenLei[] bmfl = GetBuMenFenLeiZhongCeng(workNo,rid);
+            BuMenFenLei[] bmfl1 = GetBuMenFenLeiLingDao(workNo, rid);
             if (bmfl != null)
             {
                 bmfl1 = bmfl.Concat(bmfl1.ToList()).ToArray();
@@ -2484,9 +2548,9 @@ namespace sjbgWebService
             return bmfl1;
         }
 
-        internal static BuMenFenLei[] getBuMenFenLeiLingDao(string work_no,int rid)
+        internal static BuMenFenLei[] GetBuMenFenLeiLingDao(string workNo,int rid)
         {
-            if (rid != 21 && rid != 22 && rid != 23) return null;//只有领导有权限
+            if (rid != 21 && rid != 22 && rid != 23 && rid != 20) return null;//只有领导有权限
             DataTable dt = DAL.GetBuMenFenLei(rid);
             if (dt == null) return null;
             if (dt.TableName.Equals("error!"))
@@ -2504,7 +2568,7 @@ namespace sjbgWebService
                     bumen[i].FenLeiMingCheng = Convert.ToString(dt.Rows[i]["flmc"].ToString());
                     bumen[i].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
 
-                    DataTable dtyh = DAL.GetBuMenFenLeiYongHu(rid,work_no, bumen[i].FenLeiID);
+                    DataTable dtyh = DAL.GetBuMenFenLeiYongHu(rid,workNo, bumen[i].FenLeiID);
                     GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dtyh.Rows.Count];
                     for (int j = 0; j < dtyh.Rows.Count; j++)
                     {
@@ -2522,7 +2586,7 @@ namespace sjbgWebService
 
         internal static INT makeCuiBan(int gwid,int rid)
         {
-            GongWen2016 gw = getGongWen2016ById(gwid);
+            GongWen2016 gw = GetGongWen2016ById(gwid);
             if (gw == null)
             {
                 return new INT(-1, "无此公文");
@@ -2532,7 +2596,7 @@ namespace sjbgWebService
 
         internal static INT makeCuiBan(int gwid, string[] jsr)
         {
-            GongWen2016 gw = getGongWen2016ById(gwid);
+            GongWen2016 gw = GetGongWen2016ById(gwid);
             if (gw == null)
             {
                 return new INT(-1, "无此公文");
@@ -2540,9 +2604,9 @@ namespace sjbgWebService
             return DAL.makeCuiBan( jsr, gw.BiaoTi);
         }
 
-        internal static INT addGongWenRenYuan(int uid,string gh, int rid)
+        internal static INT AddGongWenRenYuan(int uid,string gh, int rid)
         {
-            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(uid);
             if (gwyh == null)
             {
                 return new INT(-1, "无权限添加新公文用户。");
@@ -2575,16 +2639,16 @@ namespace sjbgWebService
             {
                 return new INT(-1, "已经是公文用户，不能再次添加");
             }
-            if (getYongHuXinXiByGh(uid,gh) == null)
+            if (GetYongHuXinXiByGh(uid,gh) == null)
             {
                 return new INT(-1, "不是本部门人员，无法添加");
             }
             return DAL.AddGongWenRenYuan(gh, rid);
         }
 
-        internal static INT deleteGongWenRenYuan(int uid, string gh, int rid)
+        internal static INT DeleteGongWenRenYuan(int uid, string gh, int rid)
         {
-            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(uid);
             if (gwyh == null)
             {
                 return new INT(-1, "无权限删除公文用户。");
@@ -2620,9 +2684,9 @@ namespace sjbgWebService
             return DAL.DeleteGongWenRenYuan(gh, rid);
         }
 
-        internal static INT deleteGongWen2016(int uid, int gwid)
+        internal static INT DeleteGongWen2016(int uid, int gwid)
         {
-            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(uid);
             if (gwyh == null)
             {
                 return new INT(-1, "无权限删除公文。");
@@ -2634,9 +2698,9 @@ namespace sjbgWebService
             return DAL.DeleteGongWen2016(uid, gwid);
         }
 
-        internal static GongWenYongHu getYongHuXinXiByGh(int uid,string gh)
+        internal static GongWenYongHu GetYongHuXinXiByGh(int uid,string gh)
         {
-            GongWenYongHu gwyh = getGongWenYongHuByUid(uid);
+            GongWenYongHu gwyh = GetGongWenYongHuByUid(uid);
             if (gwyh == null)
             {
                 return null;
@@ -2666,7 +2730,7 @@ namespace sjbgWebService
             return r;
         }
 
-        internal static INT undoSignGongWen2016(int uid,int lzid)
+        internal static INT UndoSignGongWen2016(int uid,int lzid)
         {
             return DAL.UndoSignGongWen2016(uid,lzid);
         }

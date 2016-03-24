@@ -27,7 +27,7 @@ namespace sjbgWebService.pub
         public GpsData[] getGps(string gps_data)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.getGpsByNum(gps_data);
+            return Bll.GetGpsByNum(gps_data);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]

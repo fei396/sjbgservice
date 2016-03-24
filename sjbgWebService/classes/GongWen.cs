@@ -161,7 +161,7 @@ namespace sjbgWebService.gwxx
         }
         public UserGw(int yhbh)
         {
-            UserGw gw = BLL.getUserGwByUid(yhbh);
+            UserGw gw = Bll.GetUserGwByUid(yhbh);
             Yhbh = gw.Yhbh;
             Ssbm = gw.Ssbm;
             Yhqx = gw.Yhqx;
@@ -174,7 +174,7 @@ namespace sjbgWebService.gwxx
         }
         public UserGw(string yhmc)
         {
-            UserGw gw = BLL.getUserGwByUserName(yhmc);
+            UserGw gw = Bll.GetUserGwByUserName(yhmc);
             Yhbh = gw.Yhbh;
             Ssbm = gw.Ssbm;
             Yhqx = gw.Yhqx;
@@ -242,6 +242,7 @@ namespace sjbgWebService.gwxx
         public string JinJi { get; set; }
         public string QianShouQingKuang { get; set; }
         public int ShiFouCheXiao { get; set; }
+        public string WenJianLeiXing { get; set; }
     }
 
     public class GongWenGuiDangList
@@ -256,7 +257,7 @@ namespace sjbgWebService.gwxx
         public string JieShouRen { get; set; }
         public string JieShouRenXM { get; set; }
         public string FaBuShiJian { get; set; }
-
+        public string WenJianLeiXing { get; set; }
         public string JinJi { get; set; }
         public bool ShiFouLiuZhuanWanCheng { get; set; }
     }

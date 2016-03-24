@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Data.SqlClient;
-using System.Text;
-using System.IO;
 using gwxxService;
+
 public partial class CuiBanGongWen : System.Web.UI.Page
 {
     gwxxService.gwxxWebService s = new gwxxService.gwxxWebService();
@@ -24,6 +15,7 @@ public partial class CuiBanGongWen : System.Web.UI.Page
         if (user == null)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
         }
         if (user.RoleID != 20)
         {
@@ -74,7 +66,7 @@ public partial class CuiBanGongWen : System.Web.UI.Page
             }
 
 
-            getData(gwid, lzid);
+            GetData(gwid, lzid);
 
         }
     }
@@ -82,7 +74,7 @@ public partial class CuiBanGongWen : System.Web.UI.Page
 
 
 
-    private void getData(int gwid, int lzid)
+    private void GetData(int gwid, int lzid)
     {
 
        
@@ -116,15 +108,16 @@ public partial class CuiBanGongWen : System.Web.UI.Page
             }
             
         }
-        bindLiuZhuanData(true,lzid);
+        BindLiuZhuanData(false, 0,lzid);
     }
 
-    private void bindLiuZhuanData(bool sfbr ,int lzid)
+    private void BindLiuZhuanData(bool sfbr, int lzlvl, int lzid)
     {
-        gwxxService.GongWenLiuZhuan[] gwlz = s.getLiuZhuanXian(sfbr ,lzid);
+        gwxxService.GongWenLiuZhuan[] gwlz = s.getLiuZhuanXian(sfbr, lzlvl, lzid);
 
         gvList.DataSource = gwlz;
         gvList.DataBind();
+        if (gvList.HeaderRow == null) return;
         HyperLink hylSuoYouWeiQian = gvList.HeaderRow.FindControl("hylSuoYouWeiQian") as HyperLink;
         if (hylSuoYouWeiQian != null)
         {
@@ -170,7 +163,7 @@ public partial class CuiBanGongWen : System.Web.UI.Page
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)
     {
         int lzid = Convert.ToInt32( gvList.SelectedValue.ToString());
-        bindLiuZhuanData(false,lzid);
+        BindLiuZhuanData(false, - 1,lzid);
     }
     protected void hylSuoYouWeiQian_Click(object sender, EventArgs e)
     {

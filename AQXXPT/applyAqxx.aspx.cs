@@ -29,7 +29,7 @@ public partial class applyAqxx : System.Web.UI.Page
         {
             Response.Redirect("error.aspx?errCode=请通过正确方式登录本站");
         }
-        if (s == null || s == "")
+        if (string.IsNullOrEmpty(s))
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
@@ -132,7 +132,7 @@ public partial class applyAqxx : System.Web.UI.Page
 
         buMens = buMens.Substring(0, buMens.Length - 1);
         string fileSender = Session["user"] as string;
-        if (fileSender == null || fileSender == "")
+        if (string.IsNullOrEmpty(fileSender))
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
             return;
@@ -141,12 +141,12 @@ public partial class applyAqxx : System.Web.UI.Page
         string auditor = ddlAuditor.SelectedItem.Value;
         string setTime = txtSetTime.Text;
         string lingDaos = "";
-        if (cbLeader0001.Checked) lingDaos += "0001,";
-        if (cbLeader0002.Checked) lingDaos += "0002,";
-        if (cbLeader0007.Checked) lingDaos += "0007,";
-        if (cbLeader0008.Checked) lingDaos += "0008,";
-        if (cbLeader7034.Checked) lingDaos += "7034,";
-        if (!lingDaos.Equals("")) lingDaos = lingDaos.Substring(0, lingDaos.Length - 1);
+        //if (cbLeader0001.Checked) lingDaos += "0001,";
+        //if (cbLeader0002.Checked) lingDaos += "0002,";
+        //if (cbLeader0007.Checked) lingDaos += "0007,";
+        //if (cbLeader0008.Checked) lingDaos += "0008,";
+        //if (cbLeader0006.Checked) lingDaos += "0006,";
+        //if (!lingDaos.Equals("")) lingDaos = lingDaos.Substring(0, lingDaos.Length - 1);
         if (auditor.Equals("0000"))
         {
             auditor = "3974";
@@ -199,7 +199,7 @@ public partial class applyAqxx : System.Web.UI.Page
         cbLeader0002.Checked = cbLeaderAll.Checked;
         cbLeader0007.Checked = cbLeaderAll.Checked;
         cbLeader0008.Checked = cbLeaderAll.Checked;
-        cbLeader7034.Checked = cbLeaderAll.Checked;
+        cbLeader0006.Checked = cbLeaderAll.Checked;
     }
 }
 

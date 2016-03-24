@@ -34,7 +34,7 @@ namespace sjbgWebService
             {
                 return null;
             }
-            return BLL.getZbPersons(Convert.ToDateTime(date), isNight);
+            return Bll.GetZbPersons(Convert.ToDateTime(date), isNight);
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -50,7 +50,7 @@ namespace sjbgWebService
             {
                 return null;
             }
-            return BLL.getZbLdps(Convert.ToDateTime(date));
+            return Bll.GetZbLdps(Convert.ToDateTime(date));
         }
     }
 }

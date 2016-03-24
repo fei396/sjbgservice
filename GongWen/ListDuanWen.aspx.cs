@@ -4,7 +4,7 @@ using gwxxService;
 
 
 
-public partial class ListGongWen : System.Web.UI.Page
+public partial class ListDuanWen : System.Web.UI.Page
 {
     readonly gwxxWebService _s = new gwxxWebService();
     private static int _cpage;
@@ -19,46 +19,21 @@ public partial class ListGongWen : System.Web.UI.Page
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
             return;
         }
-        int type = Convert.ToInt32(Request["type"]);
-        if (type == 0)
-        {
-            tableChaXun.Visible = false;
-        }
-        if (user.RoleID == 21 || user.RoleID == 22)
-        {
-            tdLeiXing1.Visible = false;
-            tdLeiXing2.Visible = false;
-        }
-        else
-        {
-            tdLeiXing1.Visible = true;
-            tdLeiXing2.Visible = true;
-        }
+
+
         if (!IsPostBack)
         {
             _cpage = 1;
-            BindLeiXing();
             GetData(_cpage);
             
         }
     }
 
-    private void BindLeiXing()
-    {
-        GongWenLeiXing[] gwlx = _s.getLeiXing();
-        ddlLeiXing.DataSource = gwlx;
-        ddlLeiXing.DataTextField = "LXMC";
-        ddlLeiXing.DataValueField = "LXID";
-        //ddlLeiXing.Items.Clear();
-        ddlLeiXing.DataBind();
-        ddlLeiXing.SelectedValue = "1";//默认选择路局文
-    }
 
 
     private void GetData(int page)
     {
-        int lxid = Convert.ToInt32(ddlLeiXing.SelectedValue);
-        GetData(page, "", "", "" ,lxid);
+        GetData(page, "", "", "");
     }
 
 
@@ -69,7 +44,7 @@ public partial class ListGongWen : System.Web.UI.Page
     /// <param name="key">关键字</param>
     /// <param name="sTime">开始日期</param>
     /// <param name="eTime">截至日期</param>
-    private void GetData(int page, string key, string sTime, string eTime ,int lxid)
+    private void GetData(int page, string key, string sTime, string eTime )
     {
 
         //判断用户是否合法
@@ -81,17 +56,6 @@ public partial class ListGongWen : System.Web.UI.Page
             return;
         }
 
-        //从request获取公文类型，0是未签公文，1是所有公文
-        int gwtype;
-        try
-        {
-            gwtype = Convert.ToInt32(Request["type"]);
-        }
-        catch
-        {
-            gwtype = 0;
-        }
-        
         
         //设置webservice传输header格式
         _s.SjbgSoapHeaderValue = Security.getSoapHeader();
@@ -99,10 +63,10 @@ public partial class ListGongWen : System.Web.UI.Page
 
         int uid = Convert.ToInt32(user.GongHao);
         //获取公文总数
-        int allCount = _s.getGongWenCount(uid, "", key, sTime, eTime, gwtype ,lxid);
+        int allCount = _s.getDuanWenCount(uid, key, sTime, eTime);
 
         //获取公文列表
-        GongWenList[] gwlist = _s.getGongWenList(uid, "", key, sTime, eTime, gwtype, lxid, (page - 1) * PageCount + 1, PageCount);
+        GongWenList[] gwlist = _s.getDuanWenList(uid, key, sTime, eTime,(page - 1) * PageCount + 1, PageCount);
 
         //设置最大页数和当前页数
         _maxPage = (int)((allCount - 0.1) / PageCount) + 1;
@@ -197,8 +161,7 @@ public partial class ListGongWen : System.Web.UI.Page
 
     protected void btnChaXun_Click(object sender, EventArgs e)
     {
-        int lxid = Convert.ToInt32(ddlLeiXing.SelectedValue);
-        GetData(1, txtBiaoTi.Text.Trim(), txtStart.Text.Trim(), txtEnd.Text.Trim() ,lxid);
+        GetData(1, txtBiaoTi.Text.Trim(), txtStart.Text.Trim(), txtEnd.Text.Trim());
     }
     protected void gvList_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Configuration;
 using System.Collections;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -16,9 +17,9 @@ using System.Text;
 
 public partial class AddNew : System.Web.UI.Page
 {
-    gwxxWebService s = new gwxxWebService();
+    gwxxWebService _s = new gwxxWebService();
     //youjianService y = new youjianService();
-    private StringBuilder sb = new StringBuilder();//用来获取上传时出错信息
+    private StringBuilder _sb = new StringBuilder();//用来获取上传时出错信息
     protected void Page_Load(object sender, EventArgs e)
     {
         //判断用户是否合法
@@ -26,6 +27,7 @@ public partial class AddNew : System.Web.UI.Page
         if (user == null)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
         }
         if (user.RoleID != 20)
         {
@@ -35,26 +37,27 @@ public partial class AddNew : System.Web.UI.Page
         if (!IsPostBack)
         {
             //初始化页面
-            initPage();
+            InitPage(user.BuMenID);
             
         }
     }
-    void initPage()
+
+    private void InitPage(int buMenId)
     {
 
         //设置webservice传输header格式
-        s.SjbgSoapHeaderValue = Security.getSoapHeader();
+        _s.SjbgSoapHeaderValue = Security.getSoapHeader();
         Security.SetCertificatePolicy();
 
 
         //绑定公文类型
-        GongWenLeiXing[] gwlx = s.getLeiXing();
+        GongWenLeiXing[] gwlx = _s.getLeiXing();
         ddlLeiXing.DataSource = gwlx;
         ddlLeiXing.DataTextField = "LXMC";
         ddlLeiXing.DataValueField = "LXID";
         //ddlLeiXing.Items.Clear();
         ddlLeiXing.DataBind();
-        
+        ddlLeiXing.SelectedValue = "1";//默认选择路局文
         
         //for (int i = 0; i < gwlx.Length; i++)
         //{
@@ -63,7 +66,7 @@ public partial class AddNew : System.Web.UI.Page
         //}
 
         //绑定公文性质
-        GongWenXingZhi[] gwxz = s.getXingZhi();
+        GongWenXingZhi[] gwxz = _s.getXingZhi();
         //ddlXingZhi.Items.Clear();
         ddlXingZhi.DataSource = gwxz;
         ddlXingZhi.DataTextField = "XZMC";
@@ -76,11 +79,21 @@ public partial class AddNew : System.Web.UI.Page
         //}
 
         //绑定送阅领导
-        GongWenYongHu[] lingdao = s.getLingDao(new int[]{21});
+        GongWenYongHu[] lingdao = _s.getLingDao(new int[]{21});
         ddlLingDao.DataSource = lingdao;
         ddlLingDao.DataTextField = "XingMing";
         ddlLingDao.DataValueField = "GongHao";
         ddlLingDao.DataBind();
+        if (buMenId == 5) //党群办公文处理员
+        {
+            ddlXingZhi.SelectedValue = "2";
+            ddlLingDao.SelectedValue = "0002";
+        }
+        else
+        {
+            ddlLeiXing.SelectedValue = "1";
+            ddlLingDao.SelectedValue = "0001";
+        }
         //ddlLingDao.Items.Clear();
         //for (int i = 0; i < lingdao.Length; i++)
         //{
@@ -95,7 +108,7 @@ public partial class AddNew : System.Web.UI.Page
         txtWh.Text = "";
         txtYj.Text = "";
         txtZw.Text = "";
-        
+        ddlLeiXing_SelectedIndexChanged(null,null);
     }
 
 
@@ -107,10 +120,11 @@ public partial class AddNew : System.Web.UI.Page
         if (user == null)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
         }
 
         //获取附件信息
-        string[] files =uploadfile();
+        string[] files =UploadFile();
         if (files == null)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "uploadError", "alert('上传文件出错!')", true);
@@ -126,11 +140,26 @@ public partial class AddNew : System.Web.UI.Page
         string zw = txtZw.Text;
         int lxid = Convert.ToInt32(ddlLeiXing.SelectedValue);
         int xzid = Convert.ToInt32(ddlXingZhi.SelectedValue);
+        List<string> jsrList  = new List<string>();
+        if (lxid == 1) //路局文
+        {
+            jsrList.Add(ddlLingDao.SelectedValue);
+        }
+        else // if (lxid == 2)//段发文
+        {
+            foreach (ListItem item in  lbBuMen.Items)
+            {
+                if (item.Selected)
+                {
+                    jsrList.Add(item.Value);
+                }
+            }
+        }
         string yj = txtYj.Text;
-        string jsr = ddlLingDao.SelectedValue;
+        string[] jsr = jsrList.ToArray();
         string jinji = ddlJinJi.SelectedValue;
         //调用web服务添加公文
-        INT i = s.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, jinji, pbModule.getIP(), jsr, files);
+        INT i = _s.addNewGongWen2016(uid, ht, dw, wh, bt, zw, yj, xzid, lxid, jinji, pbModule.getIP(), jsr, files);
         if (i.Number != 1)
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "发布公文出错", "alert('" + i.Message + "')", true);
@@ -139,7 +168,7 @@ public partial class AddNew : System.Web.UI.Page
         else
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "发布公文成功", "alert('发布公文成功')", true);
-            initPage();
+            InitPage(user.BuMenID);
         }
     }
 
@@ -147,10 +176,10 @@ public partial class AddNew : System.Web.UI.Page
     /// 获取javascript控件上传的附件
     /// </summary>
     /// <returns></returns>
-    private string[] uploadfile()
+    private string[] UploadFile()
     {
         HttpFileCollection files = HttpContext.Current.Request.Files;//获取上传控件的个数  
-        if (haveFile(files))//存在上传文件  
+        if (HaveFile(files))//存在上传文件  
         {
             if (FindError(files))//上传文件不存在错误  
             {
@@ -193,7 +222,7 @@ public partial class AddNew : System.Web.UI.Page
             }
             else
             {
-                Page.ClientScript.RegisterStartupScript(GetType(), "fileError", string.Format("fileError('{0}')", sb.ToString()), true);
+                Page.ClientScript.RegisterStartupScript(GetType(), "fileError", string.Format("fileError('{0}')", _sb.ToString()), true);
                 return null;
             }
         }
@@ -211,7 +240,7 @@ public partial class AddNew : System.Web.UI.Page
     /// </summary>  
     /// <param name="files"></param>  
     /// <returns></returns>  
-    private bool haveFile(HttpFileCollection files)
+    private bool HaveFile(HttpFileCollection files)
     {
         bool flag = false;
         for (int i = 0; i < files.Count; i++)
@@ -242,23 +271,61 @@ public partial class AddNew : System.Web.UI.Page
                 string fex = Path.GetExtension(path);//获取上传文件的后缀名  
                 if (files[i].ContentLength / 102400 > 1024)//上传文件大于4M  
                 {
-                    sb.Append(fileName + "的大小超过100M!");
+                    _sb.Append(fileName + "的大小超过100M!");
                     break;
                 }
                 if (fex == ".exe" || fex == ".EXE") //上传文件是exe文件  
                 {
-                    sb.Append(fileName + "的格式不正确!");
+                    _sb.Append(fileName + "的格式不正确!");
                     break;
                 }
             }
         }
-        if (sb.ToString() == "") { flag = true; }//上传文件没有错误  
+        if (_sb.ToString() == "") { flag = true; }//上传文件没有错误  
         return flag;
     }
 
     protected void btnReset_Click(object sender, EventArgs e)
     {
-        initPage();
+        GongWenYongHu user = Session["user"] as GongWenYongHu;
+        if (user == null)
+        {
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
+        }
+        InitPage(user.BuMenID);
+    }
+
+    protected void ddlLeiXing_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (Convert.ToInt32(ddlLeiXing.SelectedValue) == 1) //路局文
+        {
+            ddlLingDao.Visible = true;
+            lbBuMen.Visible = false;
+            
+        }
+        else
+        {
+            ddlLingDao.Visible = false;
+            lbBuMen.Visible = true;
+            GongWenYongHu user = Session["user"] as GongWenYongHu;
+            if (user == null)
+            {
+                Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+                return;
+            }
+            int uid = Convert.ToInt32(user.GongHao);
+            
+            BuMenFenLei[] bmfl = _s.getBuMenFenLei(uid, user.RoleID);
+            lbBuMen.Items.Clear();
+            foreach (BuMenFenLei fenLei in bmfl)
+            {
+                foreach (GongWenBuMenRenYuan ry in fenLei.RenYuan)
+                {
+                    lbBuMen.Items.Add(new ListItem(ry.XianShiMingCheng,ry.GongHao));
+                }
+            }
+        }
     }
 }
 

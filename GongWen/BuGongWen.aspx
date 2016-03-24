@@ -17,10 +17,7 @@
                 document.getElementById("txtQianShouNeiRong").innerHTML = y.substring(y, y.length) + x;
             }
         }
-        function check()
-        {
-            document.get
-        }
+
 
     </script>
     <style type="text/css">

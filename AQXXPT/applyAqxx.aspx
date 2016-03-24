@@ -73,7 +73,7 @@
                     </asp:ListBox>
                 </td>
             </tr>
-            <tr>
+            <tr runat="server" id="trLingDao" visible="false">
                 <td style="height: 26px">
                    抄送段领导：
                 </td>
@@ -83,7 +83,7 @@
                         oncheckedchanged="cbLeaderAll_CheckedChanged" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0001" runat="server" Text="李思博" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
                         ID="cbLeader0002" Text="蔡伟杰" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox ID="cbLeader0008" Text="张延召" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
                             ID="cbLeader0007" Text="刘喜生" runat="server" />&nbsp;&nbsp;&nbsp; <asp:CheckBox
-                            ID="cbLeader7034" Text="张力" runat="server" />
+                            ID="cbLeader0006" Text="张力" runat="server" />
                 </td>
             </tr>
             <tr>

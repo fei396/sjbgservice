@@ -11,17 +11,14 @@
         function qing(x) {
             var y = document.getElementById("txtQianShouNeiRong").value;
             //document.getElementById("txt_pishi").innerText=q+x;     
-            if (y.charAt(y.length - 1) == "¡¢") {
+            if ("¡¢" === y.charAt(y.length - 1)) {
                 document.getElementById("txtQianShouNeiRong").innerHTML = y.substring(y, y.length - 1) + x;
             }
             else {
                 document.getElementById("txtQianShouNeiRong").innerHTML = y.substring(y, y.length) + x;
             }
         }
-        function check()
-        {
-            document.get
-        }
+
 
     </script>
     <style type="text/css">
@@ -34,7 +31,7 @@
 <body style="background-color: #F7Feff" align="center">
     <form id="form1" runat="server" align="center">
 
-        <hr align="center" color="#00cc00" noshade="noshade" width="96%" />
+        <hr align="center" color="#00cc00" noshade="noshade" width="96%"></hr>
         <div align="center">
             <table width="80%">
                 <tr>

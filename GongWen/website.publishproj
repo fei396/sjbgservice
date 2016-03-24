@@ -19,7 +19,7 @@ website.publishproj
     <ProjectGuid>{124642b5-575d-4c35-a2fb-e64bd03ad1ea}</ProjectGuid>
     <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
     <SourceWebVirtualPath>/GongWen</SourceWebVirtualPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <SourceWebProject>http://localhost:47077</SourceWebProject>
     <SourceWebMetabasePath>/IISExpress/7.5/LM/W3SVC/2/ROOT</SourceWebMetabasePath>
   </PropertyGroup>

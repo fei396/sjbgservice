@@ -22,7 +22,7 @@
                 var html = '<span style="font-size: larger">附件' + i + ':</span><br/><input accept=".doc,.docx,.pdf" type="file" runat="server" style="font-size: larger; color: #FF0000;" /><br />';
 
                 var o = document.getElementById('MyFile');
-                o.insertAdjacentHTML("beforeEnd", html)
+                o.insertAdjacentHTML("beforeEnd", html);
 
                 i++;
             }
@@ -107,10 +107,10 @@
                     </td>
                     </tr>
                <tr style="height: 50px">
-                    <td align="right" width="10%">文件类型：
+                    <td align="right" width="10%" >文件类型：
                     </td>
                     <td align="center" valign="middle" width="20%">
-                        <asp:DropDownList ID="ddlLeiXing" runat="server">
+                        <asp:DropDownList ID="ddlLeiXing" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlLeiXing_SelectedIndexChanged">
                         </asp:DropDownList>
                     </td>
                     <td align="right" width="10%">文件性质：
@@ -121,7 +121,7 @@
                     </td>
                     
                 </tr>
-                <tr style="height: 50px">
+                <tr style="height: 150px">
                     <td align="right" width="10%">紧急程度：
                     </td>
                     <td align="center" valign="middle">
@@ -136,11 +136,12 @@
                     <td align="center" valign="middle">
                         <asp:DropDownList ID="ddlLingDao" runat="server">
                         </asp:DropDownList>
+                        <asp:ListBox ID="lbBuMen" runat="server" Height="140px" Width="80%" SelectionMode="Multiple"></asp:ListBox>   
                     </td>
                     </tr>
+                <%--  --%>
                 <tr>
-
-                    <td style="height: 50" colspan="6" width="100%" align="center">
+                    <td style="height: 50px" colspan="6" width="100%" align="center">
                         <asp:Button ID="btnAdd" runat="server" Text="确  定" OnClientClick="return confirm('你确定发布该公文吗？');" OnClick="AddButton_Click" />
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <asp:Button ID="btnReset" runat="server" Text="取  消" OnClick="btnReset_Click" />

@@ -15,7 +15,7 @@
         <table runat="server" id="tableChaXun" align="center" width="80%">
             <tr>
 
-                <td align="left" valign="middle" width="10%">关键字：</td><td width="20%"><asp:TextBox ID="txtBiaoTi" runat="server" width="90%"></asp:TextBox>
+                <td align="left" valign="middle" width="10%">文号或标题关键字：</td><td width="20%"><asp:TextBox ID="txtBiaoTi" runat="server" width="90%"></asp:TextBox>
                 </td>
                 <td align="left" valign="middle" width="10%">开始时间：</td><td width="20%"><asp:TextBox ID="txtStart" runat="server" width="90%" onClick="WdatePicker()"></asp:TextBox>
                 </td>
@@ -67,7 +67,8 @@
                 <EditRowStyle BackColor="Azure" />
                 <Columns>
                     <asp:BoundField DataField="XuHao" HeaderText="序号" />
-                    <asp:BoundField DataField="JieShouRenXM" HeaderText="接收人" />
+                    <asp:BoundField DataField="WenJianLeiXing" HeaderText="文件类型" />
+                    <%--<asp:BoundField DataField="JieShouRenXM" HeaderText="接收人" />--%>
                     <asp:BoundField DataField="WenHao" HeaderText="文号" />
                     <asp:BoundField DataField="BiaoTi" HeaderText="标题" />
                     <asp:BoundField DataField="FaBuShiJian" HeaderText="发布时间" />

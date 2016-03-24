@@ -19,7 +19,7 @@ public partial class login : System.Web.UI.Page
     {
         XxjwdSSO.XxjwdSSO sso = new XxjwdSSO.XxjwdSSO(Request);
         string code = Request["code"];
-        if (code == null || code == "")
+        if (string.IsNullOrEmpty(code))
         {
             Response.Redirect("error.aspx?errcode=请通过正当途径登陆本网站");
             return;

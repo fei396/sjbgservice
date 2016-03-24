@@ -49,7 +49,7 @@ public partial class ViewGongWen : System.Web.UI.Page
             if (rid == 21 || rid == 22)
             {
                 tableZdybm.Visible = true;
-                bumen(uid);
+                Bumen(uid);
                 lblYiJian.Visible = true;
             }
             else
@@ -79,14 +79,14 @@ public partial class ViewGongWen : System.Web.UI.Page
                 tableQianShou.Visible = true;
             }
 
-            List<string> jsr = new System.Collections.Generic.List<string>();
+            List<string> jsr = new List<string>();
             Session["jsr"] = jsr;
             //zdybm = new System.Collections.Generic.List<int>();
             //s.SjbgSoapHeaderValue = Security.getSoapHeader();
             //Security.SetCertificatePolicy();
 
             
-            getData(gwid, lzid,bmfl);
+            GetData(gwid, lzid,bmfl);
         }
     }
 
@@ -128,7 +128,7 @@ public partial class ViewGongWen : System.Web.UI.Page
 
 
 
-    private void bumen(int uid)
+    private void Bumen(int uid)
     {
         gwxxService.GongWenZiDingYiBuMen[] zdybm = s.getZiDingYiBuMen(uid);
         if (zdybm.Equals(null))
@@ -187,7 +187,7 @@ public partial class ViewGongWen : System.Web.UI.Page
         //}
     }
 
-    private void getData(int gwid, int lzid ,BuMenFenLei[] bmfl)
+    private void GetData(int gwid, int lzid ,BuMenFenLei[] bmfl)
     {
 
        
@@ -226,12 +226,23 @@ public partial class ViewGongWen : System.Web.UI.Page
  
         gvListBuMen.DataSource = bmfl;
         gvListBuMen.DataBind();
-        bindLiuZhuanData(true,lzid);
+        BindLiuZhuanData(true, 0 ,lzid);
     }
 
-    private void bindLiuZhuanData(bool sfbr ,int lzid)
+    private void BindLiuZhuanData(bool sfbr ,int lzlvl,int lzid)
     {
-        gwxxService.GongWenLiuZhuan[] gwlz = s.getLiuZhuanXian(sfbr ,lzid);
+        int duanwen;
+        try
+        {
+            duanwen = Convert.ToInt32(Request["duanwen"]);
+
+        }
+        catch (Exception ex)
+        {
+            duanwen = 0;
+        }
+        if (duanwen != 0) sfbr = false;
+        gwxxService.GongWenLiuZhuan[] gwlz = s.getLiuZhuanXian(sfbr ,lzlvl ,lzid);
 
         gvList.DataSource = gwlz;
         gvList.DataBind();
@@ -242,7 +253,6 @@ public partial class ViewGongWen : System.Web.UI.Page
         BuMenFenLei[] bmfl = Session["bmfl"] as BuMenFenLei[];
         if (bmfl == null) return null;
         return bmfl[index].RenYuan;
-
     }
 
 
@@ -487,7 +497,7 @@ public partial class ViewGongWen : System.Web.UI.Page
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)
     {
         int lzid = Convert.ToInt32( gvList.SelectedValue.ToString());
-        bindLiuZhuanData(false,lzid);
+        BindLiuZhuanData(true, - 1,lzid);
     }
     protected void hyLinkLingDaoPiShi_Click(object sender, EventArgs e)
     {

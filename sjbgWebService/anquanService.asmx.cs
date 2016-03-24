@@ -27,7 +27,7 @@ namespace sjbgWebService
         public CjcxData[] getCjcx(string cjcx_data)
         {
             //if (!sjbgHeader.checkValid()) return null;
-            return BLL.getCjcxByNum(cjcx_data);
+            return Bll.GetCjcxByNum(cjcx_data);
         }
         //
 
@@ -37,7 +37,7 @@ namespace sjbgWebService
         {
 
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.getBookNr(id);
+            return Bll.GetBookNr(id);
 
         }
 
@@ -58,7 +58,7 @@ namespace sjbgWebService
         public BookNameData[] getBookName(string bookname_data)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.getBookName(bookname_data);
+            return Bll.GetBookName(bookname_data);
         }
     }
 

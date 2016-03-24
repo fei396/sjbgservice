@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
     <title></title>
-<script language="javascript" type="text/javascript" src="js/WdatePicker.js"  charset="gb2312"></script>
+    <script language="javascript" type="text/javascript" src="js/WdatePicker.js" charset="gb2312"></script>
     <link href="css/reset.css" rel="stylesheet" type="text/css" />
     <link href="css/common.css" rel="stylesheet" type="text/css" />
 </head>
@@ -13,28 +13,42 @@
 
         <hr align="center" color="#00cc00" noshade="noshade" width="96%" />
         <table runat="server" id="tableChaXun" align="center" width="80%">
+            
             <tr>
+                
+                <td  id="tdLeiXing1" runat="server" align="left" valign="middle" width="10%">公文类型：</td>
+                <td width="15%" id="tdLeiXing2" runat="server">
+                    <asp:DropDownList ID="ddlLeiXing" runat="server">
+                    </asp:DropDownList>
 
-                <td align="left" valign="middle" width="10%">关键字：</td><td width="15%"><asp:TextBox ID="txtBiaoTi" runat="server" width="90%"></asp:TextBox>
                 </td>
-                <td align="left" valign="middle" width="15%">开始日期：</td><td width="15%"><asp:TextBox ID="txtStart" runat="server" width="90%" onClick="WdatePicker()"></asp:TextBox>
-                </td>
-                <td align="left" valign="middle" width="15%">截至日期：</td><td width="15%"><asp:TextBox ID="txtEnd" runat="server" width="90%" onClick="WdatePicker()"></asp:TextBox>
-                </td>
-                <td align="center">
-                    <asp:Button ID="btnChaXun" runat="server" Text="查  询" OnClick="btnChaXun_Click" /></td>
+ 
+            <td align="left" valign="middle" width="15%">文号或标题关键字：</td>
+            <td width="15%">
+                <asp:TextBox ID="txtBiaoTi" runat="server" Width="90%"></asp:TextBox>
+            </td>
+            <td align="left" valign="middle" width="10%">开始日期：</td>
+            <td width="15%">
+                <asp:TextBox ID="txtStart" runat="server" Width="90%" onClick="WdatePicker()"></asp:TextBox>
+            </td>
+            <td align="left" valign="middle" width="10%">截至日期：</td>
+            <td width="15%">
+                <asp:TextBox ID="txtEnd" runat="server" Width="90%" onClick="WdatePicker()"></asp:TextBox>
+            </td>
+            <td align="center">
+                <asp:Button ID="btnChaXun" runat="server" Text="查  询" OnClick="btnChaXun_Click" /></td>
             </tr>
   
         </table>
-        
+
         <hr align="center" color="#00cc00" noshade="noshade" width="96%" />
-        
+
         <div align="center">
             <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False"
                 BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4"
-                ForeColor="#333333" Width="90%" 
-                PageSize="15" OnRowDeleting="gvList_RowDeleting"  DataKeyNames="LiuZhuanID">
-                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White"  />
+                ForeColor="#333333" Width="90%"
+                PageSize="15" OnRowDeleting="gvList_RowDeleting" DataKeyNames="LiuZhuanID">
+                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                 <PagerTemplate>
                     <%--  <table width="100%">
                 <tr>
@@ -60,9 +74,8 @@
                 </PagerTemplate>
                 <PagerStyle HorizontalAlign="Center" />
                 <EmptyDataTemplate>
-         
                     当前没有新的待办公文，您可以<a href="ListGongWen.aspx?type=1">查看全部公文</a>
-         
+
 
                 </EmptyDataTemplate>
                 <SelectedRowStyle BackColor="#6699CC" Font-Bold="True" ForeColor="#333333" />

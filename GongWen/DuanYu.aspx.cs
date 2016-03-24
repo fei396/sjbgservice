@@ -255,6 +255,7 @@ public partial class DuanYu : System.Web.UI.Page
 
         }
         else
+
         {
             Page.ClientScript.RegisterStartupScript(GetType(), "删除失败", "alert('删除自定义短语失败：" + result.Message + "')", true);
         }
