@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace aqxxptSMSservice
+﻿namespace aqxxptSMSservice
 {
 	class ApiInfo
 	{
@@ -22,7 +17,7 @@ namespace aqxxptSMSservice
             DataBase = "mas";
         }
 
-        public void initInfo()
+        public void InitInfo()
         {
             IpAddress = "10.99.81.73";
             UserName = "xxjwd";

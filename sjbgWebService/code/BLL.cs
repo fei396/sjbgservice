@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data;
 using sjbgWebService.gwxx;
-using sjbgWebService.pub;
 using sjbgWebService.xwxx;
 using System.IO;
 using System.Web.Script.Serialization;
@@ -55,7 +53,7 @@ namespace sjbgWebService
 
         public static string[] ToStringList( this string str ,string[] separator)
         {
-            if (str.IndexOf(",") > 0)
+            if (str.IndexOf(",", StringComparison.Ordinal) > 0)
             {
                 return str.Split(separator, StringSplitOptions.RemoveEmptyEntries);
             }
@@ -763,7 +761,7 @@ namespace sjbgWebService
             i = DAL.InsertRegisterCode(ri.WorkNo, ri.Mobile, code, ri.UniqueCode);
             if (i.Number == 1)
             {
-                return DAL.sendMobileMessage(ri.WorkNo, MakeRegisterMobileMessageContent(code));
+                return DAL.SendMobileMessage(ri.WorkNo, MakeRegisterMobileMessageContent(code));
 
             }
             else
@@ -1656,11 +1654,11 @@ namespace sjbgWebService
             DataTable dt = new DataTable();
             if (xxid == 0)
             {
-                dt = DAL.getAqxxptBm();
+                dt = DAL.GetAqxxptBm();
             }
             else
             {
-                dt = DAL.getAqxxptBm(xxid);
+                dt = DAL.GetAqxxptBm(xxid);
             }
             if (!dt.TableName.Equals("getAqxxptBm")) return null;
             Department[] depts = new Department[dt.Rows.Count];
@@ -1733,24 +1731,28 @@ namespace sjbgWebService
                 return new AqxxInfo[] { ai };
             }
 
-            DataTable dt = new DataTable();
-            dt = DAL.GetAqxxInfo(user.UserDept, 0);
+            DataTable dt = DAL.GetAqxxInfo(user.UserDept, 0);
 
             if (!dt.TableName.Equals("getAqxxInfo")) return null;
             AqxxInfo[] ais = new AqxxInfo[ksxh + count < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
             for (int i = 0; i < ais.Length; i++)
             {
-                ais[i] = new AqxxInfo();
-                ais[i].XXID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["xxid"]);
-                ais[i].Title = Convert.ToString(dt.Rows[i + ksxh - 1]["title"]);
-                ais[i].Sender = Convert.ToString(dt.Rows[i + ksxh - 1]["sender"]);
-                ais[i].SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendtime"]);
+                ais[i] = new AqxxInfo
+                {
+                    
+                    XXID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["xxid"]),
+                    Title = Convert.ToString(dt.Rows[i + ksxh - 1]["title"]),
+                    Sender = Convert.ToString(dt.Rows[i + ksxh - 1]["sender"]),
+                    SendTime = Convert.ToString(dt.Rows[i + ksxh - 1]["sendtime"]),
+                    ReadCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["readCount"]),
+                    SendCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["sendCount"]),
+                    Status = Convert.ToString(dt.Rows[i + ksxh - 1]["Status"]),
+                    Auditor = Convert.ToString(dt.Rows[i + ksxh - 1]["Auditor"]),
+                    AuditTime = Convert.ToString(dt.Rows[i + ksxh - 1]["AuditTime"]),
+                    SendingCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["sendingCount"]),
+                    FailCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["failCount"])
+                };
                 //ais[i].Content = Convert.ToString(dt.Rows[i+ ksxh - 1]["txt"]);
-                ais[i].ReadCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["readCount"]);
-                ais[i].SendCount = Convert.ToInt32(dt.Rows[i + ksxh - 1]["sendCount"]);
-                ais[i].Status = Convert.ToString(dt.Rows[i + ksxh - 1]["Status"]);
-                ais[i].Auditor = Convert.ToString(dt.Rows[i + ksxh - 1]["Auditor"]);
-                ais[i].AuditTime = Convert.ToString(dt.Rows[i + ksxh - 1]["AuditTime"]);
             }
             return ais;
         }
@@ -1842,7 +1844,7 @@ namespace sjbgWebService
                     int fsrRid =  Convert.ToInt32(dt.Rows[i + ksxh - 1]["fsr_rid"]);
                     int jsrRid = Convert.ToInt32(dt.Rows[i + ksxh - 1]["jsr_rid"]);
                     
-                    if (qssj.Equals(string.Empty))//签收时间为空
+                    if (string.IsNullOrEmpty(qssj))//签收时间为空
                     {
                         gwlist[i].ShiFouQianShou = 0;
                         gwlist[i].QianShouQingKuang = "未签收";

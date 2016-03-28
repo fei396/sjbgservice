@@ -1,19 +1,16 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Main.aspx.cs" Inherits="adminMain" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Main.aspx.cs" Inherits="adminMain" %>
 
 
-
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>��ȫ��Ϣƽ̨</title>
-    <link href="css/reset.css" rel="stylesheet" type="text/css" />
-<link href="css/common.css" rel="stylesheet" type="text/css" />
+    <title>��ȫ��Ϣƽ̨</title>
+    <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="css/common.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-    <form id="form1" runat="server">
+<form id="form1" runat="server">
 
 
-		   
-
-    </form>
+</form>
 </body>
 </html>

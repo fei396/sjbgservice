@@ -1,144 +1,137 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using aqxxptWebService;
 
 /// <summary>
-/// Security 的摘要说明
-
+///     Security 的摘要说明
 /// </summary>
-/// 
-
 public class Security
 {
+    private int _isAdmin;
+    private string _userCode;
+    private string _userDept;
 
+    private int _userId;
+    private string _userName;
 
-        /// <summary>
-        /// Sets the cert policy.
-        /// </summary>
-        public static void SetCertificatePolicy()
-        {
-            ServicePointManager.ServerCertificateValidationCallback
-                       += RemoteCertificateValidate;
-        }
-
-        /// <summary>
-        /// Remotes the certificate validate.
-        /// </summary>
-        private static bool RemoteCertificateValidate(
-           object sender, X509Certificate cert,
-            X509Chain chain, SslPolicyErrors error)
-        {
-            // trust any certificate!!!
-            System.Console.WriteLine("Warning, trust any certificate");
-            return true;
-        }
-
-
-    public static aqxxptService.SjbgSoapHeader getSoapHeader()
+    public Security(int uI, int i, string uC, string uN, string uD)
     {
-        aqxxptService.SjbgSoapHeader ssh = new aqxxptService.SjbgSoapHeader();
-        ssh.A = "3974";
-        ssh.P = "zcj";
+        _userId = uI;
+        _isAdmin = i;
+        _userCode = uC;
+        _userName = uN;
+        _userDept = uD;
+    }
+
+    public Security(int uI, string uC, string uN, string uD)
+    {
+        _userId = uI;
+        _isAdmin = 0;
+        _userCode = uC;
+        _userName = uN;
+        _userDept = uD;
+    }
+
+    public Security(int uI, string uC, string uN)
+    {
+        _userId = uI;
+        _isAdmin = 0;
+        _userCode = uC;
+        _userName = uN;
+        _userDept = "";
+    }
+
+    public Security()
+    {
+        _isAdmin = 0;
+        _userCode = "";
+        _userName = "";
+        _userDept = "";
+        _userId = 0;
+    }
+
+
+    /// <summary>
+    ///     Sets the cert policy.
+    /// </summary>
+    public static void SetCertificatePolicy()
+    {
+        ServicePointManager.ServerCertificateValidationCallback
+            += RemoteCertificateValidate;
+    }
+
+    /// <summary>
+    ///     Remotes the certificate validate.
+    /// </summary>
+    private static bool RemoteCertificateValidate(
+        object sender, X509Certificate cert,
+        X509Chain chain, SslPolicyErrors error)
+    {
+        // trust any certificate!!!
+        Console.WriteLine("Warning, trust any certificate");
+        return true;
+    }
+
+
+    public static SjbgSoapHeader GetSoapHeader()
+    {
+        var ssh = new SjbgSoapHeader
+        {
+            A = "3974",
+            P = "zcj"
+        };
         return ssh;
     }
 
-	private int userID;
-	private int isAdmin;
-	private string userCode;
-	private string userName;
-	private string userDept;
+    public int GetSecurity()
+    {
+        return _isAdmin;
+    }
 
-	public Security (int uI, int i,string uC,string uN,string uD )
-	{
-		userID = uI;
-		isAdmin = i;
-		userCode = uC;
-		userName = uN;
-		userDept = uD;
-	}
+    public void SetSecurity(int c)
+    {
+        _isAdmin = c;
+    }
 
-	public Security (int uI, string uC, string uN,string uD)
-	{
-		userID = uI;
-		isAdmin = 0;
-		userCode = uC;
-		userName = uN;
-		userDept = uD;
-	}
+    public void SetUserCode(string c)
+    {
+        _userCode = c;
+    }
 
-	public Security(int uI,string uC, string uN)
-	{
-		userID = uI;
-		isAdmin = 0;
-		userCode = uC;
-		userName = uN;
-		userDept = "";
-	}
+    public string GetUserCode()
+    {
+        return _userCode;
+    }
 
-	public Security ()
-	{
-		isAdmin = 0;
-		userCode = "";
-		userName = "";
-		userDept = "";
-		userID = 0;
-	}
-	public int getSecurity ()
-	{
-		return isAdmin;
-	}
+    public void SetUserName(string n)
+    {
+        _userName = n;
+    }
 
-	public void setSecurity ( int c )
-	{
-		isAdmin = c;
-	}
+    public string GetUserName()
+    {
+        return _userName;
+    }
 
-	public void setUserCode ( string c )
-	{
-		userCode = c;
-	}
+    public string GetUserDept()
+    {
+        return _userDept;
+    }
 
-	public string getUserCode ()
-	{
-		return userCode;
-	}
+    public void SetUserDept(string n)
+    {
+        _userDept = n;
+    }
 
-	public void setUserName ( string n )
-	{
-		userName = n;
-	}
+    public void SetUserId(int uI)
+    {
+        _userId = uI;
+    }
 
-	public string getUserName ()
-	{
-		return userName;
-	}
-
-	public string getUserDept()
-	{
-		return userDept;
-	}
-
-	public void setUserDept(string n)
-	{
-		userDept = n;
-	}
-
-	public void setUserId(int uI)
-	{
-		userID = uI;
-	}
-
-	public int getUserId()
-	{
-		return userID;
-	}
+    public int GetUserId()
+    {
+        return _userId;
+    }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web.Security;
 using sjbgWebService.gwxx;
 using AE.Net.Mail.Imap;
 using AE.Net.Mail;
@@ -20,10 +19,10 @@ namespace sjbgWebService
         private static readonly string YyConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["yyConnectionString"].ConnectionString;
         private static readonly string ZbConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["zbConnectionString"].ConnectionString;
         private static readonly string YsConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["ysConnectionString"].ConnectionString;
-        private static string cbConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["cbConnectionString"].ConnectionString;
+        private static string _cbConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["cbConnectionString"].ConnectionString;
         private static readonly string MqttConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["mqttConnectionString"].ConnectionString;
 
-        private static bool _sendMessageForDebug = true;
+        private static bool _sendMessageForDebug = false;
 
 
         public static DataTable GetProductByPid(string pname)
@@ -1094,11 +1093,10 @@ namespace sjbgWebService
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("uid", uid);
             comm.Parameters.AddWithValue("tid", tid);
-            int umid = -1;
             try
             {
                 conn.Open();
-                umid = Convert.ToInt32(comm.ExecuteScalar());
+                int umid = Convert.ToInt32(comm.ExecuteScalar());
                 return SetTqReply(umid, replayContent);
             }
             catch (Exception ex)
@@ -1334,12 +1332,12 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT sendMobileMessage(int workNo, string content)
+        internal static INT SendMobileMessage(int workNo, string content)
         {
-            return sendMobileMessage(workNo.ToWorkNo(), content);
+            return SendMobileMessage(workNo.ToWorkNo(), content);
         }
 
-        internal static INT sendMobileMessage(string workNo, string content)
+        internal static INT SendMobileMessage(string workNo, string content)
         {
             SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
@@ -1365,7 +1363,7 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT sendMobileMessage(string[] workNo, string content)
+        internal static INT SendMobileMessage(string[] workNo, string content)
         {
             SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
@@ -1427,7 +1425,7 @@ namespace sjbgWebService
             comm.CommandText = "select count(*)  from dic_user where user_no=@work_no";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("work_no", workno);
-            int i1 = -1;
+            int i1;
             try
             {
                 conn.Open();
@@ -1448,7 +1446,7 @@ namespace sjbgWebService
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("work_no", workno);
             comm.Parameters.AddWithValue("mobile", mobile);
-            int i2 = -1;
+            int i2;
             try
             {
                 conn.Open();
@@ -1468,7 +1466,7 @@ namespace sjbgWebService
             comm.CommandText = "select count(*) from  dat_User_Device where  deviceID=@deviceID and isValid=1";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("deviceID", uniqueCode);
-            int i3 = -1;
+            int i3;
             try
             {
                 conn.Open();
@@ -1547,7 +1545,7 @@ namespace sjbgWebService
             comm.Parameters.AddWithValue("work_no", workno);
             comm.Parameters.AddWithValue("deviceID", uniqueCode);
             comm.Parameters.AddWithValue("mobile", mobile);
-            string rCode1 = "";
+            string rCode1;
             try
             {
                 conn.Open();
@@ -1638,7 +1636,7 @@ namespace sjbgWebService
             return yj;
         }
 
-        internal static INT sendMail(int uid, YouJian yj)
+        internal static INT SendMail(int uid, YouJian yj)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
@@ -1664,7 +1662,7 @@ namespace sjbgWebService
             return new INT(1, "");
         }
 
-        internal static INT sendMail(int uid, int importance, string subject, string body, string from, string to, string cc, string bcc, string attachment)
+        internal static INT SendMail(int uid, int importance, string subject, string body, string from, string to, string cc, string bcc, string attachment)
         {
             string workno = uid.ToString().PadLeft(4, '0');
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
@@ -3172,7 +3170,7 @@ namespace sjbgWebService
         }
 
         #region 安全信息平台
-        public static DataTable getAqxxptBm()
+        public static DataTable GetAqxxptBm()
         {
 
 
@@ -3196,7 +3194,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        public static DataTable getAqxxptBm(int xxid)
+        public static DataTable GetAqxxptBm(int xxid)
         {
 
 
@@ -3299,7 +3297,7 @@ namespace sjbgWebService
                 comm.ExecuteNonQuery();
                 if (true)//(DAL.sendMqttMessage(sender, auditor, "有一条安全信息需要您审核。", 2).Number == 1)
                 {
-                    sendMobileMessage(Convert.ToInt32(auditor), "有一条安全信息需要您审核。");
+                    SendMobileMessage(Convert.ToInt32(auditor), "有一条安全信息需要您审核。");
                     trans.Commit();
                 }
                 else
@@ -3356,7 +3354,7 @@ namespace sjbgWebService
                     string sender = Convert.ToString(comm.ExecuteScalar());
                     if (SendMqttMessage("提醒信息：", sender, "安全信息审核未通过，原因：" + txt, 2).Number == 1)
                     {
-                        sendMobileMessage(Convert.ToInt32(sender), "安全信息审核未通过，原因：" + txt);
+                        SendMobileMessage(Convert.ToInt32(sender), "安全信息审核未通过，原因：" + txt);
                         trans.Commit();
                     }
                     else
@@ -3433,7 +3431,7 @@ namespace sjbgWebService
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
-            comm.CommandText = "select xxid,sender,title,sendTime,readcount,sendcount,status,auditor,audittime from v_aqxxpt_xxjs_info where (xxid = @xxid or @xxid=0) and (senderdept=@did or @did=1) order by audittime desc";
+            comm.CommandText = "select xxid,sender,title,sendTime,readcount,sendcount,failcount,sendingcount,status,auditor,audittime from v_aqxxpt_xxjs_info where (xxid = @xxid or @xxid=0) and (senderdept=@did or @did=1) order by audittime desc";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("xxid", xxid);
             comm.Parameters.AddWithValue("did", did);
@@ -3591,11 +3589,11 @@ namespace sjbgWebService
                  INT r;
                 if (_sendMessageForDebug)
                 {
-                    r =sendMobileMessage("3974", message);
+                    r =SendMobileMessage("3974", message);
                 }
                 else
                 {
-                    r = sendMobileMessage(jsrList, message);
+                    r = SendMobileMessage(jsrList, message);
                 }
                 if (r.Number == 1)
                 {
@@ -3692,8 +3690,7 @@ namespace sjbgWebService
             {
                 return new INT(-1, "数据库错误");
             }
-            SqlTransaction trans;
-            trans = conn.BeginTransaction();
+            SqlTransaction trans = conn.BeginTransaction();
             try
             {
                 comm.Transaction = trans;
@@ -3713,7 +3710,6 @@ namespace sjbgWebService
                     newJsrList.Remove(jsr);
                 }
                 string[] newJsr = newJsrList.ToArray();
-                if (newJsr == null) return new INT(0, "没有新的接收公文人员。");
                 if (newJsr.Length == 0) return new INT(0, "没有新的接收公文人员。");
                 string jsrStr = newJsr.ToListString();
                 comm.CommandText = "insert into t_gongwen_lz (gwid,pid,fsr,jsr,fssj,bz) select @gwid,@pid,@fsr,user_no,getdate(),@bz from V_GongWen_Yonghu where user_no in (" + jsrStr + ")";
@@ -3723,16 +3719,30 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("fsr", fsr);
                 comm.Parameters.AddWithValue("bz", buyueren + "补");
                 comm.ExecuteNonQuery();
-                INT r;
-                if (_sendMessageForDebug)
+
+                comm.CommandText = "select jinji from V_GongWen_GWXX where id =@gwid";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@gwid", gwid);
+                string jinji = comm.ExecuteScalar().ToString();
+                string message;
+                if (jinji.Equals("一般"))
                 {
-                    r = sendMobileMessage("3974", "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                    message = "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt;
                 }
                 else
                 {
-                    r = sendMobileMessage(newJsr, "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                    message = "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt + "。该公文是" + jinji + "公文，请务必尽快签阅。";
                 }
-                
+                INT r;
+                if (_sendMessageForDebug)
+                {
+                    r = SendMobileMessage("3974", message);
+                }
+                else
+                {
+                    r = SendMobileMessage(newJsr, message);
+                }
+
                 if (r.Number == 1)
                 {
                     trans.Commit();
@@ -3768,7 +3778,7 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("logTxt", throwJsr);
                 comm.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // ignored
             }
@@ -3845,15 +3855,28 @@ namespace sjbgWebService
                         //}
                     }
                     //发短信通知
-                    
-                    INT r;
-                    if (_sendMessageForDebug)
+
+                    comm.CommandText = "select jinji from V_GongWen_GWXX where id =@gwid";
+                    comm.Parameters.Clear();
+                    comm.Parameters.AddWithValue("@gwid", gwid);
+                    string jinji = comm.ExecuteScalar().ToString();
+                    string message;
+                    if (jinji.Equals("一般"))
                     {
-                        r = sendMobileMessage("3974", "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt); 
+                        message = "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt;
                     }
                     else
                     {
-                        r = sendMobileMessage(jsr, "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt);
+                        message = "您有一件新公文需签阅。发送人：" + fsrxm + " ，公文标题：" + bt + "。该公文是" + jinji + "公文，请务必尽快签阅。";
+                    }
+                    INT r;
+                    if (_sendMessageForDebug)
+                    {
+                        r = SendMobileMessage("3974", message); 
+                    }
+                    else
+                    {
+                        r = SendMobileMessage(jsr, message);
                     }
                     
                     
@@ -4789,11 +4812,11 @@ namespace sjbgWebService
             INT r;
             if (_sendMessageForDebug)
             {
-                r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
+                r = SendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
             }
             else
             {
-                r = sendMobileMessage(jsr, "公文处理员提醒您，请尽快签收公文：" + bt);
+                r = SendMobileMessage(jsr, "公文处理员提醒您，请尽快签收公文：" + bt);
 
             }
             if (r.Number == 1) r.Message = "已成功催办" + jsr.Length.ToString() + "人。";
@@ -4831,11 +4854,11 @@ namespace sjbgWebService
             INT r ;
             if (_sendMessageForDebug)
             {
-                r = sendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
+                r = SendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
             }
             else
             {
-                r = sendMobileMessage(jsr.ToArray(), "公文处理员提醒您，请尽快签收公文：" + bt);
+                r = SendMobileMessage(jsr.ToArray(), "公文处理员提醒您，请尽快签收公文：" + bt);
             }
             if (r.Number == 1) r.Message = jsrxm.ToArray().ToListString();
             return r;

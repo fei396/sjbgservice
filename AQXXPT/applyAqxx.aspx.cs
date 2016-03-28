@@ -1,26 +1,16 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
 using System.Collections;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.IO;
-using aqxxptService;
-
-public partial class applyAqxx : System.Web.UI.Page
+using aqxxptWebService;
+public partial class applyAqxx : Page
 {
-    aqxxptService.aqxxptService s = new aqxxptService.aqxxptService();
-    int uid;
+    private readonly aqxxptService _s = new aqxxptService();
+    private int uid;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        string s = Session["user"] as string;
+        var s = Session["user"] as string;
         try
         {
             uid = Convert.ToInt32(s);
@@ -36,21 +26,20 @@ public partial class applyAqxx : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            initPage();
+            InitPage();
         }
     }
-    void initPage()
+
+    private void InitPage()
     {
-
-
-        s.SjbgSoapHeaderValue = Security.getSoapHeader();
+        _s.SjbgSoapHeaderValue = Security.GetSoapHeader();
         Security.SetCertificatePolicy();
-        Department[] depts = s.getAqxxptBm(0);
+        Department[] depts = _s.GetAqxxptBm(0);
         lbDRn.Items.Clear();
         lbDR.Items.Clear();
-        for (int i = 0; i < depts.Length ; i++)
+        for (var i = 0; i < depts.Length; i++)
         {
-            ListItem li = new ListItem(depts[i].Name, depts[i].ID.ToString());
+            var li = new ListItem(depts[i].Name, depts[i].ID.ToString());
             lbDRn.Items.Add(li);
         }
 
@@ -58,7 +47,7 @@ public partial class applyAqxx : System.Web.UI.Page
         txtTitle.Text = "";
         txtContent.Text = "";
         txtSetTime.Text = "";
-        User[] autiors = s.getAqxxptShenHe();
+        User[] autiors = _s.GetAqxxptShenHe();
         ddlAuditor.DataSource = autiors;
         ddlAuditor.DataValueField = "userno";
         ddlAuditor.DataTextField = "username";
@@ -75,12 +64,13 @@ public partial class applyAqxx : System.Web.UI.Page
     {
         //zhi1DDL.DataBind();
     }
+
     protected void zu1AddButton_Click(object sender, EventArgs e)
     {
-        ArrayList arr = new ArrayList();
+        var arr = new ArrayList();
         foreach (ListItem li in lbDRn.Items)
         {
-            if (li.Selected == true)
+            if (li.Selected)
             {
                 arr.Add(li);
             }
@@ -91,12 +81,13 @@ public partial class applyAqxx : System.Web.UI.Page
             lbDR.Items.Add(li);
         }
     }
+
     protected void zu1DelButton_Click(object sender, EventArgs e)
     {
-        ArrayList arr = new ArrayList();
+        var arr = new ArrayList();
         foreach (ListItem li in lbDR.Items)
         {
-            if (li.Selected == true)
+            if (li.Selected)
             {
                 arr.Add(li);
             }
@@ -110,8 +101,8 @@ public partial class applyAqxx : System.Web.UI.Page
 
     protected void AddButton_Click(object sender, EventArgs e)
     {
-        string title = txtTitle.Text.Trim();
-        string content = txtContent.Text.Trim();
+        var title = txtTitle.Text.Trim();
+        var content = txtContent.Text.Trim();
         if (lbDR.Items.Count == 0)
         {
             Response.Write(" <script> alert( '请选择要发送的部门！ ') </script> ");
@@ -124,23 +115,23 @@ public partial class applyAqxx : System.Web.UI.Page
             return;
         }
 
-        string buMens = "";
+        var buMens = "";
         foreach (ListItem li in lbDR.Items)
         {
             buMens += li.Value + ",";
         }
 
         buMens = buMens.Substring(0, buMens.Length - 1);
-        string fileSender = Session["user"] as string;
+        var fileSender = Session["user"] as string;
         if (string.IsNullOrEmpty(fileSender))
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
             return;
         }
 
-        string auditor = ddlAuditor.SelectedItem.Value;
-        string setTime = txtSetTime.Text;
-        string lingDaos = "";
+        var auditor = ddlAuditor.SelectedItem.Value;
+        var setTime = txtSetTime.Text;
+        var lingDaos = "";
         //if (cbLeader0001.Checked) lingDaos += "0001,";
         //if (cbLeader0002.Checked) lingDaos += "0002,";
         //if (cbLeader0007.Checked) lingDaos += "0007,";
@@ -150,17 +141,17 @@ public partial class applyAqxx : System.Web.UI.Page
         if (auditor.Equals("0000"))
         {
             auditor = "3974";
-            INT result = s.applyAqxx(fileSender, auditor, title, content, buMens, setTime,lingDaos);
+            INT result = _s.ApplyAqxx(fileSender, auditor, title, content, buMens, setTime, lingDaos);
             if (result.Number == 1)
             {
                 int xxid = Convert.ToInt32(result.Message);
-                INT result1 = s.auditAqxx(xxid, auditor, 1, title, content);
+                INT result1 = _s.AuditAqxx(xxid, auditor, 1, title, content);
                 if (result.Number == 1)
                 {
                     Response.Write(" <script> alert( '提交信息成功，将于" + setTime + "发送信息。 ') </script> ");
                     //Response.Redirect("sendfile.aspx");
                     Session["sent"] = "sent";
-                    initPage();
+                    InitPage();
                 }
                 else
                 {
@@ -174,13 +165,13 @@ public partial class applyAqxx : System.Web.UI.Page
         }
         else
         {
-            INT result = s.applyAqxx(fileSender, auditor, title, content, buMens, setTime,lingDaos);
+            INT result = _s.ApplyAqxx(fileSender, auditor, title, content, buMens, setTime, lingDaos);
             if (result.Number == 1)
             {
                 Response.Write(" <script> alert( '提交信息成功，请等待领导审核。 ') </script> ");
                 //Response.Redirect("sendfile.aspx");
                 Session["sent"] = "sent";
-                initPage();
+                InitPage();
             }
             else
             {
@@ -188,11 +179,13 @@ public partial class applyAqxx : System.Web.UI.Page
             }
         }
     }
+
     protected void CancelButton_Click(object sender, EventArgs e)
     {
-        int blzbid = Convert.ToInt32(Request["fid"]);
+        var blzbid = Convert.ToInt32(Request["fid"]);
         Response.Redirect("applyAqxx.aspx");
     }
+
     protected void cbLeaderAll_CheckedChanged(object sender, EventArgs e)
     {
         cbLeader0001.Checked = cbLeaderAll.Checked;
@@ -202,6 +195,3 @@ public partial class applyAqxx : System.Web.UI.Page
         cbLeader0006.Checked = cbLeaderAll.Checked;
     }
 }
-
-
-  

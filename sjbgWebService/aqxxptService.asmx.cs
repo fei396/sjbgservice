@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
+﻿using System.Web.Services;
 using System.Web.Services.Protocols;
 
 namespace sjbgWebService
 {
     /// <summary>
-    /// yunyongService 的摘要说明
+    ///安全信息平台
     /// </summary>
     [WebService(Namespace = "http://sjbg.xxjwd.org/")]
 
@@ -17,26 +13,31 @@ namespace sjbgWebService
     // [System.Web.Script.Services.ScriptService]
     [WebServiceBinding(ConformsTo = WsiProfiles.None)]
     [SoapRpcService]
-    public class aqxxptService : System.Web.Services.WebService
+    public class aqxxptService : WebService
     {
-		public SjbgSoapHeader sjbgHeader = new SjbgSoapHeader();
+		public SjbgSoapHeader SjbgHeader = new SjbgSoapHeader();
 
-        //测酒查询处理数据
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+
+        /// <summary>
+        /// 获取安全信息平台可发送的部门信息
+        /// </summary>
+        /// <param name="xxid"></param>
+        /// <returns></returns>
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public Department[] getAqxxptBm(int xxid)
+        public Department[] GetAqxxptBm(int xxid)
         {
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.GetAqxxptBm(xxid);
         }
         //
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public User[] getAqxxptShenHe()
+        public User[] GetAqxxptShenHe()
         {
 
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.GetAqxxptShenHe();
 
         }
@@ -53,52 +54,60 @@ namespace sjbgWebService
         /// <param name="setTime">设置的发送短信时间</param>
         /// <param name="lingDaos">随安全信息发送的领导列表</param>
         /// <returns></returns>
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public INT applyAqxx(string sender, string auditor, string title, string content, string buMens, string setTime, string lingDaos)
+        public INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens, string setTime, string lingDaos)
         {
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.ApplyAqxx(sender, auditor, title, content, buMens, setTime, lingDaos);
         }
 
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public AqxxInfo[] getAqxxInfo(int uid,int xxid)
+        public AqxxInfo[] GetAqxxInfo(int uid,int xxid)
         {
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.GetAqxxInfo(uid,xxid);
         }
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public int getAqxxCount(int uid)
+        public int GetAqxxCount(int uid)
         {
-            if (!sjbgHeader.checkValid()) return -1;
+            if (!SjbgHeader.checkValid()) return -1;
             return Bll.GetAqxxCount(uid);
         }
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+
+        /// <summary>
+        /// 获取已发送的安全信息统计结果
+        /// </summary>
+        /// <param name="uid">发送人工号，如果是段领导，则所有人发送的都能查询到</param>
+        /// <param name="ksxh">开始序号</param>
+        /// <param name="count">数量</param>
+        /// <returns></returns>
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public AqxxInfo[] getAqxxInfos(int uid, int ksxh,int count)
+        public AqxxInfo[] GetAqxxInfos(int uid, int ksxh,int count)
         {
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.GetAqxxInfos(uid, ksxh,count);
         }
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public AQXX[] getAqxxToAudit(int uid,int xxid)
+        public AQXX[] GetAqxxToAudit(int uid,int xxid)
         {
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.GetAqxxToAudit(uid,xxid);
         }
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public AqxxDetail[] getAqxxDetail(int xxid ,int ksxh,int count)
+        public AqxxDetail[] GetAqxxDetail(int xxid ,int ksxh,int count)
         {
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.GetAqxxDetail(xxid ,ksxh,count);
         }
 
@@ -112,20 +121,20 @@ namespace sjbgWebService
         /// <param name="title">标题</param>
         /// <param name="txt">审批意见</param>
         /// <returns></returns>
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public INT auditAqxx(int xxid, string auditor, int result,string title,string txt)
+        public INT AuditAqxx(int xxid, string auditor, int result,string title,string txt)
         {
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.AuditAqxx(xxid, auditor, result,title, txt);
         }
 
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public AQXX[] getAqxxContent(int xxid)
+        public AQXX[] GetAqxxContent(int xxid)
         {
-            if (!sjbgHeader.checkValid()) return null;
+            if (!SjbgHeader.checkValid()) return null;
             return Bll.GetAqxxContent(xxid);
         }
 

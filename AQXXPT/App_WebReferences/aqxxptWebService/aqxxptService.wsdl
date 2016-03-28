@@ -1,0 +1,1058 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://sjbg.xxjwd.org/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://sjbg.xxjwd.org/literalTypes"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://sjbg.xxjwd.org/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:complexType name="ArrayOfDepartment">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:Department[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Department">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SjbgSoapHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="A" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="P" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUser">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:User[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Uid" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="UserNo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="UserDept" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="TqLevel" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="GwLevel" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="GwRoleID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="INT">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="Number" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAqxxInfo">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:AqxxInfo[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="AqxxInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="XXID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Sender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendTime" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="SendCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ReadCount" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Auditor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="AuditTime" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="FailCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="SendingCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAQXX">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:AQXX[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="AQXX">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" form="unqualified" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Sender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SenderNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SenderName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SetTime" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAqxxDetail">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="tns:AqxxDetail[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="AqxxDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Sender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Receiver" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ReceiveTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ReceiverDept" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/literalTypes">
+      <s:element name="ArrayOfDepartment" nillable="true" type="s1:ArrayOfDepartment" />
+      <s:complexType name="ArrayOfDepartment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Department" nillable="true" type="s1:Department" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Department">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfUser" nillable="true" type="s1:ArrayOfUser" />
+      <s:complexType name="ArrayOfUser">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="s1:User" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Uid" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserNo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserDept" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TqLevel" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GwLevel" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GwRoleID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="INT" nillable="true" type="s1:INT" />
+      <s:complexType name="INT">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Number" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfAqxxInfo" nillable="true" type="s1:ArrayOfAqxxInfo" />
+      <s:complexType name="ArrayOfAqxxInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AqxxInfo" nillable="true" type="s1:AqxxInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AqxxInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="XXID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SendCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReadCount" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Auditor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AuditTime" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FailCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SendingCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="int" type="s:int" />
+      <s:element name="ArrayOfAQXX" nillable="true" type="s1:ArrayOfAQXX" />
+      <s:complexType name="ArrayOfAQXX">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AQXX" nillable="true" type="s1:AQXX" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AQXX">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SenderNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SenderName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SetTime" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfAqxxDetail" nillable="true" type="s1:ArrayOfAqxxDetail" />
+      <s:complexType name="ArrayOfAqxxDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AqxxDetail" nillable="true" type="s1:AqxxDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AqxxDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Receiver" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReceiveTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReceiverDept" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAqxxptBmSoapIn">
+    <wsdl:part name="xxid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptBmSoapOut">
+    <wsdl:part name="GetAqxxptBmResult" type="tns:ArrayOfDepartment" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptBmSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptShenHeSoapIn" />
+  <wsdl:message name="GetAqxxptShenHeSoapOut">
+    <wsdl:part name="GetAqxxptShenHeResult" type="tns:ArrayOfUser" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptShenHeSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="ApplyAqxxSoapIn">
+    <wsdl:part name="sender" type="s:string" />
+    <wsdl:part name="auditor" type="s:string" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+    <wsdl:part name="buMens" type="s:string" />
+    <wsdl:part name="setTime" type="s:string" />
+    <wsdl:part name="lingDaos" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ApplyAqxxSoapOut">
+    <wsdl:part name="ApplyAqxxResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="ApplyAqxxSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfoSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="xxid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfoSoapOut">
+    <wsdl:part name="GetAqxxInfoResult" type="tns:ArrayOfAqxxInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfoSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxCountSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxCountSoapOut">
+    <wsdl:part name="GetAqxxCountResult" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxCountSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfosSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="ksxh" type="s:int" />
+    <wsdl:part name="count" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfosSoapOut">
+    <wsdl:part name="GetAqxxInfosResult" type="tns:ArrayOfAqxxInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfosSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxToAuditSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+    <wsdl:part name="xxid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxToAuditSoapOut">
+    <wsdl:part name="GetAqxxToAuditResult" type="tns:ArrayOfAQXX" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxToAuditSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxDetailSoapIn">
+    <wsdl:part name="xxid" type="s:int" />
+    <wsdl:part name="ksxh" type="s:int" />
+    <wsdl:part name="count" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxDetailSoapOut">
+    <wsdl:part name="GetAqxxDetailResult" type="tns:ArrayOfAqxxDetail" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxDetailSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="AuditAqxxSoapIn">
+    <wsdl:part name="xxid" type="s:int" />
+    <wsdl:part name="auditor" type="s:string" />
+    <wsdl:part name="result" type="s:int" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="txt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuditAqxxSoapOut">
+    <wsdl:part name="AuditAqxxResult" type="tns:INT" />
+  </wsdl:message>
+  <wsdl:message name="AuditAqxxSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxContentSoapIn">
+    <wsdl:part name="xxid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxContentSoapOut">
+    <wsdl:part name="GetAqxxContentResult" type="tns:ArrayOfAQXX" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxContentSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptBmHttpGetIn">
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptBmHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfDepartment" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptShenHeHttpGetIn" />
+  <wsdl:message name="GetAqxxptShenHeHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfUser" />
+  </wsdl:message>
+  <wsdl:message name="ApplyAqxxHttpGetIn">
+    <wsdl:part name="sender" type="s:string" />
+    <wsdl:part name="auditor" type="s:string" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+    <wsdl:part name="buMens" type="s:string" />
+    <wsdl:part name="setTime" type="s:string" />
+    <wsdl:part name="lingDaos" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ApplyAqxxHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfoHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfoHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAqxxInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxCountHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxCountHttpGetOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfosHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfosHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAqxxInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxToAuditHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxToAuditHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxDetailHttpGetIn">
+    <wsdl:part name="xxid" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxDetailHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAqxxDetail" />
+  </wsdl:message>
+  <wsdl:message name="AuditAqxxHttpGetIn">
+    <wsdl:part name="xxid" type="s:string" />
+    <wsdl:part name="auditor" type="s:string" />
+    <wsdl:part name="result" type="s:string" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="txt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuditAqxxHttpGetOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxContentHttpGetIn">
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxContentHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptBmHttpPostIn">
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptBmHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfDepartment" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxptShenHeHttpPostIn" />
+  <wsdl:message name="GetAqxxptShenHeHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfUser" />
+  </wsdl:message>
+  <wsdl:message name="ApplyAqxxHttpPostIn">
+    <wsdl:part name="sender" type="s:string" />
+    <wsdl:part name="auditor" type="s:string" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+    <wsdl:part name="buMens" type="s:string" />
+    <wsdl:part name="setTime" type="s:string" />
+    <wsdl:part name="lingDaos" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ApplyAqxxHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfoHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfoHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAqxxInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxCountHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxCountHttpPostOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfosHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxInfosHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAqxxInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxToAuditHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxToAuditHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxDetailHttpPostIn">
+    <wsdl:part name="xxid" type="s:string" />
+    <wsdl:part name="ksxh" type="s:string" />
+    <wsdl:part name="count" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxDetailHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAqxxDetail" />
+  </wsdl:message>
+  <wsdl:message name="AuditAqxxHttpPostIn">
+    <wsdl:part name="xxid" type="s:string" />
+    <wsdl:part name="auditor" type="s:string" />
+    <wsdl:part name="result" type="s:string" />
+    <wsdl:part name="title" type="s:string" />
+    <wsdl:part name="txt" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuditAqxxHttpPostOut">
+    <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxContentHttpPostIn">
+    <wsdl:part name="xxid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAqxxContentHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfAQXX" />
+  </wsdl:message>
+  <wsdl:portType name="aqxxptServiceSoap">
+    <wsdl:operation name="GetAqxxptBm">
+      <wsdl:input message="tns:GetAqxxptBmSoapIn" />
+      <wsdl:output message="tns:GetAqxxptBmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxptShenHe">
+      <wsdl:input message="tns:GetAqxxptShenHeSoapIn" />
+      <wsdl:output message="tns:GetAqxxptShenHeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyAqxx">
+      <wsdl:input message="tns:ApplyAqxxSoapIn" />
+      <wsdl:output message="tns:ApplyAqxxSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfo">
+      <wsdl:input message="tns:GetAqxxInfoSoapIn" />
+      <wsdl:output message="tns:GetAqxxInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxCount">
+      <wsdl:input message="tns:GetAqxxCountSoapIn" />
+      <wsdl:output message="tns:GetAqxxCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfos">
+      <wsdl:input message="tns:GetAqxxInfosSoapIn" />
+      <wsdl:output message="tns:GetAqxxInfosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxToAudit">
+      <wsdl:input message="tns:GetAqxxToAuditSoapIn" />
+      <wsdl:output message="tns:GetAqxxToAuditSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxDetail">
+      <wsdl:input message="tns:GetAqxxDetailSoapIn" />
+      <wsdl:output message="tns:GetAqxxDetailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditAqxx">
+      <wsdl:input message="tns:AuditAqxxSoapIn" />
+      <wsdl:output message="tns:AuditAqxxSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxContent">
+      <wsdl:input message="tns:GetAqxxContentSoapIn" />
+      <wsdl:output message="tns:GetAqxxContentSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="aqxxptServiceHttpGet">
+    <wsdl:operation name="GetAqxxptBm">
+      <wsdl:input message="tns:GetAqxxptBmHttpGetIn" />
+      <wsdl:output message="tns:GetAqxxptBmHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxptShenHe">
+      <wsdl:input message="tns:GetAqxxptShenHeHttpGetIn" />
+      <wsdl:output message="tns:GetAqxxptShenHeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyAqxx">
+      <wsdl:input message="tns:ApplyAqxxHttpGetIn" />
+      <wsdl:output message="tns:ApplyAqxxHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfo">
+      <wsdl:input message="tns:GetAqxxInfoHttpGetIn" />
+      <wsdl:output message="tns:GetAqxxInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxCount">
+      <wsdl:input message="tns:GetAqxxCountHttpGetIn" />
+      <wsdl:output message="tns:GetAqxxCountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfos">
+      <wsdl:input message="tns:GetAqxxInfosHttpGetIn" />
+      <wsdl:output message="tns:GetAqxxInfosHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxToAudit">
+      <wsdl:input message="tns:GetAqxxToAuditHttpGetIn" />
+      <wsdl:output message="tns:GetAqxxToAuditHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxDetail">
+      <wsdl:input message="tns:GetAqxxDetailHttpGetIn" />
+      <wsdl:output message="tns:GetAqxxDetailHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditAqxx">
+      <wsdl:input message="tns:AuditAqxxHttpGetIn" />
+      <wsdl:output message="tns:AuditAqxxHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxContent">
+      <wsdl:input message="tns:GetAqxxContentHttpGetIn" />
+      <wsdl:output message="tns:GetAqxxContentHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="aqxxptServiceHttpPost">
+    <wsdl:operation name="GetAqxxptBm">
+      <wsdl:input message="tns:GetAqxxptBmHttpPostIn" />
+      <wsdl:output message="tns:GetAqxxptBmHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxptShenHe">
+      <wsdl:input message="tns:GetAqxxptShenHeHttpPostIn" />
+      <wsdl:output message="tns:GetAqxxptShenHeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ApplyAqxx">
+      <wsdl:input message="tns:ApplyAqxxHttpPostIn" />
+      <wsdl:output message="tns:ApplyAqxxHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfo">
+      <wsdl:input message="tns:GetAqxxInfoHttpPostIn" />
+      <wsdl:output message="tns:GetAqxxInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxCount">
+      <wsdl:input message="tns:GetAqxxCountHttpPostIn" />
+      <wsdl:output message="tns:GetAqxxCountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfos">
+      <wsdl:input message="tns:GetAqxxInfosHttpPostIn" />
+      <wsdl:output message="tns:GetAqxxInfosHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxToAudit">
+      <wsdl:input message="tns:GetAqxxToAuditHttpPostIn" />
+      <wsdl:output message="tns:GetAqxxToAuditHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxDetail">
+      <wsdl:input message="tns:GetAqxxDetailHttpPostIn" />
+      <wsdl:output message="tns:GetAqxxDetailHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuditAqxx">
+      <wsdl:input message="tns:AuditAqxxHttpPostIn" />
+      <wsdl:output message="tns:AuditAqxxHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxContent">
+      <wsdl:input message="tns:GetAqxxContentHttpPostIn" />
+      <wsdl:output message="tns:GetAqxxContentHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="aqxxptServiceSoap" type="tns:aqxxptServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="GetAqxxptBm">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxptBm" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxptBmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxptShenHe">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxptShenHe" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxptShenHeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyAqxx">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/ApplyAqxx" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:ApplyAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfo">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxInfo" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxInfoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxCount">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxCount" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfos">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxInfos" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxInfosSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxToAudit">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxToAudit" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxDetail">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxDetail" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxDetailSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditAqxx">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/AuditAqxx" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:AuditAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxContent">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxContent" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="aqxxptServiceSoap12" type="tns:aqxxptServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="GetAqxxptBm">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxptBm" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxptBmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxptShenHe">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxptShenHe" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxptShenHeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyAqxx">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/ApplyAqxx" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:ApplyAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfo">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxInfo" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxInfoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxCount">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxCount" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfos">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxInfos" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxInfosSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxToAudit">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxToAudit" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxDetail">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxDetail" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxDetailSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditAqxx">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/AuditAqxx" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:AuditAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxContent">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxContent" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
+                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
+                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="aqxxptServiceHttpGet" type="tns:aqxxptServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetAqxxptBm">
+      <http:operation location="/GetAqxxptBm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxptShenHe">
+      <http:operation location="/GetAqxxptShenHe" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyAqxx">
+      <http:operation location="/ApplyAqxx" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfo">
+      <http:operation location="/GetAqxxInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxCount">
+      <http:operation location="/GetAqxxCount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfos">
+      <http:operation location="/GetAqxxInfos" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxToAudit">
+      <http:operation location="/GetAqxxToAudit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxDetail">
+      <http:operation location="/GetAqxxDetail" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditAqxx">
+      <http:operation location="/AuditAqxx" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxContent">
+      <http:operation location="/GetAqxxContent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="aqxxptServiceHttpPost" type="tns:aqxxptServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetAqxxptBm">
+      <http:operation location="/GetAqxxptBm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxptShenHe">
+      <http:operation location="/GetAqxxptShenHe" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ApplyAqxx">
+      <http:operation location="/ApplyAqxx" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfo">
+      <http:operation location="/GetAqxxInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxCount">
+      <http:operation location="/GetAqxxCount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxInfos">
+      <http:operation location="/GetAqxxInfos" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxToAudit">
+      <http:operation location="/GetAqxxToAudit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxDetail">
+      <http:operation location="/GetAqxxDetail" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuditAqxx">
+      <http:operation location="/AuditAqxx" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAqxxContent">
+      <http:operation location="/GetAqxxContent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="aqxxptService">
+    <wsdl:port name="aqxxptServiceSoap" binding="tns:aqxxptServiceSoap">
+      <soap:address location="http://localhost:4024/aqxxptService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="aqxxptServiceSoap12" binding="tns:aqxxptServiceSoap12">
+      <soap12:address location="http://localhost:4024/aqxxptService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="aqxxptServiceHttpGet" binding="tns:aqxxptServiceHttpGet">
+      <http:address location="http://localhost:4024/aqxxptService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="aqxxptServiceHttpPost" binding="tns:aqxxptServiceHttpPost">
+      <http:address location="http://localhost:4024/aqxxptService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

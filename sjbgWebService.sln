@@ -39,7 +39,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SendFileWeb", "SendFileWeb\
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AQXXPT", "AQXXPT\", "{5A99E56F-5D64-4106-A53B-CECAF75A6E0C}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
 		Debug.AspNetCompiler.VirtualPath = "/AQXXPT"
 		Debug.AspNetCompiler.PhysicalPath = "AQXXPT\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AQXXPT\"
@@ -56,6 +56,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AQXXPT", "AQXXPT\", "{5A99E
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "3223"
 		SlnRelativePath = "AQXXPT\"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{4613A48C-A282-4E8A-98CD-F2BFD08558B6} = {4613A48C-A282-4E8A-98CD-F2BFD08558B6}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aqxxptSMSservice", "aqxxptSMSservice\aqxxptSMSservice.csproj", "{468DBD9C-B68E-4B12-A2E1-3F50EB5EE929}"

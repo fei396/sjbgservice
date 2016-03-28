@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
 using ImApiDotNet;
 namespace aqxxptSMSservice
@@ -16,7 +14,7 @@ namespace aqxxptSMSservice
             Messages = null;
         }
 
-        public void getMessage()
+        public void GetMessage()
         {
             DataTable dt = DAL.getMessageToSend();
             if (dt.TableName.Equals("getMessageToSend") && dt.Rows.Count > 0)
@@ -29,9 +27,11 @@ namespace aqxxptSMSservice
                     long smId = Convert.ToInt64(dt.Rows[i]["smId"]);
                     if (smId != lastSmId)
                     {
-                        message = new MessageToSend();
-                        message.SmID = smId;
-                        message.Content = Convert.ToString(dt.Rows[i]["txt"]);
+                        message = new MessageToSend
+                        {
+                            SmID = smId,
+                            Content = Convert.ToString(dt.Rows[i]["txt"])
+                        };
                         message.Mobile.Add(Convert.ToString(dt.Rows[i]["mobile"]));
                         Messages.Add(message);
                     }
@@ -72,7 +72,7 @@ namespace aqxxptSMSservice
             Items = null;
         }
 
-        internal void doReceive()
+        internal void DoReceive()
         {
             if (Items == null) return;
             foreach (RPTItem item in Items)
@@ -80,7 +80,8 @@ namespace aqxxptSMSservice
                 long smId = item.getSmID();
                 string mobile = item.getMobile();
                 string rptTime = item.getRptTime();
-                DAL.ReceiveRPT(smId, mobile, rptTime);
+                int code = item.getCode();
+                DAL.ReceiveRPT(smId, mobile, rptTime, code);
             }
         }
     }
@@ -93,7 +94,7 @@ namespace aqxxptSMSservice
             Items = null;
         }
 
-        internal void doReceive()
+        internal void DoReceive()
         {
             if (Items == null) return;
             foreach (MOItem item in Items)
@@ -102,6 +103,7 @@ namespace aqxxptSMSservice
                 string mobile = item.getMobile();
                 string rptTime = item.getMoTime();
                 string content = item.getContent();
+               
                 if (content.Length > 50) content = content.Substring(0, 47) + "...";
                 DAL.ReceiveReply(smId,content, mobile, rptTime);
             }

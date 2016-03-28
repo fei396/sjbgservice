@@ -88,16 +88,17 @@ namespace aqxxptSMSservice
             return dt;
         }
 
-        internal static void ReceiveRPT(long smId, string mobile, string rptTime)
+        internal static void ReceiveRPT(long smId, string mobile, string rptTime,int code)
         {
             SqlConnection conn = new SqlConnection(messageConnString);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
-            comm.CommandText = "update T_aqxxpt_xxjs set receiveTime = @rptTime where xxid=@smid and receiver in (select user_no from V_User where sjh=@sjh)";
+            comm.CommandText = "update T_aqxxpt_xxjs set receiveTime = @rptTime,receiveCode=@code where xxid=@smid and receiver in (select user_no from V_User where sjh=@sjh)";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("rptTime", rptTime);
             comm.Parameters.AddWithValue("smid", smId);
             comm.Parameters.AddWithValue("sjh", mobile);
+            comm.Parameters.AddWithValue("code", code);
             try
             {
                 conn.Open();

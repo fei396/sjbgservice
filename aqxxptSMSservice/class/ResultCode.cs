@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace aqxxptSMSservice
+﻿namespace aqxxptSMSservice
 {
 	class ResultCode
 	{
@@ -28,40 +23,40 @@ namespace aqxxptSMSservice
             Code = code;
             switch (code)
             {
-                case 0:
+                case IMAPI_SUCC:
                     Message = "操作成功";
                     break;
-                case -1:
+                case IMAPI_CONN_ERR:
                     Message = "连接数据库出错";
                     break;
-                case -2:
+                case IMAPI_CONN_CLOSE_ERR:
                     Message = "数据库关闭失败";
                     break;
-                case -3:
+                case IMAPI_INS_ERR:
                     Message = "数据库插入错误";
                     break;
-                case -4:
+                case IMAPI_DEL_ERR:
                     Message = "数据库删除错误";
                     break;
-                case -5:
+                case IMAPI_QUERY_ERR:
                     Message = "数据库查询错误";
                     break;
-                case -6:
+                case IMAPI_DATA_ERR:
                     Message = "参数错误";
                     break;
-                case -7:
+                case IMAPI_API_ERR:
                     Message = "API标识非法";
                     break;
-                case -8:
+                case IMAPI_DATA_TOOLONG:
                     Message = "消息内容太长";
                     break;
-                case -9:
+                case IMAPI_INIT_ERR:
                     Message = "没有初始化或初始化失败";
                     break;
-                case -10:
+                case IMAPI_IFSTATUS_INVALID:
                     Message = "API接口处于暂停（失效）状态";
                     break;
-                case -11:
+                case IMAPI_GATEWAY_CONN_ERR:
                     Message = "短信网关未连接";
                     break;
                 default:

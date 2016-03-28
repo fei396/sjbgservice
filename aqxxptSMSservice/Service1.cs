@@ -12,16 +12,16 @@ namespace aqxxptSMSservice
 {
     public partial class Service1 : ServiceBase
     {
-        smsClient client;
+        private SmsClient _client;
         
-        private static string strAdmin = System.Configuration.ConfigurationManager.AppSettings["AdminNum"];
+        private static readonly string StrAdmin = System.Configuration.ConfigurationManager.AppSettings["AdminNum"];
         
-        private static string strTiXing = System.Configuration.ConfigurationManager.AppSettings["TiXing"];
-        private static string strSpan = System.Configuration.ConfigurationManager.AppSettings["checkSpan"];
-        private static string strMessageToAdminOnError = System.Configuration.ConfigurationManager.AppSettings["MessageToAdminOnError"];
-        private static int checkSpan;
+        private static readonly string StrTiXing = System.Configuration.ConfigurationManager.AppSettings["TiXing"];
+        private static readonly string StrSpan = System.Configuration.ConfigurationManager.AppSettings["checkSpan"];
+        private static readonly string StrMessageToAdminOnError = System.Configuration.ConfigurationManager.AppSettings["MessageToAdminOnError"];
+        private static int _checkSpan;
         private static DateTime TiXing;
-        private static bool MessageToAdminOnError;
+        private static bool _messageToAdminOnError;
         public Service1()
         {
             InitializeComponent();
@@ -32,81 +32,81 @@ namespace aqxxptSMSservice
 
         protected override void OnStart(string[] args)
         {
-            initParam();
+            InitParam();
             //initApi();
-            initTimer();
-            Log.writeLog("服务初始化完毕，开始运行。");
+            InitTimer();
+            Log.WriteLog("服务初始化完毕，开始运行。");
         }
 
 
         protected override void OnStop()
         {
-            release();
-            Log.writeLog("服务释放完毕，停止运行。");
+            Release();
+            Log.WriteLog("服务释放完毕，停止运行。");
         }
 
         public void DoStop()
         {
-            if (client != null)
+            if (_client != null)
             {
-                client.sendMessageSingle(strAdmin, "安全信息平台短信服务意外终止。");
+                _client.SendMessageSingle(StrAdmin, "安全信息平台短信服务意外终止。");
             }
             this.Stop();
             
         }
 
 
-        private void release()
+        private void Release()
         {
             try
             {
-                client.releaseApi();
+                _client.ReleaseApi();
             }
             catch (Exception ex)
             {
-                Log.writeLog(ex.Message);
-                Log.writeLog("服务意外终止。");
+                Log.WriteLog(ex.Message);
+                //Log.WriteLog("服务意外终止。");
                 this.DoStop();
             }
         }
 
 
 
-        private void initTimer()
+        private void InitTimer()
         {
-            timer1.Interval = checkSpan * 1000;
+            timer1.Interval = _checkSpan * 1000;
             timer1.Start();
         }
 
-        private void initParam()
+        private void InitParam()
         {
             try
             {
-                checkSpan = Convert.ToInt32(strSpan);
-                TiXing = Convert.ToDateTime(strTiXing);
-                MessageToAdminOnError = Convert.ToBoolean(strMessageToAdminOnError);
+                _checkSpan = Convert.ToInt32(StrSpan);
+                TiXing = Convert.ToDateTime(StrTiXing);
+                _messageToAdminOnError = Convert.ToBoolean(StrMessageToAdminOnError);
             }
             catch (Exception ex)
             {
-                Log.writeLog("initParam");
-                Log.writeLog(ex.Message);
-                Log.writeLog("服务意外终止。");
+                Log.WriteLog("initParam");
+                Log.WriteLog(ex.Message);
+                //Log.writeLog("服务意外终止。");
                 this.DoStop();
             }
         }
 
-        private void initApi()
+        private void InitApi()
         {
             try
             {
-                client = new smsClient();
-                client.initApi();
+                _client = new SmsClient();
+                _client.InitApi();
             }
             catch (Exception ex)
             {
-                Log.writeLog("initApi");
-                Log.writeLog(ex.Message);
-                Log.writeLog("服务意外终止。");
+                Log.WriteLog("initApi");
+                Log.WriteLog(ex.Message);
+                //Log.writeLog("服务意外终止。");
                 this.DoStop();
             }
         }
@@ -116,29 +116,32 @@ namespace aqxxptSMSservice
         private void timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             timer1.Stop();
-            if (client == null)
+            if (_client == null)
             {
                 try
                 {
-                    initApi();
+                    InitApi();
                 }
                 catch (Exception ex)
                 {
-                    Log.writeLog("client.initApi");
-                    Log.writeLog(ex.Message);
-                    Log.writeLog("服务意外终止。");
-                    this.DoStop();
+                    Log.WriteLog("client.initApi");
+                    Log.WriteLog(ex.Message);
+                    //Log.writeLog("服务意外终止。");
+                    //this.DoStop();
                 }
             }
             try
             {
-                client.checkAll();
-                if (MessageToAdminOnError == true) client.sendMessageSingle(strAdmin, "安全信息平台服务运行正常。");
+                if (_client != null)
+                {
+                    _client.CheckAll();
+                    if (_messageToAdminOnError == true) _client.SendMessageSingle(StrAdmin, "安全信息平台服务运行正常。");
+                }
             }
             catch (Exception ex)
             {
-                Log.writeLog("client.checkAll");
-                Log.writeLog(ex.Message);
+                Log.WriteLog("client.checkAll");
+                Log.WriteLog(ex.Message);
                 //Log.writeLog("服务意外终止。");
                 //this.DoStop();
             }

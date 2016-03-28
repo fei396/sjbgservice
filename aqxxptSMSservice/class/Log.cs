@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace aqxxptSMSservice
 {
 
 
-	class Log
+	internal class Log
 	{
-        static string strLogFile = System.Configuration.ConfigurationManager.AppSettings["LogFile"];
+        static readonly string StrLogFile = System.Configuration.ConfigurationManager.AppSettings["LogFile"];
 
-        public static void writeLog(string strContent)
+        public static void WriteLog(string strContent)
         {
-            FileInfo f = new FileInfo(strLogFile);
+            FileInfo f = new FileInfo(StrLogFile);
 
             StreamWriter sw;
             if (f.Exists)
@@ -23,7 +20,7 @@ namespace aqxxptSMSservice
             }
             else
             {
-                if (!f.Directory.Exists) System.IO.Directory.CreateDirectory(f.Directory.FullName);
+                if (f.Directory != null && !f.Directory.Exists) Directory.CreateDirectory(f.Directory.FullName);
                 sw = f.CreateText();
             }
             sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "--" + strContent);

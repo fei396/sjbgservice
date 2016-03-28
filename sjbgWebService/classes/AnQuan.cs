@@ -48,6 +48,8 @@ namespace sjbgWebService
         public string Status { get; set; }
         public string Auditor { get; set; }
         public string AuditTime { get; set; }
+        public int FailCount { get; set; }
+        public int SendingCount { get; set; }
     }
 
     public class AqxxDetail

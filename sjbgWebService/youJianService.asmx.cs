@@ -75,7 +75,7 @@ namespace sjbgWebService.youjian
         public INT sendMail(int uid, YouJian mm)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return DAL.sendMail(uid, mm);
+            return DAL.SendMail(uid, mm);
 
         }
 
@@ -85,7 +85,7 @@ namespace sjbgWebService.youjian
         {
             if (!sjbgHeader.checkValid()) return null;
 
-            return DAL.sendMail(uid, importance, subject, body, from ,to, cc, bcc, attachment);
+            return DAL.SendMail(uid, importance, subject, body, from ,to, cc, bcc, attachment);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
