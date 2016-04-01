@@ -1,0 +1,194 @@
+    收件人：<asp:TextBox ID="tbTo" runat="Server" SkinID="tbSkin" Width="60%" MaxLength="255"></asp:TextBox>
+    <asp:RequiredFieldValidator ID="rfNameBlank" runat="server" ControlToValidate="tbTo" Display="none" ErrorMessage="收件人地址不能为空！"></asp:RequiredFieldValidator>
+     <asp:RequiredFieldValidator ID="rfNameValue" runat="server" ControlToValidate="tbTo" Display="none" InitialValue="请输入收件人地址" ErrorMessage="请输入收件人地址！"></asp:RequiredFieldValidator>
+    <asp:RegularExpressionValidator ID="revName" runat="server" ControlToValidate="tbTo" Display="none" ErrorMessage="收件人的地址的长度最大为255，请重新输入。" ValidationExpression=".{1,255}"></asp:RegularExpressionValidator>
+   <ajaxToolkit:TextBoxWatemarkExtender ID="wmeName" runat="server" TargetControlID="tbTo" WatermarkText="请输入收件人地址" WatermarkClass="Watermark"></ajaxToolkit:TextBoxWatemarkExtender>
+      <ajaxToolkit:ValidatorCalloutExtender ID="vceNameBlank" runat="server" TargetControlID="rfNameBlank" HighlightCssClass="Validator"></ajaxToolkit:ValidatorCalloutExtender>
+  
+
+   
+        protected void btnCommit_Click(object sender, EventArgs e)
+        {
+            MailMessage mail = new MailMessage();
+            int size = 0;
+            string from = "admin@dorient.com";
+            mail.From = new MailAddress(from);
+            size += mail.From.Address.Length;
+            string split = ";";
+            string[] toList = tbTo.Text.Trim().Split(split.ToCharArray());
+            for (int i = 0; i < toList.Length; i++)
+            {
+                mail.To.Add(toList[i].Trim());
+            }
+            size += tbTo.Text.Length;
+            mail.Subject = tbTitle.Text.Trim();
+            mail.SubjectEncoding = Encoding.UTF8;
+            size += mail.Subject.Length;
+            mail.Body = tbBody.Text;
+            mail.BodyEncoding = Encoding.UTF8;
+            size += mail.Body.Length;
+            mail.IsBodyHtml = HtmlCB.Checked;
+            if (mail.IsBodyHtml == true) { size += 100; }
+            HttpFileCollection fileList = HttpContext.Current.Request.Files;
+            for (int i = 0; i < fileList.Count; i++)
+            {
+                HttpPostedFile file = fileList[i];
+                if (file.FileName.Length <= 0 || file.ContentLength <= 0) 
+                {
+                    continue;
+                }
+                Attachment attachment = new Attachment(file.FileName);
+                mail.Attachments.Add(attachment);
+                size += file.ContentLength;
+                try
+                {
+                    SmtpClient client = new SmtpClient();
+                   // client.Host = ASP.global_asax.MAILSERVERHOST;
+                    //client.Port = ASP.global_asax.MAILSERVERPORT;
+                    client.Host ="10.99.81.16";
+                    client.Port = 25;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    Mail mailbox = new Mail();
+                    int mailID = mailbox.AddMail(mail.Subject,mail.Body,from,tbTo.Text,tbCC.Text,mail.IsBodyHtml,size);
+                    if (mailID <= 0) return;
+                    for (int j = 0; j < fileList.Count; j++)
+                    {
+                        HttpPostedFile file2 = fileList[i];
+                        if (file2.FileName.Length <= 0 || file2.ContentLength <= 0)
+                        { continue; }
+                        string filename = DateTime.Now.ToString("yyyyMMddhhmmssfff"); ;
+                        string extension = Path.GetExtension(file2.FileName);
+                        string url = "MailAttachments/" + filename + extension;
+                        string fullPath = Server.MapPath(url);
+                        file.SaveAs(fullPath);
+                        mailbox.AddMailAttachment(Path.GetFileName(file.FileName), url, mailID);
+                        //
+                    }
+                   
+                }
+                catch (Exception ex) { throw new Exception(ex.Message, ex); }
+            }
+
+        }
+
+
+
+
+
+
+
+
+        protected void btnCommit_Click(object sender, EventArgs e)
+        {
+            MailMessage mail = new MailMessage();
+            int size = 0;
+            string from = "admin@dorient.com";
+            mail.From = new MailAddress(from);
+            string split = ";";
+            string[] toList = tbTo.Text.Trim().Split(split.ToCharArray());
+            for (int i = 0; i < toList.Length; i++)
+            {
+                mail.To.Add(toList[i].Trim());
+            }
+            mail.Subject = tbTitle.Text.Trim();
+            mail.SubjectEncoding = Encoding.UTF8;
+            mail.Body = tbBody.Text;
+            mail.BodyEncoding = Encoding.UTF8;
+            mail.IsBodyHtml = HtmlCB.Checked;
+            HttpFileCollection fileList = HttpContext.Current.Request.Files;
+            for (int i = 0; i < fileList.Count; i++)
+            {
+                HttpPostedFile file = fileList[i];
+                if (file.FileName.Length <= 0 || file.ContentLength <= 0) 
+                {
+                    continue;
+                }
+
+                try
+                {
+                    Mail mailbox = new Mail();
+                    int mailID = mailbox.AddMail(mail.Subject,mail.Body,from,tbTo.Text,tbCC.Text,mail.IsBodyHtml,size);
+                    if (mailID <= 0) return;
+                    for (int j = 0; j < fileList.Count; j++)
+                    {
+                        HttpPostedFile file2 = fileList[i];
+                        if (file2.FileName.Length <= 0 || file2.ContentLength <= 0)
+                        { continue; }
+                        string filename = DateTime.Now.ToString("yyyyMMddhhmmssfff"); ;
+                        string extension = Path.GetExtension(file2.FileName);
+                        string url = "MailAttachments/" + filename + extension;
+                        string fullPath = Server.MapPath(url);
+                        file.SaveAs(fullPath);
+                        mailbox.AddMailAttachment(Path.GetFileName(file.FileName), url, mailID);
+                    }
+                   
+                }
+                catch (Exception ex) { throw new Exception(ex.Message, ex); }
+            }
+
+        }
+
+
+      connectionString="data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\aspnetdb.mdf;User Instance=true"
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1" runat="server">
+    <title>新乡机务段邮件管理系统</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td align="left" valign="top" height="127px"><iframe id="header" src="Header.aspx" name="header" frameborder="0" scrolling="no" width="100%"></iframe></td>
+</tr>
+<tr>
+<td valign="top">
+
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="8" bgcolor="#353c44">&nbsp;</td>
+    <td width="147" valign="top"><iframe id="MenuTree" src="MailTree.aspx" name="MenuTree" frameborder="0" scrolling="no" width="100%" onload="Javascript:SetWinHeight(this)"></iframe></td>
+    <td width="10" bgcolor="#add2da">&nbsp;</td>
+    <td valign="top"><iframe height="100%" id="Mailbox" src="SendMail.aspx" name="Mailbox" frameborder="0" scrolling="auto" width="100%" onload="Javascript:SetWinHeight(this)"></iframe></td>
+    <td width="8" bgcolor="#353c44">&nbsp;</td>
+  </tr>
+</table>
+
+
+
+
+
+</td>
+</tr>
+<tr>
+<td>
+  <iframe src="down.aspx" name="bottomFrame" scrolling="no" id="bottomFrame" width="100%" height="11px"></iframe>
+</td>
+</tr>
+</table>
+</div>
+</form>
+</body>
+<script language="javascript">
+<!--
+    function SetWinHeight(obj) {
+        var win = obj;
+        if (document.getElementById) {
+            if (win && !window.opera) {
+                if (win.contentDocument && win.contentDocument.body.offsetHeight)
+                    win.height = win.contentDocument.body.offsetHeight+160;
+                else if (win.Document && win.Document.body.scrollHeight)
+                    win.height = win.Document.body.scrollHeight+160;
+            }
+        }
+    }
+-->
+</script>
+</html>
+Replace(pass_txt.Text, "'", ""),

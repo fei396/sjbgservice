@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="editfile_detail.aspx.cs" Inherits="editfile_detail" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="editfile_detail.aspx.cs" Inherits="EditfileDetail" %>
 
 <html>
 <head>
@@ -10,7 +10,21 @@
 </head>
 <body style="background-color: #F7Feff" align="center">
 <form id="form1" runat="server" align="center">
-
+    <hr align="center" color="#00cc00" noshade="noshade" width="96%"/>
+        <div align="center">
+        
+        <asp:Label ID="Label1" runat="server" Text="选择状态："></asp:Label>&nbsp;&nbsp;&nbsp;
+        <asp:DropDownList ID="ddlStatus" runat="server">
+            <asp:ListItem Value="0">全部状态</asp:ListItem>
+            <asp:ListItem Value="1">尚未发送</asp:ListItem>
+            <asp:ListItem Value="2">暂无回执</asp:ListItem>
+            <asp:ListItem Value="3">发送失败</asp:ListItem>
+            <asp:ListItem Value="4">发送成功</asp:ListItem>
+        </asp:DropDownList>
+        &nbsp;&nbsp;&nbsp;
+        <asp:Button ID="btnChaXun" runat="server" Text="查询" OnClick="btnChaXun_Click" />
+        
+        </div>
     <hr align="center" color="#00cc00" noshade="noshade" width="96%"/>
     <div align="center">
         <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False"
@@ -51,6 +65,7 @@
 
                 <asp:BoundField DataField="ReceiverDept" HeaderText="接收人部门" SortExpression="ReceiverDept"/>
                 <asp:BoundField DataField="Receiver" HeaderText="接收人" SortExpression="Receiver"/>
+                <asp:BoundField DataField="Status" HeaderText="状态" SortExpression="Status"/>
                 <asp:BoundField DataField="ReceiveTime" HeaderText="接收时间" SortExpression="ReceiveTime"/>
             </Columns>
         </asp:GridView>

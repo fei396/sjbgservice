@@ -499,7 +499,7 @@ namespace sjbgWebService
             comm.Connection = conn;
             comm.CommandText = "update dic_user set user_mima=@pass where user_no=@work_no";
             string workNo = uid.ToWorkNo();
-            pass = Bll.SetEncryptPass(workNo, pass);
+            pass = BLL.SetEncryptPass(workNo, pass);
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("pass", pass);
             comm.Parameters.AddWithValue("work_no", workNo);
@@ -532,7 +532,7 @@ namespace sjbgWebService
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 string workNo = Convert.ToString(dt.Rows[i]["user_no"]);
-                string pass = Bll.SetEncryptPass(workNo, workNo);
+                string pass = BLL.SetEncryptPass(workNo, workNo);
                 comm.Connection = conn;
                 comm.CommandText = "update dic_user set user_mima=@pass where user_no=@work_no";
                 comm.Parameters.Clear();
@@ -559,7 +559,7 @@ namespace sjbgWebService
         {
             SqlConnection conn = new SqlConnection(YyConnStr);
             SqlCommand comm = new SqlCommand();
-            string pass = Bll.SetEncryptPass(uid.ToString(), newpass);
+            string pass = BLL.SetEncryptPass(uid.ToString(), newpass);
             comm.Connection = conn;
             comm.CommandText = "update T_TQYJ_User set pwd=@pwd where uid=@uid";
             comm.Parameters.Clear();
@@ -687,7 +687,7 @@ namespace sjbgWebService
             else
             {
                 string pass1 = Convert.ToString(dt.Rows[0]["user_mima"]);
-                userPass = Bll.SetEncryptPass(userNo, userPass);
+                userPass = BLL.SetEncryptPass(userNo, userPass);
                 if (!userPass.Equals(pass1)) return new INT(-3, "密码错误");//密码错误
             }
 
@@ -736,7 +736,7 @@ namespace sjbgWebService
             else
             {
                 string pass1 = Convert.ToString(dt.Rows[0]["user_mima"]);
-                userPass = Bll.SetEncryptPass(userNo, userPass);
+                userPass = BLL.SetEncryptPass(userNo, userPass);
                 if (!userPass.Equals(pass1)) return new INT(-3, "密码错误");//密码错误
             }
 
@@ -1236,7 +1236,7 @@ namespace sjbgWebService
         {
             SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
-            string pass = Bll.SetEncryptPass(userNo, newPass);
+            string pass = BLL.SetEncryptPass(userNo, newPass);
             comm.Connection = conn;
 
             //验证旧密码
@@ -1247,7 +1247,7 @@ namespace sjbgWebService
             {
                 conn.Open();
                 string passDataBase = Convert.ToString(comm.ExecuteScalar());
-                if (!passDataBase.Equals(Bll.SetEncryptPass(userNo, oldPass)))
+                if (!passDataBase.Equals(BLL.SetEncryptPass(userNo, oldPass)))
                 {
                     return new BOOLEAN(false, "原密码不正确。");
                 }
@@ -1688,26 +1688,26 @@ namespace sjbgWebService
             }
             mm.Subject = subject;
             mm.Body = body;
-            mm.From = Bll.ToSysMailAddress(from)[0];
-            List<System.Net.Mail.MailAddress> toList = Bll.ToSysMailAddress(to);
+            mm.From = BLL.ToSysMailAddress(from)[0];
+            List<System.Net.Mail.MailAddress> toList = BLL.ToSysMailAddress(to);
             if (toList != null)
                 foreach (System.Net.Mail.MailAddress t in toList)
                 {
                     mm.To.Add(t);
                 }
-            List<System.Net.Mail.MailAddress> ccList = Bll.ToSysMailAddress(cc);
+            List<System.Net.Mail.MailAddress> ccList = BLL.ToSysMailAddress(cc);
             if (ccList != null)
                 foreach (System.Net.Mail.MailAddress c in ccList)
                 {
                     mm.CC.Add(c);
                 }
-            List<System.Net.Mail.MailAddress> bccList = Bll.ToSysMailAddress(bcc);
+            List<System.Net.Mail.MailAddress> bccList = BLL.ToSysMailAddress(bcc);
             if (ccList != null)
                 foreach (System.Net.Mail.MailAddress bc in ccList)
                 {
                     mm.CC.Add(bc);
                 }
-            List<System.Net.Mail.Attachment> atts = Bll.ToSysAttachment(attachment);
+            List<System.Net.Mail.Attachment> atts = BLL.ToSysAttachment(attachment);
             if (atts != null)
                 foreach (System.Net.Mail.Attachment att in atts)
                 {
@@ -3450,15 +3450,16 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable GetAqxxDetail(int xxid)
+        internal static DataTable GetAqxxDetail(int xxid ,int type)
         {
             SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             SqlDataAdapter sda = new SqlDataAdapter();
             comm.Connection = conn;
-            comm.CommandText = "select title,sender,sendtime,receiverno + receivername as receiver,receivetime,receiverDept from V_AQXXPT_XXJS where xxid=@xxid";
+            comm.CommandText = "select title,sender,sendtime,receiverno + receivername as receiver,receivetime,receiverDept ,status from V_AQXXPT_XXJS where xxid=@xxid and (statusCode = @type or @type =0)";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("xxid", xxid);
+            comm.Parameters.AddWithValue("type", type);
             sda.SelectCommand = comm;
             DataTable dt = new DataTable();
             try
@@ -5209,6 +5210,109 @@ namespace sjbgWebService
 
         #endregion
 
+        #region 2016自制邮件系统
+        /// <summary>
+        /// 获取邮件内容
+        /// </summary>
+        /// <param name="mid">邮件ID号</param>
+        /// <returns></returns>
+        internal static DataTable GetMailById2016(int mid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT   id, title, body, fromaddress, toaddress, copyaddress, ishtmlformat, createdate, size, status, filenamestring, url,readflag FROM Mail where id=@mid";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("mid", mid);
+            DataTable dt = new DataTable();
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+
+                dt.TableName = "error!";
+                return dt;
+            }
+
+            dt.TableName = "GetMailById2016";
+            return dt;
+        }
+
+        /// <summary>
+        /// 获取邮件列表
+        /// </summary>
+        /// <param name="gh">工号</param>
+        /// <param name="type">邮件列表类型，1:收件箱，2:垃圾箱，3:已发送</param>
+        /// <returns></returns>
+        internal static DataTable GetMailList2016(string gh,int type)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT   id, title, fromaddress, createdate, size, filenamestring ,readflag FROM V_YouJian_YJXX ";
+            switch ( type)
+            {
+                case 1://收件箱
+                    comm.CommandText += " where toAddress=@gh and dustbin=0 ";
+                    break;
+                case 2://垃圾箱
+                    comm.CommandText += " where toAddress=@gh and dustbin=1 ";
+                    break;
+                case 3://已发送
+                    comm.CommandText += " where copyAddress=@gh and dustbin=0 ";
+                    break;
+                default:
+                    return null;
+            }
+            comm.CommandText += " order by id desc";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("@gh", gh);
+            DataTable dt = new DataTable();
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+
+                dt.TableName = "error!";
+                return dt;
+            }
+
+            dt.TableName = "getMailList2016";
+            return dt;
+        }
+
+
+        internal static DataTable GetYouJianFuJian(string gh, int mid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT  url,filenamestring FROM V_YouJian_YJXX where id = @mid";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("mid", mid);
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch (Exception)
+            {
+
+
+                return null;
+            }
+            return dt;
+
+        }
+        #endregion
+
 
         #region 系统维护
         /// <summary>
@@ -5224,7 +5328,7 @@ namespace sjbgWebService
         internal static INT AddUserBaseInfo(string gh, string xm, int bmid, string sjh, string zw, string gz)
         {
             //初始密码和工号一样，获取初始密码的md5值
-            string mm = Bll.SetEncryptPass(gh, gh);
+            string mm = BLL.SetEncryptPass(gh, gh);
 
 
             SqlConnection conn = new SqlConnection(BaseConnStr);
@@ -5289,7 +5393,7 @@ namespace sjbgWebService
         internal static INT DeleteUserBaseInfo(string gh, string xm, int bmid, string sjh, string zw, string gz)
         {
             //初始密码和工号一样，获取初始密码的md5值
-            string mm = Bll.SetEncryptPass(gh, gh);
+            string mm = BLL.SetEncryptPass(gh, gh);
 
 
             SqlConnection conn = new SqlConnection(BaseConnStr);

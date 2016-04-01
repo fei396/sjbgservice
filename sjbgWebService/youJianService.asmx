@@ -1,1 +1,1 @@
-﻿<%@ WebService Language="C#" CodeBehind="youJianService.asmx.cs" Class="sjbgWebService.youjian.youjianService" %>
+﻿<%@ WebService Language="C#" CodeBehind="youJianService.asmx.cs" Class="sjbgWebService.youjian.YoujianService" %>

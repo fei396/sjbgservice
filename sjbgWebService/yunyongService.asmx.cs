@@ -27,7 +27,7 @@ namespace sjbgWebService
         public JcjhData[] getJcjh(string jcjh_data)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetJcjhByNum(jcjh_data);
+            return BLL.GetJcjhByNum(jcjh_data);
         }
         //
 
@@ -37,7 +37,7 @@ namespace sjbgWebService
         public RyjhData[] getRyjh(string ryjh_data)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetRyjhByNum(ryjh_data);
+            return BLL.GetRyjhByNum(ryjh_data);
         }
         //
 
@@ -47,7 +47,7 @@ namespace sjbgWebService
         public DcjhData[] getDcjh(string dcjh_data)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetDcjhByNum(dcjh_data);
+            return BLL.GetDcjhByNum(dcjh_data);
         }
         //
 
@@ -57,7 +57,7 @@ namespace sjbgWebService
         public MingPai[] getMingPaiByXianBie(int database ,string line_mode ,int type)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetMingPaiByXianBie(database ,line_mode ,type);
+            return BLL.GetMingPaiByXianBie(database ,line_mode ,type);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -65,7 +65,7 @@ namespace sjbgWebService
         public MingPai[] getMingPaiByGongHao(int database ,int uid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetMingPaiByUid(database,uid);
+            return BLL.GetMingPaiByUid(database,uid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -73,7 +73,7 @@ namespace sjbgWebService
         public DaMingPai[] getDaMingPai(int database, string line,int type , string filter, int ksxh,int count)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetDaMingPaiByXianBie(database, line ,type, filter ,ksxh,count);
+            return BLL.GetDaMingPaiByXianBie(database, line ,type, filter ,ksxh,count);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -81,7 +81,7 @@ namespace sjbgWebService
         public XianBie[] getXianBie(int database)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetXianBie(database);
+            return BLL.GetXianBie(database);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -89,7 +89,7 @@ namespace sjbgWebService
         public CanBu[] getCanBu(int uid,string month)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetCanBu(uid, month);
+            return BLL.GetCanBu(uid, month);
         }
     }
 }

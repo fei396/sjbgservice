@@ -85,6 +85,27 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GongWen", "http://localhost
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "xxjwdMail", "xxjwdMail\", "{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_2842"
+		Debug.AspNetCompiler.PhysicalPath = "xxjwdMail\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_2842\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_2842"
+		Release.AspNetCompiler.PhysicalPath = "xxjwdMail\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_2842\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "2842"
+		SlnRelativePath = "xxjwdMail\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -272,6 +293,30 @@ Global
 		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|x64.ActiveCfg = Debug|Any CPU
 		{108F8C45-4AD6-4F69-9054-265AC8498399}.Release|x86.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Debug|x64.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Debug|x86.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.oraclex64|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.oraclex64|Any CPU.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.oraclex64|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.oraclex64|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.oraclex64|x64.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.oraclex64|x64.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.oraclex64|x86.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.oraclex64|x86.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|x64.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|x64.Build.0 = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|x86.ActiveCfg = Debug|Any CPU
+		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

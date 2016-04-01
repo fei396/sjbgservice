@@ -732,5 +732,37 @@ namespace sjbgWebService
         {
             return new INT(1);
         }
+
+
     }
+
+
+    #region 2016自制邮件系统
+
+    public class YouJian2016
+    {
+        public int ID { get; set; }
+        public int Size { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public string Date { get; set; }
+        public bool IsBodyHtml { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Attachments { get; set; }
+        public bool IsRead { get; set; }
+    }
+
+    public class YouJianList2016
+    {
+        public int ID { get; set; }
+        public string Size { get; set; }
+        public string Subject { get; set; }
+        public string Date { get; set; }
+        public string From { get; set; }
+        public bool HasAttachment { get; set; }
+        public bool IsRead { get; set; }
+    }
+
+    #endregion
 }

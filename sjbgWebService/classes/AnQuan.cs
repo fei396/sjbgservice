@@ -60,5 +60,6 @@ namespace sjbgWebService
         public string Receiver { get; set; }
         public string ReceiveTime { get; set; }
         public string ReceiverDept { get; set; }
+        public string Status { get; set; }
     }
 }

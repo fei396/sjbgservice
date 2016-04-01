@@ -1,13 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
-                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://sjbg.xxjwd.org/"
-                  xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://sjbg.xxjwd.org/literalTypes"
-                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
-                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
-                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://sjbg.xxjwd.org/"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://sjbg.xxjwd.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://sjbg.xxjwd.org/literalTypes" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://sjbg.xxjwd.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://sjbg.xxjwd.org/">
       <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -112,6 +104,7 @@
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Receiver" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ReceiveTime" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ReceiverDept" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Status" type="s:string" />
         </s:sequence>
       </s:complexType>
     </s:schema>
@@ -207,6 +200,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="Receiver" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="ReceiveTime" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="ReceiverDept" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
         </s:sequence>
       </s:complexType>
     </s:schema>
@@ -284,6 +278,7 @@
   </wsdl:message>
   <wsdl:message name="GetAqxxDetailSoapIn">
     <wsdl:part name="xxid" type="s:int" />
+    <wsdl:part name="type" type="s:int" />
     <wsdl:part name="ksxh" type="s:int" />
     <wsdl:part name="count" type="s:int" />
   </wsdl:message>
@@ -367,6 +362,7 @@
   </wsdl:message>
   <wsdl:message name="GetAqxxDetailHttpGetIn">
     <wsdl:part name="xxid" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
     <wsdl:part name="ksxh" type="s:string" />
     <wsdl:part name="count" type="s:string" />
   </wsdl:message>
@@ -441,6 +437,7 @@
   </wsdl:message>
   <wsdl:message name="GetAqxxDetailHttpPostIn">
     <wsdl:part name="xxid" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
     <wsdl:part name="ksxh" type="s:string" />
     <wsdl:part name="count" type="s:string" />
   </wsdl:message>
@@ -594,131 +591,101 @@
     <wsdl:operation name="GetAqxxptBm">
       <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxptBm" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:GetAqxxptBmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxptBmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxptShenHe">
       <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxptShenHe" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:GetAqxxptShenHeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxptShenHeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="ApplyAqxx">
       <soap:operation soapAction="http://sjbg.xxjwd.org/ApplyAqxx" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:ApplyAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:ApplyAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxInfo">
       <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxInfo" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:GetAqxxInfoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxInfoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxCount">
       <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxCount" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:GetAqxxCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxInfos">
       <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxInfos" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:GetAqxxInfosSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxInfosSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxToAudit">
       <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxToAudit" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:GetAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxDetail">
       <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxDetail" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:GetAqxxDetailSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxDetailSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AuditAqxx">
       <soap:operation soapAction="http://sjbg.xxjwd.org/AuditAqxx" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:AuditAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:AuditAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxContent">
       <soap:operation soapAction="http://sjbg.xxjwd.org/GetAqxxContent" style="rpc" />
       <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:GetAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                     encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
@@ -727,131 +694,101 @@
     <wsdl:operation name="GetAqxxptBm">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxptBm" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:GetAqxxptBmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxptBmSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxptShenHe">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxptShenHe" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:GetAqxxptShenHeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxptShenHeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="ApplyAqxx">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/ApplyAqxx" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:ApplyAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:ApplyAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxInfo">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxInfo" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:GetAqxxInfoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxInfoSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxCount">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxCount" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:GetAqxxCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxCountSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxInfos">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxInfos" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:GetAqxxInfosSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxInfosSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxToAudit">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxToAudit" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:GetAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxToAuditSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxDetail">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxDetail" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:GetAqxxDetailSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxDetailSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AuditAqxx">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/AuditAqxx" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:AuditAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:AuditAqxxSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetAqxxContent">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/GetAqxxContent" style="rpc" />
       <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:GetAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded"
-                       encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetAqxxContentSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/"
-                     encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>

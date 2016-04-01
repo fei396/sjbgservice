@@ -27,7 +27,7 @@ namespace sjbgWebService
         public FeiYunYongJiChe[] getFyyjc(string jczt)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetFyyjc(jczt);
+            return BLL.GetFyyjc(jczt);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -35,7 +35,7 @@ namespace sjbgWebService
         public string[] getFyyjcZt()
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetFyyjcZt();
+            return BLL.GetFyyjcZt();
         }
         
     }

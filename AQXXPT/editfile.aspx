@@ -12,6 +12,7 @@
 <form id="form1" runat="server" align="center">
 
     <hr align="center" color="#00cc00" noshade="noshade" width="96%"/>
+
     <div align="center">
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
                       BorderStyle="Solid" BorderWidth="2px" Caption="已发送信息：" CaptionAlign="Right" CellPadding="4"
@@ -46,10 +47,12 @@
 
                 <asp:BoundField DataField="SendCount" HeaderText="发送人数" SortExpression="SendCount"/>
                 <asp:BoundField DataField="readCount" HeaderText="成功人数" SortExpression="readCount"/>
-                <asp:BoundField DataField="readCount" HeaderText="失败人数" SortExpression="failCount"/>
-                <asp:BoundField DataField="readCount" HeaderText="未回执人数" SortExpression="SendingCount"/>
+                <asp:BoundField DataField="failCount" HeaderText="失败人数" SortExpression="failCount"/>
+                <asp:BoundField DataField="SendingCount" HeaderText="未回执人数" SortExpression="SendingCount"/>
                 <asp:TemplateField>
                     <ItemTemplate>
+                        
+
                         <asp:HyperLink ID="HyperLink1" runat="server"
                                        NavigateUrl='<%#"editfile_detail.aspx?xxid=" + Eval("XXID") + "&count=" + Eval("SendCount") %>'
                                        Text="查看详情" Visible='<%#Eval("Status").Equals("已审核") ? true : false %>'>

@@ -29,7 +29,7 @@ namespace sjbgWebService
         public String[] getJianBaoBuMen()
         {
 			if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetJianBaoBuMen();
+            return BLL.GetJianBaoBuMen();
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -45,7 +45,7 @@ namespace sjbgWebService
             {
                 return null;
             }
-            return Bll.GetAllJianBao(Convert.ToDateTime(date));
+            return BLL.GetAllJianBao(Convert.ToDateTime(date));
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -61,7 +61,7 @@ namespace sjbgWebService
             {
                 return null;
             }
-            return Bll.GetJianBao(dept,Convert.ToDateTime(date));
+            return BLL.GetJianBao(dept,Convert.ToDateTime(date));
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -70,7 +70,7 @@ namespace sjbgWebService
         {
             if (!sjbgHeader.checkValid()) return null;
            
-            return Bll.GetJianBao(j.BuMen,Convert.ToDateTime(j.Date));
+            return BLL.GetJianBao(j.BuMen,Convert.ToDateTime(j.Date));
         }
 
 

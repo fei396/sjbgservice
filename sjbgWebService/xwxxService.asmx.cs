@@ -22,14 +22,14 @@ namespace sjbgWebService.xwxx
 		[SoapRpcMethod, WebMethod]
 		public XinWen[] getXinWen(int xwlx, int ksxh, int count)
 		{
-			return Bll.GetXinWen(xwlx, ksxh, count);
+			return BLL.GetXinWen(xwlx, ksxh, count);
 		}
 
 
 		[SoapRpcMethod, WebMethod]
 		public XinWenLeiXing[] getXinWenLeiXing()
 		{
-			return Bll.GetXinWenLeiXing();
+			return BLL.GetXinWenLeiXing();
 		}
 	}
 }

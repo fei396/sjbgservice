@@ -37,7 +37,7 @@ namespace sjbgWebService
         public ReceiveFile[] getFileListToReceive(int uid , int type,int ksxh,int count)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetFilesToReceive(uid,type,ksxh,count);
+            return BLL.GetFilesToReceive(uid,type,ksxh,count);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -45,7 +45,7 @@ namespace sjbgWebService
         public SentFileList[] getSentFileList(int uid )
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetSentFiles(uid);
+            return BLL.GetSentFiles(uid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -53,7 +53,7 @@ namespace sjbgWebService
         public SentFileDetail[] getSentFileDetails(int fid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetSentFileDetails(fid);
+            return BLL.GetSentFileDetails(fid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -84,7 +84,7 @@ namespace sjbgWebService
         public INT receiveFile(int fdrid, int uid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.ReceiveFile(fdrid, uid);
+            return BLL.ReceiveFile(fdrid, uid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -92,7 +92,7 @@ namespace sjbgWebService
         public Department[] getSendFileDept( int did)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetDeptsByDeptId(did);
+            return BLL.GetDeptsByDeptId(did);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -100,7 +100,7 @@ namespace sjbgWebService
         public int getDeptByUserNo(string userno)
         {
             if (!sjbgHeader.checkValid()) return 0;
-            return Bll.GetUserByNum(userno).UserDept;
+            return BLL.GetUserByNum(userno).UserDept;
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -108,7 +108,7 @@ namespace sjbgWebService
         public DutyRoom[] getDutyRoomByDeptId(int did)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetDutyRoomByDeptId(did);
+            return BLL.GetDutyRoomByDeptId(did);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -116,7 +116,7 @@ namespace sjbgWebService
         public INT SendFile(int sender, string fileFullName, string fileDesc,string fileContent,string receivers)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.SendFile(sender,fileFullName,fileDesc ,fileContent,receivers);
+            return BLL.SendFile(sender,fileFullName,fileDesc ,fileContent,receivers);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]

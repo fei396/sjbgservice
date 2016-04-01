@@ -161,7 +161,7 @@ namespace sjbgWebService.gwxx
         }
         public UserGw(int yhbh)
         {
-            UserGw gw = Bll.GetUserGwByUid(yhbh);
+            UserGw gw = BLL.GetUserGwByUid(yhbh);
             Yhbh = gw.Yhbh;
             Ssbm = gw.Ssbm;
             Yhqx = gw.Yhqx;
@@ -174,7 +174,7 @@ namespace sjbgWebService.gwxx
         }
         public UserGw(string yhmc)
         {
-            UserGw gw = Bll.GetUserGwByUserName(yhmc);
+            UserGw gw = BLL.GetUserGwByUserName(yhmc);
             Yhbh = gw.Yhbh;
             Ssbm = gw.Ssbm;
             Yhqx = gw.Yhqx;

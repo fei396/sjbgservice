@@ -2,11 +2,11 @@
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using aqxxptWebService;
-public partial class editfile_detail : Page
+public partial class EditfileDetail : Page
 {
-    private const int pageCount = 20;
-    private static int cpage;
-    private readonly aqxxptService ss = new aqxxptService();
+    private const int PageCount = 20;
+    private static int _cpage;
+    private readonly aqxxptService _s = new aqxxptService();
     private int xxid;
     private int count;
     private int maxPage;
@@ -17,36 +17,30 @@ public partial class editfile_detail : Page
         xxid = Convert.ToInt32(Request["xxid"]);
 
         count = Convert.ToInt32(Request["count"]);
-        maxPage = count/pageCount + 1;
-        if (s == null || s == "")
+        maxPage = count/PageCount + 1;
+        if (string.IsNullOrEmpty(s))
         {
-            //Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
 
 
         if (!IsPostBack)
         {
-            //string cj = Session["udept"] as string;
-            //SqlDataSource1.SelectCommand = "SELECT    xmmc, cj , rygh, work_name , sfhg , kkid FROM V_CQKK_RYCJB  ";
-            //if (cj != "_所有") SqlDataSource1.SelectCommand += " where cj='" + cj + "'";
 
-            //SqlDataSource1.SelectCommand += " order by  xmmc,cj,rygh";
-
-
-            ss.SjbgSoapHeaderValue = Security.GetSoapHeader();
-            cpage = 1;
-            getData(cpage);
+            _s.SjbgSoapHeaderValue = Security.GetSoapHeader();
+            _cpage = 1;
+            GetData(_cpage ,0);
         }
     }
 
 
-    private void getData(int page)
+    private void GetData(int page ,int type)
     {
         Security.SetCertificatePolicy();
 
-        if ((page - 1)*pageCount >= count) page = maxPage;
-        cpage = page;
-        AqxxDetail[] ads = ss.GetAqxxDetail(xxid, pageCount*(page - 1) + 1, pageCount);
+        if ((page - 1)*PageCount >= count) page = maxPage;
+        _cpage = page;
+        AqxxDetail[] ads = _s.GetAqxxDetail(xxid, type,PageCount*(page - 1) + 1, PageCount);
         GridView1.DataSource = ads;
         GridView1.DataBind();
 
@@ -59,14 +53,14 @@ public partial class editfile_detail : Page
         var cmdPreview = (LinkButton) GridView1.BottomPagerRow.Cells[0].FindControl("cmdPreview");
         var cmdNext = (LinkButton) GridView1.BottomPagerRow.Cells[0].FindControl("cmdNext");
         var cmdLastPage = (LinkButton) GridView1.BottomPagerRow.Cells[0].FindControl("cmdLastPage");
-        if (cpage == 1)
+        if (_cpage == 1)
         {
             cmdFirstPage.Enabled = false;
             cmdPreview.Enabled = false;
             cmdNext.Enabled = true;
             cmdLastPage.Enabled = true;
         }
-        else if (cpage >= maxPage)
+        else if (_cpage >= maxPage)
         {
             cmdFirstPage.Enabled = true;
             cmdPreview.Enabled = true;
@@ -85,28 +79,33 @@ public partial class editfile_detail : Page
 
     protected void First_Click(object sender, EventArgs e)
     {
-        getData(1);
+        int type = Convert.ToInt32(ddlStatus.SelectedValue);
+        GetData(1,type);
     }
 
     protected void Last_Click(object sender, EventArgs e)
     {
-        getData(maxPage);
+        int type = Convert.ToInt32(ddlStatus.SelectedValue);
+        GetData(maxPage,type);
     }
 
     protected void Pre_Click(object sender, EventArgs e)
     {
-        getData(cpage - 1);
+        int type = Convert.ToInt32(ddlStatus.SelectedValue);
+        GetData(_cpage - 1,type);
     }
 
     protected void Next_Click(object sender, EventArgs e)
     {
-        getData(cpage + 1);
+        int type = Convert.ToInt32(ddlStatus.SelectedValue);
+        GetData(_cpage + 1,type);
     }
 
     protected void Custom_Click(object sender, EventArgs e)
     {
-        var tb_gopage = (TextBox) GridView1.BottomPagerRow.Cells[0].FindControl("txtGoPage");
-        getData(Convert.ToInt32(tb_gopage.Text));
+        var tbGopage = (TextBox) GridView1.BottomPagerRow.Cells[0].FindControl("txtGoPage");
+        int type = Convert.ToInt32(ddlStatus.SelectedValue);
+        GetData(Convert.ToInt32(tbGopage.Text),type);
     }
 
     protected void GridView1_DataBound(object sender, EventArgs e)
@@ -128,10 +127,10 @@ public partial class editfile_detail : Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        var tb_gopage = (TextBox) GridView1.BottomPagerRow.Cells[0].FindControl("txtGoPage");
+        TextBox tbGopage = (TextBox) GridView1.BottomPagerRow.Cells[0].FindControl("txtGoPage");
         try
         {
-            GridView1.PageIndex = Convert.ToInt32(tb_gopage.Text) - 1;
+            GridView1.PageIndex = Convert.ToInt32(tbGopage.Text) - 1;
         }
         catch
         {
@@ -146,5 +145,11 @@ public partial class editfile_detail : Page
         GridView1.Caption = "本次共查询到记录" + e.AffectedRows + "条";
         //Label lb = (Label)GridView1.BottomPagerRow.Cells[0].FindControl("lballcount");
         //lb.Text = e.AffectedRows.ToString();
+    }
+
+    protected void btnChaXun_Click(object sender, EventArgs e)
+    {
+        int type = Convert.ToInt32(ddlStatus.SelectedValue);
+        GetData(1, type);
     }
 }

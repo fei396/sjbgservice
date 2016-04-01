@@ -50,14 +50,14 @@ namespace sjbgWebService.pub
 		public BOOLEAN changePassword(int uid, string opass,string npass)
 		{
 			if (!sjbgHeader.checkValid()) return null;
-			return Bll.SetNewPass(uid, opass,npass);
+			return BLL.SetNewPass(uid, opass,npass);
 		}
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
 		[SoapRpcMethod, WebMethod]
 		public User getUserById(string user_no)
 		{
 			if (!sjbgHeader.checkValid()) return null;
-			return Bll.GetUserByNum(user_no);
+			return BLL.GetUserByNum(user_no);
 		}
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -65,7 +65,7 @@ namespace sjbgWebService.pub
         public UserRole[] getUserRolesById(int uid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetUserRoleByNum(uid);
+            return BLL.GetUserRoleByNum(uid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -73,7 +73,7 @@ namespace sjbgWebService.pub
         public MenuItem[] getUserMenusById(int uid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetUserMenuByNum(uid);
+            return BLL.GetUserMenuByNum(uid);
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -81,7 +81,7 @@ namespace sjbgWebService.pub
 		public Product getProductByPName(string pname)
 		{
 			if (!sjbgHeader.checkValid()) return null;
-			return Bll.GetProductByPname(pname);
+			return BLL.GetProductByPname(pname);
 		}
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -89,7 +89,7 @@ namespace sjbgWebService.pub
 		public ApkInfo getApkVerCode()
 		{
 			if (!sjbgHeader.checkValid()) return null;
-			return Bll.GetApkInfo();
+			return BLL.GetApkInfo();
 
 		}
 
@@ -110,13 +110,13 @@ namespace sjbgWebService.pub
 		[SoapRpcMethod,WebMethod]
 		public INT login(string user_no, string user_pass, string code,string info,string version)
 		{
-            return Bll.Login(user_no, user_pass, code,getip(), info, version);
+            return BLL.Login(user_no, user_pass, code,getip(), info, version);
 		}
 
         [SoapRpcMethod, WebMethod]
         public INT loginDirect(string user_no, string user_pass, string code, string info, string version)
         {
-            return Bll.LoginDirect(user_no, user_pass, code, getip(), info, version);
+            return BLL.LoginDirect(user_no, user_pass, code, getip(), info, version);
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -127,7 +127,7 @@ namespace sjbgWebService.pub
             RegisterInfo ri = new RegisterInfo(workno, mobile, ucode, rcode, sq, sa, email);
             if (ri.isRegisterValid() == false) return new INT(-999,SjbgConfig.StrInvalidParameter);
 
-			return Bll.RegisterDevice(ri);
+			return BLL.RegisterDevice(ri);
 		}
 
 
@@ -137,7 +137,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
             if (!txt.IsValidString()) return new INT(-1, "文本包含非法字符。");
-            return Bll.SendFeedBack(uid, txt);
+            return BLL.SendFeedBack(uid, txt);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -146,7 +146,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
             if (!tids.IsValidString()) return new INT(-1, "文本包含非法字符。");
-            return Bll.SetTopicsSubed(tids);
+            return BLL.SetTopicsSubed(tids);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -154,7 +154,7 @@ namespace sjbgWebService.pub
         public INT setMqttStatus(int uid, int type ,string clientId)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.SetMqttStaus(uid, type, clientId);
+            return BLL.SetMqttStaus(uid, type, clientId);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -162,7 +162,7 @@ namespace sjbgWebService.pub
         public INT getMqttStatus(int uid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetMqttStaus(uid);
+            return BLL.GetMqttStaus(uid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -171,7 +171,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
 
-            return Bll.GetLoginRecord(uid, ksxh,count);
+            return BLL.GetLoginRecord(uid, ksxh,count);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -180,7 +180,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
 
-            return Bll.GetUnsubTopics(uid);
+            return BLL.GetUnsubTopics(uid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -189,7 +189,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
 
-            return Bll.GetSystemMessage(uid,type,ksxh,count);
+            return BLL.GetSystemMessage(uid,type,ksxh,count);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -198,7 +198,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
 
-            return Bll.ReadSystemMessage(mid);
+            return BLL.ReadSystemMessage(mid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -207,7 +207,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
 
-            return Bll.ReadMqttMessage(uid,mid);
+            return BLL.ReadMqttMessage(uid,mid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -216,7 +216,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
 
-            return Bll.GetUnReadMqttMessage(uid);
+            return BLL.GetUnReadMqttMessage(uid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -225,7 +225,7 @@ namespace sjbgWebService.pub
         {
             if (!sjbgHeader.checkValid()) return null;
 
-            return Bll.InsertSystemMessage(uid, type);
+            return BLL.InsertSystemMessage(uid, type);
         }
 
         //[SoapHeader("preHeader", Direction = SoapHeaderDirection.In)]
@@ -243,7 +243,7 @@ namespace sjbgWebService.pub
             //if (!sjbgHeader.checkValid()) return null;
             RegisterInfo ri = new RegisterInfo(workno, mobile, ucode);
             if (ri.isRegisterValid() == false) return new INT(-999, SjbgConfig.StrInvalidParameter);
-            return Bll.RequestRegisterCode(ri);
+            return BLL.RequestRegisterCode(ri);
             
 		}
 

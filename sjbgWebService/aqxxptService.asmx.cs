@@ -28,7 +28,7 @@ namespace sjbgWebService
         public Department[] GetAqxxptBm(int xxid)
         {
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.GetAqxxptBm(xxid);
+            return BLL.GetAqxxptBm(xxid);
         }
         //
 
@@ -38,7 +38,7 @@ namespace sjbgWebService
         {
 
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.GetAqxxptShenHe();
+            return BLL.GetAqxxptShenHe();
 
         }
 
@@ -59,7 +59,7 @@ namespace sjbgWebService
         public INT ApplyAqxx(string sender, string auditor, string title, string content, string buMens, string setTime, string lingDaos)
         {
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.ApplyAqxx(sender, auditor, title, content, buMens, setTime, lingDaos);
+            return BLL.ApplyAqxx(sender, auditor, title, content, buMens, setTime, lingDaos);
         }
 
 
@@ -68,7 +68,7 @@ namespace sjbgWebService
         public AqxxInfo[] GetAqxxInfo(int uid,int xxid)
         {
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.GetAqxxInfo(uid,xxid);
+            return BLL.GetAqxxInfo(uid,xxid);
         }
 
         [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -76,7 +76,7 @@ namespace sjbgWebService
         public int GetAqxxCount(int uid)
         {
             if (!SjbgHeader.checkValid()) return -1;
-            return Bll.GetAqxxCount(uid);
+            return BLL.GetAqxxCount(uid);
         }
 
 
@@ -92,7 +92,7 @@ namespace sjbgWebService
         public AqxxInfo[] GetAqxxInfos(int uid, int ksxh,int count)
         {
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.GetAqxxInfos(uid, ksxh,count);
+            return BLL.GetAqxxInfos(uid, ksxh,count);
         }
 
         [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -100,15 +100,15 @@ namespace sjbgWebService
         public AQXX[] GetAqxxToAudit(int uid,int xxid)
         {
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.GetAqxxToAudit(uid,xxid);
+            return BLL.GetAqxxToAudit(uid,xxid);
         }
 
         [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public AqxxDetail[] GetAqxxDetail(int xxid ,int ksxh,int count)
+        public AqxxDetail[] GetAqxxDetail(int xxid ,int type,int ksxh,int count)
         {
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.GetAqxxDetail(xxid ,ksxh,count);
+            return BLL.GetAqxxDetail(xxid ,type,ksxh,count);
         }
 
 
@@ -126,7 +126,7 @@ namespace sjbgWebService
         public INT AuditAqxx(int xxid, string auditor, int result,string title,string txt)
         {
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.AuditAqxx(xxid, auditor, result,title, txt);
+            return BLL.AuditAqxx(xxid, auditor, result,title, txt);
         }
 
 
@@ -135,7 +135,7 @@ namespace sjbgWebService
         public AQXX[] GetAqxxContent(int xxid)
         {
             if (!SjbgHeader.checkValid()) return null;
-            return Bll.GetAqxxContent(xxid);
+            return BLL.GetAqxxContent(xxid);
         }
 
     }

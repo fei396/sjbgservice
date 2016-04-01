@@ -1,0 +1,40 @@
+在Access的SQL中，日期和时间用#做分界符，日期和时间用空格分开，日期内部用-分隔，使用ADO查询时时间内部用::分隔。入下所示： 
+  strSQL:= ’SELECT * FROM RecHistory ’ 
+           + ’ WHERE (recTime BETWEEN #’ 
+             + FormatDateTime(’yyyy-mm-dd hh::nn::ss’,dtBeginDate.DateTime) + ’#’ 
+           + ’ AND #’+ 
+             FormatDateTime(’yyyy-mm-dd hh::nn::ss’,dtEndDate.DateTime) + ’#)’;
+
+
+DateDiff函数在Sql与Access中的区别 
+人气：14　作者：wsli　来源：浠水网　加入时间：2006-2-28 
+今天要做个搜索，用到了时间比较函数！
+
+以前多是直接比较时间，查询语句有长效率又不高～～～
+
+后来用了DateDiff函数，在调试的时候发现了一些问题，总结几个和大家分享 ^_^
+
+1、数据库的问题，Access和Sql读取时间的函数不一样，Now()只能在Access中使用，在Sql中只能使用GetDate()函数来获取系统时间，相应的其他函数如Time()，反正大家在调试的时候注意下
+
+2、就是DateDiff('d',Time1,Time2)，刚开始的时候我专数据库ACCESS专SQL发现这个函数怎么调试在多不能通过，在ACCESS下可以使用的到了SQL就不能使用，郁闷～～～
+
+无奈后来去网上搜索了下，发现还真的有区别～～～
+
+具体是：
+
+Access中：DateDiff('d',Time1,Time2)
+
+Sql中：DateDiff(d,Time1,Time2)
+
+嘎嘎，大家注意在SQL中不需要加引号
+
+下面是自己用的DateDiff函数写的SQL查询语句
+
+Select PigID,PigName,RingNum,Sex,PigOwner,PostDate,Passed FROM HZ_Pig Where DateDiff(m,'ShootTime',PostDate)<=0
+
+具体功能就不说了啊，地球人多知道的！
+
+嘎嘎，希望对大家有帮助喽～～～～～
+ 
+ 
+

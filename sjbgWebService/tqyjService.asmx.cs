@@ -27,7 +27,7 @@ namespace sjbgWebService
         public TeQing[] getTqByWorkno(int workno,int ksxh,int count)
         {
 			if (!sjbgHeader.checkValid()) return null;
-            return Bll.GetTeQingByWorkNo(workno,ksxh,count);
+            return BLL.GetTeQingByWorkNo(workno,ksxh,count);
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -35,7 +35,7 @@ namespace sjbgWebService
         public BOOLEAN replyTQ(int workno,int tid,string replayContent)
         {
 			if (!sjbgHeader.checkValid()) return null;
-            return  Bll.ReplyTq(workno,tid, replayContent);
+            return  BLL.ReplyTq(workno,tid, replayContent);
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -43,7 +43,7 @@ namespace sjbgWebService
         public TeQing[] checkReply(int senderno,int ksxh,int count)
         {
 			if (!sjbgHeader.checkValid()) return null;
-            return Bll.CheckReply(senderno,ksxh,count);
+            return BLL.CheckReply(senderno,ksxh,count);
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -51,7 +51,7 @@ namespace sjbgWebService
         public TeQing[] checkReplyDetails(int tid,int ksxh,int count)
         {
 			if (!sjbgHeader.checkValid()) return null;
-            return Bll.CheckReplyDetails(tid,ksxh,count);
+            return BLL.CheckReplyDetails(tid,ksxh,count);
         }
 
 		[SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -59,7 +59,7 @@ namespace sjbgWebService
         public INT getTqLevel(int workno)
         {
 			if (!sjbgHeader.checkValid()) return new INT( -999 ,SjbgConfig.StrInvlaidRequest);
-            return Bll.GetTqLevel(workno);
+            return BLL.GetTqLevel(workno);
         }
 
     }
