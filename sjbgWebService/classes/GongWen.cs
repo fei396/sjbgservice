@@ -331,4 +331,40 @@ namespace sjbgWebService.gwxx
 
     }
 
+    #region 段发通知
+
+    public class TongZhiLeiXing
+    {
+        public int LXID { get; set; }
+        public string LXMC { get; set; }
+    }
+
+    public class TongZhiList
+    {
+        public int TongZhiID { get; set; }
+        public int LiuZhuanID { get; set; }
+        public string FaSongRen { get; set; }
+        public string BiaoTi { get; set; }
+        public string FaSongShiJian { get; set; }
+        public int ShiFouQianShou { get; set; }
+        public string QianShouQingKuang { get; set; }
+        public int ShiFouCheXiao { get; set; }
+        public string TongZhiLeiXing { get; set; }
+    }
+
+    public class TongZhi
+    {
+        public int TongZhiID { get; set; }
+        public string BiaoTi { get; set; }
+        public string ZhengWen { get; set; }
+        public string WenJianLeiXing { get; set; }
+        public int LeiXingID { get; set; }
+        public string FaBuShiJian { get; set; }
+        public int FaBuRenID { get; set; }
+        public string FaBuRenXM { get; set; }
+        public string[] FuJian { get; set; }
+    }
+
+    #endregion
+
 }

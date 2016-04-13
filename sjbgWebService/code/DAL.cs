@@ -1408,6 +1408,52 @@ namespace sjbgWebService
 
         }
 
+        internal static INT SendMobileMessage2(int[] uid, string content)
+        {
+            return new INT(1);
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            try
+            {
+                conn.Open();
+            }
+            catch
+            {
+                return new INT(-1, "数据库错误");
+            }
+            SqlTransaction trans;
+            trans = conn.BeginTransaction();
+            try
+            {
+                comm.Transaction = trans;
+
+                for (int i = 0; i < uid.Length; i++)
+                {
+                    comm.CommandText = "insert into T_DuanXin_NoReply (uid,txt) values(@uid,@txt)";
+                    comm.Parameters.Clear();
+                    comm.Parameters.AddWithValue("uid", uid[i]);
+                    comm.Parameters.AddWithValue("txt", content);
+                    comm.ExecuteNonQuery();
+                }
+                trans.Commit();
+            }
+
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return new INT(-1, ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return new INT(1, "");
+
+
+        }
+
         /// <summary>
         /// 检查用户手机号和移动设备时候已经注册。0未注册，1已注册，-100数据库错误，-1没有该工号,-2工号重复，-3没有该手机号，-4手机号重复，-5移动设备重复
         /// </summary>
@@ -1774,16 +1820,16 @@ namespace sjbgWebService
             return userinfo;
         }
 
-        internal static YouJianSimple[] GetMailMessagesTkmp(int uid, int startId, int count, bool asc)
-        {
-            string workno = uid.ToWorkNo();
-            string[] userinfo = GetTkmPuser(workno);
-            string user = userinfo[0];
-            string pass = userinfo[1];
-            YouJianTKMP yjt = new YouJianTKMP(user, pass);
-            return yjt.getMailList(startId, count, asc, 0);
+        //internal static YouJianSimple[] GetMailMessagesTkmp(int uid, int startId, int count, bool asc)
+        //{
+        //    string workno = uid.ToWorkNo();
+        //    string[] userinfo = GetTkmPuser(workno);
+        //    string user = userinfo[0];
+        //    string pass = userinfo[1];
+        //    YouJianTKMP yjt = new YouJianTKMP(user, pass);
+        //    return yjt.getMailList(startId, count, asc, 0);
 
-        }
+        //}
 
         internal static YouJianFuJian[] GetMailAttachment(int uid, int muid, string mailBoxName, int pos)
         {
@@ -1806,17 +1852,17 @@ namespace sjbgWebService
             else return new YouJianFuJian[] { yjfj[pos - 1] };
         }
 
-        internal static YouJian GetMailMessageTkmp(int uid, int muid)
-        {
-            string workno = uid.ToWorkNo();
+        //internal static YouJian GetMailMessageTkmp(int uid, int muid)
+        //{
+        //    string workno = uid.ToWorkNo();
 
-            string[] userinfo = GetTkmPuser(workno);
-            string user = userinfo[0];
-            string pass = userinfo[1];
-            YouJianTKMP yjt = new YouJianTKMP(user, pass);
-            YouJian yj = yjt.getMail(muid);
-            return yj;
-        }
+        //    string[] userinfo = GetTkmPuser(workno);
+        //    string user = userinfo[0];
+        //    string pass = userinfo[1];
+        //    YouJianTKMP yjt = new YouJianTKMP(user, pass);
+        //    YouJian yj = yjt.getMail(muid);
+        //    return yj;
+        //}
 
         internal static WenJianJia[] GetMailBoxList(int uid)
         {
@@ -2900,7 +2946,7 @@ namespace sjbgWebService
                 conn.Open();
                 comm.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new INT(-1, "数据库错误");
             }
@@ -2951,7 +2997,7 @@ namespace sjbgWebService
                 conn.Open();
                 comm.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new INT(-1, "数据库错误");
             }
@@ -3779,7 +3825,7 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("logTxt", throwJsr);
                 comm.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }
@@ -3964,7 +4010,7 @@ namespace sjbgWebService
                 jsrrid = Convert.ToInt32(comm.ExecuteScalar());
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 dt.TableName = "error!";
                 return dt;
@@ -4051,7 +4097,7 @@ namespace sjbgWebService
             {
                 sda.Fill(dt);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 dt.TableName = "error!";
                 return dt;
@@ -4097,7 +4143,7 @@ namespace sjbgWebService
             {
                 sda.Fill(dt);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 dt.TableName = "error!";
                 return dt;
@@ -4144,7 +4190,7 @@ namespace sjbgWebService
             {
                 sda.Fill(dt);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 dt.TableName = "error!";
                 return dt;
@@ -5230,7 +5276,7 @@ namespace sjbgWebService
             {
                 sda.Fill(dt);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 dt.TableName = "error!";
@@ -5276,7 +5322,7 @@ namespace sjbgWebService
             {
                 sda.Fill(dt);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 dt.TableName = "error!";
@@ -5457,6 +5503,205 @@ namespace sjbgWebService
 
         #endregion
 
+        public static DataTable GetTongZhiLeiXing(int uid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand
+            {
+                Connection = conn,
+                CommandText = "SELECT lxid , lxmc FROM V_TongZhi_bumen_leixing where bmid in( select bmid from V_user where uid=@uid) order by paixu"
+            };
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("uid", uid);
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return dt;
+        }
 
+
+        internal static DataTable GetTongZhiBuMenFenLeiYongHu(int uid,int flid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT user_no ,case when nc is null then user_name else nc end as nc,case when flid=1 then user_name when flid=2 then bm_mc else bm_mc+zhiwu end as xsmc FROM V_TongZhi_YongHu_BuMenFenLei where flid=@flid and uid <>@uid ";
+            comm.CommandText += " order by paixu,px,ncpaixu,zhiwu desc";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("flid", flid);
+            comm.Parameters.AddWithValue("uid", uid);
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                return null;
+            }
+
+            dt.TableName = "getBuMenFenLei";
+            return dt;
+        }
+
+        internal  static DataTable GetTongZhiBuMenFenLei(int uid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+
+            try
+            {
+                conn.Open();
+                comm.CommandText = "select count(*) from v_user_role where uid=@uid and rid=27 ";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("uid", uid);
+
+                if (Convert.ToInt32(comm.ExecuteScalar()) <= 0) //没有发通知的权限
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+            finally
+            {
+
+                conn.Close();
+            }
+
+
+            comm.CommandText = "SELECT flid,flmc, flzc FROM V_TongZhi_BuMenFenLei ";
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                return null;
+            }
+
+            dt.TableName = "getBuMenFenLei";
+            return dt;
+        }
+
+        public static INT AddNewTongZhi2016(string bt, string zw, int fbrid, int lxid, int[] jsrList, string[] tzfj, string ip, int sfgk)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            //测试一下看看数据库链接是否正常
+            try
+            {
+                conn.Open();
+            }
+            catch (Exception ex)
+            {
+                return new INT(-1, ex.Message);
+            }
+            //设置sql事务
+            SqlTransaction trans;
+            trans = conn.BeginTransaction();
+            comm.Transaction = trans;
+
+            comm.Connection = conn;
+            try
+            {
+
+                comm.CommandText = "insert into T_TongZhi_TZXX (Bt,Zw,tzlxID,fbrID,sfgk,ip) values(@bt,@zw,@lxid,@fbrid,@sfgk,@ip)";
+                comm.CommandText += ";select scope_identity();";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("bt", bt);
+                comm.Parameters.AddWithValue("zw", zw);
+                comm.Parameters.AddWithValue("lxid", lxid);
+                comm.Parameters.AddWithValue("fbrid", fbrid);
+                comm.Parameters.AddWithValue("sfgk", sfgk);
+                comm.Parameters.AddWithValue("ip", ip);
+
+                int tzid = Convert.ToInt32(comm.ExecuteScalar());
+
+                //依次把附件添加进附件表
+                for (int i = 0; i < tzfj.Length; i++)
+                {
+                    comm.CommandText = "insert into t_tongzhi_tzfj (tzid,fjmc,paixu) values(@tzid,@fjmc,@paixu)";
+                    comm.Parameters.Clear();
+                    comm.Parameters.AddWithValue("tzid", tzid);
+                    comm.Parameters.AddWithValue("fjmc", tzfj[i]);
+                    comm.Parameters.AddWithValue("paixu", i + 1);
+                    comm.ExecuteNonQuery();
+                }
+
+                foreach (int jsr in jsrList)
+                {
+                    //添加公文流转表开始流转
+                    comm.CommandText = "insert into t_tongzhi_lz (tzid,pid,fsrid,jsrid,fssj) values(@tzid,0,@fsr,@jsr,getdate())";
+                    comm.Parameters.Clear();
+                    comm.Parameters.AddWithValue("@tzid", tzid);
+                    comm.Parameters.AddWithValue("@fsr", fbrid);
+                    comm.Parameters.AddWithValue("@jsr", jsr);
+                    comm.ExecuteNonQuery();
+                }
+
+
+                //发短信通知
+                string message, chenghu;
+                comm.CommandText = "select bm_mc+ user_name from V_user where uid=@uid";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("@uid", fbrid);
+                chenghu = Convert.ToString( comm.ExecuteScalar());
+
+                message = chenghu + "给您发送了一件段内通知。标题：" + bt + "。请尽快签阅。";
+  
+
+                INT r;
+                if (_sendMessageForDebug)
+                {
+                    r = SendMobileMessage("3974", message);
+                }
+                else
+                {
+                    r = SendMobileMessage2(jsrList, message);
+                }
+                if (r.Number == 1)
+                {
+                    //所有操作都成功完成，提交事务，确认操作
+                    trans.Commit();
+                }
+                else
+                {
+                    //发短信时提醒失败
+                    //回滚事务，撤销操作，返回错误信息
+                    trans.Rollback();
+                    return new INT(-1, "发送提醒短信失败。公文创建未成功。");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                //在操作中失败
+                //回滚事务，撤销操作，返回错误信息
+                trans.Rollback();
+                return new INT(-1, ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            //返回成功
+            return new INT(1);
+        }
     }
 }

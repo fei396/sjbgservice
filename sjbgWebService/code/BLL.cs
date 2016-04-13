@@ -563,6 +563,8 @@ namespace sjbgWebService
             }
         }
 
+
+
         internal static string[] GetJianBaoBuMen()
         {
             DataTable dt = DAL.GetJianBaoBuMen();
@@ -2819,7 +2821,7 @@ namespace sjbgWebService
         internal static YouJianFuJian GetYouJianFuJian(int uid, int mid, int pos)
         {
             string gh = uid.ToWorkNo();
-            DataTable dt = DAL.GetYouJianFuJian(gh ,mid);
+            DataTable dt = DAL.GetYouJianFuJian(gh, mid);
             if (dt == null)
             {
                 return null;
@@ -2828,7 +2830,7 @@ namespace sjbgWebService
             {
                 return null;
             }
-            string[] urls = dt.Rows[0]["url"].ToString().Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] urls = dt.Rows[0]["url"].ToString().Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             string[] names = dt.Rows[0]["filenamestring"].ToString().Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             if (names.Length < pos)
             {
@@ -2860,11 +2862,11 @@ namespace sjbgWebService
             int i;
             do
             {
-                
+
                 i = inStream.Read(buffer, 0, 1);
                 if (i > 0)
                 {
-                    
+
                     b.Add(buffer[0]);
                 }
             }
@@ -2881,8 +2883,72 @@ namespace sjbgWebService
 
 
 
+        #region 2016段发通知
+        internal static TongZhiLeiXing[] GetTongZhiLeiXing(int uid)
+        {
+
+            DataTable dt = DAL.GetTongZhiLeiXing(uid);
+            if (dt == null) return null;
+
+            TongZhiLeiXing[] tzlx = new TongZhiLeiXing[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                tzlx[i] = new TongZhiLeiXing
+                {
+                    LXID = Convert.ToInt32(dt.Rows[i]["lxid"].ToString()),
+                    LXMC = Convert.ToString(dt.Rows[i]["lxmc"].ToString())
+                };
+            }
+            return tzlx;
+
+        }
 
 
+        public static BuMenFenLei[] GetTongZhiBuMenFenLei(int uid)
+        {
+            DataTable dt = DAL.GetTongZhiBuMenFenLei(uid);
+            if (dt == null) return null;
+
+            BuMenFenLei[] bumen = new BuMenFenLei[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                bumen[i] = new BuMenFenLei();
+                bumen[i].FenLeiID = Convert.ToInt32(dt.Rows[i]["flID"].ToString());
+                bumen[i].FenLeiMingCheng = Convert.ToString(dt.Rows[i]["flmc"].ToString());
+                bumen[i].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
+
+                DataTable dtyh = DAL.GetTongZhiBuMenFenLeiYongHu(uid, bumen[i].FenLeiID);
+                GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dtyh.Rows.Count];
+                for (int j = 0; j < dtyh.Rows.Count; j++)
+                {
+                    ry[j] = new GongWenBuMenRenYuan();
+                    ry[j].GongHao = Convert.ToString(dtyh.Rows[j]["user_no"].ToString());
+                    ry[j].XianShiMingCheng = Convert.ToString(dtyh.Rows[j]["xsmc"].ToString());
+                    ry[j].NiCheng = Convert.ToString(dtyh.Rows[j]["nc"].ToString());
+                }
+                bumen[i].RenYuan = ry;
+            }
+            return bumen;
+
+
+        }
+
+        public static INT AddNewTongZhi2016(string bt, string zw, int fbrid, int lxid, int[] jsrid, string[] files, string ip, int sfgk)
+        {
+            if (!bt.IsValidString())
+            {
+                return new INT(-1, "标题中存在非法字符");
+            }
+
+            if (!zw.IsValidString())
+            {
+                return new INT(-1, "正文中存在非法字符");
+            }
+            return DAL.AddNewTongZhi2016(bt, zw, fbrid, lxid, jsrid, files, ip, sfgk);
+        }
+
+
+        #endregion
 
 
     }

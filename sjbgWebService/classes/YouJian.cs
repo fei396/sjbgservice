@@ -529,212 +529,212 @@ namespace sjbgWebService
     }
 
 
-    public class YouJianTKMP
-    {
-        string serverIp = "10.99.81.68";
-        string domain = "xxjwd.com";
-        int pop3Port = 110;
-        int smtpPort = 25;
-        string username;
-        string password;
-        System.Net.IPAddress address;
-        TKMP.Net.IPopLogon logon;
-        TKMP.Net.PopClient pop;
-        public YouJianTKMP(string username, string password)
-        {
-            this.username = username;
-            this.password = password;
-            address = System.Net.Dns.GetHostByName(serverIp).AddressList[0];
-            logon = new TKMP.Net.BasicPopLogon(username, password);
-            pop = new TKMP.Net.PopClient(logon, address, pop3Port);
-        }
+    //public class YouJianTKMP
+    //{
+    //    string serverIp = "10.99.81.68";
+    //    string domain = "xxjwd.com";
+    //    int pop3Port = 110;
+    //    int smtpPort = 25;
+    //    string username;
+    //    string password;
+    //    System.Net.IPAddress address;
+    //    TKMP.Net.IPopLogon logon;
+    //    TKMP.Net.PopClient pop;
+    //    public YouJianTKMP(string username, string password)
+    //    {
+    //        this.username = username;
+    //        this.password = password;
+    //        address = System.Net.Dns.GetHostByName(serverIp).AddressList[0];
+    //        logon = new TKMP.Net.BasicPopLogon(username, password);
+    //        pop = new TKMP.Net.PopClient(logon, address, pop3Port);
+    //    }
 
-        /// <summary>
-        /// 获取邮件列表基本信息
-        /// </summary>
-        /// <param name="start">开始序号</param>
-        /// <param name="count">数量</param>
-        /// <param name="asc">是否升序排列</param>
-        /// <param name="flag">阅读标记:1只选未读，2只选已读,3所有邮件（赞不启用）</param>
-        /// <returns></returns>
-        public YouJianSimple[] getMailList(int start, int count, bool asc, int flag)
-        {
-            if (!pop.Connect())
-            {
-                return null;
-            }
+    //    /// <summary>
+    //    /// 获取邮件列表基本信息
+    //    /// </summary>
+    //    /// <param name="start">开始序号</param>
+    //    /// <param name="count">数量</param>
+    //    /// <param name="asc">是否升序排列</param>
+    //    /// <param name="flag">阅读标记:1只选未读，2只选已读,3所有邮件（赞不启用）</param>
+    //    /// <returns></returns>
+    //    public YouJianSimple[] getMailList(int start, int count, bool asc, int flag)
+    //    {
+    //        if (!pop.Connect())
+    //        {
+    //            return null;
+    //        }
 
-            int mailcount = pop.MailDatas.Length;
-            if (start > mailcount) return null;
-            YouJianSimple[] yjss = new YouJianSimple[mailcount - start + 1 > count ? count : mailcount - start + 1];
+    //        int mailcount = pop.MailDatas.Length;
+    //        if (start > mailcount) return null;
+    //        YouJianSimple[] yjss = new YouJianSimple[mailcount - start + 1 > count ? count : mailcount - start + 1];
 
-            int shuliang = yjss.Length;
-            int jishu = asc ? start : mailcount - start + 1;
-            int bujin = asc ? 1 : -1;
-            for (int i = 0; i < shuliang; i++)
-            {
-                yjss[i] = new YouJianSimple();
-                yjss[i].Uid = jishu.ToString();
-                TKMP.Net.MailData Mail = pop.MailDatas[jishu - 1];
-                jishu = jishu + bujin;
-                yjss[i].Size = Mail.Length;
-                if (!Mail.ReadHeader())
-                {
-                    return null;
-                }
-                else
-                {
-                    System.IO.Stream Header = Mail.HeaderStream;
-                    TKMP.Reader.MailReader reader = new TKMP.Reader.MailReader(Header, true);
-                    yjss[i].Subject = reader.HeaderCollection["Subject"];
-                    string from = reader.HeaderCollection["From"];
+    //        int shuliang = yjss.Length;
+    //        int jishu = asc ? start : mailcount - start + 1;
+    //        int bujin = asc ? 1 : -1;
+    //        for (int i = 0; i < shuliang; i++)
+    //        {
+    //            yjss[i] = new YouJianSimple();
+    //            yjss[i].Uid = jishu.ToString();
+    //            TKMP.Net.MailData Mail = pop.MailDatas[jishu - 1];
+    //            jishu = jishu + bujin;
+    //            yjss[i].Size = Mail.Length;
+    //            if (!Mail.ReadHeader())
+    //            {
+    //                return null;
+    //            }
+    //            else
+    //            {
+    //                System.IO.Stream Header = Mail.HeaderStream;
+    //                TKMP.Reader.MailReader reader = new TKMP.Reader.MailReader(Header, true);
+    //                yjss[i].Subject = reader.HeaderCollection["Subject"];
+    //                string from = reader.HeaderCollection["From"];
 
-                    int pos1 = from.LastIndexOf("<");
-                    int pos2 = from.LastIndexOf(">");
-                    if (pos1 != -1 && pos2 != -1)
-                    {
-                        from = from.Substring(pos1 + 1, pos2 - pos1 - 1);
-                    }
-                    yjss[i].From = from;
-                    string date = reader.HeaderCollection["Date"];
-                    try
-                    {
-                        date = Convert.ToDateTime(date).ToString("yyyy-MM-dd HH:mm:ss");
-                    }
-                    catch
-                    {
+    //                int pos1 = from.LastIndexOf("<");
+    //                int pos2 = from.LastIndexOf(">");
+    //                if (pos1 != -1 && pos2 != -1)
+    //                {
+    //                    from = from.Substring(pos1 + 1, pos2 - pos1 - 1);
+    //                }
+    //                yjss[i].From = from;
+    //                string date = reader.HeaderCollection["Date"];
+    //                try
+    //                {
+    //                    date = Convert.ToDateTime(date).ToString("yyyy-MM-dd HH:mm:ss");
+    //                }
+    //                catch
+    //                {
 
-                    }
-                    yjss[i].Date = date;
-                    if (reader.HeaderCollection["Importance"] == null) yjss[i].Importance = 3;
-                    else
-                    {
-                        switch (reader.HeaderCollection["Importance"].ToLower())
-                        {
-                            case "low":
-                                yjss[i].Importance = 1;
-                                break;
-                            case "normal":
-                                yjss[i].Importance = 3;
-                                break;
-                            case "high":
-                                yjss[i].Importance = 5;
-                                break;
-                            default:
-                                yjss[i].Importance = 5;
-                                break;
-                        }
+    //                }
+    //                yjss[i].Date = date;
+    //                if (reader.HeaderCollection["Importance"] == null) yjss[i].Importance = 3;
+    //                else
+    //                {
+    //                    switch (reader.HeaderCollection["Importance"].ToLower())
+    //                    {
+    //                        case "low":
+    //                            yjss[i].Importance = 1;
+    //                            break;
+    //                        case "normal":
+    //                            yjss[i].Importance = 3;
+    //                            break;
+    //                        case "high":
+    //                            yjss[i].Importance = 5;
+    //                            break;
+    //                        default:
+    //                            yjss[i].Importance = 5;
+    //                            break;
+    //                    }
 
-                    }
-                    if (!Mail.ReadBody()) return null;
-                    System.IO.Stream body = Mail.DataStream;
-                    TKMP.Reader.MailReader bodyreader = new TKMP.Reader.MailReader(body, false);
-                    yjss[i].HasAttachements = bodyreader.FileCount > 0;
+    //                }
+    //                if (!Mail.ReadBody()) return null;
+    //                System.IO.Stream body = Mail.DataStream;
+    //                TKMP.Reader.MailReader bodyreader = new TKMP.Reader.MailReader(body, false);
+    //                yjss[i].HasAttachements = bodyreader.FileCount > 0;
 
-                }
-            }
-            pop.Close();
-            return yjss;
-        }
+    //            }
+    //        }
+    //        pop.Close();
+    //        return yjss;
+    //    }
 
 
-        public YouJian getMail(int muid)
-        {
-            if (!pop.Connect())
-            {
-                return null;
-            }
-            int mailcount = pop.MailDatas.Length;
-            if (muid > mailcount) return null;
-            TKMP.Net.MailData Mail = pop.MailDatas[muid-1];
-            if (!Mail.ReadHeader())
-            {
-                return null;
-            }
-            else if (!Mail.ReadBody())
-            {
-                return null;
-            }
-            else
-            {
-                System.IO.Stream body = Mail.DataStream;
-                TKMP.Reader.MailReader bodyreader = new TKMP.Reader.MailReader(body, false);
-                YouJian yj = new YouJian();
-                yj.Uid = muid.ToString();
-                yj.Size = Mail.Length;
-                string date = bodyreader.HeaderCollection["Date"];
-                if (date == null)
-                {
-                    date = "未知时间";
-                }
-                else
-                {
-                    date = Convert.ToDateTime(date).ToString("yyyy-MM-dd HH:mm:ss");
-                }
-                yj.Date = date;
-                yj.Body = bodyreader.MainText;
-                string from = bodyreader.HeaderCollection["From"];
-                int pos1 = from.LastIndexOf("<");
-                int pos2 = from.LastIndexOf(">");
-                if (pos1 != -1 && pos2 != -1)
-                {
-                    from = from.Substring(pos1 + 1, pos2 - pos1 - 1);
-                }
-                yj.From = from;
-                yj.To = bodyreader.HeaderCollection["To"];
-                yj.Cc = bodyreader.HeaderCollection["Cc"];
-                if (yj.Cc == null) yj.Cc = "";
-                yj.Subject = bodyreader.HeaderCollection["Subject"];
-                if (bodyreader.HeaderCollection["Importance"] == null) yj.Importance = 3;
-                else
-                {
-                    switch (bodyreader.HeaderCollection["Importance"].ToLower())
-                    {
-                        case "low":
-                            yj.Importance = 1;
-                            break;
-                        case "normal":
-                            yj.Importance = 3;
-                            break;
-                        case "high":
-                            yj.Importance = 5;
-                            break;
-                        default:
-                            yj.Importance = 5;
-                            break;
-                    }
+    //    public YouJian getMail(int muid)
+    //    {
+    //        if (!pop.Connect())
+    //        {
+    //            return null;
+    //        }
+    //        int mailcount = pop.MailDatas.Length;
+    //        if (muid > mailcount) return null;
+    //        TKMP.Net.MailData Mail = pop.MailDatas[muid-1];
+    //        if (!Mail.ReadHeader())
+    //        {
+    //            return null;
+    //        }
+    //        else if (!Mail.ReadBody())
+    //        {
+    //            return null;
+    //        }
+    //        else
+    //        {
+    //            System.IO.Stream body = Mail.DataStream;
+    //            TKMP.Reader.MailReader bodyreader = new TKMP.Reader.MailReader(body, false);
+    //            YouJian yj = new YouJian();
+    //            yj.Uid = muid.ToString();
+    //            yj.Size = Mail.Length;
+    //            string date = bodyreader.HeaderCollection["Date"];
+    //            if (date == null)
+    //            {
+    //                date = "未知时间";
+    //            }
+    //            else
+    //            {
+    //                date = Convert.ToDateTime(date).ToString("yyyy-MM-dd HH:mm:ss");
+    //            }
+    //            yj.Date = date;
+    //            yj.Body = bodyreader.MainText;
+    //            string from = bodyreader.HeaderCollection["From"];
+    //            int pos1 = from.LastIndexOf("<");
+    //            int pos2 = from.LastIndexOf(">");
+    //            if (pos1 != -1 && pos2 != -1)
+    //            {
+    //                from = from.Substring(pos1 + 1, pos2 - pos1 - 1);
+    //            }
+    //            yj.From = from;
+    //            yj.To = bodyreader.HeaderCollection["To"];
+    //            yj.Cc = bodyreader.HeaderCollection["Cc"];
+    //            if (yj.Cc == null) yj.Cc = "";
+    //            yj.Subject = bodyreader.HeaderCollection["Subject"];
+    //            if (bodyreader.HeaderCollection["Importance"] == null) yj.Importance = 3;
+    //            else
+    //            {
+    //                switch (bodyreader.HeaderCollection["Importance"].ToLower())
+    //                {
+    //                    case "low":
+    //                        yj.Importance = 1;
+    //                        break;
+    //                    case "normal":
+    //                        yj.Importance = 3;
+    //                        break;
+    //                    case "high":
+    //                        yj.Importance = 5;
+    //                        break;
+    //                    default:
+    //                        yj.Importance = 5;
+    //                        break;
+    //                }
 
-                }
+    //            }
 
-                if (bodyreader.FileCount == 0) yj.Attachments = "";
-                else
-                {
-                    YouJianFuJian[] yjfjs = new YouJianFuJian[bodyreader.FileCount];
-                    for (int i = 0; i < bodyreader.FileCount; i++)
-                    {
-                        yjfjs[i] = new YouJianFuJian();
-                        yjfjs[i].FileName = bodyreader.FileCollection[i].FileName;
-                        yjfjs[i].FileSize = bodyreader.FileCollection[i].FileSize;
-                        //byte[] bytes = bodyreader.FileCollection[i].GetData(1,bodyreader.FileCollection[i].FileSize);
-                        //string base64 = Convert.ToBase64String(bytes);
-                        //yjfjs[i].Base64Code = base64;
-                    }
-                    yj.Attachments = yj.AttachmentToString(yjfjs, true);
-                }
-                return yj;
-            }
+    //            if (bodyreader.FileCount == 0) yj.Attachments = "";
+    //            else
+    //            {
+    //                YouJianFuJian[] yjfjs = new YouJianFuJian[bodyreader.FileCount];
+    //                for (int i = 0; i < bodyreader.FileCount; i++)
+    //                {
+    //                    yjfjs[i] = new YouJianFuJian();
+    //                    yjfjs[i].FileName = bodyreader.FileCollection[i].FileName;
+    //                    yjfjs[i].FileSize = bodyreader.FileCollection[i].FileSize;
+    //                    //byte[] bytes = bodyreader.FileCollection[i].GetData(1,bodyreader.FileCollection[i].FileSize);
+    //                    //string base64 = Convert.ToBase64String(bytes);
+    //                    //yjfjs[i].Base64Code = base64;
+    //                }
+    //                yj.Attachments = yj.AttachmentToString(yjfjs, true);
+    //            }
+    //            return yj;
+    //        }
             
-        }
+    //    }
     
 
 
-        public INT sendMail(string subject,string body,string to,string cc,string bcc,string attachment)
-        {
-            return new INT(1);
-        }
+    //    public INT sendMail(string subject,string body,string to,string cc,string bcc,string attachment)
+    //    {
+    //        return new INT(1);
+    //    }
 
 
-    }
+    //}
 
 
     #region 2016自制邮件系统

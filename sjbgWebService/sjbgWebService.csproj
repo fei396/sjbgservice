@@ -121,6 +121,7 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="段发通知系统数据库设计.doc" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="aqxxptService.asmx.cs">

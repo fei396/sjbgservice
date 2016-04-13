@@ -579,5 +579,40 @@ namespace sjbgWebService.gwxx
         }
 
         #endregion
+
+        #region 段内通知
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public TongZhiLeiXing[] getTongZhiLeiXing(int uid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.GetTongZhiLeiXing(uid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public BuMenFenLei[] getTongZhiBuMenFenLei(int uid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.GetTongZhiBuMenFenLei(uid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT addNewTongZhi2016(string bt, string zw, int fbrid, int lxid, int[] jsrid, string[] files, string ip,int sfgk)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.AddNewTongZhi2016(bt, zw, fbrid, lxid, jsrid, files, ip, sfgk);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT getAllTongZhiLeiXing()
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.getAllTongZhiLeiXing();
+        }
+        #endregion
     }
 }

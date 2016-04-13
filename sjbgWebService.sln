@@ -106,6 +106,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "xxjwdMail", "xxjwdMail\", "
 		SlnRelativePath = "xxjwdMail\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XxjwdSSO", "XxjwdSSO\XxjwdSSO.csproj", "{30952B30-0B4C-4E32-AD50-EC8CFBB86473}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -317,6 +319,30 @@ Global
 		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|x64.Build.0 = Debug|Any CPU
 		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|x86.ActiveCfg = Debug|Any CPU
 		{C3586E8C-CFD8-4CED-94A5-2ED39E88566B}.Release|x86.Build.0 = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Debug|x64.Build.0 = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Debug|x86.Build.0 = Debug|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.oraclex64|Any CPU.ActiveCfg = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.oraclex64|Any CPU.Build.0 = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.oraclex64|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.oraclex64|Mixed Platforms.Build.0 = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.oraclex64|x64.ActiveCfg = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.oraclex64|x64.Build.0 = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.oraclex64|x86.ActiveCfg = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.oraclex64|x86.Build.0 = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Release|x64.ActiveCfg = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Release|x64.Build.0 = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Release|x86.ActiveCfg = Release|Any CPU
+		{30952B30-0B4C-4E32-AD50-EC8CFBB86473}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

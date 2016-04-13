@@ -127,23 +127,23 @@ namespace sjbgWebService.youjian
 	    }
 
 
-	    [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
-	    [SoapRpcMethod, WebMethod]
-	    public YouJianSimple[] GetMailMessageListTkmp(int uid, int start, int count, bool asc)
-	    {
-	        if (!SjbgHeader.checkValid()) return null;
-	        return DAL.GetMailMessagesTkmp(uid, start, count, asc);
-	    }
+	    //[SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
+	    //[SoapRpcMethod, WebMethod]
+	    //public YouJianSimple[] GetMailMessageListTkmp(int uid, int start, int count, bool asc)
+	    //{
+	    //    if (!SjbgHeader.checkValid()) return null;
+	    //    return DAL.GetMailMessagesTkmp(uid, start, count, asc);
+	    //}
 
 
-	    [SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
-	    [SoapRpcMethod, WebMethod]
-	    public YouJian GetMailMessageTkmp(int uid, int muid)
-	    {
-	        if (!SjbgHeader.checkValid()) return null;
-	        return DAL.GetMailMessageTkmp(uid, muid);
+	    //[SoapHeader("SjbgHeader", Direction = SoapHeaderDirection.In)]
+	    //[SoapRpcMethod, WebMethod]
+	    //public YouJian GetMailMessageTkmp(int uid, int muid)
+	    //{
+	    //    if (!SjbgHeader.checkValid()) return null;
+	    //    return DAL.GetMailMessageTkmp(uid, muid);
 
-	    }
+	    //}
 
         #endregion
 
