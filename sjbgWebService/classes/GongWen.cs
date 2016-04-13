@@ -352,7 +352,7 @@ namespace sjbgWebService.gwxx
         public string TongZhiLeiXing { get; set; }
     }
 
-    public class TongZhi
+    public class TongZhi2016
     {
         public int TongZhiID { get; set; }
         public string BiaoTi { get; set; }
@@ -363,6 +363,24 @@ namespace sjbgWebService.gwxx
         public int FaBuRenID { get; set; }
         public string FaBuRenXM { get; set; }
         public string[] FuJian { get; set; }
+    }
+
+
+    public class TongZhiLiuZhuan
+    {
+        public int LiuZhuanID { get; set; }
+        public int TongZhiID { get; set; }
+        public int FaSongRen { get; set; }
+        public string FaSongRenXM { get; set; }
+        public int JieShouRen { get; set; }
+        public string JieShouRenXM { get; set; }
+        public string FaSongShiJian { get; set; }
+        public string QianShouShiJian { get; set; }
+        public string QianShouNeiRong { get; set; }
+        public int LiuZhuanShu { get; set; }
+        public int WanChengShu { get; set; }
+
+        public string JieShouRenBM { get; set; }
     }
 
     #endregion

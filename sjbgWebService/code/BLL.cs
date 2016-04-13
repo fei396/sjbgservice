@@ -606,6 +606,8 @@ namespace sjbgWebService
             }
         }
 
+
+
         internal static JianBao[] GetAllJianBao(DateTime dateTime)
         {
             DataTable dt = DAL.GetJianBao("all", dateTime);
@@ -635,6 +637,7 @@ namespace sjbgWebService
         {
             return new ApkInfo(SjbgConfig.ApkVerCode, SjbgConfig.ApkVerName, SjbgConfig.ApkFilePath, SjbgConfig.ApkFileName, SjbgConfig.ApkUpdateContent);
         }
+
 
 
         public static INT GetTqUidByWorkNo(int workno)
@@ -2887,7 +2890,17 @@ namespace sjbgWebService
         internal static TongZhiLeiXing[] GetTongZhiLeiXing(int uid)
         {
 
-            DataTable dt = DAL.GetTongZhiLeiXing(uid);
+            DataTable dt;
+            if (uid == 0)
+            {
+                dt = DAL.GetAllTongZhiLeiXing();
+            }
+            else
+            {
+
+                dt = DAL.GetTongZhiLeiXing(uid);
+            }
+
             if (dt == null) return null;
 
             TongZhiLeiXing[] tzlx = new TongZhiLeiXing[dt.Rows.Count];
@@ -2929,8 +2942,6 @@ namespace sjbgWebService
                 bumen[i].RenYuan = ry;
             }
             return bumen;
-
-
         }
 
         public static INT AddNewTongZhi2016(string bt, string zw, int fbrid, int lxid, int[] jsrid, string[] files, string ip, int sfgk)
@@ -2947,7 +2958,139 @@ namespace sjbgWebService
             return DAL.AddNewTongZhi2016(bt, zw, fbrid, lxid, jsrid, files, ip, sfgk);
         }
 
+        internal static int GetTongZhiCount(int uid, int lxid, int fsrid, string keys, string sTime, string eTime, int type)
+        {
+            DataTable dt = DAL.GetTongZhiList(uid, lxid, fsrid, keys, sTime, eTime, type);
+            if (dt == null || dt.TableName.Equals("error!"))
+            {
+                return -1;
+            }
+            else
+            {
+                return dt.Rows.Count;
+            }
+        }
 
+        internal static TongZhiList[] GetTongZhiList(int uid, int lxid, int fsrid, string keys, string sTime,
+            string eTime, int type, int ksxh, int count)
+        {
+            DataTable dt = DAL.GetTongZhiList(uid, lxid, fsrid, keys, sTime, eTime, type);
+
+            //如果获取数据过程错误，返回null
+            if (dt == null || dt.TableName.Equals("error!"))
+            {
+                return null;
+            }
+            else
+            {
+                //将DataTable转换为GongWenList
+                TongZhiList[] tzlist =
+                    new TongZhiList[ksxh + count - 1 < dt.Rows.Count ? count : dt.Rows.Count - ksxh + 1];
+                for (int i = 0; i < tzlist.Length; i++)
+                {
+                    tzlist[i] = new TongZhiList();
+                    tzlist[i].TongZhiID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["tzid"]);
+                    tzlist[i].LiuZhuanID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["lzID"]);
+                    tzlist[i].BiaoTi = Convert.ToString(dt.Rows[i + ksxh - 1]["bt"]);
+                    tzlist[i].FaSongRen = Convert.ToString(dt.Rows[i + ksxh - 1]["fsrxm"]);
+                    tzlist[i].FaSongShiJian =
+                        Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fssj"]).ToString("yyyy-MM-dd HH:mm:ss");
+                    string qssj = Convert.ToString(dt.Rows[i + ksxh - 1]["qssj"]);
+                    if (string.IsNullOrEmpty(qssj)) //签收时间为空
+                    {
+                        tzlist[i].ShiFouQianShou = 0;
+                        tzlist[i].QianShouQingKuang = "未签收";
+
+                    }
+                    else //签收时间不为空，已签收
+                    {
+                        tzlist[i].ShiFouQianShou = 1;
+                        tzlist[i].QianShouQingKuang = "已签收";
+                    }
+                }
+                return tzlist;
+            }
+        }
+
+
+        internal static GongWenBuMenRenYuan[] GetTongZhiBuMenRenYuan(int uid)
+        {
+            DataTable dt = DAL.GetBuMenFenLeiRenYuanByUid(uid);
+            GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dt.Rows.Count];
+            for (int j = 0; j < dt.Rows.Count; j++)
+            {
+                ry[j] = new GongWenBuMenRenYuan();
+                ry[j].GongHao = Convert.ToString(dt.Rows[j]["user_no"].ToString());
+                ry[j].XianShiMingCheng = Convert.ToString(dt.Rows[j]["user_name"].ToString());
+                ry[j].NiCheng = Convert.ToString(dt.Rows[j]["nc"].ToString());
+            }
+            return ry;
+        }
+
+        internal static TongZhiLiuZhuan[] GetTongZhiLiuZhuanXian(bool sfbr, int lzlvl, int lzid)
+        {
+            DataTable dt = DAL.GetTongZhiLiuZhuanXianByLzId(sfbr, lzlvl, lzid);
+            if (dt == null) return null;
+
+            TongZhiLiuZhuan[] tzlz = new TongZhiLiuZhuan[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                tzlz[i] = new TongZhiLiuZhuan();
+                tzlz[i].LiuZhuanID = Convert.ToInt32(dt.Rows[i]["lzid"]);
+                tzlz[i].TongZhiID = Convert.ToInt32(dt.Rows[i]["tzid"]);
+                tzlz[i].FaSongRen = Convert.ToInt32(dt.Rows[i]["fsrid"]);
+                tzlz[i].FaSongRenXM = Convert.ToString(dt.Rows[i]["fsrxm"]);
+                tzlz[i].FaSongShiJian = Convert.ToString(dt.Rows[i]["fssj"]);
+                tzlz[i].JieShouRen = Convert.ToInt32(dt.Rows[i]["jsrid"]);
+                tzlz[i].JieShouRenXM = Convert.ToString(dt.Rows[i]["jsrxm"]);
+                tzlz[i].QianShouNeiRong = Convert.ToString(dt.Rows[i]["qsnr"]);
+                tzlz[i].QianShouShiJian = Convert.ToString(dt.Rows[i]["qssj"]);
+                tzlz[i].LiuZhuanShu = Convert.ToInt32(dt.Rows[i]["liuzhuan"]);
+                tzlz[i].WanChengShu = Convert.ToInt32(dt.Rows[i]["wancheng"]);
+                tzlz[i].JieShouRenBM = Convert.ToString(dt.Rows[i]["jsrbmmc"]);
+            }
+            return tzlz;
+
+
+        }
+
+        internal static TongZhi2016 getTongZhi2016ByID(int tzid)
+        {
+            DataTable dt = DAL.GetTongZhi2016ById(tzid);
+            if (dt == null) return null;
+            if (dt.Rows.Count != 1) return null;
+
+            TongZhi2016 tz = new TongZhi2016();
+            tz.TongZhiID = Convert.ToInt32(dt.Rows[0]["tzid"]);
+            tz.BiaoTi = Convert.ToString(dt.Rows[0]["bt"]);
+            tz.FaBuRenID = Convert.ToInt32(dt.Rows[0]["fbrid"]);
+            tz.FaBuRenXM = Convert.ToString(dt.Rows[0]["fbrxm"]);
+            tz.FaBuShiJian = Convert.ToString(dt.Rows[0]["fbrq"]);
+            tz.LeiXingID = Convert.ToInt32(dt.Rows[0]["tzlxid"]);
+            tz.WenJianLeiXing = Convert.ToString(dt.Rows[0]["lxmc"]);
+
+            tz.ZhengWen = Convert.ToString(dt.Rows[0]["zw"]);
+            DataTable dtFj = DAL.GetTongZhiFuJian2016ById(tzid);
+            if (dtFj?.Rows.Count > 0)
+            {
+                tz.FuJian = new string[dtFj.Rows.Count];
+                for (int j = 0; j < dtFj.Rows.Count; j++)
+                {
+                    tz.FuJian[j] = dtFj.Rows[j]["fjmc"].ToString();
+                }
+            }
+            return tz;
+
+
+        }
+        internal static INT signTongZhi2016(int tzid, int lzid, int uid, int[] jsry, string pishi, string ip)
+        {
+
+
+            TongZhi2016 tz = getTongZhi2016ByID(tzid);
+
+            return DAL.SignTongZhi2016(tzid, lzid, uid, jsry, tz.BiaoTi, pishi, ip);
+        }
         #endregion
 
 

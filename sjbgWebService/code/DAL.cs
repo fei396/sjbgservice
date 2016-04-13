@@ -3240,6 +3240,7 @@ namespace sjbgWebService
             return dt;
         }
 
+
         public static DataTable GetAqxxptBm(int xxid)
         {
 
@@ -3363,6 +3364,7 @@ namespace sjbgWebService
             }
             return new INT(1, xxid.ToString());
         }
+
 
 
         internal static INT AuditAqxx(int xxid, string auditor, int result, string title, string txt)
@@ -5503,6 +5505,9 @@ namespace sjbgWebService
 
         #endregion
 
+
+        #region 段内通知
+
         public static DataTable GetTongZhiLeiXing(int uid)
         {
             SqlConnection conn = new SqlConnection(BaseConnStr);
@@ -5526,6 +5531,26 @@ namespace sjbgWebService
             return dt;
         }
 
+        public static DataTable GetAllTongZhiLeiXing()
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand
+            {
+                Connection = conn,
+                CommandText = "select 0,'所有类型',0 as paixu union SELECT lxid , lxmc,paixu FROM V_TongZhi_bumen_leixing order by paixu"
+            };
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return dt;
+        }
 
         internal static DataTable GetTongZhiBuMenFenLeiYongHu(int uid,int flid)
         {
@@ -5703,5 +5728,319 @@ namespace sjbgWebService
             //返回成功
             return new INT(1);
         }
+
+
+
+        internal static DataTable GetTongZhiList(int uid, int lxid, int fsrid, string keys, string sTime, string eTime, int type)
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+
+
+
+            comm.CommandText = "SELECT  tzid, lzID, bt,  fsrxm, fssj, qssj, qsnr  FROM V_TongZhi_List_All where 1=1 ";
+            comm.Parameters.Clear();
+
+
+            if (uid > 0)
+            {
+                comm.CommandText += " and jsrid = @uid ";
+                comm.Parameters.AddWithValue("uid", uid);
+                if (type == 0)
+                {
+                    comm.CommandText += " and qssj is null ";
+                }
+            }
+            else
+            {
+                comm.CommandText += " and sfgk=1 ";
+                
+            }
+
+            if (fsrid>0)
+            {
+                comm.CommandText += " and fsrid=@fsrid ";
+                comm.Parameters.AddWithValue("fsrid", fsrid);
+            }
+            if (lxid > 0)
+            {
+                comm.CommandText += " and tzlxid=@lxid ";
+                comm.Parameters.AddWithValue("lxid", lxid);
+            }
+
+            if (!keys.Equals(string.Empty))
+            {
+                comm.CommandText += " and (bt like @keyword) ";
+                comm.Parameters.AddWithValue("keyword", "%" + keys + "%");
+            }
+            if (!sTime.Equals(string.Empty))
+            {
+                comm.CommandText += " and fbrq>@sTime ";
+                comm.Parameters.AddWithValue("sTime", sTime);
+            }
+            if (!eTime.Equals(string.Empty))
+            {
+                comm.CommandText += " and fbrq<@eTime ";
+                comm.Parameters.AddWithValue("eTime", Convert.ToDateTime(eTime).AddDays(1).ToString("yyyy-MM-dd"));
+            }
+           
+           
+
+            comm.CommandText += " order by fssj desc ";
+
+
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            dt.TableName = "GetTongZhiList";
+            return dt;
+        }
+
+
+        internal static DataTable GetTongZhi2016ById(int tzid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT  tzid,bt, zw, tzlxID, fbrid, fbrq, fbrbmmc + fbrxm as fbrxm ,lxmc FROM V_TongZhi_TZXX where tzid=@tzid";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("tzid", tzid);
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                return null;
+            }
+
+            dt.TableName = "GetTongZhi2016ById";
+            return dt;
+        }
+
+        internal static DataTable GetTongZhiFuJian2016ById(int tzid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT  fjmc FROM V_TongZhi_FuJian where tzid=@tzid order by paixu";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("tzid", tzid);
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                return null;
+            }
+
+            dt.TableName = "getGongWenFuJian2016ById";
+            return dt;
+        }
+
+
+        internal static DataTable GetBuMenFenLeiRenYuanByUid(int uid)
+        {
+            string workno = uid.ToString();
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT  user_no FROM V_User where uid=@uid";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("uid", uid);
+            try
+            {
+                conn.Open();
+                workno = Convert.ToString(comm.ExecuteScalar());
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            
+            return GetBenBuMenRenYuan(workno);
+        }
+
+
+        internal static INT SignTongZhi2016(int tzid, int lzid, int uid, int[] jsr, string biaoTi, string pishi, string ip)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            try
+            {
+                conn.Open();
+            }
+            catch
+            {
+                return new INT(-1, "数据库错误");
+            }
+            SqlTransaction trans;
+            trans = conn.BeginTransaction();
+            try
+            {
+                comm.Transaction = trans;
+
+                comm.CommandText = "select gwid,jsr,case when qssj is null then 0 else 1 end as sfqs from t_tongzhi_lz where id=@lzid and isvalid=1";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("lzid", lzid);
+                SqlDataAdapter sda = new SqlDataAdapter(comm);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                int dbGwid = Convert.ToInt32(dt.Rows[0]["gwid"]);
+                string dbFsr = Convert.ToString(dt.Rows[0]["jsr"]);
+                int sfqs = Convert.ToInt32(dt.Rows[0]["sfqs"]);
+                if (sfqs == 1) return new INT(-1, "该公文已经签收，无法再次签收。");
+
+
+
+                comm.CommandText = "update t_tongzhi_lz set qsnr=@qsnr,qssj=getdate(),ipAddress=@ip where tzid=@tzid and jsridd=@uid and qssj is null";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("tzid", tzid);
+                comm.Parameters.AddWithValue("uid", uid);
+                comm.Parameters.AddWithValue("qsnr", pishi);
+                comm.Parameters.AddWithValue("ip", ip);
+                int rows = comm.ExecuteNonQuery();
+
+                if (rows == 0) return new INT(-1, "该公文已经签收，无法再次签收。");
+
+
+                if (jsr != null && jsr.Length > 0)
+                {
+                    foreach (int jsrid in jsr)
+                    {
+                        comm.CommandText = "insert into t_tongzhi_lz (tzid,pid,fsr,jsr,fssj) values(@tzid,@pid,@fsr ,@jsr, getdate())";
+                        comm.Parameters.Clear();
+                        comm.Parameters.AddWithValue("@gwid", tzid);
+                        comm.Parameters.AddWithValue("@pid", lzid);
+                        comm.Parameters.AddWithValue("@fsr", uid);
+                        comm.Parameters.AddWithValue("@jsr", jsrid);
+                        comm.ExecuteNonQuery();
+                    }
+                    //发短信通知
+
+                  
+                    string message = "您有一件新通知需签阅。标题：" + biaoTi;
+                    
+                
+                    INT r;
+                    if (_sendMessageForDebug)
+                    {
+                        r = SendMobileMessage("3974", message);
+                    }
+                    else
+                    {
+                        r = SendMobileMessage2(jsr, message);
+                    }
+
+
+                    if (r.Number == 1)
+                    {
+                        trans.Commit();
+                    }
+                    else
+                    {
+                        trans.Rollback();
+                        return new INT(-1, "发送提醒短信失败。公文创建未成功。");
+                    }
+                }
+                else
+                {
+                    trans.Commit();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return new INT(-1, ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return new INT(1);
+        }
+
+
+        internal static DataTable GetTongZhiLiuZhuanXianByLzId(bool sfbr, int lzlvl, int lzid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "select b.jsrbmmc,b.lzid,b.tzid,b.fsrid,b.fsrxm,b.fssj,b.jsrid,b.jsrxm,b.qssj,b.qsnr ,case when a.lvl >0 then -1 else dbo.tongzhi_xia_ji_liu_zhuan_wan_cheng_shu(b.lzID) end AS wancheng, ";
+            comm.CommandText += " case when a.lvl > 0 then -1 else dbo.tongzhi_xia_ji_liu_zhuan_shu(b.lzID)end AS liuzhuan from tongzhi_liu_zhuan_xian(@lzid) a join V_TongZhi_LiuZhuan b on a.lzid = b.lzID ";
+
+
+            if (sfbr == true)
+            {
+                comm.CommandText += " and a.benren = 1";
+                if (lzlvl == 0)
+                {
+                    comm.CommandText += " and a.lvl >=-1 ";
+                }
+                else
+                {
+                    comm.CommandText += " and a.lvl < 0 ";
+                }
+            }
+            else
+            {
+                if (lzlvl == 0)
+                {
+                    comm.CommandText += " and a.lvl =0 ";
+                }
+                else
+                {
+                    comm.CommandText += " and a.lvl < 0 ";
+                }
+
+            }
+            comm.CommandText += " order by a.lvl desc";
+
+            //else
+            //{
+            //    comm.CommandText = "select b.jsr_bm,b.lzid,b.gwid,b.fsr,b.fsrxm,b.fssj,b.jsr,b.jsrxm,b.qssj,b.qsnr ,dbo.xia_ji_liu_zhuan_wan_cheng_shu(b.lzID) AS wancheng, ";
+
+            //    comm.CommandText += " dbo.xia_ji_liu_zhuan_shu(b.lzID) AS liuzhuan from V_GongWen_LiuZhuan b  where pid=@lzid ";
+
+            //}
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("lzid", lzid);
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+            DataTable dt = new DataTable();
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch
+            {
+                return null;
+            }
+
+            dt.TableName = "getLiuZhuanXianByLzId";
+            return dt;
+        }
+        #endregion
     }
 }

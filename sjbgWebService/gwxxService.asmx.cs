@@ -608,11 +608,61 @@ namespace sjbgWebService.gwxx
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
-        public INT getAllTongZhiLeiXing()
+        public TongZhiLeiXing[] getAllTongZhiLeiXing()
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.getAllTongZhiLeiXing();
+            return BLL.GetTongZhiLeiXing(0);
         }
+
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public TongZhiList[] getTongZhiList(int uid, int lxid, int fsrid, string keys, string sTime, string eTime, int type, int ksxh, int count)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.GetTongZhiList(uid, lxid, -1, keys, sTime, eTime, type, ksxh, count);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public int getTongZhiCount(int uid, int lxid, int fsrid, string keys, string sTime, string eTime, int type)
+        {
+            if (!sjbgHeader.checkValid()) return -1;
+            return BLL.GetTongZhiCount(uid, lxid, -1, keys, sTime, eTime, type);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public GongWenBuMenRenYuan[] getTongZhiBuMenRenYuan(int uid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.GetTongZhiBuMenRenYuan(uid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public TongZhi2016 getTongZhi2016ByID(int tzid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.getTongZhi2016ByID(tzid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public TongZhiLiuZhuan[] getTongZhiLiuZhuanXian(bool sfbr, int lzlvl, int lzid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.GetTongZhiLiuZhuanXian(sfbr, lzlvl, lzid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public INT signTongZhi2016(int tzid, int lzid, int uid, int[] jsry, string pishi, string ip)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.signTongZhi2016(tzid, lzid, uid, jsry, pishi, ip);
+        }
+
         #endregion
     }
 }
