@@ -22,7 +22,7 @@ namespace sjbgWebService
         private static string _cbConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["cbConnectionString"].ConnectionString;
         private static readonly string MqttConnStr = System.Configuration.ConfigurationManager.ConnectionStrings["mqttConnectionString"].ConnectionString;
 
-        private static bool _sendMessageForDebug = false;
+        private static bool _sendMessageForDebug = true;
 
 
         public static DataTable GetProductByPid(string pname)
@@ -4799,7 +4799,7 @@ namespace sjbgWebService
             }
             conn.Close();
 
-            comm.CommandText = "SELECT user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 25 or rid=20 or rid= 26) AND (bm_id IN (SELECT bm_id FROM V_User WHERE (user_no = @work_no))) order by zwpaixu";
+            comm.CommandText = "SELECT uid,user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 25 or rid=20 or rid= 26) AND (bm_id IN (SELECT bm_id FROM V_User WHERE (user_no = @work_no))) order by zwpaixu";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("work_no", workNo);
             SqlDataAdapter sda = new SqlDataAdapter(comm);
@@ -4815,7 +4815,7 @@ namespace sjbgWebService
             }
             if (workNo.Equals("0971"))
             {
-                comm.CommandText = "SELECT user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 23) AND (bm_id IN (58,59,39))";
+                comm.CommandText = "SELECT uid, user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 23) AND (bm_id IN (58,59,39))";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("work_no", workNo);
                 DataTable dt1 = new DataTable();
@@ -4828,12 +4828,13 @@ namespace sjbgWebService
                     dr["nc"] = dt1.Rows[i]["nc"];
                     dr["bm_mc"] = dt1.Rows[i]["bm_mc"];
                     dr["ziwu"] = dt1.Rows[i]["ziwu"];
+                    dr["uid"] = dt1.Rows[i]["uid"];
                     dt.Rows.InsertAt(dr, 0);
                 }
             }
             if (workNo.Equals("0112"))
             {
-                comm.CommandText = "SELECT user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 23) AND (bm_id IN (40))";
+                comm.CommandText = "SELECT uid,user_no, user_name, nc,bm_mc,ziwu FROM V_GongWen_YongHu WHERE (rid = 23) AND (bm_id IN (40))";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("work_no", workNo);
                 DataTable dt1 = new DataTable();
@@ -4846,6 +4847,7 @@ namespace sjbgWebService
                     dr["nc"] = dt1.Rows[i]["nc"];
                     dr["bm_mc"] = dt1.Rows[i]["bm_mc"];
                     dr["ziwu"] = dt1.Rows[i]["ziwu"];
+                    dr["uid"] = dt1.Rows[i]["uid"];
                     dt.Rows.InsertAt(dr, 0);
                 }
             }
@@ -5537,7 +5539,7 @@ namespace sjbgWebService
             SqlCommand comm = new SqlCommand
             {
                 Connection = conn,
-                CommandText = "select 0,'所有类型',0 as paixu union SELECT lxid , lxmc,paixu FROM V_TongZhi_bumen_leixing order by paixu"
+                CommandText = "select 0 as lxid,'所有类型' as lxmc ,0 as paixu union SELECT lxid , lxmc,paixu FROM V_TongZhi_bumen_leixing order by paixu"
             };
             SqlDataAdapter sda = new SqlDataAdapter(comm);
             DataTable dt = new DataTable();
@@ -5557,7 +5559,7 @@ namespace sjbgWebService
             SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
-            comm.CommandText = "SELECT user_no ,case when nc is null then user_name else nc end as nc,case when flid=1 then user_name when flid=2 then bm_mc else bm_mc+zhiwu end as xsmc FROM V_TongZhi_YongHu_BuMenFenLei where flid=@flid and uid <>@uid ";
+            comm.CommandText = "SELECT uid,user_no ,case when nc is null then user_name else nc end as nc,case when flid=1 then user_name when flid=2 then bm_mc else bm_mc+zhiwu end as xsmc FROM V_TongZhi_YongHu_BuMenFenLei where flid=@flid and uid <>@uid ";
             comm.CommandText += " order by paixu,px,ncpaixu,zhiwu desc";
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("flid", flid);
@@ -5900,20 +5902,20 @@ namespace sjbgWebService
             {
                 comm.Transaction = trans;
 
-                comm.CommandText = "select gwid,jsr,case when qssj is null then 0 else 1 end as sfqs from t_tongzhi_lz where id=@lzid and isvalid=1";
+                comm.CommandText = "select tzid,jsrid,case when qssj is null then 0 else 1 end as sfqs from t_tongzhi_lz where id=@lzid and isvalid=1";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("lzid", lzid);
                 SqlDataAdapter sda = new SqlDataAdapter(comm);
                 DataTable dt = new DataTable();
                 sda.Fill(dt);
-                int dbGwid = Convert.ToInt32(dt.Rows[0]["gwid"]);
-                string dbFsr = Convert.ToString(dt.Rows[0]["jsr"]);
+                int dbGwid = Convert.ToInt32(dt.Rows[0]["tzid"]);
+                string dbFsr = Convert.ToString(dt.Rows[0]["jsrid"]);
                 int sfqs = Convert.ToInt32(dt.Rows[0]["sfqs"]);
                 if (sfqs == 1) return new INT(-1, "该公文已经签收，无法再次签收。");
 
 
 
-                comm.CommandText = "update t_tongzhi_lz set qsnr=@qsnr,qssj=getdate(),ipAddress=@ip where tzid=@tzid and jsridd=@uid and qssj is null";
+                comm.CommandText = "update t_tongzhi_lz set qsnr=@qsnr,qssj=getdate(),ipAddress=@ip where tzid=@tzid and jsrid=@uid and qssj is null";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("tzid", tzid);
                 comm.Parameters.AddWithValue("uid", uid);
@@ -5928,9 +5930,9 @@ namespace sjbgWebService
                 {
                     foreach (int jsrid in jsr)
                     {
-                        comm.CommandText = "insert into t_tongzhi_lz (tzid,pid,fsr,jsr,fssj) values(@tzid,@pid,@fsr ,@jsr, getdate())";
+                        comm.CommandText = "insert into t_tongzhi_lz (tzid,pid,fsrid,jsrid,fssj) values(@tzid,@pid,@fsr ,@jsr, getdate())";
                         comm.Parameters.Clear();
-                        comm.Parameters.AddWithValue("@gwid", tzid);
+                        comm.Parameters.AddWithValue("@tzid", tzid);
                         comm.Parameters.AddWithValue("@pid", lzid);
                         comm.Parameters.AddWithValue("@fsr", uid);
                         comm.Parameters.AddWithValue("@jsr", jsrid);

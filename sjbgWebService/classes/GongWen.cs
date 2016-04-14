@@ -318,6 +318,7 @@ namespace sjbgWebService.gwxx
         public string GongHao { get; set; }
         public string XianShiMingCheng { get; set; }
         public string NiCheng { get; set; }
+        public int Uid { get; set; }
     }
     public class BuMenFenLei
     {
@@ -341,6 +342,7 @@ namespace sjbgWebService.gwxx
 
     public class TongZhiList
     {
+        public int XuHao { get; set; }
         public int TongZhiID { get; set; }
         public int LiuZhuanID { get; set; }
         public string FaSongRen { get; set; }

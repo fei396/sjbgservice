@@ -2938,6 +2938,7 @@ namespace sjbgWebService
                     ry[j].GongHao = Convert.ToString(dtyh.Rows[j]["user_no"].ToString());
                     ry[j].XianShiMingCheng = Convert.ToString(dtyh.Rows[j]["xsmc"].ToString());
                     ry[j].NiCheng = Convert.ToString(dtyh.Rows[j]["nc"].ToString());
+                    ry[j].Uid = Convert.ToInt32(dtyh.Rows[j]["uid"].ToString());
                 }
                 bumen[i].RenYuan = ry;
             }
@@ -2989,6 +2990,7 @@ namespace sjbgWebService
                 for (int i = 0; i < tzlist.Length; i++)
                 {
                     tzlist[i] = new TongZhiList();
+                    tzlist[i].XuHao = i + 1;
                     tzlist[i].TongZhiID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["tzid"]);
                     tzlist[i].LiuZhuanID = Convert.ToInt32(dt.Rows[i + ksxh - 1]["lzID"]);
                     tzlist[i].BiaoTi = Convert.ToString(dt.Rows[i + ksxh - 1]["bt"]);
@@ -3023,6 +3025,7 @@ namespace sjbgWebService
                 ry[j].GongHao = Convert.ToString(dt.Rows[j]["user_no"].ToString());
                 ry[j].XianShiMingCheng = Convert.ToString(dt.Rows[j]["user_name"].ToString());
                 ry[j].NiCheng = Convert.ToString(dt.Rows[j]["nc"].ToString());
+                ry[j].Uid = Convert.ToInt32(dt.Rows[j]["uid"].ToString());
             }
             return ry;
         }
@@ -3054,7 +3057,7 @@ namespace sjbgWebService
 
         }
 
-        internal static TongZhi2016 getTongZhi2016ByID(int tzid)
+        internal static TongZhi2016 GetTongZhi2016ById(int tzid)
         {
             DataTable dt = DAL.GetTongZhi2016ById(tzid);
             if (dt == null) return null;
@@ -3083,11 +3086,11 @@ namespace sjbgWebService
 
 
         }
-        internal static INT signTongZhi2016(int tzid, int lzid, int uid, int[] jsry, string pishi, string ip)
+        internal static INT SignTongZhi2016(int tzid, int lzid, int uid, int[] jsry, string pishi, string ip)
         {
 
 
-            TongZhi2016 tz = getTongZhi2016ByID(tzid);
+            TongZhi2016 tz = GetTongZhi2016ById(tzid);
 
             return DAL.SignTongZhi2016(tzid, lzid, uid, jsry, tz.BiaoTi, pishi, ip);
         }

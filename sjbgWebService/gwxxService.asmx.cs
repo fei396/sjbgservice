@@ -580,14 +580,28 @@ namespace sjbgWebService.gwxx
 
         #endregion
 
-        #region 段内通知
+        #region 2016段内通知
 
+
+        /// <summary>
+        /// 获取发送人uid的可发送的通知类型
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
         [SoapRpcMethod, WebMethod]
         public TongZhiLeiXing[] getTongZhiLeiXing(int uid)
         {
             if (!sjbgHeader.checkValid()) return null;
             return BLL.GetTongZhiLeiXing(uid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public TongZhiLeiXing[] getAllTongZhiLeiXing()
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.GetTongZhiLeiXing(0);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -606,13 +620,7 @@ namespace sjbgWebService.gwxx
             return BLL.AddNewTongZhi2016(bt, zw, fbrid, lxid, jsrid, files, ip, sfgk);
         }
 
-        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
-        [SoapRpcMethod, WebMethod]
-        public TongZhiLeiXing[] getAllTongZhiLeiXing()
-        {
-            if (!sjbgHeader.checkValid()) return null;
-            return BLL.GetTongZhiLeiXing(0);
-        }
+
 
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -644,7 +652,7 @@ namespace sjbgWebService.gwxx
         public TongZhi2016 getTongZhi2016ByID(int tzid)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.getTongZhi2016ByID(tzid);
+            return BLL.GetTongZhi2016ById(tzid);
         }
 
         [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
@@ -660,7 +668,7 @@ namespace sjbgWebService.gwxx
         public INT signTongZhi2016(int tzid, int lzid, int uid, int[] jsry, string pishi, string ip)
         {
             if (!sjbgHeader.checkValid()) return null;
-            return BLL.signTongZhi2016(tzid, lzid, uid, jsry, pishi, ip);
+            return BLL.SignTongZhi2016(tzid, lzid, uid, jsry, pishi, ip);
         }
 
         #endregion
