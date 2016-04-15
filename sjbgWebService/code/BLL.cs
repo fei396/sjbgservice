@@ -2975,7 +2975,31 @@ namespace sjbgWebService
         internal static TongZhiList[] GetTongZhiList(int uid, int lxid, int fsrid, string keys, string sTime,
             string eTime, int type, int ksxh, int count)
         {
-            DataTable dt = DAL.GetTongZhiList(uid, lxid, fsrid, keys, sTime, eTime, type);
+
+            DataTable dt;
+
+            if (uid <= 0)
+            {
+                dt = DAL.GetTongZhiListChaXun(lxid, fsrid, keys, sTime, eTime, 0);//只显示公开
+            }
+            else
+            {
+                int role = BLL.GetTongZhiUserRoleType(uid);
+                if (role <= 0)
+                {
+                    DAL.GetTongZhiListChaXun(lxid, fsrid, keys, sTime, eTime, 0);//只显示公开
+                }
+                if (role == 1)
+                {
+                    dt = DAL.GetTongZhiListChaXun(lxid, fsrid, keys, sTime, eTime, 1); //领导查询，显示所有
+                }
+
+                else
+                {
+                    dt = DAL.GetTongZhiList(uid, lxid, fsrid, keys, sTime, eTime, type);
+                }
+            }
+           
 
             //如果获取数据过程错误，返回null
             if (dt == null || dt.TableName.Equals("error!"))
@@ -3009,6 +3033,7 @@ namespace sjbgWebService
                         tzlist[i].ShiFouQianShou = 1;
                         tzlist[i].QianShouQingKuang = "已签收";
                     }
+                    tzlist[i].TongZhiLeiXing = Convert.ToString(dt.Rows[i + ksxh - 1]["lxmc"]);
                 }
                 return tzlist;
             }
@@ -3094,6 +3119,20 @@ namespace sjbgWebService
 
             return DAL.SignTongZhi2016(tzid, lzid, uid, jsry, tz.BiaoTi, pishi, ip);
         }
+
+
+
+        internal static int GetTongZhiUserRoleType(int uid)
+        {
+            return DAL.GetTongZhiUserRoleType(uid);
+        }
+
+        internal static GongWenZiDingYiDuanYu[] GetTongZhiZiDingYiDuanYu(int uid)
+        {
+            string workno = DAL.GetWorkNoByUid(uid);
+            return BLL.GetZiDingYiDuanYu(Convert.ToInt32(workno), false);
+        }
+
         #endregion
 
 

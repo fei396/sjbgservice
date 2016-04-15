@@ -119,7 +119,7 @@ input { font:12px  Tahoma, Arial, Helvetica, snas-serif; }
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:CheckBoxList ID="cbl" runat="server" AutoPostBack="True" CellPadding="5" CellSpacing="5" DataSource="<%# GetCKBLDataSource(Container.DataItemIndex)%>" DataTextField="XianShiMingCheng" DataValueField="GongHao" OnSelectedIndexChanged="cbl_SelectedIndexChanged" RepeatColumns="5" RepeatDirection="Horizontal">
+                                        <asp:CheckBoxList ID="cbl" runat="server" AutoPostBack="True" CellPadding="5" CellSpacing="5" DataSource="<%# GetCKBLDataSource(Container.DataItemIndex)%>" DataTextField="XianShiMingCheng" DataValueField="Uid" OnSelectedIndexChanged="cbl_SelectedIndexChanged" RepeatColumns="5" RepeatDirection="Horizontal">
                                         </asp:CheckBoxList>
                                     </ItemTemplate>
                                 </asp:TemplateField>

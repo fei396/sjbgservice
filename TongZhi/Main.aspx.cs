@@ -14,18 +14,28 @@ public partial class adminMain : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        GongWenYongHu gwyh = Session["user"] as GongWenYongHu;
-        if (gwyh.Equals(null))
+        int uid = Convert.ToInt32(Session["uid"]);
+        int role = Convert.ToInt32(Session["role"]);
+        if (uid <= 0)
         {
             Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
         }
-        if (gwyh.RoleID == 20)
+        if (role == 1)
         {
-            Response.Redirect("ListTongZhiGuiDang.aspx?type=0");
+            Response.Redirect("ListTongZhi.aspx?type=2");
+        }
+        else if (role == 4)
+        {
+            Response.Redirect("ListTongZhi.aspx?type=0");
+        }
+        else if (role == 2 || role == 3)
+        {
+            Response.Redirect("ListTongZhi.aspx?type=1");
         }
         else
         {
-            Response.Redirect("ListGongWen.aspx?type=0");
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
         }
     }
 }

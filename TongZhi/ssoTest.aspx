@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" %>
 <%@ import Namespace="System.Diagnostics" %>
-<%@ import Namespace="XxjwdSSO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <script runat="server">
@@ -42,9 +41,9 @@
     protected void Button1_Click(object sender, EventArgs e)
     {
         Guid g = Guid.NewGuid();
-        XxjwdSSO sso = new XxjwdSSO(Request);
+        XxjwdSSO.XxjwdSSO sso = new XxjwdSSO.XxjwdSSO(Request);
         string gh = TextBox1.Text;
-        string code = sso.getNewVerifyCode(gh);
+        string code = sso.GetNewVerifyCode(gh);
         Response.Redirect("login.aspx?code=" + code);
     }
 </script>

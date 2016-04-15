@@ -16,20 +16,20 @@ public partial class AddNew : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        Session["uid"] = 2502;
+        
         Security.SetCertificatePolicy();
 
         int uid = Convert.ToInt32(Session["uid"]);
-
-        //if (uid == null)
-        //{
-        //    Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
-        //    return;
-        //}
-        //if (user.RoleID != 30)
-        //{
-        //    Response.Redirect("error.aspx?errCode=不能打开该页面");
-        //}
+        int role = Convert.ToInt32(Session["role"]);
+        if (uid <= 0)
+        {
+            Response.Redirect("error.aspx?errCode=登录已过期，请重新登录");
+            return;
+        }
+        if (role != 2 && role !=3)
+        {
+            Response.Redirect("error.aspx?errCode=不能打开该页面");
+        }
         if (!IsPostBack)
         {
             gwxxService.BuMenFenLei[] bmfl = s.getTongZhiBuMenFenLei(uid);
@@ -82,11 +82,11 @@ public partial class AddNew : System.Web.UI.Page
 
         string[] files = UploadFile();
 
-        if (files == null)
-        {
-            Page.ClientScript.RegisterStartupScript(GetType(), "uploadError", "alert('上传文件出错!')", true);
-            return;
-        }
+        //if (files == null)
+        //{
+        //    //Page.ClientScript.RegisterStartupScript(GetType(), "uploadError", "alert('上传文件出错!')", true);
+        //    //return;
+        //}
 
         string bt = txtBt.Text;
         string zw = txtZw.Text;
@@ -99,9 +99,21 @@ public partial class AddNew : System.Web.UI.Page
             sfgk = 0;
         }
 
-        int[] jsrid = new int[1];
-        jsrid[0] = 2502;
-
+        List<string> jsrList = Session["jsr"] as List<string>;
+        int[] jsrid;
+        if (jsrList == null)
+        {
+            jsrid = null;
+        }
+        else
+        {
+            jsrid = new int[jsrList.Count];
+            for (int j = 0; j < jsrList.Count; j++)
+            {
+                jsrid[j] = Convert.ToInt32(jsrList[j]);
+            }
+        }
+        
         INT i = s.addNewTongZhi2016(bt, zw, fbrid, lxid, jsrid, files, ip, sfgk);
         if (i.Number != 1)
         {
@@ -217,23 +229,6 @@ public partial class AddNew : System.Web.UI.Page
     }
 
 
-    private List<string> getJsrList()
-    {
-        List<string> jsrList = new List<string>();
-        foreach (GridViewRow row in gvListBuMen.Rows)
-        {
-            CheckBoxList cbl = row.FindControl("cbl") as CheckBoxList;
-            if (cbl == null) continue;
-            foreach (ListItem item in cbl.Items)
-            {
-                if (item.Selected == true)
-                {
-                    jsrList.Add(item.Value);
-                }
-            }
-        }
-        return jsrList;
-    }
     private void setCheckBoxListItemSelected()
     {
         List<string> jsr = Session["jsr"] as List<string>;

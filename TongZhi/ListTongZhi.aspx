@@ -50,14 +50,15 @@ td { font:12px  Tahoma, Arial, Helvetica, snas-serif; }
 
                 <PagerStyle HorizontalAlign="Center" />
                 <EmptyDataTemplate>
-                    当前没有新的待办公文，您可以<a href="ListGongWen.aspx?type=1">查看全部公文</a>
+                    当前没有新的待签通知，您可以<a href="ListTongZhi.aspx?type=1">查看全部通知</a>
                 </EmptyDataTemplate>
                 <SelectedRowStyle BackColor="#6699CC" Font-Bold="True" ForeColor="#333333" />
                 <HeaderStyle BackColor="#6699CC" Font-Bold="True" ForeColor="White" />
                 <EditRowStyle BackColor="Azure" />
                 <Columns>
                     <asp:BoundField DataField="XuHao" HeaderText="序号" />
-                    <asp:BoundField DataField="FaSongRen" HeaderText="发送人" />
+                    <asp:BoundField DataField="FaSongRen" HeaderText="发布人" />
+                    <asp:BoundField DataField="TongZhiLeiXing" HeaderText="通知类型" />
                     <asp:BoundField DataField="BiaoTi" HeaderText="标题" />
                     <asp:BoundField DataField="FaSongShiJian" HeaderText="时间" />
                     <asp:TemplateField>

@@ -22,16 +22,21 @@ namespace XxjwdSSO
         /// </summary>
         public int Result { get; set; }
         public string WorkNo { get; set; }
-
-        public VerifyResult(int r, string w)
+        public string Message { get; set; }
+        public int Uid { get; set; }
+        public VerifyResult(int r, string w,int u,string m)
         {
             Result = r;
             WorkNo = w;
+            Message = m;
+            Uid = u;
         }
         public VerifyResult(int r)
         {
             Result = r;
-            WorkNo = "";
+            WorkNo = string.Empty;
+            Message = string.Empty;
+            Uid = -1;
         }
     }
 }

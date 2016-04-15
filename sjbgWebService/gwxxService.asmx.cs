@@ -10,6 +10,7 @@ using System.Web.Services.Protocols;
 using System.Web.Services.Description;
 using sjbgWebService.pub;
 using System.Data;
+using System.Runtime.InteropServices;
 
 namespace sjbgWebService.gwxx
 {
@@ -671,6 +672,21 @@ namespace sjbgWebService.gwxx
             return BLL.SignTongZhi2016(tzid, lzid, uid, jsry, pishi, ip);
         }
 
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public int GetTongZhiUserRoleType(int uid)
+        {
+            if (!sjbgHeader.checkValid()) return -1;
+            return BLL.GetTongZhiUserRoleType(uid);
+        }
+
+        [SoapHeader("sjbgHeader", Direction = SoapHeaderDirection.In)]
+        [SoapRpcMethod, WebMethod]
+        public GongWenZiDingYiDuanYu[] getTongZhiZiDingYiDuanYu(int uid)
+        {
+            if (!sjbgHeader.checkValid()) return null;
+            return BLL.GetTongZhiZiDingYiDuanYu(uid);
+        }
         #endregion
     }
 }

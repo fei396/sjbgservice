@@ -73,7 +73,7 @@
 
                         <asp:GridView ID="gvList" runat="server" AutoGenerateColumns="False"
                             BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4" DataKeyNames="LiuZhuanID" 
-                            ForeColor="#333333" Width="100%" Caption="文件签收情况" Font-Size="Medium">
+                            ForeColor="#333333" Width="100%" Caption="文件签收情况" Font-Size="Medium" OnSelectedIndexChanged="gvList_SelectedIndexChanged">
                          
                             <EmptyDataTemplate>
                                 尚无人签收
@@ -147,12 +147,16 @@
 
                                 </td>
                             </tr>
-
+                                                       <tr>
+                                <td colspan="2">
+                                    <%=duanyu()%>
+                                </td>
+                            </tr>
 
                             <tr>
-                                <td class="auto-style2">
+                                <td class="auto-style2" align="center">
 
-                                    <asp:CheckBoxList ID="CheckBoxList1" runat="server">
+                                    <asp:CheckBoxList ID="cblRenYuan" runat="server">
                                     </asp:CheckBoxList>
                                 </td>
                             </tr>

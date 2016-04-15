@@ -1,5 +1,5 @@
 // Code in 2007.1
-var 
+var
 // 获取元素
 $ = function (elementId) {
     if (elementId == null) return false;
@@ -106,39 +106,30 @@ init = function (rid) {
         return false;
     }
     // 初始化菜单列表
-    switch(rid)
-    {
-        case 21:
-        case 22:
+    switch (rid) {
+        case 1://段领导
             Menus = {
 
-                "操作菜单": { "row": 1, "show": true, "menu": { "待办通知": "ListTongZhi.aspx?type=0", "全部通知": "ListTongZhi.aspx?type=1" } }
+                "操作菜单": { "row": 1, "show": true, "menu": {  "查看通知": "ListTongZhi.aspx?type=2" } }
 
             };
             break;
-        case 23:
-            case 24:
-            //Menus = {
-
-            //    "操作菜单": { "row": 1, "show": true, "menu": { "待办公文": "ListTongZhi.aspx?type=0", "全部公文": "ListGongWen.aspx?type=1", "管理本部门人员": "EditBuMenRenYuan.aspx", "自定义短语": "DuanYu.aspx" } }
-
-                //};
-                Menus = {
-
-                    "操作菜单": { "row": 1, "show": true, "menu": { "待签通知": "ListTongZhi.aspx?type=0", "全部通知": "ListTongZhi.aspx?type=1" } }
-
-                };
-            break;
-        case 20:
+        case 2://能发不能收
             Menus = {
 
-                "通知处理员": { "row": 1, "show": true, "menu": { "发新通知": "AddNew.aspx", "未签完通知": "ListTongZhiGuiDang.aspx?type=0", "所有通知": "ListTongZhiGuiDang.aspx?type=1" } },
+                "通知处理员": { "row": 1, "show": true, "menu": { "发新通知": "AddNew.aspx", "已发送通知": "ListTongZhi.aspx?type=2" } }
+
+            };
+            break;
+        case 3://能发能收
+            Menus = {
+
+                "通知处理员": { "row": 1, "show": true, "menu": { "发新通知": "AddNew.aspx","已发送通知": "ListTongZhi.aspx?type=1" } },
                 "操作菜单": { "row": 1, "show": true, "menu": { "待签通知": "ListTongZhi.aspx?type=0", "全部通知": "ListTongZhi.aspx?type=1" } }
 
             };
             break;
-        case 25:
-            case 26:
+        case 4://能收不能发
             Menus = {
 
                 "操作菜单": { "row": 1, "show": true, "menu": { "待签通知": "ListTongZhi.aspx?type=0", "全部通知": "ListTongZhi.aspx?type=1" } }
@@ -148,7 +139,7 @@ init = function (rid) {
         default:
             break;
     }
-   
+
 
     // 生成并初始化菜单
     menu.create(Menus);

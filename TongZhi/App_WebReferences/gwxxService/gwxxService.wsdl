@@ -1294,6 +1294,13 @@
   <wsdl:message name="getTongZhiLeiXingSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
+  <wsdl:message name="getAllTongZhiLeiXingSoapIn" />
+  <wsdl:message name="getAllTongZhiLeiXingSoapOut">
+    <wsdl:part name="getAllTongZhiLeiXingResult" type="tns:ArrayOfTongZhiLeiXing" />
+  </wsdl:message>
+  <wsdl:message name="getAllTongZhiLeiXingSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
   <wsdl:message name="getTongZhiBuMenFenLeiSoapIn">
     <wsdl:part name="uid" type="s:int" />
   </wsdl:message>
@@ -1317,13 +1324,6 @@
     <wsdl:part name="addNewTongZhi2016Result" type="tns:INT" />
   </wsdl:message>
   <wsdl:message name="addNewTongZhi2016SjbgSoapHeader">
-    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
-  </wsdl:message>
-  <wsdl:message name="getAllTongZhiLeiXingSoapIn" />
-  <wsdl:message name="getAllTongZhiLeiXingSoapOut">
-    <wsdl:part name="getAllTongZhiLeiXingResult" type="tns:ArrayOfTongZhiLeiXing" />
-  </wsdl:message>
-  <wsdl:message name="getAllTongZhiLeiXingSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
   <wsdl:message name="getTongZhiListSoapIn">
@@ -1399,6 +1399,24 @@
     <wsdl:part name="signTongZhi2016Result" type="tns:INT" />
   </wsdl:message>
   <wsdl:message name="signTongZhi2016SjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetTongZhiUserRoleTypeSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetTongZhiUserRoleTypeSoapOut">
+    <wsdl:part name="GetTongZhiUserRoleTypeResult" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="GetTongZhiUserRoleTypeSjbgSoapHeader">
+    <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
+  </wsdl:message>
+  <wsdl:message name="getTongZhiZiDingYiDuanYuSoapIn">
+    <wsdl:part name="uid" type="s:int" />
+  </wsdl:message>
+  <wsdl:message name="getTongZhiZiDingYiDuanYuSoapOut">
+    <wsdl:part name="getTongZhiZiDingYiDuanYuResult" type="tns:ArrayOfGongWenZiDingYiDuanYu" />
+  </wsdl:message>
+  <wsdl:message name="getTongZhiZiDingYiDuanYuSjbgSoapHeader">
     <wsdl:part name="SjbgSoapHeader" type="tns:SjbgSoapHeader" />
   </wsdl:message>
   <wsdl:message name="getLeaderListHttpGetIn" />
@@ -1782,6 +1800,10 @@
   <wsdl:message name="getTongZhiLeiXingHttpGetOut">
     <wsdl:part name="Body" element="s1:ArrayOfTongZhiLeiXing" />
   </wsdl:message>
+  <wsdl:message name="getAllTongZhiLeiXingHttpGetIn" />
+  <wsdl:message name="getAllTongZhiLeiXingHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfTongZhiLeiXing" />
+  </wsdl:message>
   <wsdl:message name="getTongZhiBuMenFenLeiHttpGetIn">
     <wsdl:part name="uid" type="s:string" />
   </wsdl:message>
@@ -1800,10 +1822,6 @@
   </wsdl:message>
   <wsdl:message name="addNewTongZhi2016HttpGetOut">
     <wsdl:part name="Body" element="s1:INT" />
-  </wsdl:message>
-  <wsdl:message name="getAllTongZhiLeiXingHttpGetIn" />
-  <wsdl:message name="getAllTongZhiLeiXingHttpGetOut">
-    <wsdl:part name="Body" element="s1:ArrayOfTongZhiLeiXing" />
   </wsdl:message>
   <wsdl:message name="getTongZhiListHttpGetIn">
     <wsdl:part name="uid" type="s:string" />
@@ -1861,6 +1879,18 @@
   </wsdl:message>
   <wsdl:message name="signTongZhi2016HttpGetOut">
     <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="GetTongZhiUserRoleTypeHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTongZhiUserRoleTypeHttpGetOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="getTongZhiZiDingYiDuanYuHttpGetIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getTongZhiZiDingYiDuanYuHttpGetOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenZiDingYiDuanYu" />
   </wsdl:message>
   <wsdl:message name="getLeaderListHttpPostIn" />
   <wsdl:message name="getLeaderListHttpPostOut">
@@ -2243,6 +2273,10 @@
   <wsdl:message name="getTongZhiLeiXingHttpPostOut">
     <wsdl:part name="Body" element="s1:ArrayOfTongZhiLeiXing" />
   </wsdl:message>
+  <wsdl:message name="getAllTongZhiLeiXingHttpPostIn" />
+  <wsdl:message name="getAllTongZhiLeiXingHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfTongZhiLeiXing" />
+  </wsdl:message>
   <wsdl:message name="getTongZhiBuMenFenLeiHttpPostIn">
     <wsdl:part name="uid" type="s:string" />
   </wsdl:message>
@@ -2261,10 +2295,6 @@
   </wsdl:message>
   <wsdl:message name="addNewTongZhi2016HttpPostOut">
     <wsdl:part name="Body" element="s1:INT" />
-  </wsdl:message>
-  <wsdl:message name="getAllTongZhiLeiXingHttpPostIn" />
-  <wsdl:message name="getAllTongZhiLeiXingHttpPostOut">
-    <wsdl:part name="Body" element="s1:ArrayOfTongZhiLeiXing" />
   </wsdl:message>
   <wsdl:message name="getTongZhiListHttpPostIn">
     <wsdl:part name="uid" type="s:string" />
@@ -2322,6 +2352,18 @@
   </wsdl:message>
   <wsdl:message name="signTongZhi2016HttpPostOut">
     <wsdl:part name="Body" element="s1:INT" />
+  </wsdl:message>
+  <wsdl:message name="GetTongZhiUserRoleTypeHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTongZhiUserRoleTypeHttpPostOut">
+    <wsdl:part name="Body" element="s1:int" />
+  </wsdl:message>
+  <wsdl:message name="getTongZhiZiDingYiDuanYuHttpPostIn">
+    <wsdl:part name="uid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getTongZhiZiDingYiDuanYuHttpPostOut">
+    <wsdl:part name="Body" element="s1:ArrayOfGongWenZiDingYiDuanYu" />
   </wsdl:message>
   <wsdl:portType name="gwxxWebServiceSoap">
     <wsdl:operation name="getLeaderList">
@@ -2524,6 +2566,10 @@
       <wsdl:input message="tns:getTongZhiLeiXingSoapIn" />
       <wsdl:output message="tns:getTongZhiLeiXingSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="getAllTongZhiLeiXing">
+      <wsdl:input message="tns:getAllTongZhiLeiXingSoapIn" />
+      <wsdl:output message="tns:getAllTongZhiLeiXingSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="getTongZhiBuMenFenLei">
       <wsdl:input message="tns:getTongZhiBuMenFenLeiSoapIn" />
       <wsdl:output message="tns:getTongZhiBuMenFenLeiSoapOut" />
@@ -2531,10 +2577,6 @@
     <wsdl:operation name="addNewTongZhi2016">
       <wsdl:input message="tns:addNewTongZhi2016SoapIn" />
       <wsdl:output message="tns:addNewTongZhi2016SoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getAllTongZhiLeiXing">
-      <wsdl:input message="tns:getAllTongZhiLeiXingSoapIn" />
-      <wsdl:output message="tns:getAllTongZhiLeiXingSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="getTongZhiList">
       <wsdl:input message="tns:getTongZhiListSoapIn" />
@@ -2559,6 +2601,14 @@
     <wsdl:operation name="signTongZhi2016">
       <wsdl:input message="tns:signTongZhi2016SoapIn" />
       <wsdl:output message="tns:signTongZhi2016SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTongZhiUserRoleType">
+      <wsdl:input message="tns:GetTongZhiUserRoleTypeSoapIn" />
+      <wsdl:output message="tns:GetTongZhiUserRoleTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTongZhiZiDingYiDuanYu">
+      <wsdl:input message="tns:getTongZhiZiDingYiDuanYuSoapIn" />
+      <wsdl:output message="tns:getTongZhiZiDingYiDuanYuSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="gwxxWebServiceHttpGet">
@@ -2762,6 +2812,10 @@
       <wsdl:input message="tns:getTongZhiLeiXingHttpGetIn" />
       <wsdl:output message="tns:getTongZhiLeiXingHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="getAllTongZhiLeiXing">
+      <wsdl:input message="tns:getAllTongZhiLeiXingHttpGetIn" />
+      <wsdl:output message="tns:getAllTongZhiLeiXingHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="getTongZhiBuMenFenLei">
       <wsdl:input message="tns:getTongZhiBuMenFenLeiHttpGetIn" />
       <wsdl:output message="tns:getTongZhiBuMenFenLeiHttpGetOut" />
@@ -2769,10 +2823,6 @@
     <wsdl:operation name="addNewTongZhi2016">
       <wsdl:input message="tns:addNewTongZhi2016HttpGetIn" />
       <wsdl:output message="tns:addNewTongZhi2016HttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getAllTongZhiLeiXing">
-      <wsdl:input message="tns:getAllTongZhiLeiXingHttpGetIn" />
-      <wsdl:output message="tns:getAllTongZhiLeiXingHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="getTongZhiList">
       <wsdl:input message="tns:getTongZhiListHttpGetIn" />
@@ -2797,6 +2847,14 @@
     <wsdl:operation name="signTongZhi2016">
       <wsdl:input message="tns:signTongZhi2016HttpGetIn" />
       <wsdl:output message="tns:signTongZhi2016HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTongZhiUserRoleType">
+      <wsdl:input message="tns:GetTongZhiUserRoleTypeHttpGetIn" />
+      <wsdl:output message="tns:GetTongZhiUserRoleTypeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTongZhiZiDingYiDuanYu">
+      <wsdl:input message="tns:getTongZhiZiDingYiDuanYuHttpGetIn" />
+      <wsdl:output message="tns:getTongZhiZiDingYiDuanYuHttpGetOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="gwxxWebServiceHttpPost">
@@ -3000,6 +3058,10 @@
       <wsdl:input message="tns:getTongZhiLeiXingHttpPostIn" />
       <wsdl:output message="tns:getTongZhiLeiXingHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="getAllTongZhiLeiXing">
+      <wsdl:input message="tns:getAllTongZhiLeiXingHttpPostIn" />
+      <wsdl:output message="tns:getAllTongZhiLeiXingHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="getTongZhiBuMenFenLei">
       <wsdl:input message="tns:getTongZhiBuMenFenLeiHttpPostIn" />
       <wsdl:output message="tns:getTongZhiBuMenFenLeiHttpPostOut" />
@@ -3007,10 +3069,6 @@
     <wsdl:operation name="addNewTongZhi2016">
       <wsdl:input message="tns:addNewTongZhi2016HttpPostIn" />
       <wsdl:output message="tns:addNewTongZhi2016HttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getAllTongZhiLeiXing">
-      <wsdl:input message="tns:getAllTongZhiLeiXingHttpPostIn" />
-      <wsdl:output message="tns:getAllTongZhiLeiXingHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="getTongZhiList">
       <wsdl:input message="tns:getTongZhiListHttpPostIn" />
@@ -3035,6 +3093,14 @@
     <wsdl:operation name="signTongZhi2016">
       <wsdl:input message="tns:signTongZhi2016HttpPostIn" />
       <wsdl:output message="tns:signTongZhi2016HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTongZhiUserRoleType">
+      <wsdl:input message="tns:GetTongZhiUserRoleTypeHttpPostIn" />
+      <wsdl:output message="tns:GetTongZhiUserRoleTypeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTongZhiZiDingYiDuanYu">
+      <wsdl:input message="tns:getTongZhiZiDingYiDuanYuHttpPostIn" />
+      <wsdl:output message="tns:getTongZhiZiDingYiDuanYuHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="gwxxWebServiceSoap" type="tns:gwxxWebServiceSoap">
@@ -3539,6 +3605,16 @@
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getAllTongZhiLeiXing">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getAllTongZhiLeiXing" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getAllTongZhiLeiXingSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getTongZhiBuMenFenLei">
       <soap:operation soapAction="http://sjbg.xxjwd.org/getTongZhiBuMenFenLei" style="rpc" />
       <wsdl:input>
@@ -3554,16 +3630,6 @@
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
         <soap:header message="tns:addNewTongZhi2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getAllTongZhiLeiXing">
-      <soap:operation soapAction="http://sjbg.xxjwd.org/getAllTongZhiLeiXing" style="rpc" />
-      <wsdl:input>
-        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-        <soap:header message="tns:getAllTongZhiLeiXingSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -3624,6 +3690,26 @@
       <wsdl:input>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
         <soap:header message="tns:signTongZhi2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTongZhiUserRoleType">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/GetTongZhiUserRoleType" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:GetTongZhiUserRoleTypeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTongZhiZiDingYiDuanYu">
+      <soap:operation soapAction="http://sjbg.xxjwd.org/getTongZhiZiDingYiDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+        <soap:header message="tns:getTongZhiZiDingYiDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -4132,6 +4218,16 @@
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getAllTongZhiLeiXing">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAllTongZhiLeiXing" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getAllTongZhiLeiXingSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getTongZhiBuMenFenLei">
       <soap12:operation soapAction="http://sjbg.xxjwd.org/getTongZhiBuMenFenLei" style="rpc" />
       <wsdl:input>
@@ -4147,16 +4243,6 @@
       <wsdl:input>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
         <soap12:header message="tns:addNewTongZhi2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getAllTongZhiLeiXing">
-      <soap12:operation soapAction="http://sjbg.xxjwd.org/getAllTongZhiLeiXing" style="rpc" />
-      <wsdl:input>
-        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
-        <soap12:header message="tns:getAllTongZhiLeiXingSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
@@ -4217,6 +4303,26 @@
       <wsdl:input>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
         <soap12:header message="tns:signTongZhi2016SjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTongZhiUserRoleType">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/GetTongZhiUserRoleType" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:GetTongZhiUserRoleTypeSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTongZhiZiDingYiDuanYu">
+      <soap12:operation soapAction="http://sjbg.xxjwd.org/getTongZhiZiDingYiDuanYu" style="rpc" />
+      <wsdl:input>
+        <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
+        <soap12:header message="tns:getTongZhiZiDingYiDuanYuSjbgSoapHeader" part="SjbgSoapHeader" use="encoded" encodingStyle="http://www.w3.org/2003/05/soap-encoding" namespace="http://sjbg.xxjwd.org/" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="encoded" namespace="http://sjbg.xxjwd.org/" encodingStyle="http://www.w3.org/2003/05/soap-encoding" />
@@ -4675,6 +4781,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getAllTongZhiLeiXing">
+      <http:operation location="/getAllTongZhiLeiXing" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getTongZhiBuMenFenLei">
       <http:operation location="/getTongZhiBuMenFenLei" />
       <wsdl:input>
@@ -4686,15 +4801,6 @@
     </wsdl:operation>
     <wsdl:operation name="addNewTongZhi2016">
       <http:operation location="/addNewTongZhi2016" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getAllTongZhiLeiXing">
-      <http:operation location="/getAllTongZhiLeiXing" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -4749,6 +4855,24 @@
     </wsdl:operation>
     <wsdl:operation name="signTongZhi2016">
       <http:operation location="/signTongZhi2016" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTongZhiUserRoleType">
+      <http:operation location="/GetTongZhiUserRoleType" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTongZhiZiDingYiDuanYu">
+      <http:operation location="/getTongZhiZiDingYiDuanYu" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -5209,6 +5333,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getAllTongZhiLeiXing">
+      <http:operation location="/getAllTongZhiLeiXing" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getTongZhiBuMenFenLei">
       <http:operation location="/getTongZhiBuMenFenLei" />
       <wsdl:input>
@@ -5220,15 +5353,6 @@
     </wsdl:operation>
     <wsdl:operation name="addNewTongZhi2016">
       <http:operation location="/addNewTongZhi2016" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getAllTongZhiLeiXing">
-      <http:operation location="/getAllTongZhiLeiXing" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -5283,6 +5407,24 @@
     </wsdl:operation>
     <wsdl:operation name="signTongZhi2016">
       <http:operation location="/signTongZhi2016" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTongZhiUserRoleType">
+      <http:operation location="/GetTongZhiUserRoleType" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTongZhiZiDingYiDuanYu">
+      <http:operation location="/getTongZhiZiDingYiDuanYu" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

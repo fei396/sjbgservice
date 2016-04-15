@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Data.SqlClient;
-using System.Text;
-using System.IO;
+using gwxxService;
 using XxjwdSSO;
 
-public partial class login : System.Web.UI.Page
+public partial class Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -26,7 +15,7 @@ public partial class login : System.Web.UI.Page
         }
 
         
-        VerifyResult vr = sso.verifyCode(code);
+        VerifyResult vr = sso.VerifyCode(code);
 
         if (vr.Result <= 0)
         {
@@ -46,7 +35,7 @@ public partial class login : System.Web.UI.Page
             int uid;
             try
             {
-                uid = Convert.ToInt32(vr.WorkNo);
+                uid = Convert.ToInt32(vr.Uid);
             }
             catch (Exception ex)
             {
@@ -54,13 +43,17 @@ public partial class login : System.Web.UI.Page
                 return;
             }
             gwxxService.gwxxWebService s = new gwxxService.gwxxWebService();
-            gwxxService.GongWenYongHu gwyh = s.getGongWenYongHuByUid(uid);
-            if (gwyh==null)
+            Security.SetCertificatePolicy();
+            SjbgSoapHeader header = new SjbgSoapHeader();
+            s.SjbgSoapHeaderValue = header;
+            int role = s.GetTongZhiUserRoleType(uid);
+            if (role <=0)
             {
-                Response.Redirect("error.aspx?errcode=登录失败：用户不存在");
+                Response.Redirect("error.aspx?errcode=登录失败：用户不存在或无权限");
                 return;
             }
-            Session["user"] = gwyh;
+            Session["uid"] = uid;
+            Session["role"] = role;
             Response.Redirect("mdefault.aspx");
         }
     }

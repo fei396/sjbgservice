@@ -3427,8 +3427,6 @@ namespace sjbgWebService
                     comm.CommandText = "insert into t_aqxxpt_xxjs (xxid,receiver) select " + xxid.ToString() + " as xxid, user_no from V_AQXXPT_Receiver where bumen_id in (select bmid from t_aqxxpt_xx_bm where xxid=" + xxid.ToString() + ")";
                     comm.ExecuteNonQuery();
                     //发送消息给所有接收人
-                    ///
-                    ///
                     trans.Commit();
                 }
 
@@ -3445,6 +3443,7 @@ namespace sjbgWebService
             }
             return new INT(1);
         }
+
 
 
         internal static DataTable GetAqxxToAudit(string auditor, int xxid)
@@ -3498,7 +3497,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable GetAqxxDetail(int xxid ,int type)
+        internal static DataTable GetAqxxDetail(int xxid, int type)
         {
             SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
@@ -3578,7 +3577,7 @@ namespace sjbgWebService
                 comm.Parameters.AddWithValue("@wh", wh);
                 if (Convert.ToInt32(comm.ExecuteScalar()) > 0)
                 {
-                    return new INT(-1,"该文号已存在。");
+                    return new INT(-1, "该文号已存在。");
                 }
 
                 //先插入公文信息表
@@ -3622,7 +3621,7 @@ namespace sjbgWebService
                     comm.Parameters.AddWithValue("@jsr", jsr);
                     comm.ExecuteNonQuery();
                 }
-                
+
 
                 //发短信通知
                 string message;
@@ -3634,11 +3633,11 @@ namespace sjbgWebService
                 {
                     message = "您有一件新公文需要签阅。公文标题：" + bt + "。该公文是" + jinji + "公文，请务必尽快签阅。";
                 }
-                
-                 INT r;
+
+                INT r;
                 if (_sendMessageForDebug)
                 {
-                    r =SendMobileMessage("3974", message);
+                    r = SendMobileMessage("3974", message);
                 }
                 else
                 {
@@ -3921,14 +3920,14 @@ namespace sjbgWebService
                     INT r;
                     if (_sendMessageForDebug)
                     {
-                        r = SendMobileMessage("3974", message); 
+                        r = SendMobileMessage("3974", message);
                     }
                     else
                     {
                         r = SendMobileMessage(jsr, message);
                     }
-                    
-                    
+
+
                     if (r.Number == 1)
                     {
                         trans.Commit();
@@ -4007,10 +4006,10 @@ namespace sjbgWebService
             int jsrrid;
             try
             {
-              
+
                 conn.Open();
                 jsrrid = Convert.ToInt32(comm.ExecuteScalar());
-                
+
             }
             catch (Exception)
             {
@@ -4021,7 +4020,7 @@ namespace sjbgWebService
             {
                 conn.Close();
             }
-            
+
 
             comm.CommandText = "SELECT  gwid, lzID, ht,dw, wh, bt, zw, wjxzID, wjlxID, fbr, fbrq, wjlx, wjxz, fbrxm, pID,fsr, fsrxm, jsr, jsrxm, fssj, qssj, qsnr,fsr_rid,jsr_rid,jinji, case when qssj is null then 0 when getdate()-qssj <48/24 then 1 else 0 end as chexiao FROM V_GongWen_List_All where jsr = @jsr ";
             comm.Parameters.Clear();
@@ -4094,7 +4093,7 @@ namespace sjbgWebService
 
 
             SqlDataAdapter sda = new SqlDataAdapter(comm);
-            
+
             try
             {
                 sda.Fill(dt);
@@ -4117,7 +4116,7 @@ namespace sjbgWebService
             comm.Connection = conn;
             comm.CommandText = "SELECT  gwid, min(lzID) as lzid, wh, bt,  fbrq, fbrxm, jinji FROM V_GongWen_List_All where wjlxid=2 ";
             comm.Parameters.Clear();
-           
+
             if (!keyWord.Equals(string.Empty))
             {
                 comm.CommandText += " and (wh like @keyword or bt like @keyword) ";
@@ -4299,7 +4298,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable GetLiuZhuanXianByLzId(bool sfbr,int lzlvl, int lzid)
+        internal static DataTable GetLiuZhuanXianByLzId(bool sfbr, int lzlvl, int lzid)
         {
             SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
@@ -4856,9 +4855,9 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static INT makeCuiBan(string[] jsr,string bt)
+        internal static INT makeCuiBan(string[] jsr, string bt)
         {
-            
+
 
             INT r;
             if (_sendMessageForDebug)
@@ -4900,9 +4899,9 @@ namespace sjbgWebService
                 jsr.Add(dt.Rows[i]["jsr"].ToString());
                 jsrxm.Add(dt.Rows[i]["jsrxm"].ToString());
             }
-            
 
-            INT r ;
+
+            INT r;
             if (_sendMessageForDebug)
             {
                 r = SendMobileMessage("3974", "公文处理员提醒您，请尽快签收公文：" + bt);
@@ -5234,7 +5233,7 @@ namespace sjbgWebService
                     comm.ExecuteNonQuery();
                 }
 
-               
+
                 trans.Commit();
             }
             catch (Exception ex)
@@ -5297,13 +5296,13 @@ namespace sjbgWebService
         /// <param name="gh">工号</param>
         /// <param name="type">邮件列表类型，1:收件箱，2:垃圾箱，3:已发送</param>
         /// <returns></returns>
-        internal static DataTable GetMailList2016(string gh,int type)
+        internal static DataTable GetMailList2016(string gh, int type)
         {
             SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
             comm.CommandText = "SELECT   id, title, fromaddress, createdate, size, filenamestring ,readflag FROM V_YouJian_YJXX ";
-            switch ( type)
+            switch (type)
             {
                 case 1://收件箱
                     comm.CommandText += " where toAddress=@gh and dustbin=0 ";
@@ -5554,7 +5553,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal static DataTable GetTongZhiBuMenFenLeiYongHu(int uid,int flid)
+        internal static DataTable GetTongZhiBuMenFenLeiYongHu(int uid, int flid)
         {
             SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
@@ -5579,7 +5578,7 @@ namespace sjbgWebService
             return dt;
         }
 
-        internal  static DataTable GetTongZhiBuMenFenLei(int uid)
+        internal static DataTable GetTongZhiBuMenFenLei(int uid)
         {
             SqlConnection conn = new SqlConnection(BaseConnStr);
             SqlCommand comm = new SqlCommand();
@@ -5647,7 +5646,8 @@ namespace sjbgWebService
             try
             {
 
-                comm.CommandText = "insert into T_TongZhi_TZXX (Bt,Zw,tzlxID,fbrID,sfgk,ip) values(@bt,@zw,@lxid,@fbrid,@sfgk,@ip)";
+                comm.CommandText =
+                    "insert into T_TongZhi_TZXX (Bt,Zw,tzlxID,fbrID,sfgk,ip) values(@bt,@zw,@lxid,@fbrid,@sfgk,@ip)";
                 comm.CommandText += ";select scope_identity();";
                 comm.Parameters.Clear();
                 comm.Parameters.AddWithValue("bt", bt);
@@ -5659,59 +5659,70 @@ namespace sjbgWebService
 
                 int tzid = Convert.ToInt32(comm.ExecuteScalar());
 
-                //依次把附件添加进附件表
-                for (int i = 0; i < tzfj.Length; i++)
+                if (tzfj != null)
                 {
-                    comm.CommandText = "insert into t_tongzhi_tzfj (tzid,fjmc,paixu) values(@tzid,@fjmc,@paixu)";
-                    comm.Parameters.Clear();
-                    comm.Parameters.AddWithValue("tzid", tzid);
-                    comm.Parameters.AddWithValue("fjmc", tzfj[i]);
-                    comm.Parameters.AddWithValue("paixu", i + 1);
-                    comm.ExecuteNonQuery();
+
+                    //依次把附件添加进附件表
+                    for (int i = 0; i < tzfj.Length; i++)
+                    {
+                        comm.CommandText = "insert into t_tongzhi_tzfj (tzid,fjmc,paixu) values(@tzid,@fjmc,@paixu)";
+                        comm.Parameters.Clear();
+                        comm.Parameters.AddWithValue("tzid", tzid);
+                        comm.Parameters.AddWithValue("fjmc", tzfj[i]);
+                        comm.Parameters.AddWithValue("paixu", i + 1);
+                        comm.ExecuteNonQuery();
+                    }
                 }
-
-                foreach (int jsr in jsrList)
+                if (jsrList != null)
                 {
-                    //添加公文流转表开始流转
-                    comm.CommandText = "insert into t_tongzhi_lz (tzid,pid,fsrid,jsrid,fssj) values(@tzid,0,@fsr,@jsr,getdate())";
+                    foreach (int jsr in jsrList)
+                    {
+                        //添加公文流转表开始流转
+                        comm.CommandText =
+                            "insert into t_tongzhi_lz (tzid,pid,fsrid,jsrid,fssj) values(@tzid,0,@fsr,@jsr,getdate())";
+                        comm.Parameters.Clear();
+                        comm.Parameters.AddWithValue("@tzid", tzid);
+                        comm.Parameters.AddWithValue("@fsr", fbrid);
+                        comm.Parameters.AddWithValue("@jsr", jsr);
+                        comm.ExecuteNonQuery();
+                    }
+
+
+                    //发短信通知
+                    string message, chenghu;
+                    comm.CommandText = "select bm_mc+ user_name from V_user where uid=@uid";
                     comm.Parameters.Clear();
-                    comm.Parameters.AddWithValue("@tzid", tzid);
-                    comm.Parameters.AddWithValue("@fsr", fbrid);
-                    comm.Parameters.AddWithValue("@jsr", jsr);
-                    comm.ExecuteNonQuery();
-                }
+                    comm.Parameters.AddWithValue("@uid", fbrid);
+                    chenghu = Convert.ToString(comm.ExecuteScalar());
+
+                    message = chenghu + "给您发送了一件段内通知。标题：" + bt + "。请尽快签阅。";
 
 
-                //发短信通知
-                string message, chenghu;
-                comm.CommandText = "select bm_mc+ user_name from V_user where uid=@uid";
-                comm.Parameters.Clear();
-                comm.Parameters.AddWithValue("@uid", fbrid);
-                chenghu = Convert.ToString( comm.ExecuteScalar());
-
-                message = chenghu + "给您发送了一件段内通知。标题：" + bt + "。请尽快签阅。";
-  
-
-                INT r;
-                if (_sendMessageForDebug)
-                {
-                    r = SendMobileMessage("3974", message);
+                    INT r;
+                    if (_sendMessageForDebug)
+                    {
+                        r = SendMobileMessage("3974", message);
+                    }
+                    else
+                    {
+                        r = SendMobileMessage2(jsrList, message);
+                    }
+                    if (r.Number == 1)
+                    {
+                        //所有操作都成功完成，提交事务，确认操作
+                        trans.Commit();
+                    }
+                    else
+                    {
+                        //发短信时提醒失败
+                        //回滚事务，撤销操作，返回错误信息
+                        trans.Rollback();
+                        return new INT(-1, "发送提醒短信失败。公文创建未成功。");
+                    }
                 }
                 else
                 {
-                    r = SendMobileMessage2(jsrList, message);
-                }
-                if (r.Number == 1)
-                {
-                    //所有操作都成功完成，提交事务，确认操作
                     trans.Commit();
-                }
-                else
-                {
-                    //发短信时提醒失败
-                    //回滚事务，撤销操作，返回错误信息
-                    trans.Rollback();
-                    return new INT(-1, "发送提醒短信失败。公文创建未成功。");
                 }
             }
 
@@ -5742,30 +5753,35 @@ namespace sjbgWebService
 
 
 
-            comm.CommandText = "SELECT  tzid, lzID, bt,  fsrxm, fssj, qssj, qsnr  FROM V_TongZhi_List_All where 1=1 ";
-            comm.Parameters.Clear();
 
 
-            if (uid > 0)
+            if (uid > 0) //uid>0取属于某个uid的通知
             {
+
+                comm.CommandText = "SELECT  tzid, lzID, bt, fsrbmmc + fsrxm as fsrxm, fssj, qssj, qsnr,lxmc  FROM V_TongZhi_List_All where 1=1 ";
+                comm.Parameters.Clear();
                 comm.CommandText += " and jsrid = @uid ";
                 comm.Parameters.AddWithValue("uid", uid);
-                if (type == 0)
+                if (type == 0)//此时type=0表示未签，type=1表示已签
                 {
                     comm.CommandText += " and qssj is null ";
                 }
+                if (fsrid > 0)
+                {
+                    comm.CommandText += " and fsrid=@fsrid ";
+                    comm.Parameters.AddWithValue("fsrid", fsrid);
+                }
             }
-            else
+            else//uid<=0表示取所有的通知
             {
-                comm.CommandText += " and sfgk=1 ";
-                
+                return null;
+                //if (type == 0)//此时type=0表示仅取公开的通知，type=1表示所有的通知
+                //{
+                //    comm.CommandText += " and qssj is null ";
+                //}
             }
 
-            if (fsrid>0)
-            {
-                comm.CommandText += " and fsrid=@fsrid ";
-                comm.Parameters.AddWithValue("fsrid", fsrid);
-            }
+
             if (lxid > 0)
             {
                 comm.CommandText += " and tzlxid=@lxid ";
@@ -5787,8 +5803,8 @@ namespace sjbgWebService
                 comm.CommandText += " and fbrq<@eTime ";
                 comm.Parameters.AddWithValue("eTime", Convert.ToDateTime(eTime).AddDays(1).ToString("yyyy-MM-dd"));
             }
-           
-           
+
+
 
             comm.CommandText += " order by fssj desc ";
 
@@ -5805,6 +5821,71 @@ namespace sjbgWebService
             }
 
             dt.TableName = "GetTongZhiList";
+            return dt;
+        }
+
+        internal static DataTable GetTongZhiListChaXun(int lxid, int fsrid, string keys, string sTime, string eTime, int sfgk)
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT tzid, Bt, fbrq as fssj, sfgk, lxmc,  fbrbmmc +fbrxm as fsrxm ,0 as lzid,getdate() as qssj FROM V_TongZhi_TZXX  where (tzlxid=@lxid or @lxid=0) ";
+
+
+
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("lxid", lxid);
+            if (sfgk == 0)//此时type=0表示未签，type=1表示已签
+            {
+                comm.CommandText += " and sfgk = 0 ";
+            }
+
+            if (fsrid > 0)
+            {
+                comm.CommandText += " and fsrid=@fsrid ";
+                comm.Parameters.AddWithValue("fsrid", fsrid);
+            }
+
+
+
+
+
+
+
+            if (!keys.Equals(string.Empty))
+            {
+                comm.CommandText += " and (bt like @keyword) ";
+                comm.Parameters.AddWithValue("keyword", "%" + keys + "%");
+            }
+            if (!sTime.Equals(string.Empty))
+            {
+                comm.CommandText += " and fbrq>@sTime ";
+                comm.Parameters.AddWithValue("sTime", sTime);
+            }
+            if (!eTime.Equals(string.Empty))
+            {
+                comm.CommandText += " and fbrq<@eTime ";
+                comm.Parameters.AddWithValue("eTime", Convert.ToDateTime(eTime).AddDays(1).ToString("yyyy-MM-dd"));
+            }
+
+
+
+            comm.CommandText += " order by fbrq desc ";
+
+
+            SqlDataAdapter sda = new SqlDataAdapter(comm);
+
+            try
+            {
+                sda.Fill(dt);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            dt.TableName = "GetTongZhiListChaXun";
             return dt;
         }
 
@@ -5878,7 +5959,7 @@ namespace sjbgWebService
             {
                 conn.Close();
             }
-            
+
             return GetBenBuMenRenYuan(workno);
         }
 
@@ -5940,10 +6021,10 @@ namespace sjbgWebService
                     }
                     //发短信通知
 
-                  
+
                     string message = "您有一件新通知需签阅。标题：" + biaoTi;
-                    
-                
+
+
                     INT r;
                     if (_sendMessageForDebug)
                     {
@@ -6043,6 +6124,99 @@ namespace sjbgWebService
             dt.TableName = "getLiuZhuanXianByLzId";
             return dt;
         }
+
+        internal static string GetWorkNoByUid(int uid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT user_no from V_user where uid=@uid";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("uid", uid);
+            try
+            {
+                conn.Open();
+                return Convert.ToString(comm.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+        }
+
+
+        internal static int GetTongZhiUserRoleType(int uid)
+        {
+            SqlConnection conn = new SqlConnection(BaseConnStr);
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "SELECT user_no from V_user where uid=@uid";
+            comm.Parameters.Clear();
+            comm.Parameters.AddWithValue("uid", uid);
+            try
+            {
+                conn.Open();
+                string workno = Convert.ToString(comm.ExecuteScalar());
+
+
+                comm.CommandText = "select count(*) from dat_user_role where uid=@workno and rid in (3) and isvalid=1";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("workno", workno);
+
+                int lingdao = Convert.ToInt32(comm.ExecuteScalar());
+                if (lingdao > 0) return 1;//领导，只能查询
+
+                comm.CommandText = "select count(*) from dat_user_role where uid=@workno and rid=27 and isvalid=1";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("workno", workno);
+                int canSend = Convert.ToInt32(comm.ExecuteScalar());
+
+
+
+                comm.CommandText = "select count(*) from dat_user_role where uid=@workno and rid in (23,24,25,26) and isvalid=1";
+                comm.Parameters.Clear();
+                comm.Parameters.AddWithValue("workno", workno);
+                int canReceive = Convert.ToInt32(comm.ExecuteScalar());
+
+                if (canSend > 0)
+                {
+                    if (canReceive > 0)
+                    {
+                        return 3;//能发能收
+                    }
+                    else
+                    {
+                        return 2;//能发不能收
+                    }
+                }
+                else
+                {
+                    if (canReceive > 0)
+                    {
+                        return 4;//不能发只能收
+                    }
+                    else
+                    {
+                        return -1;//不能发不能收
+                    }
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
         #endregion
     }
 }
