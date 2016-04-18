@@ -16,7 +16,7 @@ public partial class ListTongZhi : System.Web.UI.Page
         int uid = Convert.ToInt32(Session["uid"]);
         int role = Convert.ToInt32(Session["role"]);
         int type = Convert.ToInt32(Request["type"]);
-
+        int lxid = Convert.ToInt32(Request["lxid"]);
 
         if (!IsPostBack)
         {
@@ -25,7 +25,7 @@ public partial class ListTongZhi : System.Web.UI.Page
             ddlLeiXing.DataValueField = "LXID";
             ddlLeiXing.DataTextField = "LXMC";
             ddlLeiXing.DataBind();
-            ddlLeiXing.SelectedValue = "0";
+            ddlLeiXing.SelectedValue = lxid.ToString();
             _cpage = 1;
             GetData(_cpage);
             if (type == 0)

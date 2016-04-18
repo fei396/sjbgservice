@@ -57,6 +57,8 @@
     <div>
         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+        <br/>
+        <a href="ListTongZhi.aspx?type=3&lxid=3">不登陆直接查看</a>
     </div>
     </form>
 </body>

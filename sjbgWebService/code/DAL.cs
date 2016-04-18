@@ -5836,9 +5836,9 @@ namespace sjbgWebService
 
             comm.Parameters.Clear();
             comm.Parameters.AddWithValue("lxid", lxid);
-            if (sfgk == 0)//此时type=0表示未签，type=1表示已签
+            if (sfgk == 0)
             {
-                comm.CommandText += " and sfgk = 0 ";
+                comm.CommandText += " and sfgk = 1 ";
             }
 
             if (fsrid > 0)

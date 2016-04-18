@@ -63,7 +63,7 @@
                     <%--<td align="lfet">
                         <asp:Label ID="lblFaWenShiJian" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>--%>
                 </tr>
-                <tr>
+                <tr runat="server" id="trFuJian">
                     <td colspan="2">
                         <table width="100%">
                             <tr>

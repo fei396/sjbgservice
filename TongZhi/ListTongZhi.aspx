@@ -50,7 +50,7 @@ td { font:12px  Tahoma, Arial, Helvetica, snas-serif; }
 
                 <PagerStyle HorizontalAlign="Center" />
                 <EmptyDataTemplate>
-                    当前没有新的待签通知，您可以<a href="ListTongZhi.aspx?type=1">查看全部通知</a>
+                    没有该类型通知
                 </EmptyDataTemplate>
                 <SelectedRowStyle BackColor="#6699CC" Font-Bold="True" ForeColor="#333333" />
                 <HeaderStyle BackColor="#6699CC" Font-Bold="True" ForeColor="White" />

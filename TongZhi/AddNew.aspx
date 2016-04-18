@@ -57,7 +57,7 @@ input { font:12px  Tahoma, Arial, Helvetica, snas-serif; }
             <br />
         </div>
         <div align="center" valign="middle">
-            <table border="1" cellspacing="0" rules="all" width="700">
+            <table border="1" cellspacing="0" rules="all" width="80%">
                 <tr height="300" style="height: 80px">
                     <td align="right" width="10%">标 题： </td>
                     <td align="center" colspan="3" valign="middle">
@@ -94,11 +94,11 @@ input { font:12px  Tahoma, Arial, Helvetica, snas-serif; }
                         </asp:RadioButtonList>
                     </td>
                 </tr>
-                <tr>
+             <%--   <tr>
                     <td align="center" class="auto-style4" colspan="4">
                         <asp:Label ID="lbBM" runat="server" Text="Label"></asp:Label>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr style="height: 150px">
                     <td align="right" colspan="4">
                         <asp:GridView ID="gvListBuMen" runat="server" AutoGenerateColumns="False" BorderStyle="Solid" BorderWidth="2px" CaptionAlign="Right" CellPadding="4" ForeColor="#333333" Height="261px" OnRowDataBound="gvListBuMen_RowDataBound" Width="100%">

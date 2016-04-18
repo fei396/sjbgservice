@@ -66,7 +66,7 @@ public partial class ViewTongZhi : System.Web.UI.Page
 
         if (tz == null)
         {
-            return;
+            Response.Redirect("http://10.99.81.68/");
         }
         else
         {
@@ -83,16 +83,25 @@ public partial class ViewTongZhi : System.Web.UI.Page
                 }
                 tdFuJian.InnerHtml = html;
             }
+            else
+            {
+                trFuJian.Visible = false;
+            }
         }
-        
-        GongWenBuMenRenYuan[] bmry = s.getTongZhiBuMenRenYuan(uid);
-        cblRenYuan.DataSource = bmry;
-        cblRenYuan.DataValueField = "Uid";
-        cblRenYuan.DataTextField = "XianShiMingCheng";
-        cblRenYuan.DataBind();
-        cblRenYuan.RepeatColumns = 8;
 
-        BindLiuZhuanData(true, 0, lzid);
+        if (uid > 0)
+        {
+            GongWenBuMenRenYuan[] bmry = s.getTongZhiBuMenRenYuan(uid);
+            cblRenYuan.DataSource = bmry;
+            cblRenYuan.DataValueField = "Uid";
+            cblRenYuan.DataTextField = "XianShiMingCheng";
+            cblRenYuan.DataBind();
+            cblRenYuan.RepeatColumns = 8;
+        }
+        if (lzid > 0)
+        {
+            BindLiuZhuanData(true, 0, lzid);
+        }
     }
     private void BindLiuZhuanData(bool sfbr, int lzlvl, int lzid)
     {

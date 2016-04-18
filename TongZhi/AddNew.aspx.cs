@@ -52,7 +52,7 @@ public partial class AddNew : System.Web.UI.Page
 
         txtBt.Text = "";
         txtZw.Text = "";
-        lbBM.Text = uid.ToString();
+        //lbBM.Text = uid.ToString();
         RadioButtonList1.SelectedValue = "是";
         BuMenFenLei[] bmfl = Session["bmfl"] as BuMenFenLei[];
         gvListBuMen.DataSource = bmfl;
@@ -273,14 +273,14 @@ public partial class AddNew : System.Web.UI.Page
 
             foreach (gwxxService.GongWenBuMenRenYuan ry in bmfl[row].RenYuan)
             {
-                jsr.Add(ry.GongHao);
+                jsr.Add(ry.Uid.ToString());
             }
         }
         else
         {
             foreach (gwxxService.GongWenBuMenRenYuan ry in bmfl[row].RenYuan)
             {
-                jsr.Remove(ry.GongHao);
+                jsr.Remove(ry.Uid.ToString());
             }
         }
         Session["jsr"] = jsr;

@@ -2922,26 +2922,62 @@ namespace sjbgWebService
             DataTable dt = DAL.GetTongZhiBuMenFenLei(uid);
             if (dt == null) return null;
 
-            BuMenFenLei[] bumen = new BuMenFenLei[dt.Rows.Count];
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                bumen[i] = new BuMenFenLei();
-                bumen[i].FenLeiID = Convert.ToInt32(dt.Rows[i]["flID"].ToString());
-                bumen[i].FenLeiMingCheng = Convert.ToString(dt.Rows[i]["flmc"].ToString());
-                bumen[i].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
+            BuMenFenLei[] bumen;
 
-                DataTable dtyh = DAL.GetTongZhiBuMenFenLeiYongHu(uid, bumen[i].FenLeiID);
-                GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dtyh.Rows.Count];
-                for (int j = 0; j < dtyh.Rows.Count; j++)
+            GongWenBuMenRenYuan[] bmry = GetTongZhiBuMenRenYuan(uid);
+            if (bmry.Length > 0)
+            {
+                bumen = new BuMenFenLei[dt.Rows.Count + 1];
+                bumen[0] = new BuMenFenLei();
+                bumen[0].FenLeiID = 0;
+                bumen[0].FenLeiMingCheng = "科室人员";
+                bumen[0].FenLeiZongCheng = "全体人员";
+                bumen[0].RenYuan = bmry;
+
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    ry[j] = new GongWenBuMenRenYuan();
-                    ry[j].GongHao = Convert.ToString(dtyh.Rows[j]["user_no"].ToString());
-                    ry[j].XianShiMingCheng = Convert.ToString(dtyh.Rows[j]["xsmc"].ToString());
-                    ry[j].NiCheng = Convert.ToString(dtyh.Rows[j]["nc"].ToString());
-                    ry[j].Uid = Convert.ToInt32(dtyh.Rows[j]["uid"].ToString());
+                    bumen[i + 1] = new BuMenFenLei();
+                    bumen[i + 1].FenLeiID = Convert.ToInt32(dt.Rows[i]["flID"].ToString());
+                    bumen[i + 1].FenLeiMingCheng = Convert.ToString(dt.Rows[i]["flmc"].ToString());
+                    bumen[i + 1].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
+
+                    DataTable dtyh = DAL.GetTongZhiBuMenFenLeiYongHu(uid, bumen[i + 1].FenLeiID);
+                    GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dtyh.Rows.Count];
+                    for (int j = 0; j < dtyh.Rows.Count; j++)
+                    {
+                        ry[j] = new GongWenBuMenRenYuan();
+                        ry[j].GongHao = Convert.ToString(dtyh.Rows[j]["user_no"].ToString());
+                        ry[j].XianShiMingCheng = Convert.ToString(dtyh.Rows[j]["xsmc"].ToString());
+                        ry[j].NiCheng = Convert.ToString(dtyh.Rows[j]["nc"].ToString());
+                        ry[j].Uid = Convert.ToInt32(dtyh.Rows[j]["uid"].ToString());
+                    }
+                    bumen[i + 1].RenYuan = ry;
                 }
-                bumen[i].RenYuan = ry;
             }
+            else
+            {
+               bumen = new BuMenFenLei[dt.Rows.Count];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    bumen[i ] = new BuMenFenLei();
+                    bumen[i].FenLeiID = Convert.ToInt32(dt.Rows[i]["flID"].ToString());
+                    bumen[i].FenLeiMingCheng = Convert.ToString(dt.Rows[i]["flmc"].ToString());
+                    bumen[i].FenLeiZongCheng = Convert.ToString(dt.Rows[i]["flzc"].ToString());
+
+                    DataTable dtyh = DAL.GetTongZhiBuMenFenLeiYongHu(uid, bumen[i].FenLeiID);
+                    GongWenBuMenRenYuan[] ry = new GongWenBuMenRenYuan[dtyh.Rows.Count];
+                    for (int j = 0; j < dtyh.Rows.Count; j++)
+                    {
+                        ry[j] = new GongWenBuMenRenYuan();
+                        ry[j].GongHao = Convert.ToString(dtyh.Rows[j]["user_no"].ToString());
+                        ry[j].XianShiMingCheng = Convert.ToString(dtyh.Rows[j]["xsmc"].ToString());
+                        ry[j].NiCheng = Convert.ToString(dtyh.Rows[j]["nc"].ToString());
+                        ry[j].Uid = Convert.ToInt32(dtyh.Rows[j]["uid"].ToString());
+                    }
+                    bumen[i].RenYuan = ry;
+                }
+            }
+            
             return bumen;
         }
 
@@ -3022,7 +3058,12 @@ namespace sjbgWebService
                     tzlist[i].FaSongShiJian =
                         Convert.ToDateTime(dt.Rows[i + ksxh - 1]["fssj"]).ToString("yyyy-MM-dd HH:mm:ss");
                     string qssj = Convert.ToString(dt.Rows[i + ksxh - 1]["qssj"]);
-                    if (string.IsNullOrEmpty(qssj)) //签收时间为空
+                    if (uid <= 0)
+                    {
+                        tzlist[i].ShiFouQianShou = 2;
+                        tzlist[i].QianShouQingKuang = "只读";
+                    }
+                    else if (string.IsNullOrEmpty(qssj)) //签收时间为空
                     {
                         tzlist[i].ShiFouQianShou = 0;
                         tzlist[i].QianShouQingKuang = "未签收";

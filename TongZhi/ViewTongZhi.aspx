@@ -44,7 +44,7 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <asp:TextBox CssClass="Text_Multi" valign="middle" ID="txtZhengWen" runat="server"   ReadOnly="True" TextMode="MultiLine" Height="261px" Width="1252px"  ></asp:TextBox>
+                        <asp:TextBox CssClass="Text_Multi" valign="middle" ID="txtZhengWen" runat="server"   ReadOnly="True" TextMode="MultiLine"  ></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -53,7 +53,7 @@
                     <%--<td align="lfet">
                         <asp:Label ID="lblFaWenShiJian" runat="server" Text="Label" Font-Size="Medium"></asp:Label></td>--%>
                 </tr>
-                <tr>
+                <tr runat="server" id="trFuJian">
                     <td>
                         <table width="100%">
                             <tr>
